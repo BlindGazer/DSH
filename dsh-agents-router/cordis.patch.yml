@@ -1,0 +1,3 @@
+- insert:
+    - id: dsh-agents-router
+      name: ./lib/index.js

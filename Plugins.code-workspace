@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"name": "Proxy",
+			"path": "./dsh-provider-proxy"
+		},
+		{
+			"name": "Router",
+			"path": "./dsh-agents-router"
+		},
+		{
+			"path": "./"
+		}
+	],
+	"settings": {}
+}

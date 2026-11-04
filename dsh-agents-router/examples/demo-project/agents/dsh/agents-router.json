@@ -1,0 +1,15 @@
+{
+  "areas": {
+    "front": {
+      "path": "src/front/",
+      "keywords": ["front", "javascript", "react"]
+    },
+    "front/admin": {
+      "path": "src/front/admin/"
+    },
+    "back": {
+      "path": ["src/api/", "src/core/"],
+      "enabled": true
+    }
+  }
+}

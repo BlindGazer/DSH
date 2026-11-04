@@ -1,0 +1,83 @@
+{
+  "name": "@kalex/dsh-provider-proxy",
+  "version": "0.1.0",
+  "description": "Selective HTTP/HTTPS/SOCKS5 proxy routing per model provider for DeepSeek Harness",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./node": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/client.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "cordis.patch.yml",
+    "README.md",
+    "README_EN.md",
+    "package.json"
+  ],
+  "dsh": {
+    "plugin": {
+      "schemaVersion": 1,
+      "displayName": {
+        "en": "Provider Proxy",
+        "zh-CN": "模型提供商代理"
+      },
+      "summary": {
+        "en": "Selective HTTP/HTTPS/SOCKS5 proxy profiles and routing per model provider.",
+        "zh-CN": "按模型提供商配置和绑定 HTTP/HTTPS/SOCKS5 代理。"
+      },
+      "category": "network"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings-models",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-plugin-manager"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "verify": "node scripts/verify-release.mjs",
+    "prepack": "node scripts/build.mjs && node scripts/verify-release.mjs",
+    "pack:release": "node scripts/build.mjs && node scripts/verify-release.mjs && pnpm pack",
+    "test": "node scripts/build.mjs && node test/proxy.test.mjs && node scripts/verify-release.mjs",
+    "check": "node scripts/build.mjs && node test/proxy.test.mjs && node scripts/verify-release.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "proxy",
+    "socks5",
+    "providers"
+  ],
+  "author": "kalex.developer@gmail.com",
+  "license": "ISC",
+  "packageManager": "pnpm@12.16.1",
+  "dependencies": {
+    "undici": "8.12.3"
+  },
+  "peerDependencies": {
+    "react": ">=17"
+  }
+}

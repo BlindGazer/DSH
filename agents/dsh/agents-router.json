@@ -1,0 +1,11 @@
+{
+  "areas": {
+    "front": {
+      "path": ["dsh-agents-router/", "dsh-provider-proxy/"],
+      "keywords": ["front", "javascript", "react"]
+    },
+    "openspec": {
+      "path": ["openspec/"]
+    }
+  }
+}
