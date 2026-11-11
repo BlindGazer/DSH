@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="ru" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Все правила проекта — DSH & Material 3 UI</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            dsh: {
+              darkBg: '#0c0d10',
+              darkSurface: '#121418',
+              darkCard: '#16181d',
+              darkCardHover: '#1c1f26',
+              darkBorder: '#262932',
+              darkBorderSubtle: '#1e2028',
+              lightBg: '#f4f6f8',
+              lightSurface: '#ffffff',
+              lightCard: '#f8f9fb',
+              lightCardHover: '#f0f2f5',
+              lightBorder: '#dcdfe6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar & Material 3 subtle transitions */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      -webkit-font-smoothing: antialiased;
+    }
+    .accordion-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows 0.2s cubic-bezier(0.2, 0, 0, 1), opacity 0.18s cubic-bezier(0.2, 0, 0, 1);
+      opacity: 0;
+    }
+    .accordion-content.expanded {
+      grid-template-rows: 1fr;
+      opacity: 1;
+    }
+    .accordion-inner {
+      overflow: hidden;
+    }
+    mark.highlight {
+      background-color: rgba(234, 179, 8, 0.28);
+      color: inherit;
+      border-radius: 3px;
+      padding: 0 2px;
+      font-weight: 500;
+    }
+    html:not(.dark) mark.highlight {
+      background-color: rgba(250, 204, 21, 0.55);
+    }
+    /* Keyboard shortcut hint styling */
+    .kbd-badge {
+      font-size: 11px;
+      line-height: 1;
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="bg-dsh-lightBg dark:bg-dsh-darkBg text-slate-900 dark:text-slate-100 min-h-screen transition-colors duration-200 selection:bg-blue-500/20 selection:text-blue-400">
+
+  <!-- TOP APPLICATION HEADER (Context from screenshot) -->
+  <header class="border-b border-dsh-lightBorder dark:border-dsh-darkBorder bg-dsh-lightSurface dark:bg-dsh-darkSurface sticky top-0 z-30 transition-colors duration-200">
+    <!-- Upper bar -->
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3 min-w-0">
+        <h1 class="font-semibold text-[15px] tracking-tight text-slate-900 dark:text-slate-100 truncate">
+          Проверка доступности TableCo...
+        </h1>
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md text-xs font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-white/[0.04] border border-slate-200/80 dark:border-white/[0.06] shrink-0">
+          <svg class="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="8" r="3.5"/>
+            <circle cx="6.5" cy="16.5" r="3.5"/>
+            <circle cx="17.5" cy="16.5" r="3.5"/>
+          </svg>
+          Standard mode
+        </span>
+      </div>
+
+      <!-- Right actions & Theme Switcher -->
+      <div class="flex items-center gap-2 shrink-0">
+        <!-- Theme Switcher (Dark / Light DSH Mode) -->
+        <button id="themeToggleBtn" type="button"
+          class="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border border-dsh-lightBorder dark:border-dsh-darkBorder bg-slate-100/80 dark:bg-[#1a1d24] hover:bg-slate-200/70 dark:hover:bg-[#222630] text-slate-700 dark:text-slate-200 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/40"
+          title="Переключить тему (Тёмная / Светлая)">
+          <!-- Sun Icon -->
+          <svg id="sunIcon" class="w-3.5 h-3.5 text-amber-500 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="4"></circle>
+            <path d="M12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"></path>
+          </svg>
+          <!-- Moon Icon -->
+          <svg id="moonIcon" class="w-3.5 h-3.5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <span id="themeLabel">Тёмная тема</span>
+        </button>
+
+        <!-- Folder dropdown mock -->
+        <button type="button" class="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs border border-dsh-lightBorder dark:border-dsh-darkBorder bg-white dark:bg-[#171920] hover:bg-slate-50 dark:hover:bg-[#1e212a] text-slate-700 dark:text-slate-300 transition-colors">
+          <span class="text-amber-400">📁</span>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+
+        <!-- Session manager dropdown mock -->
+        <button type="button" class="hidden md:inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium border border-dsh-lightBorder dark:border-dsh-darkBorder bg-white dark:bg-[#171920] hover:bg-slate-50 dark:hover:bg-[#1e212a] text-slate-700 dark:text-slate-200 transition-colors">
+          <span>Session manager</span>
+          <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="max-w-[1440px] mx-auto px-4 sm:px-6 flex items-center gap-6 text-[13px] font-medium">
+      <button type="button" class="py-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+        Chat
+      </button>
+      <button type="button" class="py-2.5 text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+        Memory
+      </button>
+      <button type="button" class="py-2.5 text-blue-600 dark:text-blue-400 border-b-2 border-blue-600 dark:border-blue-400 font-semibold">
+        Router
+      </button>
+      <button type="button" class="py-2.5 text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 transition-colors">
+        •••
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN WORKSPACE CONTENT -->
+  <main class="max-w-[1440px] mx-auto px-4 sm:px-6 py-5">
+
+    <!-- DSH + Material 3 Container Card: "Все правила проекта" -->
+    <section class="rounded-xl border border-dsh-lightBorder dark:border-dsh-darkBorder bg-dsh-lightSurface dark:bg-dsh-darkSurface shadow-sm overflow-hidden transition-colors duration-200">
+
+      <!-- 1. HEADER & FILTER CONTROLS BAR -->
+      <div class="p-3.5 sm:px-5 sm:py-4 border-b border-dsh-lightBorder dark:border-dsh-darkBorderSubtle flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3.5">
+
+        <!-- Left: Section Title & Counter + Quick Expand/Collapse All -->
+        <div class="flex items-center justify-between sm:justify-start gap-3">
+          <div class="flex items-center gap-2">
+            <h2 class="text-[15px] font-semibold tracking-tight text-slate-900 dark:text-slate-100">
+              Все правила проекта
+            </h2>
+            <span id="rulesCounterBadge" class="inline-flex items-center justify-center px-2 py-0.5 text-xs font-mono font-medium rounded-full bg-slate-100 dark:bg-white/[0.06] text-slate-600 dark:text-slate-300 border border-slate-200/80 dark:border-white/[0.06]">
+              20
+            </span>
+          </div>
+
+          <div class="h-4 w-[1px] bg-slate-200 dark:bg-slate-800 hidden sm:block"></div>
+
+          <!-- Toggle Expand/Collapse All Spoilers -->
+          <button id="toggleAllBtn" type="button"
+            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/[0.05] transition-colors"
+            title="Развернуть или свернуть текст всех правил">
+            <svg id="toggleAllIcon" class="w-3.5 h-3.5 transition-transform duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+            </svg>
+            <span id="toggleAllText">Развернуть все</span>
+          </button>
+        </div>
+
+        <!-- Right: Search Input (Requirement #4) + Status Segmented Control -->
+        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 flex-1 lg:max-w-2xl lg:justify-end">
+
+          <!-- Search / Filter Field (Material 3 Compact Outlined Field in DSH palette) -->
+          <div class="relative flex-1 min-w-[240px]">
+            <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 10.85a5.8 5.8 0 11-11.6 0 5.8 5.8 0 0111.6 0z" />
+            </svg>
+            <input
+              id="ruleSearchInput"
+              type="text"
+              placeholder="Фильтр по названию, пути или содержимому..."
+              autocomplete="off"
+              class="w-full pl-9 pr-16 py-1.5 text-[13px] rounded-lg border border-dsh-lightBorder dark:border-dsh-darkBorder bg-slate-50/70 dark:bg-[#0e1014] text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-blue-500 dark:focus:border-blue-400 focus:bg-white dark:focus:bg-[#12151b] focus:ring-2 focus:ring-blue-500/20 transition-all"
+            />
+            <!-- Clear button & "/" shortcut badge -->
+            <div class="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1">
+              <button id="clearSearchBtn" type="button"
+                class="hidden p-1 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/60 dark:hover:bg-white/10 transition-colors"
+                title="Очистить фильтр (Esc)">
+                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <kbd id="searchShortcutHint" class="kbd-badge hidden sm:inline-block font-mono text-slate-400 dark:text-slate-500 bg-slate-200/70 dark:bg-white/[0.06] border border-slate-300/70 dark:border-white/[0.07]">
+                /
+              </kbd>
+            </div>
+          </div>
+
+          <!-- DSH Segmented Filter Button Group (Все | Активные | Пропущенные) -->
+          <div class="inline-flex p-1 rounded-lg border border-dsh-lightBorder dark:border-dsh-darkBorder bg-slate-100/80 dark:bg-[#0e1014] shrink-0 self-start sm:self-auto" role="tablist">
+            <button type="button" data-status-filter="all"
+              class="status-tab px-3 py-1 rounded-md text-xs font-medium transition-all">
+              Все
+            </button>
+            <button type="button" data-status-filter="active"
+              class="status-tab px-3 py-1 rounded-md text-xs font-medium transition-all">
+              Активные
+            </button>
+            <button type="button" data-status-filter="skipped"
+              class="status-tab px-3 py-1 rounded-md text-xs font-medium transition-all">
+              Пропущенные
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Active search info banner (shown only when filtering by content) -->
+      <div id="searchStatusBanner" class="hidden px-5 py-2 bg-blue-50/70 dark:bg-blue-950/20 border-b border-blue-200/60 dark:border-blue-900/30 text-xs text-blue-700 dark:text-blue-300 flex items-center justify-between">
+        <span id="searchStatusText">Найдено совпадений в содержимом — карточки с совпадением в тексте автоматически развернуты.</span>
+        <button id="resetAllFiltersBtn" type="button" class="font-medium underline hover:no-underline ml-3">
+          Сбросить фильтр
+        </button>
+      </div>
+
+      <!-- 2. RULES ACCORDION LIST -->
+      <div id="rulesListContainer" class="p-3 sm:p-4 space-y-2">
+        <!-- Rendered dynamically by JS -->
+      </div>
+
+      <!-- Empty state when no rules match filter -->
+      <div id="emptyStateContainer" class="hidden py-14 px-4 text-center">
+        <div class="w-11 h-11 rounded-full bg-slate-100 dark:bg-white/[0.04] border border-slate-200 dark:border-white/[0.07] mx-auto flex items-center justify-center text-slate-400 mb-3">
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M16.65 10.85a5.8 5.8 0 11-11.6 0 5.8 5.8 0 0111.6 0z" />
+          </svg>
+        </div>
+        <p class="text-sm font-medium text-slate-700 dark:text-slate-200">Правила не найдены</p>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 max-w-md mx-auto">
+          По вашему запросу не найдено совпадений ни в названии файла, ни в области действия, ни в содержимом правил.
+        </p>
+        <button id="emptyStateResetBtn" type="button"
+          class="mt-4 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors">
+          Показать все правила
+        </button>
+      </div>
+
+    </section>
+
+    <!-- UX / Material 3 Design Legend Footer for review -->
+    <footer class="mt-5 px-1 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-500 dark:text-slate-400">
+      <div class="flex flex-wrap items-center gap-x-5 gap-y-1.5">
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+          <strong>1. Название сверху:</strong> имя файла и путь вынесены в шапку карточки
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+          <strong>2. Спойлер + читаемый текст:</strong> по умолчанию скрыт, шрифт 13.5px regular
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+          <strong>3. Кол-во символов в заголовке:</strong> зеленый бейдж в одной строке с именем
+        </span>
+        <span class="inline-flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+          <strong>4. Живой поиск:</strong> ищет по имени и тексту (авто-раскрывает спойлер при совпадении внутри текста)
+        </span>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // --- DATA FROM SCREENSHOTS ---
+    const rulesData = [
+      {
+        id: 'rule-1',
+        name: 'agents.md',
+        path: 'agents/agents.md',
+        scope: 'global',
+        trigger: 'always',
+        chars: 2615,
+        status: 'active',
+        content: 'agents.md — корневая конфигурация агентов проекта. Определяет структуру репозитория, правила маршрутизации подзадач между специализированными агентами (front, back, qa), а также базовые ограничения безопасности при работе с файловой системой и консольными командами.'
+      },
+      {
+        id: 'rule-2',
+        name: 'human-communication.md',
+        path: 'agents/rules/human-communication.md',
+        scope: 'global',
+        trigger: 'always',
+        chars: 603,
+        status: 'active',
+        content: 'Language and communication style, reply to the user in Russian with short clear phrases, one question per message, options with consequences and a recommendation; OpenSpec texts in Russian; code comments explain the reason'
+      },
+      {
+        id: 'rule-3',
+        name: 'no-fancy-symbols.md',
+        path: 'agents/rules/no-fancy-symbols.md',
+        scope: 'global',
+        trigger: 'always',
+        chars: 500,
+        status: 'active',
+        content: 'In files, code, comments and documents do not use the em dash, arrows, emoji and other symbols a human normally does not type; they are allowed in chat replies, and when the user explicitly asked or the symbols already exist in the edited text'
+      },
+      {
+        id: 'rule-4',
+        name: 'ponytail.md',
+        path: 'agents/rules/ponytail.md',
+        scope: 'global',
+        trigger: 'always',
+        chars: 2655,
+        status: 'active',
+        content: 'Ponytail, lazy senior dev mode. Always pick the simplest solution that works. Do not introduce new abstractions, wrappers, or design patterns unless strictly required by existing project architecture.'
+      },
+      {
+        id: 'rule-5',
+        name: 'private.md',
+        path: 'agents/rules/private.md',
+        scope: 'global',
+        trigger: 'always',
+        chars: 301,
+        status: 'active',
+        content: 'Forbid reading or changing appsettings.Development.json anywhere in the repository, do not expose secrets in logs/tests/examples'
+      },
+      {
+        id: 'rule-6',
+        name: 'common.md',
+        path: 'agents/front/rules/common.md',
+        scope: 'front',
+        trigger: 'src/Test.ClientApp/src/components/common/Table/TableContainer.tsx',
+        chars: 39815,
+        status: 'active',
+        content: 'Требования к написанию фронтового кода, применять при создании или редактировании любого файла в src/Test.Components и src/Test.ClientApp; при изменении doc/Front/style-guides.md, doc/Front/back-end-integration.md соблюдать строгую типизацию пропсов, мемоизацию тяжелых табличных ячеек и стандарты доступности (a11y).'
+      },
+      {
+        id: 'rule-7',
+        name: 'dod.md',
+        path: 'agents/front/rules/dod.md',
+        scope: 'front',
+        trigger: 'src/Test.ClientApp/src/components/common/Table/TableContainer.tsx',
+        chars: 2438,
+        status: 'active',
+        content: 'Критерий завершения задачи (definition-of-done) во фронтовых проектах src/Test.Components и src/Test.ClientApp - реализация, lint и build, тесты, повторные lint и build; не более одной попытки исправления упавшего теста без согласования с пользователем.'
+      },
+      {
+        id: 'rule-8',
+        name: 'files-encoding.md',
+        path: 'agents/front/rules/files-encoding.md',
+        scope: 'front',
+        trigger: 'src/Test.ClientApp/src/components/common/Table/TableContainer.tsx',
+        chars: 534,
+        status: 'active',
+        content: 'Do not edit files with `sed -i` in Git Bash: it converts CRLF to LF; use the Edit tool. Standard file encoding (UTF-8 without BOM) and LF line endings across all packages and scripts.'
+      },
+      {
+        id: 'rule-9',
+        name: 'code.md',
+        path: 'agents/rules/code.md',
+        scope: 'global',
+        trigger: 'always',
+        chars: 1420,
+        status: 'skipped',
+        content: 'General recommendations for working with code. Keep functions focused, preserve existing formatting in untouched lines, and verify imports before finalizing changes.'
+      }
+    ];
+
+    // --- APPLICATION STATE ---
+    const state = {
+      statusFilter: 'active', // 'all' | 'active' | 'skipped' (matches screenshot default "Активные")
+      searchQuery: '',
+      expandedIds: new Set(), // Collapsed by default per Requirement #2!
+      copiedId: null
+    };
+
+    // --- DOM ELEMENTS ---
+    const rulesListContainer = document.getElementById('rulesListContainer');
+    const emptyStateContainer = document.getElementById('emptyStateContainer');
+    const rulesCounterBadge = document.getElementById('rulesCounterBadge');
+    const ruleSearchInput = document.getElementById('ruleSearchInput');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const searchShortcutHint = document.getElementById('searchShortcutHint');
+    const searchStatusBanner = document.getElementById('searchStatusBanner');
+    const searchStatusText = document.getElementById('searchStatusText');
+    const resetAllFiltersBtn = document.getElementById('resetAllFiltersBtn');
+    const emptyStateResetBtn = document.getElementById('emptyStateResetBtn');
+    const toggleAllBtn = document.getElementById('toggleAllBtn');
+    const toggleAllText = document.getElementById('toggleAllText');
+    const statusTabs = document.querySelectorAll('.status-tab');
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    const sunIcon = document.getElementById('sunIcon');
+    const moonIcon = document.getElementById('moonIcon');
+    const themeLabel = document.getElementById('themeLabel');
+
+    // --- HELPER FUNCTIONS ---
+    function formatNumber(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function highlightText(text, query) {
+      const safeText = escapeHtml(text);
+      if (!query || !query.trim()) return safeText;
+      const escapedQuery = query.trim().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      const regex = new RegExp(`(${escapedQuery})`, 'gi');
+      return safeText.replace(regex, '<mark class="highlight">$1</mark>');
+    }
+
+    function getFilteredRules() {
+      const q = state.searchQuery.trim().toLowerCase();
+      return rulesData.filter(rule => {
+        const matchesStatus =
+          state.statusFilter === 'all' ? true : rule.status === state.statusFilter;
+        if (!matchesStatus) return false;
+        if (!q) return true;
+
+        return (
+          rule.name.toLowerCase().includes(q) ||
+          rule.path.toLowerCase().includes(q) ||
+          rule.scope.toLowerCase().includes(q) ||
+          rule.trigger.toLowerCase().includes(q) ||
+          rule.content.toLowerCase().includes(q)
+        );
+      });
+    }
+
+    // --- RENDER STATUS TABS ---
+    function updateStatusTabsUI() {
+      const counts = {
+        all: rulesData.length,
+        active: rulesData.filter(r => r.status === 'active').length,
+        skipped: rulesData.filter(r => r.status === 'skipped').length
+      };
+
+      statusTabs.forEach(btn => {
+        const tabStatus = btn.getAttribute('data-status-filter');
+        const isActive = tabStatus === state.statusFilter;
+        const labelMap = {
+          all: `Все (${counts.all})`,
+          active: `Активные (${counts.active})`,
+          skipped: `Пропущенные (${counts.skipped})`
+        };
+        btn.textContent = labelMap[tabStatus];
+
+        if (isActive) {
+          btn.className = 'status-tab px-3 py-1 rounded-md text-xs font-medium transition-all bg-white dark:bg-[#1e222b] text-slate-900 dark:text-slate-100 shadow-sm border border-slate-200/80 dark:border-white/[0.08]';
+        } else {
+          btn.className = 'status-tab px-3 py-1 rounded-md text-xs font-medium transition-all text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 border border-transparent';
+        }
+      });
+    }
+
+    // --- RENDER RULES LIST ---
+    function renderRules() {
+      updateStatusTabsUI();
+
+      const filtered = getFilteredRules();
+      const q = state.searchQuery.trim();
+
+      // Update counter badge
+      if (q || state.statusFilter !== 'all') {
+        rulesCounterBadge.textContent = `${filtered.length} из ${rulesData.length}`;
+      } else {
+        rulesCounterBadge.textContent = `${rulesData.length}`;
+      }
+
+      // Update search clear & status banner
+      if (q.length > 0) {
+        clearSearchBtn.classList.remove('hidden');
+        searchShortcutHint.classList.add('hidden');
+      } else {
+        clearSearchBtn.classList.add('hidden');
+        searchShortcutHint.classList.remove('hidden');
+      }
+
+      // Check if any rule matched specifically inside its hidden content
+      const contentMatchCount = q
+        ? filtered.filter(r => r.content.toLowerCase().includes(q.toLowerCase())).length
+        : 0;
+
+      if (q && contentMatchCount > 0) {
+        searchStatusBanner.classList.remove('hidden');
+        searchStatusText.textContent = `Найдено правил: ${filtered.length} (совпадений в тексте правил: ${contentMatchCount} — спойлеры автоматически открыты)`;
+      } else {
+        searchStatusBanner.classList.add('hidden');
+      }
+
+      // Empty state handling
+      if (filtered.length === 0) {
+        rulesListContainer.classList.add('hidden');
+        emptyStateContainer.classList.remove('hidden');
+        return;
+      } else {
+        rulesListContainer.classList.remove('hidden');
+        emptyStateContainer.classList.add('hidden');
+      }
+
+      // Update Expand/Collapse All button label
+      const allFilteredExpanded = filtered.every(r => state.expandedIds.has(r.id));
+      toggleAllText.textContent = allFilteredExpanded ? 'Свернуть все' : 'Развернуть все';
+
+      // Build cards HTML
+      rulesListContainer.innerHTML = filtered.map(rule => {
+        const matchedInContent = q && rule.content.toLowerCase().includes(q.toLowerCase());
+        const isExpanded = state.expandedIds.has(rule.id) || matchedInContent;
+
+        // Scope badge styling (global vs front)
+        const scopeBadgeClasses = rule.scope === 'global'
+          ? 'bg-slate-200/70 dark:bg-white/[0.06] text-slate-600 dark:text-slate-300 border-slate-300/60 dark:border-white/[0.07]'
+          : 'bg-indigo-500/10 dark:bg-indigo-400/10 text-indigo-700 dark:text-indigo-300 border-indigo-500/20 dark:border-indigo-400/20';
+
+        // Skipped rule subtle visual distinction
+        const skippedOpacity = rule.status === 'skipped' ? 'opacity-75' : '';
+
+        // Split path into directory prefix + bold filename for quick developer scanning
+        const lastSlashIndex = rule.path.lastIndexOf('/');
+        const dirPrefix = lastSlashIndex !== -1 ? rule.path.slice(0, lastSlashIndex + 1) : '';
+        const fileName = lastSlashIndex !== -1 ? rule.path.slice(lastSlashIndex + 1) : rule.path;
+
+        return `
+          <article
+            data-rule-id="${rule.id}"
+            class="group rounded-lg border transition-all duration-150 ${skippedOpacity} ${
+              isExpanded
+                ? 'border-slate-300 dark:border-[#323644] bg-white dark:bg-[#181b22] shadow-sm'
+                : 'border-dsh-lightBorder dark:border-dsh-darkBorder bg-dsh-lightCard dark:bg-dsh-darkCard hover:bg-dsh-lightCardHover dark:hover:bg-dsh-darkCardHover hover:border-slate-300 dark:hover:border-[#303440]'
+            }"
+          >
+            <!-- CLICKABLE SPOILER HEADER ROW (Points #1, #2, #3) -->
+            <div
+              role="button"
+              tabindex="0"
+              aria-expanded="${isExpanded}"
+              onclick="toggleRule('${rule.id}')"
+              onkeydown="if(event.key === 'Enter' || event.key === ' ') { event.preventDefault(); toggleRule('${rule.id}'); }"
+              class="px-3.5 py-2.5 sm:px-4 sm:py-3 flex flex-wrap sm:flex-nowrap items-center justify-between gap-x-4 gap-y-2 cursor-pointer select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 rounded-lg"
+            >
+              <!-- Left side: Chevron + Rule Name / File Path at the TOP -->
+              <div class="flex items-center gap-2.5 min-w-0 flex-1">
+                <!-- Expand/Collapse Chevron -->
+                <span class="w-5 h-5 rounded-md flex items-center justify-center text-slate-400 dark:text-slate-500 group-hover:text-slate-700 dark:group-hover:text-slate-200 group-hover:bg-slate-200/60 dark:group-hover:bg-white/[0.06] transition-all shrink-0">
+                  <svg class="w-3.5 h-3.5 transition-transform duration-200 ${isExpanded ? 'rotate-90 text-blue-600 dark:text-blue-400' : ''}" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </span>
+
+                <!-- File icon -->
+                <svg class="w-4 h-4 text-slate-400 dark:text-slate-500 shrink-0 hidden sm:block" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                </svg>
+
+                <!-- Rule Title / Path (Point #1: Name on top) -->
+                <div class="min-w-0 flex items-center gap-2 flex-wrap sm:flex-nowrap">
+                  <span class="font-mono text-[13px] truncate" title="${escapeHtml(rule.path)}">
+                    <span class="text-slate-400 dark:text-slate-500">${highlightText(dirPrefix, q)}</span><span class="font-semibold text-slate-800 dark:text-slate-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">${highlightText(fileName, q)}</span>
+                  </span>
+
+                  ${rule.status === 'skipped' ? `
+                    <span class="px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wider rounded bg-amber-500/10 text-amber-600 dark:text-amber-400 border border-amber-500/20 shrink-0">
+                      Пропущено
+                    </span>
+                  ` : ''}
+                </div>
+
+                <!-- Collapsed inline 1-line subtle preview (only visible on wide screens when collapsed) -->
+                ${!isExpanded ? `
+                  <span class="hidden xl:inline-block text-xs text-slate-400 dark:text-slate-500 truncate max-w-[340px] 2xl:max-w-[480px] pl-2 border-l border-slate-200 dark:border-slate-800 font-normal">
+                    ${escapeHtml(rule.content)}
+                  </span>
+                ` : ''}
+              </div>
+
+              <!-- Right side: Scope, Trigger & Character Count Badge in the SAME header row (Point #3) -->
+              <div class="flex items-center gap-2 sm:gap-2.5 shrink-0 ml-7 sm:ml-0">
+
+                <!-- Scope Badge (global / front) -->
+                <span class="px-2 py-0.5 text-[11px] font-mono rounded border ${scopeBadgeClasses}">
+                  ${highlightText(rule.scope, q)}
+                </span>
+
+                <!-- Trigger / Target File Badge -->
+                <span
+                  class="hidden md:inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-mono rounded bg-slate-100 dark:bg-[#12141a] text-slate-500 dark:text-slate-400 border border-slate-200/80 dark:border-white/[0.05] max-w-[230px] lg:max-w-[310px]"
+                  title="Условие применения: ${escapeHtml(rule.trigger)}"
+                >
+                  <span class="truncate">${highlightText(rule.trigger, q)}</span>
+                </span>
+
+                <!-- Character Count Pill Badge (Point #3: In the same row with the title, DSH green style) -->
+                <span
+                  class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-emerald-500/10 dark:bg-[#13261b] text-emerald-700 dark:text-[#4ac26b] border border-emerald-500/25 dark:border-[#234730] shrink-0"
+                  title="Объём правила: ${formatNumber(rule.chars)} символов"
+                >
+                  ${formatNumber(rule.chars)} симв.
+                </span>
+              </div>
+            </div>
+
+            <!-- COLLAPSIBLE SPOILER BODY (Point #2: Hidden by default, normal readable font weight & size) -->
+            <div class="accordion-content ${isExpanded ? 'expanded' : ''}">
+              <div class="accordion-inner">
+                <div class="px-3.5 pb-3.5 pt-1 sm:px-4 sm:pb-4 border-t border-slate-200/70 dark:border-white/[0.06] bg-slate-50/60 dark:bg-[#121419]/90 rounded-b-lg">
+
+                  <!-- Metadata row for mobile + Copy button -->
+                  <div class="flex items-center justify-between gap-2 pt-2 pb-2 text-[11px] font-mono text-slate-400 dark:text-slate-500">
+                    <div class="flex items-center gap-2 min-w-0 truncate">
+                      <span>Путь: <strong class="font-normal text-slate-600 dark:text-slate-300">${highlightText(rule.path, q)}</strong></span>
+                      <span class="md:hidden">• Триггер: <strong class="font-normal text-slate-600 dark:text-slate-300">${highlightText(rule.trigger, q)}</strong></span>
+                    </div>
+
+                    <button
+                      type="button"
+                      onclick="event.stopPropagation(); copyRuleText('${rule.id}')"
+                      class="inline-flex items-center gap-1.5 px-2 py-1 rounded text-[11px] font-sans font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-slate-200/70 dark:hover:bg-white/[0.07] transition-colors shrink-0"
+                      title="Скопировать текст правила"
+                    >
+                      ${state.copiedId === rule.id ? `
+                        <svg class="w-3.5 h-3.5 text-emerald-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span class="text-emerald-600 dark:text-emerald-400">Скопировано</span>
+                      ` : `
+                        <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+                          <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                        </svg>
+                        <span>Копировать</span>
+                      `}
+                    </button>
+                  </div>
+
+                  <!-- Rule Content Text (Point #2: 13.5px, regular weight, comfortable line-height) -->
+                  <div class="p-3 rounded-md bg-white dark:bg-[#0d0f13] border border-slate-200/80 dark:border-white/[0.05] text-[13.5px] font-normal leading-[1.6] text-slate-700 dark:text-slate-200 break-words">
+                    ${highlightText(rule.content, q)}
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join('');
+    }
+
+    // --- INTERACTION HANDLERS ---
+    window.toggleRule = function(ruleId) {
+      if (state.expandedIds.has(ruleId)) {
+        state.expandedIds.delete(ruleId);
+      } else {
+        state.expandedIds.add(ruleId);
+      }
+      renderRules();
+    };
+
+    window.copyRuleText = function(ruleId) {
+      const rule = rulesData.find(r => r.id === ruleId);
+      if (!rule) return;
+
+      const tempInput = document.createElement('textarea');
+      tempInput.value = rule.content;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      state.copiedId = ruleId;
+      renderRules();
+      setTimeout(() => {
+        if (state.copiedId === ruleId) {
+          state.copiedId = null;
+          renderRules();
+        }
+      }, 1800);
+    };
+
+    // Expand / Collapse All button
+    toggleAllBtn.addEventListener('click', () => {
+      const filtered = getFilteredRules();
+      const allExpanded = filtered.every(r => state.expandedIds.has(r.id));
+
+      if (allExpanded) {
+        filtered.forEach(r => state.expandedIds.delete(r.id));
+      } else {
+        filtered.forEach(r => state.expandedIds.add(r.id));
+      }
+      renderRules();
+    });
+
+    // Live Search Input
+    ruleSearchInput.addEventListener('input', (e) => {
+      state.searchQuery = e.target.value;
+      renderRules();
+    });
+
+    // Clear Search Button
+    function clearSearch() {
+      state.searchQuery = '';
+      ruleSearchInput.value = '';
+      renderRules();
+      ruleSearchInput.focus();
+    }
+
+    clearSearchBtn.addEventListener('click', clearSearch);
+    resetAllFiltersBtn.addEventListener('click', clearSearch);
+
+    emptyStateResetBtn.addEventListener('click', () => {
+      state.searchQuery = '';
+      state.statusFilter = 'all';
+      ruleSearchInput.value = '';
+      renderRules();
+    });
+
+    // Keyboard shortcuts: "/" to focus filter, "Escape" to clear filter
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== ruleSearchInput) {
+        e.preventDefault();
+        ruleSearchInput.focus();
+      } else if (e.key === 'Escape' && document.activeElement === ruleSearchInput) {
+        if (state.searchQuery) {
+          clearSearch();
+        } else {
+          ruleSearchInput.blur();
+        }
+      }
+    });
+
+    // Status Filter Tabs
+    statusTabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        state.statusFilter = btn.getAttribute('data-status-filter');
+        renderRules();
+      });
+    });
+
+    // Dark / Light Theme Switcher
+    themeToggleBtn.addEventListener('click', () => {
+      const htmlEl = document.documentElement;
+      const isDark = htmlEl.classList.toggle('dark');
+
+      if (isDark) {
+        sunIcon.classList.add('hidden');
+        moonIcon.classList.remove('hidden');
+        themeLabel.textContent = 'Тёмная тема';
+      } else {
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+        themeLabel.textContent = 'Светлая тема';
+      }
+    });
+
+    // Initial Render
+    renderRules();
+  </script>
+</body>
+</html>

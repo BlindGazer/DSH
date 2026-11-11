@@ -1,0 +1,7 @@
+---
+description: C# formatting — one blank line between adjacent members
+globs: "**/*.cs"
+alwaysApply: false
+---
+
+Leave exactly one blank line between adjacent members of a type. Don’t add two consecutive blank lines or separate related lines within a single expression with a blank line. Preserve the file’s existing style if it is stricter than this rule.

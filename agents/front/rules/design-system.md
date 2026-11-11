@@ -1,19 +1,23 @@
 ---
-description: Enforces visual, stylistic, and interactive consistency across all UI and Web components using unified theme tokens and shared controls.
+paths:
+  - "packages/dsh-core/src/**"
+  - "packages/*/src/client/**"
+description: Enforces unified DSH + Google Material 3 design system tokens, theme extensibility, and flicker-free loading states.
 ---
 
-# UI and Design System Consistency
+# UI and Design System Consistency (`@kalex/dsh-core`)
 
-Adhere to a unified design system and visual language across all plugins and UI surfaces. Do not introduce one-off styles for elements with the same purpose.
+## 1. Single Source of Truth (`@kalex/dsh-core/theme`)
 
-## 1. Single Source of Truth (Design Tokens)
-- **Color Palette:** Use predefined CSS variables and theme tokens (`--dsh-ui-*`) for backgrounds, text, borders, and accents in both light and dark themes. Do not hardcode raw hex, RGB, or HSL values inside individual components outside the root theme definition.
-- **Theme Parity:** Every surface, border, and interactive state must remain legible and consistent in both light and dark themes. Never use `--dsh-ui-on-accent` (white) text on soft or neutral hover/selected backgrounds (`--dsh-ui-hover`, `--dsh-ui-info-soft`).
-- **Typography and Spacing:** Use standardized font sizes, weights, line heights, control heights, and spacing from the host DSH theme.
+- Use CSS custom properties (`--dsh-ui-*`) defined in `@kalex/dsh-core` for all surfaces, text, borders, elevations, and semantic states (`info`, `success`, `warning`, `danger`). Never hardcode raw hex/RGB values inside feature components.
+- Seamless DSH + Google Material 3 parity: plugin surfaces must blend seamlessly with the host DSH shell while providing clear interactive states (`default`, `hover`, `active`, `focus-visible`, `disabled`) and legible contrast in both `light`, `dark`, and custom registered themes.
+- Allow local style overrides in plugins and components via `className`, `variant`, and scoped CSS variables without modifying shared component internals.
 
-## 2. Semantic and Functional Consistency
-- **Identical Purpose = Identical Style:** Controls with the same role (buttons, icon buttons, dropdowns, badges, inputs, modals, tabs) must match DSH dimensions, borders, and spacing.
-- **Interactive States:** Every interactive control must define consistent `default`, `hover`, `active`, `focus-visible`, and `disabled` states with sufficient text contrast in both themes.
+## 2. Loading States and Animations
 
-## 3. Component Reusability Over Duplication
-- Reuse existing themed components (`ThemedSelect`, `SwitchControl`, standard buttons and cards) instead of ad-hoc inline styles or `!important` overrides.
+- Never show an empty unstyled container while data loads: display `Skeleton`, `Spinner`, or `ProgressBar` from `@kalex/dsh-core` marked with `TestId.Common.Loading`.
+- Use standard animation timing constants from `Delay` (`Delay.AnimationShort = 300`, `Delay.DebounceSearch = 300`) to prevent visual flicker.
+
+## 3. Design Principles
+
+Read this skill [design-principles](/agents/front/skills/design-principles/SKILL.md) when you need to change the visual appearance of UI components.

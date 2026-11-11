@@ -1,0 +1,237 @@
+.scope {
+    --dsh-style-scope: 1;
+}
+:global {
+    .ar-settings-jump {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 4px;
+        height: 28px;
+        padding: 0 10px;
+        border: 1px solid var(--settings-border-strong);
+        border-radius: 6px;
+        background: transparent;
+        color: var(--settings-text);
+        font: inherit;
+        font-size: 12px;
+        line-height: 18px;
+        cursor: pointer;
+        &:hover {
+            background: var(--settings-hover);
+        }
+        span {
+            font-size: 13px;
+            line-height: 1;
+        }
+    }
+    .ar-settings-root {
+        --settings-surface: var(--dsh-ui-surface);
+        --settings-elevated: var(--dsh-ui-elevated);
+        --settings-hover: var(--dsh-ui-hover);
+        --settings-border: var(--dsh-ui-border);
+        --settings-border-strong: var(--dsh-ui-border-strong);
+        --settings-text: var(--dsh-ui-text);
+        --settings-muted: var(--dsh-ui-muted);
+        --settings-accent: var(--dsh-ui-accent);
+        width: 100%;
+        max-width: 960px;
+        color: var(--settings-text);
+        font: inherit;
+        font-size: 13px;
+    }
+    .ar-settings-root * {
+        box-sizing: border-box;
+    }
+    .ar-settings-card {
+        padding: 20px;
+        background: var(--settings-surface);
+        border: 1px solid var(--settings-border);
+        border-radius: 10px;
+        color: var(--settings-text);
+    }
+    .ar-settings-heading {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid var(--settings-border);
+    }
+    .ar-settings-heading h2 {
+        margin: 0 0 4px;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+    .ar-settings-heading p {
+        margin: 0;
+        color: var(--settings-muted);
+        font-size: 11px;
+        line-height: 1.5;
+        overflow-wrap: anywhere;
+    }
+    .ar-settings-scope {
+        padding: 4px 8px;
+        border-radius: 5px;
+        background: var(--settings-elevated);
+        color: var(--settings-muted);
+        font:
+            11px ui-monospace,
+            SFMono-Regular,
+            Consolas,
+            monospace;
+        white-space: nowrap;
+    }
+    .ar-settings-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        min-height: 68px;
+        padding: 12px 0;
+        border-bottom: 1px solid var(--settings-border);
+    }
+    .ar-settings-copy {
+        display: grid;
+        gap: 4px;
+        min-width: 0;
+    }
+    .ar-settings-copy strong {
+        font-size: 12px;
+        font-weight: 500;
+    }
+    .ar-settings-copy small {
+        color: var(--settings-muted);
+        font-size: 11px;
+        line-height: 1.4;
+    }
+    .ar-settings-row .ar-themed-select {
+        width: 220px;
+        max-width: 100%;
+        min-width: 0;
+        flex-shrink: 0;
+    }
+    .ar-themed-select-trigger:focus-visible,
+    .ar-settings-switch:focus-visible,
+    .ar-settings-jump:focus-visible,
+    .ar-btn:focus-visible {
+        outline: 2px solid var(--settings-accent);
+        outline-offset: 2px;
+    }
+    .ar-settings-switch {
+        position: relative;
+        flex: 0 0 auto;
+        width: 36px;
+        height: 20px;
+        padding: 2px;
+        border: 0;
+        border-radius: 999px;
+        background: var(--dsh-ui-switch-off);
+        cursor: pointer;
+        transition: background 0.15s;
+    }
+    .ar-settings-switch[aria-checked="true"] {
+        background: var(--dsh-ui-switch-on);
+    }
+    .ar-settings-switch span {
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--dsh-ui-switch-thumb-off);
+        transition: transform 0.15s;
+    }
+    .ar-settings-switch[aria-checked="true"] span {
+        background: var(--dsh-ui-switch-thumb-on);
+        transform: translateX(16px);
+    }
+    .ar-settings-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        min-height: 50px;
+        padding-top: 14px;
+    }
+    .ar-settings-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+    .ar-settings-buttons .ar-btn {
+        height: 32px;
+        min-height: 32px;
+        padding: 0 12px;
+        border: 1px solid var(--settings-border-strong);
+        border-radius: 6px;
+        background: var(--settings-elevated);
+        color: var(--settings-text);
+        font: inherit;
+        font-size: 12px;
+        cursor: pointer;
+    }
+    .ar-settings-buttons .ar-btn:hover:not(:disabled) {
+        background: var(--settings-hover);
+    }
+    .ar-settings-buttons .ar-settings-primary {
+        background: var(--settings-text);
+        color: var(--settings-surface);
+        border-color: transparent;
+        font-weight: 600;
+    }
+    .ar-settings-buttons .ar-settings-primary:hover:not(:disabled) {
+        opacity: 0.86;
+        background: var(--settings-text);
+    }
+    .ar-btn:disabled,
+    .ar-themed-select-trigger:disabled,
+    .ar-settings-switch:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+    .ar-settings-error {
+        color: var(--dsh-ui-danger);
+    }
+    .ar-settings-success {
+        color: var(--dsh-ui-success);
+    }
+    .ar-settings-modal-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 9999;
+        display: grid;
+        place-items: center;
+        padding: 20px;
+        overflow: auto;
+        background: var(--dsh-ui-backdrop);
+    }
+    .ar-settings-modal-backdrop > .ar-settings-root {
+        width: min(100%, 760px);
+        max-height: 90vh;
+        overflow: auto;
+    }
+    @media (max-width: 640px) {
+        .ar-settings-card {
+            padding: 16px;
+        }
+        .ar-settings-row {
+            align-items: flex-start;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .ar-settings-row .ar-themed-select {
+            width: 100%;
+            flex-basis: 100%;
+        }
+        .ar-settings-footer {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+        .ar-settings-buttons {
+            align-self: flex-end;
+        }
+    }
+}

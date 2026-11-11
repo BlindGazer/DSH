@@ -1,0 +1,15 @@
+{
+    "extends": "./configs/tsconfig.base.json",
+    "files": [],
+    "references": [
+        {
+            "path": "./configs/packages/dsh-core/tsconfig.json"
+        },
+        {
+            "path": "./configs/packages/dsh-proxy-provider/tsconfig.json"
+        },
+        {
+            "path": "./configs/packages/dsh-agents-router/tsconfig.json"
+        }
+    ]
+}

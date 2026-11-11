@@ -1,0 +1,85 @@
+{
+  "name": "@kalex/dsh-agents-router",
+  "version": "2.0.0",
+  "description": "Project-aware rules and skills routing for DeepSeek Harness",
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./node": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/client.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "cordis.patch.yml",
+    "README.md",
+    "README_EN.md",
+    "package.json"
+  ],
+  "dsh": {
+    "plugin": {
+      "schemaVersion": 1,
+      "displayName": {
+        "en": "Agents Router",
+        "ru": "Маршрутизатор правил и skills"
+      },
+      "summary": {
+        "en": "Project-aware rules and skills routing for DeepSeek Harness",
+        "ru": "Маршрутизация правил и skills проекта для DeepSeek Harness"
+      },
+      "category": "agent"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-conversation",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-plugin-manager",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-rc.1"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs && tsc --build --force --emitDeclarationOnly ../../configs/packages/dsh-agents-router/tsconfig.json",
+    "build:client": "vite build --config ../../configs/packages/dsh-agents-router/vite.config.ts",
+    "build:host": "vite build --config ../../configs/packages/dsh-agents-router/vite.config.host.ts",
+    "test": "vitest run --config ../../configs/packages/dsh-agents-router/vitest.config.ts",
+    "test:watch": "vitest --config ../../configs/packages/dsh-agents-router/vitest.config.ts",
+    "verify": "node scripts/verify-release.mjs",
+    "check": "pnpm run build && pnpm run test && pnpm run verify"
+  },
+  "keywords": [
+    "dsh",
+    "agent",
+    "rules",
+    "skills"
+  ],
+  "author": "kalex.developer@gmail.com",
+  "license": "ISC",
+  "packageManager": "pnpm@12.16.1",
+  "dependencies": {
+    "yaml": "^2.8.2",
+    "react": "^18.0.0 || ^19.0.0",
+    "react-compiler-runtime": "^1.0.0"
+  }
+}

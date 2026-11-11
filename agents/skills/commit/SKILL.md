@@ -25,3 +25,6 @@ Write a single-line commit message in the format:
 - Never stage or commit secrets, keys, tokens, or `**/appsettings.Development.json`.
 - Do not bypass git hooks (`--no-verify` is forbidden) and do not `push`, `amend`, or `force push` unless the user explicitly asked for it.
 - Follow [no-fancy-symbols](/agents/rules/no-fancy-symbols.md) in commit messages (use `-`, `->`, `"`, `'`, `...`).
+
+
+- when user call /commit manually, stage and commit all changes with standard scheme or just description if there are no number/task

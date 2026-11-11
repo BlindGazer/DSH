@@ -1,0 +1,24 @@
+---
+paths:
+  - "packages/dsh-core/src/**"
+  - "packages/*/src/client/**"
+description: React 19.3+, Vite 8 + Oxc React Compiler, component decomposition, and localization rules.
+---
+
+# React and Frontend Architecture Rules
+
+## 1. Component and Hook Separation
+- Functional components only. One component per file (`{Component}.tsx`), named after its export.
+- Component `.tsx` files contain JSX markup, prop wiring, and `{Component}Props` interface only.
+- Extract state, polling, timers, and API calls into feature hooks: `features/{feature}/hooks/use{Feature}{Purpose}.ts`.
+- Reuse shared primitives (`ThemedSelect`, `SwitchControl`, `Button`, `IconButton`, `Modal`, `Tabs`, `Skeleton`, `Spinner`, `ProgressBar`, `ChildrenLazy`) from `@kalex/dsh-core` directly via source imports.
+
+## 2. React 19.3 and React Compiler (Vite 8 + Oxc)
+- Client bundles compile with `@vitejs/plugin-react` (`react({ compiler: true })`) powered by Oxc and `build.minify: 'oxc'`. Do not use Babel.
+- Rely on React Compiler for automatic memoization by default; manual `memo`, `useMemo`, or `useCallback` is allowed when explicit reference stability is required (always set `displayName` on `memo` components).
+- Keep render functions pure and props/state immutable to prevent React Compiler bailouts (verified by Oxlint).
+
+## 3. Localization and Test IDs
+- Do not hardcode user-facing static strings in components or hooks. Move them to `shared/constants/localizations/{Feature}Localization.ts` (supporting `en` and `ru` with `{0}`, `{1}` interpolation).
+- Keep `data-testid` selectors in `shared/constants/testId.ts` (`TestId.{Feature}.{Element}`).
+- For complex performance patterns, load the `front-react-best-practices` skill (`/agents/front/skills/react-best-practices/SKILL.md`).

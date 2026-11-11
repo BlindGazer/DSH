@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../../packages/dsh-core/src",
+        "outDir": "../../../packages/dsh-core/lib",
+        "tsBuildInfoFile": "../../../packages/dsh-core/tsconfig.tsbuildinfo"
+    },
+    "include": ["../../../packages/dsh-core/src/**/*"]
+}

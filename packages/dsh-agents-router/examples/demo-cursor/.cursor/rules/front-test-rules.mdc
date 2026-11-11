@@ -1,0 +1,11 @@
+---
+globs: "**/*.test.ts, **/*.test.tsx, **/*.spec.ts, **/*.spec.tsx"
+paths:
+  - "**/*.test.ts"
+  - "**/*.test.tsx"
+  - "**/*.spec.ts"
+  - "**/*.spec.tsx"
+description: Rules for Vitest unit and component tests across packages.
+---
+
+To work with these tests, load the `vitest-best-practices` skill with the standard skill-loading tool. See [vitest-best-practices](.cursor/skills/vitest-best-practices/SKILL.md).

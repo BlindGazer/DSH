@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "composite": false,
+        "noEmit": true,
+        "rootDir": "../../../packages",
+        "types": ["node", "vitest/globals"]
+    },
+    "include": ["../../../packages/dsh-core/src/scss.d.ts", "../../../packages/dsh-core/test/**/*"]
+}

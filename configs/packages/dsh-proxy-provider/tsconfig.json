@@ -1,0 +1,16 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../../packages/dsh-proxy-provider/src",
+        "outDir": "../../../packages/dsh-proxy-provider/lib",
+        "tsBuildInfoFile": "../../../packages/dsh-proxy-provider/tsconfig.tsbuildinfo",
+        "types": ["node"]
+    },
+    "include": ["../../../packages/dsh-proxy-provider/src/**/*"],
+    "references": [
+        {
+            "path": "../dsh-core/tsconfig.json"
+        }
+    ]
+}

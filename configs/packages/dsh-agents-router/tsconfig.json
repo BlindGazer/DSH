@@ -1,0 +1,17 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../../packages/dsh-agents-router/src",
+        "outDir": "../../../packages/dsh-agents-router/lib",
+        "tsBuildInfoFile": "../../../packages/dsh-agents-router/tsconfig.tsbuildinfo",
+        "types": ["node"],
+        "strict": true
+    },
+    "include": ["../../../packages/dsh-agents-router/src/**/*"],
+    "references": [
+        {
+            "path": "../dsh-core/tsconfig.json"
+        }
+    ]
+}

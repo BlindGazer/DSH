@@ -1,0 +1,41 @@
+{
+    "name": "@kalex/dsh-core",
+    "version": "2.0.0",
+    "description": "Shared UI components, DSH + Google Material 3 design system, hooks, localization, and core contracts for DeepSeek Harness plugins",
+    "type": "module",
+    "main": "./lib/index.js",
+    "types": "./lib/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./lib/index.d.ts",
+            "default": "./lib/index.js"
+        },
+        "./package.json": "./package.json"
+    },
+    "files": [
+        "lib",
+        "src",
+        "README.md",
+        "package.json"
+    ],
+    "scripts": {
+        "build": "vite build --config ../../configs/packages/dsh-core/vite.config.ts && tsc --build --force --emitDeclarationOnly ../../configs/packages/dsh-core/tsconfig.json",
+        "test": "vitest run --config ../../configs/packages/dsh-core/vitest.config.ts",
+        "test:watch": "vitest --config ../../configs/packages/dsh-core/vitest.config.ts",
+        "verify": "node scripts/verify-release.mjs",
+        "check": "pnpm run build && pnpm run test && pnpm run verify"
+    },
+    "keywords": [
+        "dsh",
+        "deepseek-harness",
+        "design-system",
+        "react",
+        "components"
+    ],
+    "author": "kalex.developer@gmail.com",
+    "license": "ISC",
+    "dependencies": {
+        "react": "^18.0.0 || ^19.0.0",
+        "react-compiler-runtime": "^1.0.0"
+    }
+}

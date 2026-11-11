@@ -1,0 +1,14 @@
+import type { GlobalSettings, ProjectSettings } from '../models/RouterModels.js';
+export declare const PLUGIN_ID = "dsh-agents-router";
+export declare const PACKAGE_ID = "@kalex/dsh-agents-router";
+export declare const PREFIX = "/agents-router";
+export declare const CLIENT_PLUGIN_ID = "dsh-agents-router-client";
+export declare const AREA_CONTEXT = "dsh-agents-router:areas";
+export declare const RULE_CONTEXT = "dsh-agents-router:rules";
+export declare const USAGE_SECTION = "dsh-agents-router:usage";
+export declare const AREA_CONTEXT_ORDER = 140;
+export declare const RULE_CONTEXT_ORDER = 150;
+export declare const USAGE_SECTION_ORDER = 850;
+export declare const FILE_ERROR = "AGENTS_ROUTER_REPLAN_REQUIRED";
+export declare const DEFAULT_PROJECT_SETTINGS: Readonly<ProjectSettings>;
+export declare const DEFAULT_GLOBAL_SETTINGS: Readonly<GlobalSettings>;

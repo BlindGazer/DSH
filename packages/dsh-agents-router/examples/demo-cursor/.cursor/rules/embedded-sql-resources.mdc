@@ -1,0 +1,8 @@
+---
+description: Example sql rule description
+globs:
+  - "**/*.sql"
+alwaysApply: true
+---
+
+Sample rule for sql files

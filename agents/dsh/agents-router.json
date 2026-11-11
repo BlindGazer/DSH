@@ -1,11 +1,51 @@
 {
-  "areas": {
-    "front": {
-      "path": ["dsh-agents-router/", "dsh-provider-proxy/"],
-      "keywords": ["front", "javascript", "react"]
-    },
-    "openspec": {
-      "path": ["openspec/"]
+    "areas": {
+        "front": {
+            "path": [
+                "packages/dsh-core/src/",
+                "packages/dsh-agents-router/src/client/",
+                "packages/dsh-proxy-provider/src/client/"
+            ],
+            "keywords": [
+                "front",
+                "ui",
+                "react",
+                "theme",
+                "component",
+                "css",
+                "vite"
+            ]
+        },
+        "host": {
+            "path": [
+                "packages/dsh-agents-router/src/host/",
+                "packages/dsh-agents-router/src/shared/",
+                "packages/dsh-proxy-provider/src/host/",
+                "packages/dsh-proxy-provider/src/shared/", 
+                "scripts/",
+                "configs/"
+            ],
+            "keywords": [
+                "host",
+                "node",
+                "cordis",
+                "proxy",
+                "router",
+                "socks5",
+                "undici"
+            ]
+        },
+        "openspec": {
+            "path": [
+                "openspec/"
+            ],
+            "keywords": [
+                "openspec",
+                "spec",
+                "proposal",
+                "design",
+                "tasks"
+            ]
+        }
     }
-  }
 }
