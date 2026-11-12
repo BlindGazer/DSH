@@ -23,4 +23,4 @@ TypeScript, React 19 + React Compiler, Vite 8 (Oxc), Vitest, Cordis, YAML. See [
 See how the plugin looks and works inside DSH in [Examples](Examples_EN.md).
 
 - [Commands and installation](Setup_EN.md) | [Команды и установка](Setup.md)
-- [Русский README](../../README.md)
+- [Русский README](../README.md)
