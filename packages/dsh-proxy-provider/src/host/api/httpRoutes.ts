@@ -96,7 +96,7 @@ export interface WebServerHostContext {
 }
 
 /**
- * Регистрирует HTTP-маршруты управления прокси (/api/kalex-provider-proxy/*) в веб-сервере DSH.
+ * Регистрирует HTTP-маршруты управления прокси (/api/dsh-proxy-provider/*) в веб-сервере DSH.
  */
 export function registerHttpRoutes(ctx: WebServerHostContext, controller: ProviderProxyController): void {
     let activeGuiToken: string | null = null;
@@ -106,15 +106,18 @@ export function registerHttpRoutes(ctx: WebServerHostContext, controller: Provid
         webCtx.effect(() =>
             webCtx.webServer.register({
                 kind: 'prefix',
-                path: '/api/kalex-provider-proxy',
+                path: '/api/dsh-proxy-provider',
                 handler: async (req, res) => {
                     if (!isSameOriginBrowserRequest(req)) {
-                        writeJson(res, 403, { ok: false, error: 'Forbidden: access restricted to DSH Web GUI' });
+                        writeJson(res, 403, {
+                            ok: false,
+                            error: 'Forbidden: access restricted to DSH Web GUI'
+                        });
                         return;
                     }
 
                     const url = new URL(req.url ?? '/', 'http://dsh.internal');
-                    const action = url.pathname.replace(/^\/api\/kalex-provider-proxy\/?/, '');
+                    const action = url.pathname.replace(/^\/api\/dsh-proxy-provider\/?/, '');
                     try {
                         if (action === 'session' && req.method === 'POST') {
                             const body = await readJsonBody(req);
@@ -132,12 +135,18 @@ export function registerHttpRoutes(ctx: WebServerHostContext, controller: Provid
                         if (reqToken && !activeGuiToken) activeGuiToken = String(reqToken);
 
                         if (action === 'state' && req.method === 'GET') {
-                            writeJson(res, 200, { ok: true, ...(await controller.refreshRouting()) });
+                            writeJson(res, 200, {
+                                ok: true,
+                                ...(await controller.refreshRouting())
+                            });
                             return;
                         }
                         if (action === 'config' && req.method === 'POST') {
                             const body = (await readJsonBody(req)) as RawConfigCandidate;
-                            writeJson(res, 200, { ok: true, ...(await controller.updateConfig(body)) });
+                            writeJson(res, 200, {
+                                ok: true,
+                                ...(await controller.updateConfig(body))
+                            });
                             return;
                         }
                         if (action === 'export' && (req.method === 'GET' || req.method === 'POST')) {
@@ -153,13 +162,19 @@ export function registerHttpRoutes(ctx: WebServerHostContext, controller: Provid
                         }
                         if (action === 'import' && req.method === 'POST') {
                             const body = (await readJsonBody(req)) as RawConfigCandidate;
-                            writeJson(res, 200, { ok: true, ...(await controller.importConfig(body)) });
+                            writeJson(res, 200, {
+                                ok: true,
+                                ...(await controller.importConfig(body))
+                            });
                             return;
                         }
                         if (action === 'bind' && req.method === 'POST') {
                             const body = await readJsonBody(req);
                             if (!body || typeof body.providerId !== 'string') {
-                                writeJson(res, 400, { ok: false, error: 'providerId is required' });
+                                writeJson(res, 400, {
+                                    ok: false,
+                                    error: 'providerId is required'
+                                });
                                 return;
                             }
                             const profileId = typeof body.profileId === 'string' ? body.profileId : null;
@@ -191,7 +206,10 @@ export function registerHttpRoutes(ctx: WebServerHostContext, controller: Provid
                             writeJson(res, 200, await controller.testConnection(profile, testUrl));
                             return;
                         }
-                        writeJson(res, 404, { ok: false, error: `Unknown endpoint "${action}"` });
+                        writeJson(res, 404, {
+                            ok: false,
+                            error: `Unknown endpoint "${action}"`
+                        });
                     } catch (error) {
                         writeJson(res, error instanceof InvalidJsonBodyError ? 400 : 500, {
                             ok: false,

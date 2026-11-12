@@ -3,7 +3,7 @@ import type { BuiltinProviderEndpoint } from '../models/ProxyModels.js';
 /**
  * Базовый URL HTTP API плагина внутри веб-сервера DSH.
  */
-export const API_BASE = '/api/kalex-provider-proxy';
+export const API_BASE = '/api/dsh-proxy-provider';
 
 /**
  * Адрес по умолчанию для проверки работоспособности прокси-соединения.

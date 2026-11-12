@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Addir (Linked Directories)",
-    "description": "Attach extra directories to a workspace and manage them in the GUI."
+    "title": "Workspace manager",
+    "description": "Attach multiple directories to a workspace and manage them in the GUI."
   }
 }

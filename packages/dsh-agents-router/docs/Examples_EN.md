@@ -12,7 +12,7 @@ _Plugin settings on the "Plugins" page (the block below the description)._
 
 In a session window, the plugin shows which rules and skills are loaded into the context, plus the token budget.
 
-![Router panel in a session](../assets/examples/router_tab_memory.png)
+![Router panel in a session](../assets/examples/router_tab_rules.png)
 
 _Router panel in a session window: loaded rules and skills, token budget._
 

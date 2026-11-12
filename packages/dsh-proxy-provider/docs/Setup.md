@@ -1,10 +1,14 @@
 # Установка и команды
 
+## Требования
+
+- Node.js и pnpm (для сборки из исходников).
+- Установленный DSH Desktop (профиль `desktop`).
+
 ## Установка из GitHub через DSH CLI
 
 ```powershell
-$desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd"
-& $desktopDsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
 ## Установка через pnpm
@@ -16,11 +20,10 @@ Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
 pnpm install github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
-## Установка из локальной папки
+## Установка из локальной папки (рекомендуется для разработки)
 
 ```powershell
-$desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd"
-& $desktopDsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
+dsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
 ```
 
 ## Доступные команды
@@ -31,9 +34,21 @@ $desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli
 # Сборка плагина (Host + Client)
 pnpm run build
 
+# Сборка только клиентской части
+pnpm run build:client
+
+# Сборка только серверной части
+pnpm run build:host
+
 # Запуск модульных тестов
 pnpm run test
 
+# Запуск тестов в режиме наблюдения
+pnpm run test:watch
+
 # Проверка артефактов плагина
 pnpm run verify
+
+# Полная проверка: сборка + тесты + verify
+pnpm run check
 ```

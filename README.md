@@ -1,5 +1,7 @@
 # DeepSeek Harness (DSH) Monorepo: Плагины и Общая Библиотека
 
+[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH) [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/) [![Vite](https://img.shields.io/badge/Vite-8-4B32C3)](https://vite.dev/) [![License](https://img.shields.io/badge/license-ISC-green)](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/package.json)
+
 > [English](./docs/README_EN.md)
 
 Набор плагинов для **DeepSeek Harness (DSH)** на основе автономных пакетов с единой архитектурой, строгой системой типов и общим UI-фреймворком.
@@ -7,26 +9,34 @@
 ## Установка
 
 ```powershell
-# Установка плагина dsh-proxy-provider из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-
-# Установка плагина dsh-agents-router из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
-
-# Установка плагина dsh-workspace-manager из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
 ```
 
 ---
 
 ## 📦 Проекты в монорепозитории
 
-| Пакет                                                                | Описание и решаемые задачи                                                                                                                                                                                                                                                                                                                   | Ссылка                                                                                            |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| **[@kalex/dsh-core](./packages/dsh-core)**                           | **Общая библиотека дизайн-системы и утилит.** Решает проблему дублирования кода между плагинами, предоставляет адаптивные UI-компоненты (ThemedSelect, SwitchControl, Modal, Tabs, Button, Loader), палитры тем DSH (тёмная/светлая/кастомные), утилиты санитизации хостов, форматирования сообщений и сохранения локали.                    | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/README.md)              |
-| **[@kalex/dsh-proxy-provider](./packages/dsh-proxy-provider)**       | **Плагин выборочного проксирования провайдеров LLM.** Решает проблему сетевых ограничений и блокировок API провайдеров (OpenAI, Anthropic, DeepSeek, OpenRouter и др.). Позволяет настраивать индивидуальные HTTP/HTTPS/SOCKS5 прокси для каждого провайдера, шифровать учетные данные (AES-256-GCM) и тестировать задержку соединения.      | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/README.md)    |
-| **[@kalex/dsh-agents-router](./packages/dsh-agents-router)**         | **Интеллектуальный маршрутизатор правил и навыков агентов.** Решает проблему раздувания контекста (context window bloat) и перегрузки LLM лишними инструкциями. Динамически подгружает в контекст только те правила, которые соответствуют текущему рабочему набору файлов сессии, обеспечивает мягкий бюджет токенов и изоляцию инструкций. | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/README.md)     |
-| **[@kalex/dsh-workspace-manager](./packages/dsh-workspace-manager)** | **Управление каталогами рабочего пространства.** Подключает несколько каталогов из разных расположений, позволяет задавать псевдонимы и описания, а также ограничивать доступ режимом только для чтения.                                                                                                                                     | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/README.md) |
+| Пакет                                                                        | Описание и решаемые задачи                                                                                                                                                                                                                                                                                                                   | Ссылка                                                                                                |
+| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| **[@kalex/dsh-core](./packages/dsh-core)**                                   | **Общая библиотека дизайн-системы и утилит.** Решает проблему дублирования кода между плагинами, предоставляет адаптивные UI-компоненты (ThemedSelect, SwitchControl, Modal, Tabs, Button, Loader), палитры тем DSH (тёмная/светлая/кастомные), утилиты санитизации хостов, форматирования сообщений и сохранения локали.                    | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/README.md)                  |
+| **[@kalex/dsh-proxy-provider](./packages/dsh-proxy-provider)**               | **Плагин выборочного проксирования провайдеров LLM.** Решает проблему сетевых ограничений и блокировок API провайдеров (OpenAI, Anthropic, DeepSeek, OpenRouter и др.). Позволяет настраивать индивидуальные HTTP/HTTPS/SOCKS5 прокси для каждого провайдера, шифровать учетные данные (AES-256-GCM) и тестировать задержку соединения.      | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/README.md)        |
+| **[@kalex/dsh-agents-router](./packages/dsh-agents-router)**                 | **Интеллектуальный маршрутизатор правил и навыков агентов.** Решает проблему раздувания контекста (context window bloat) и перегрузки LLM лишними инструкциями. Динамически подгружает в контекст только те правила, которые соответствуют текущему рабочему набору файлов сессии, обеспечивает мягкий бюджет токенов и изоляцию инструкций. | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/README.md)         |
+| **[@kalex/dsh-workspace-manager](./packages/dsh-workspace-manager)**         | **Управление каталогами рабочего пространства.** Подключает несколько каталогов из разных расположений, позволяет задавать псевдонимы и описания, а также ограничивать доступ режимом только для чтения.                                                                                                                                     | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/README.md)     |
+| **[@kalex/dsh-openai-codex-provider](./packages/dsh-openai-codex-provider)** | **Вход через ChatGPT и модели OpenAI Codex.** Позволяет использовать модели OpenAI Codex в DSH без ключа OpenAI Platform API: вход по коду устройства ChatGPT, хранение токенов в локальном Credential Store DSH, настройка сетевого маршрута и карточек сброса.                                                                             | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/README.md) |
+
+---
+
+## 📚 Документация
+
+Стандарт документации для всех пакетов описан в [docs/DOCUMENTATION_SPEC.md](docs/DOCUMENTATION_SPEC.md).
+
+Каждый пакет содержит:
+
+- `README.md` - краткое описание в корне пакета (отображается в настройках плагина DSH).
+- `docs/` - подробная документация: установка и команды, возможности, примеры в DSH, безопасность и английская версия.
 
 ---
 
@@ -93,14 +103,10 @@ Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
 ### Вариант 1: Установка из GitHub через DSH CLI
 
 ```powershell
-# Установка плагина dsh-proxy-provider из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-
-# Установка плагина dsh-agents-router из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
-
-# Установка плагина dsh-workspace-manager из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
 ```
 
 ### Вариант 2: Установка из GitHub через pnpm
@@ -109,6 +115,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspa
 pnpm install github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
 pnpm install github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+pnpm install github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
 ```
 
 ### Вариант 3: Установка из локальной папки репозитория (рекомендуется для разработки)
@@ -128,3 +135,4 @@ dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
 1. `src/shared/`: Не зависящие от среды модели, константы, валидаторы и локализация.
 2. `src/host/`: Серверная/Node.js логика (API, файловые сервисы, шифрование, диспетчеризация). Не импортирует клиентские модули или React.
 3. `src/client/`: Клиентский интерфейс React с разделением на фичи (`app/`, `features/`, `utils/`, `theme/`).
+   тест

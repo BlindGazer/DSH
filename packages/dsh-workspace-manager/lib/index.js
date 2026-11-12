@@ -68,7 +68,7 @@ function isHarnessProfilePath(target) {
 * HTTP / REST API routes for Addir directory management.
 * Consumed by the workspace editor and profile-wide settings.
 *
-* @module dsh-plugin-addir/api
+* @module dsh-workspace-manager/api
 */
 function writeJson(res, status, body) {
 	const json = JSON.stringify(body);
@@ -104,7 +104,7 @@ function registerAddirRoutes(ctx, service, config = resolveConfig()) {
 	return ctx.inject(["webServer"], (webCtx) => {
 		webCtx.effect(() => webCtx.webServer.register({
 			kind: "prefix",
-			path: "/api/addir",
+			path: "/api/dsh-workspace-manager",
 			handler: async (req, res) => {
 				if (req.method === "OPTIONS") {
 					res.writeHead(204, {
@@ -116,7 +116,7 @@ function registerAddirRoutes(ctx, service, config = resolveConfig()) {
 					return;
 				}
 				const url = new URL(req.url ?? "/", "http://dsh.internal");
-				const action = url.pathname.replace(/^\/api\/addir\/?/, "");
+				const action = url.pathname.replace(/^\/api\/dsh-workspace-manager\/?/, "");
 				try {
 					if (action === "config") {
 						if (req.method === "GET") {
@@ -147,7 +147,7 @@ function registerAddirRoutes(ctx, service, config = resolveConfig()) {
 							return;
 						}
 						const editor = ctx.get("configEditor");
-						const entry = editor?.entries().find((row) => row.options.name === "dsh-plugin-addir");
+						const entry = editor?.entries().find((row) => row.options.name === "dsh-workspace-manager");
 						if (!editor || !entry) {
 							writeJson(res, 409, {
 								ok: false,
@@ -378,7 +378,7 @@ function isWorkspaceDirectoriesMessage(message) {
 * Persistent storage for workspace-to-directories mappings.
 * Saves directory associations durably under $DSH_HOME/storages/addir.json.
 *
-* @module dsh-plugin-addir/storage
+* @module dsh-workspace-manager/storage
 */
 function getDefaultStoragePath() {
 	const dshHome = process.env.DSH_HOME || join(homedir(), ".dsh");
@@ -758,7 +758,7 @@ var WorkspaceDirectoriesServiceImpl = class {
 			const entry = this.get(alias, sessionId);
 			if (entry) return canonicalizePath(resolve(entry.path, relativePart));
 		}
-		return canonicalizePath(trimmed);
+		return canonicalizePath(resolve(this.getPrimaryPath(sessionId), trimmed));
 	}
 	isUnderWorkspace(targetPath, sessionId) {
 		const list = this.list(sessionId);
@@ -767,7 +767,11 @@ var WorkspaceDirectoriesServiceImpl = class {
 	}
 	isReadOnly(targetPath, sessionId) {
 		const list = this.list(sessionId);
-		for (const dir of list) if (dir.readOnly && isSubPath(targetPath, dir.path)) return true;
+		const primary = list.find((dir) => dir.source === "primary");
+		for (const dir of list) {
+			const readOnlyParentOfPrimary = primary !== void 0 && isSubPath(primary.path, dir.path) && isSubPath(targetPath, primary.path);
+			if (dir.readOnly && !readOnlyParentOfPrimary && isSubPath(targetPath, dir.path)) return true;
+		}
 		return false;
 	}
 };
@@ -929,7 +933,7 @@ function createRemoveTool(service, toolName = "addir_remove") {
 *
 * @module dsh-plugin-workspace-directories
 */
-var name = "dsh-plugin-addir";
+var name = "dsh-workspace-manager";
 /**
 * Service Provider wrapping WorkspaceDirectoriesServiceImpl for Cordis.
 */
@@ -937,7 +941,7 @@ var AddirProvider = class extends Service {
 	static Config = Config;
 	impl;
 	constructor(ctx, config = {}) {
-		super(ctx, "addir");
+		super(ctx, "dsh-workspace-manager");
 		const resolved = resolveConfig(config);
 		this.impl = new WorkspaceDirectoriesServiceImpl(resolved);
 		if (resolved.enableTools) ctx.inject(["tools"], (toolsCtx) => {
@@ -1019,7 +1023,6 @@ var AddirProvider = class extends Service {
 * Standard Cordis plugin entry function.
 */
 function apply(ctx, config = {}) {
-	const provider = new AddirProvider(ctx, config);
-	ctx.provide("addir", provider);
+	return new AddirProvider(ctx, config);
 }
 export { AddirProvider, AddirProvider as WorkspaceDirectoriesProvider, apply, name };

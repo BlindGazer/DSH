@@ -17,7 +17,7 @@
     "src",
     "cordis.patch.yml",
     "README.md",
-    "doc",
+    "docs",
     "LICENSE",
     "package.json"
   ],
@@ -50,7 +50,7 @@
   "scripts": {
     "build": "node scripts/build.mjs",
     "build:client": "vite build --config ../../configs/packages/dsh-openai-codex-provider/vite.config.ts",
-    "build:host": "vite build --config ../../configs/packages/dsh-openai-codex-provider/vite.config.host.ts",
+    "build:host": "node scripts/build.mjs --host-only",
     "build:remote": "vite build --config ../../configs/packages/dsh-openai-codex-provider/vite.config.remote.ts",
     "test": "vitest run --config ../../configs/packages/dsh-openai-codex-provider/vitest.config.ts",
     "verify": "node scripts/verify-release.mjs",
@@ -69,7 +69,7 @@
     "dsh": ">=0.2.2-rc.1"
   },
   "author": "gooosie",
-  "license": "MIT",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BlindGazer/DSH.git",

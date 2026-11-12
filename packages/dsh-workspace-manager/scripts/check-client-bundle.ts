@@ -43,7 +43,7 @@ runInNewContext(source, sandbox, { filename: 'client.js' });
 
 assert.equal(registrations.length, 1);
 const [{ id, factory }] = registrations;
-assert.equal(id, 'dsh-plugin-addir');
+assert.equal(id, '@kalex/dsh-workspace-manager');
 assert.equal(typeof factory, 'function');
 
 const sharedModules = new Map<string, object>([

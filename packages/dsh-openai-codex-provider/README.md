@@ -1,64 +1,42 @@
 # [@kalex/dsh-openai-codex-provider](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider)
 
+[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH)
+[![Node](https://img.shields.io/badge/Node-%3E%3D22.19.0-339933)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/license-isc-green)](https://github.com/BlindGazer/DSH/blob/main/LICENSE.md)
+
 > [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
 
-Плагин DeepSeek Harness для входа через ChatGPT и использования моделей OpenAI Codex без OpenAI Platform API key.
-Форк [gooosie/dsh-openai-codex-auth](https://github.com/gooosie/dsh-openai-codex-auth).
+Плагин **DeepSeek Harness (DSH)** для авторизации в OpenAI/Codex. Форк [gooosie/dsh-openai-codex-auth](https://github.com/gooosie/dsh-openai-codex-auth).
 
-## Требования
+## 🎯 Назначение
 
-- DeepSeek Harness `>=0.2.2-rc.1` и совместимые host-зависимости из `package.json`.
-- Node.js `>=22.19.0` для CLI-установки.
-- Учетная запись ChatGPT с доступом к Codex и поддержкой входа по коду устройства.
+Позволяет использовать модели OpenAI Codex в DSH через вход по коду устройства ChatGPT. Токены хранятся в локальном Credential Store DSH, клиентскому интерфейсу передается только состояние входа без токенов.
 
-Используйте только одну реализацию маршрута `openai-codex`. Одновременная регистрация другого провайдера для этого маршрута, включая встроенную реализацию DSH, может вызвать конфликт и помешать активации плагина. Следуйте требованиям совместимости установленной версии DSH.
-
-## Установка или обновление
-
-Для профиля Web выполните:
+## 🚀 Установка
 
 ```sh
 dsh plugin --profile web add @kalex/dsh-openai-codex-provider
 ```
 
-После обновления перезапустите DSH, если этого требует установленная версия. Для отдельного desktop-профиля используйте менеджер плагинов или CLI, поставляемый с этой версией приложения: профиль Web и desktop могут быть независимыми.
+## 🛠 Технологический стек
 
-## Вход и модели
+| Технология | Версия / особенности        |
+| ---------- | --------------------------- |
+| TypeScript | >= 7.0.2, строгая типизация |
+| React      | 19                          |
+| undici     | 8.12.3, сетевые запросы     |
+| zod        | 4.x, валидация              |
+| Vite (Oxc) | 8.3.5                       |
+| Vitest     | 3.2.0                       |
 
-1. Откройте настройки моделей DSH и выберите OpenAI Codex.
-2. Нажмите кнопку входа и перейдите по показанной ссылке проверки.
-3. Введите код устройства и завершите авторизацию ChatGPT.
-4. Выберите доступные модели в селекторе DSH. В настройках можно изменить отображаемые имена, порядок и включенность моделей; должна остаться хотя бы одна включенная модель.
+## 🔐 Безопасность
 
-Токены хранятся в локальном Credential Store DSH. Клиентскому интерфейсу передается только состояние входа и другие необходимые сведения, без токенов. Агент также может вызвать `codex_login`, `codex_status` и `codex_logout`.
+Токены хранятся в локальном Credential Store DSH, клиенту передается только состояние входа без токенов. Подробнее в [Security](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Security.md).
 
-## Использование, кредиты и карточки сброса
+## 📸 Примеры в DSH
 
-Настройки показывают доступные данные об использовании, лимитах, времени сброса, кредитах и карточках сброса. Если сервис ограничивает ответ или часть данных недоступна, интерфейс сообщает об этом отдельно, не заменяя отсутствующее значение нулем.
+Как плагин выглядит и работает внутри DSH, смотрите в [Examples](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Examples.md).
 
-Применение карточки сброса требует отдельного подтверждения и может израсходовать кредит для всей учетной записи. Если результат неизвестен, повторяйте только ту же операцию из интерфейса. Не запускайте новое списание с другим запросом, пока исходный результат не выяснен. Данные карточек и сброса зависят от недокументированного интерфейса сервиса и могут измениться.
-
-## Сетевой маршрут
-
-В настройке маршрута доступны два режима:
-
-- `host` (по умолчанию): использовать сетевой маршрут DSH.
-- `system`: использовать ручные настройки системного HTTP/HTTPS-прокси Windows для входа, обновления токена, данных об использовании и запросов моделей.
-
-Системный режим не поддерживает PAC, автоматическое обнаружение, SOCKS-only и адреса прокси с логином или паролем. Если подходящий ручной HTTPS-прокси недоступен, запрос завершается ошибкой, а не переключается на прямое соединение. Изменение этой настройки не управляет внешней страницей OAuth. Уже выполняющиеся запросы завершаются через исходный маршрут.
-
-## Удаление
-
-Сначала выйдите из учетной записи в настройках OpenAI Codex, чтобы удалить локальные учетные данные, затем удалите пакет из профиля Web:
-
-```sh
-dsh plugin --profile web remove @kalex/dsh-openai-codex-provider
-```
-
-Для desktop-профиля удаление выполняйте через соответствующий менеджер или CLI приложения. Удаление из Web не удаляет отдельную копию desktop.
-
-## Происхождение и лицензия
-
-Пакет перенесен из проекта `dsh-openai-codex-auth` автора `gooosie`, версия исходного пакета `0.6.4`: [github.com/gooosie/dsh-openai-codex-auth](https://github.com/gooosie/dsh-openai-codex-auth). Новое имя устанавливаемого пакета не меняет необходимые внутренние идентификаторы Cordis и хранения. Условия MIT и исходное уведомление об авторских правах сохранены в файле [LICENSE](./LICENSE).
-
-Технические ограничения хранения данных и сетевых маршрутов описаны в [документе безопасности](./docs/security.md).
+- [Команды и установка](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Setup.md) | [Commands and installation](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Setup_EN.md)
+- [English README](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/README_EN.md)

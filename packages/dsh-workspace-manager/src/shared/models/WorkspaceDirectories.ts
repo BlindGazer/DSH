@@ -175,9 +175,7 @@ export type AddirService = WorkspaceDirectoriesService;
 
 declare module '@deepseek-ai/cordis' {
     interface Context {
-        /**
-         * Addir (Multi-directory workspace association) service.
-         */
-        addir: AddirService;
+        /** Сервис управления несколькими рабочими каталогами. */
+        'dsh-workspace-manager': AddirService;
     }
 }

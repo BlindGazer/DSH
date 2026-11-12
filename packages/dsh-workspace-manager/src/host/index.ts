@@ -21,7 +21,7 @@ export * from './security/workspaceAccessGuard.js';
 export * from './services/WorkspaceDirectoriesService.js';
 export * from './tools/workspaceDirectoryTools.js';
 
-export const name = 'dsh-plugin-addir';
+export const name = 'dsh-workspace-manager';
 
 /**
  * Service Provider wrapping WorkspaceDirectoriesServiceImpl for Cordis.
@@ -34,7 +34,7 @@ export class AddirProvider extends Service implements AddirService {
     private readonly impl: WorkspaceDirectoriesServiceImpl;
 
     constructor(ctx: Context, config: Config = {}) {
-        super(ctx, 'addir');
+        super(ctx, 'dsh-workspace-manager');
         const resolved = resolveConfig(config);
         this.impl = new WorkspaceDirectoriesServiceImpl(resolved);
 
@@ -153,9 +153,8 @@ export class AddirProvider extends Service implements AddirService {
 /**
  * Standard Cordis plugin entry function.
  */
-export function apply(ctx: Context, config: Config = {}): void {
-    const provider = new AddirProvider(ctx, config);
-    ctx.provide('addir', provider);
+export function apply(ctx: Context, config: Config = {}): AddirProvider {
+    return new AddirProvider(ctx, config);
 }
 
 export { AddirProvider as WorkspaceDirectoriesProvider };

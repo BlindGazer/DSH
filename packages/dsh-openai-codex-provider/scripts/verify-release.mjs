@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
 import { access, readdir, readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -30,6 +31,8 @@ const exportTargets = Object.values(packageJson.exports).flatMap(entry => (typeo
 for (const target of exportTargets) {
     await access(resolve(packageRoot, target));
 }
+
+execFileSync(process.execPath, ['--check', resolve(packageRoot, 'lib/index.js')]);
 
 const workerFile = (await readdir(resolve(packageRoot, 'lib/assets'))).find(file => /^system-proxy-worker-.+\.js$/.test(file));
 assert.ok(workerFile, 'The Node system-proxy worker must be present in the package');

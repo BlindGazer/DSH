@@ -1,3 +1,3 @@
 - insert:
-    - id: kalex-provider-proxy
+    - id: dsh-proxy-provider
       name: ./lib/index.js

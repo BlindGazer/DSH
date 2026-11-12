@@ -36,7 +36,7 @@ for (const target of targets) {
 await check('lib is included in package files', () => assert.ok(pkg.files?.includes('lib')));
 await check('Node entry imports and exports required symbols', async () => {
     const plugin = await import(pathToFileURL(resolve(root, 'lib/index.js')).href);
-    assert.equal(plugin.name, 'kalex-provider-proxy');
+    assert.equal(plugin.name, 'dsh-proxy-provider');
     assert.equal(typeof plugin.apply, 'function');
     assert.equal(typeof plugin.createProviderProxyController, 'function');
     assert.equal(typeof plugin.compileRoutingTable, 'function');
@@ -116,7 +116,7 @@ if (registration) {
     });
     await check('Plugin Manager detail action is registered and ignores unrelated packages', () => {
         const action = registrations.find(
-            ({ options }) => options.name === 'plugins.detail.actions' && options.id === 'kalex-provider-proxy-settings-action'
+            ({ options }) => options.name === 'plugins.detail.actions' && options.id === 'dsh-proxy-provider-settings-action'
         )?.component;
         assert.equal(typeof action, 'function');
         assert.equal(action({ subject: { kind: 'row', pkg: { name: '@other/plugin' } } }), undefined);

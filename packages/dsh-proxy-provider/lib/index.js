@@ -10,7 +10,7 @@ import { pathToFileURL } from "node:url";
 /**
 * Базовый URL HTTP API плагина внутри веб-сервера DSH.
 */
-var API_BASE = "/api/kalex-provider-proxy";
+var API_BASE = "/api/dsh-proxy-provider";
 /**
 * Адрес по умолчанию для проверки работоспособности прокси-соединения.
 */
@@ -339,7 +339,7 @@ function isSameOriginBrowserRequest(req) {
 	return true;
 }
 /**
-* Регистрирует HTTP-маршруты управления прокси (/api/kalex-provider-proxy/*) в веб-сервере DSH.
+* Регистрирует HTTP-маршруты управления прокси (/api/dsh-proxy-provider/*) в веб-сервере DSH.
 */
 function registerHttpRoutes(ctx, controller) {
 	let activeGuiToken = null;
@@ -347,7 +347,7 @@ function registerHttpRoutes(ctx, controller) {
 	ctx.inject(["webServer"], (webCtx) => {
 		webCtx.effect(() => webCtx.webServer.register({
 			kind: "prefix",
-			path: "/api/kalex-provider-proxy",
+			path: "/api/dsh-proxy-provider",
 			handler: async (req, res) => {
 				if (!isSameOriginBrowserRequest(req)) {
 					writeJson(res, 403, {
@@ -356,7 +356,7 @@ function registerHttpRoutes(ctx, controller) {
 					});
 					return;
 				}
-				const action = new URL(req.url ?? "/", "http://dsh.internal").pathname.replace(/^\/api\/kalex-provider-proxy\/?/, "");
+				const action = new URL(req.url ?? "/", "http://dsh.internal").pathname.replace(/^\/api\/dsh-proxy-provider\/?/, "");
 				try {
 					if (action === "session" && req.method === "POST") {
 						if ((await readJsonBody(req))?.action === "release") {
@@ -1589,7 +1589,7 @@ function compileRoutingTable(providers, config) {
 function resolveStoragePath(customStoragePath) {
 	if (customStoragePath) return customStoragePath;
 	const dshHome = process.env.DSH_HOME || join(homedir(), ".dsh");
-	return join(dshHome, "kalex-provider-proxy.json");
+	return join(dshHome, "dsh-proxy-provider.json");
 }
 /**
 * Загружает конфигурацию прокси с диска и автоматически перешифровывает открытые пароли при наличии.
@@ -1781,7 +1781,7 @@ function createProviderProxyController(options = {}) {
 	};
 }
 // src/host/index.ts
-var name = "kalex-provider-proxy";
+var name = "dsh-proxy-provider";
 /**
 * Точка входа серверного плагина Cordis для @kalex/dsh-proxy-provider.
 */
@@ -1985,8 +1985,8 @@ function translateProxyText(value, locale = "en") {
 		const detail = imported[2] === "successfully" ? "успешно" : imported[2] === "without credentials" ? "без учетных данных" : "с расшифрованными учетными данными";
 		return `Импортировано профилей: ${imported[1]}, ${detail}.`;
 	}
-	const exported = /^(.+) exported to kalex-provider-proxy-settings\.json$/.exec(value);
-	if (exported) return `Экспортированы ${exported[1] === "Settings and password-encrypted credentials" ? "настройки и зашифрованные учетные данные" : "настройки прокси без учетных данных"} (kalex-provider-proxy-settings.json)`;
+	const exported = /^(.+) exported to dsh-proxy-provider-settings\.json$/.exec(value);
+	if (exported) return `Экспортированы ${exported[1] === "Settings and password-encrypted credentials" ? "настройки и зашифрованные учетные данные" : "настройки прокси без учетных данных"} (dsh-proxy-provider-settings.json)`;
 	const conflictTitle = /^⚠ Host conflict \((.+) → (.+)\)$/.exec(value);
 	if (conflictTitle) return `⚠ Конфликт узла (${conflictTitle[1]}, применяется прокси ${conflictTitle[2]})`;
 	const conflictDetails = /^Host "(.+)" is shared by \[(.+)\]\. Active proxy "(.+)" is applied to all requests to (.+)\.$/.exec(value);

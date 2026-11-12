@@ -2,7 +2,7 @@
  * Persistent storage for workspace-to-directories mappings.
  * Saves directory associations durably under $DSH_HOME/storages/addir.json.
  *
- * @module dsh-plugin-addir/storage
+ * @module dsh-workspace-manager/storage
  */
 
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';

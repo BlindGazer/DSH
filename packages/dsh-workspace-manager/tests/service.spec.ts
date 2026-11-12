@@ -98,6 +98,16 @@ describe('WorkspaceDirectoriesService', () => {
     expect(resolvedColon).toBe(join(dirB, 'src/index.ts'))
   })
 
+  it('resolves relative paths against the active primary workspace', () => {
+    const service = new WorkspaceDirectoriesServiceImpl(resolveConfig(), dirA)
+    const sessionId = 'session-primary'
+
+    service.setPrimary(dirB, sessionId)
+
+    expect(service.resolvePath('README.md')).toBe(join(dirA, 'README.md'))
+    expect(service.resolvePath('README.md', sessionId)).toBe(join(dirB, 'README.md'))
+  })
+
   it('checks workspace containment and read-only status', async () => {
     const service = new WorkspaceDirectoriesServiceImpl(resolveConfig(), dirA)
     await service.add({ path: dirReadOnly, alias: 'docs', readOnly: true })
@@ -112,6 +122,14 @@ describe('WorkspaceDirectoriesService', () => {
 
     expect(service.isReadOnly(fileUnderA)).toBe(false)
     expect(service.isReadOnly(fileUnderDocs)).toBe(true)
+  })
+
+  it('keeps the primary workspace writable when a read-only link contains it', async () => {
+    const service = new WorkspaceDirectoriesServiceImpl(resolveConfig(), dirA)
+    await service.add({ path: testRoot, alias: 'readonly-parent', readOnly: true })
+
+    expect(service.isReadOnly(join(dirA, 'src/file.ts'))).toBe(false)
+    expect(service.isReadOnly(join(dirB, 'src/file.ts'))).toBe(true)
   })
 
   it('supports session isolation', async () => {

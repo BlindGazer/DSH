@@ -177,13 +177,13 @@ export function translateProxyText(value: string, locale: DshLocaleCode = 'en'):
                   : 'с расшифрованными учетными данными';
         return `Импортировано профилей: ${imported[1]}, ${detail}.`;
     }
-    const exported = /^(.+) exported to kalex-provider-proxy-settings\.json$/.exec(value);
+    const exported = /^(.+) exported to dsh-proxy-provider-settings\.json$/.exec(value);
     if (exported) {
         const detail =
             exported[1] === 'Settings and password-encrypted credentials'
                 ? 'настройки и зашифрованные учетные данные'
                 : 'настройки прокси без учетных данных';
-        return `Экспортированы ${detail} (kalex-provider-proxy-settings.json)`;
+        return `Экспортированы ${detail} (dsh-proxy-provider-settings.json)`;
     }
     const conflictTitle = /^⚠ Host conflict \((.+) → (.+)\)$/.exec(value);
     if (conflictTitle) return `⚠ Конфликт узла (${conflictTitle[1]}, применяется прокси ${conflictTitle[2]})`;

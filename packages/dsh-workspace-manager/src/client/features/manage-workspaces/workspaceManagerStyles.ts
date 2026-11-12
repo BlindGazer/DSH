@@ -2,19 +2,20 @@ import { buildCoreThemeStyles, subscribeDshThemeChanges } from '@kalex/dsh-core'
 
 export const styles = `
 .addir-modal {
-    width: min(560px, calc(100vw - 32px));
+    width: min(640px, calc(100vw - 32px));
     max-height: calc(100dvh - 32px);
     display: flex;
     flex-direction: column;
     gap: 0;
 }
-.addir-editor, .addir-settings * { box-sizing: border-box; }
+.addir-editor, .addir-settings *, .addir-name { box-sizing: border-box; }
 .addir-editor {
     display: flex;
     flex-direction: column;
     gap: 20px;
     min-width: 0;
     min-height: 0;
+    overflow-x: hidden;
     overflow-y: auto;
     padding: 20px;
     color: var(--dsh-ui-text);

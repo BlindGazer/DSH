@@ -17,8 +17,7 @@ const commands = [
             '--ignore-pattern',
             '**/dist/**',
             '--ignore-pattern',
-            '**/node_modules/**',
-            'scripts'
+            '**/node_modules/**'
         ]
     ],
     ['Biome', ['exec', 'biome', 'check', '--config-path=configs/biome.json', 'packages', 'scripts', 'configs']]

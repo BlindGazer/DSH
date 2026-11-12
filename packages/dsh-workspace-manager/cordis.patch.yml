@@ -1,5 +1,3 @@
-# Cordis patch for dsh-plugin-addir: a bundle layer inserts the plugin row;
-# profiles configure it by targeting the same id from their own patch layer.
 - insert:
-    - id: addir
-      name: dsh-plugin-addir
+    - id: dsh-workspace-manager
+      name: ./lib/index.js

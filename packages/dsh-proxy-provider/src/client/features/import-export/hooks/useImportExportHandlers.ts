@@ -9,9 +9,13 @@ export interface IoNotice {
 
 export interface ImportedPayloadCandidate {
     readonly encryptedCredentials?: boolean;
-    readonly profiles?: ReadonlyArray<{ readonly auth?: { readonly exportCipher?: string } }>;
+    readonly profiles?: ReadonlyArray<{
+        readonly auth?: { readonly exportCipher?: string };
+    }>;
     readonly config?: {
-        readonly profiles?: ReadonlyArray<{ readonly auth?: { readonly exportCipher?: string } }>;
+        readonly profiles?: ReadonlyArray<{
+            readonly auth?: { readonly exportCipher?: string };
+        }>;
     };
 }
 
@@ -64,7 +68,7 @@ export function useImportExportHandlers(options: {
         const url = URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = 'kalex-provider-proxy-settings.json';
+        link.download = 'dsh-proxy-provider-settings.json';
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -72,8 +76,8 @@ export function useImportExportHandlers(options: {
         setIoNotice({
             ok: true,
             text: withCreds
-                ? 'Settings and password-encrypted credentials exported to kalex-provider-proxy-settings.json'
-                : 'Proxy settings (without credentials) exported to kalex-provider-proxy-settings.json'
+                ? 'Settings and password-encrypted credentials exported to dsh-proxy-provider-settings.json'
+                : 'Proxy settings (without credentials) exported to dsh-proxy-provider-settings.json'
         });
     };
 
@@ -86,17 +90,25 @@ export function useImportExportHandlers(options: {
             return;
         }
         try {
-            const exportData = await proxyStore.exportConfig({ includeCredentials: false });
+            const exportData = await proxyStore.exportConfig({
+                includeCredentials: false
+            });
             triggerDownloadJson(exportData, false);
         } catch (err) {
             const errorObj = err as { message?: string };
-            setIoNotice({ ok: false, text: errorObj?.message || 'Failed to export settings' });
+            setIoNotice({
+                ok: false,
+                text: errorObj?.message || 'Failed to export settings'
+            });
         }
     };
 
     const handleConfirmEncryptedExport = async (): Promise<void> => {
         if (!exportPassword) {
-            setIoNotice({ ok: false, text: 'Please enter a password to encrypt credentials.' });
+            setIoNotice({
+                ok: false,
+                text: 'Please enter a password to encrypt credentials.'
+            });
             return;
         }
         setIoNotice(null);
@@ -110,7 +122,10 @@ export function useImportExportHandlers(options: {
             triggerDownloadJson(exportData, true);
         } catch (err) {
             const errorObj = err as { message?: string };
-            setIoNotice({ ok: false, text: errorObj?.message || 'Failed to export encrypted settings' });
+            setIoNotice({
+                ok: false,
+                text: errorObj?.message || 'Failed to export encrypted settings'
+            });
         }
     };
 
@@ -138,17 +153,26 @@ export function useImportExportHandlers(options: {
 
             await proxyStore.importConfig(parsed);
             options.setEditingDraft(null);
-            setIoNotice({ ok: true, text: `Imported ${candidateProfiles.length} profile(s) successfully.` });
+            setIoNotice({
+                ok: true,
+                text: `Imported ${candidateProfiles.length} profile(s) successfully.`
+            });
         } catch (err) {
             const errorObj = err as { message?: string };
-            setIoNotice({ ok: false, text: errorObj?.message || 'Invalid JSON file for proxy settings import' });
+            setIoNotice({
+                ok: false,
+                text: errorObj?.message || 'Invalid JSON file for proxy settings import'
+            });
         }
     };
 
     const handleConfirmEncryptedImport = async (skipCredentials = false): Promise<void> => {
         if (!pendingImportPayload) return;
         if (!skipCredentials && !importPassword) {
-            setIoNotice({ ok: false, text: 'Please enter the password to decrypt imported credentials.' });
+            setIoNotice({
+                ok: false,
+                text: 'Please enter the password to decrypt imported credentials.'
+            });
             return;
         }
         setIoNotice(null);
@@ -169,7 +193,10 @@ export function useImportExportHandlers(options: {
             });
         } catch (err) {
             const errorObj = err as { message?: string };
-            setIoNotice({ ok: false, text: errorObj?.message || 'Failed to decrypt and import proxy settings' });
+            setIoNotice({
+                ok: false,
+                text: errorObj?.message || 'Failed to decrypt and import proxy settings'
+            });
         }
     };
 

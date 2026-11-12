@@ -2,7 +2,7 @@
  * HTTP / REST API routes for Addir directory management.
  * Consumed by the workspace editor and profile-wide settings.
  *
- * @module dsh-plugin-addir/api
+ * @module dsh-workspace-manager/api
  */
 
 import { existsSync, statSync } from 'node:fs';
@@ -51,7 +51,7 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
         webCtx.effect(() =>
             webCtx.webServer.register({
                 kind: 'prefix',
-                path: '/api/addir',
+                path: '/api/dsh-workspace-manager',
                 handler: async (req, res) => {
                     if (req.method === 'OPTIONS') {
                         res.writeHead(204, {
@@ -64,7 +64,7 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                     }
 
                     const url = new URL(req.url ?? '/', 'http://dsh.internal');
-                    const action = url.pathname.replace(/^\/api\/addir\/?/, '');
+                    const action = url.pathname.replace(/^\/api\/dsh-workspace-manager\/?/, '');
 
                     try {
                         if (action === 'config') {
@@ -83,16 +83,25 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                             }>(req);
                             const keys = ['enableTools', 'enableContextInjection', 'enforceReadOnly'] as const;
                             if (!body || keys.some(key => typeof body[key] !== 'boolean')) {
-                                writeJson(res, 400, { ok: false, error: 'Configuration switches must be booleans' });
+                                writeJson(res, 400, {
+                                    ok: false,
+                                    error: 'Configuration switches must be booleans'
+                                });
                                 return;
                             }
                             const editor: ConfigEditor | undefined = ctx.get('configEditor');
-                            const entry = editor?.entries().find(row => row.options.name === 'dsh-plugin-addir');
+                            const entry = editor?.entries().find(row => row.options.name === 'dsh-workspace-manager');
                             if (!editor || !entry) {
-                                writeJson(res, 409, { ok: false, error: 'Profile configuration editor is unavailable' });
+                                writeJson(res, 409, {
+                                    ok: false,
+                                    error: 'Profile configuration editor is unavailable'
+                                });
                                 return;
                             }
-                            await editor.edit(entry, current => ({ ...current, ...Object.fromEntries(keys.map(key => [key, body[key]])) }));
+                            await editor.edit(entry, current => ({
+                                ...current,
+                                ...Object.fromEntries(keys.map(key => [key, body[key]]))
+                            }));
                             writeJson(res, 200, { ok: true });
                             return;
                         }
@@ -102,9 +111,15 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                                 writeJson(res, 405, { ok: false, error: 'Method not allowed' });
                                 return;
                             }
-                            const body = await readJsonBody<{ workspacePath?: string; directories?: AddDirectoryOptions[] }>(req);
+                            const body = await readJsonBody<{
+                                workspacePath?: string;
+                                directories?: AddDirectoryOptions[];
+                            }>(req);
                             if (!body || typeof body.workspacePath !== 'string' || !Array.isArray(body.directories)) {
-                                writeJson(res, 400, { ok: false, error: 'Workspace path and directories are required' });
+                                writeJson(res, 400, {
+                                    ok: false,
+                                    error: 'Workspace path and directories are required'
+                                });
                                 return;
                             }
                             const directories: AddDirectoryOptions[] = [];
@@ -117,7 +132,10 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                                     (item.description !== undefined && typeof item.description !== 'string') ||
                                     typeof item.readOnly !== 'boolean'
                                 ) {
-                                    writeJson(res, 400, { ok: false, error: 'Invalid directory fields' });
+                                    writeJson(res, 400, {
+                                        ok: false,
+                                        error: 'Invalid directory fields'
+                                    });
                                     return;
                                 }
                                 directories.push({
@@ -133,7 +151,10 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                                     directories: service.replaceWorkspaceDirectories(body.workspacePath, directories)
                                 });
                             } catch (error) {
-                                writeJson(res, 400, { ok: false, error: error instanceof Error ? error.message : String(error) });
+                                writeJson(res, 400, {
+                                    ok: false,
+                                    error: error instanceof Error ? error.message : String(error)
+                                });
                             }
                             return;
                         }
@@ -142,7 +163,10 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                             let sessionId = url.searchParams.get('sessionId') ?? undefined;
 
                             if (req.method === 'POST') {
-                                const body = await readJsonBody<{ workspacePath?: string; sessionId?: string }>(req);
+                                const body = await readJsonBody<{
+                                    workspacePath?: string;
+                                    sessionId?: string;
+                                }>(req);
                                 if (body.workspacePath) workspacePath = body.workspacePath;
                                 if (body.sessionId) sessionId = body.sessionId;
                             }
@@ -211,7 +235,10 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                             }>(req);
 
                             if (!body.pathOrAlias) {
-                                writeJson(res, 400, { ok: false, error: 'pathOrAlias is required' });
+                                writeJson(res, 400, {
+                                    ok: false,
+                                    error: 'pathOrAlias is required'
+                                });
                                 return;
                             }
 
@@ -243,7 +270,10 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                             return;
                         }
 
-                        writeJson(res, 404, { ok: false, error: `Unknown endpoint "${action}"` });
+                        writeJson(res, 404, {
+                            ok: false,
+                            error: `Unknown endpoint "${action}"`
+                        });
                     } catch (err) {
                         const message = err instanceof Error ? err.message : String(err);
                         writeJson(res, 500, { ok: false, error: message });

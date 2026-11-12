@@ -441,7 +441,7 @@ export class WorkspaceDirectoriesServiceImpl implements WorkspaceDirectoriesServ
             }
         }
 
-        return canonicalizePath(trimmed);
+        return canonicalizePath(resolve(this.getPrimaryPath(sessionId), trimmed));
     }
 
     isUnderWorkspace(targetPath: string, sessionId?: string): boolean {
@@ -456,8 +456,11 @@ export class WorkspaceDirectoriesServiceImpl implements WorkspaceDirectoriesServ
 
     isReadOnly(targetPath: string, sessionId?: string): boolean {
         const list = this.list(sessionId);
+        const primary = list.find(dir => dir.source === 'primary');
         for (const dir of list) {
-            if (dir.readOnly && isSubPath(targetPath, dir.path)) {
+            const readOnlyParentOfPrimary =
+                primary !== undefined && isSubPath(primary.path, dir.path) && isSubPath(targetPath, primary.path);
+            if (dir.readOnly && !readOnlyParentOfPrimary && isSubPath(targetPath, dir.path)) {
                 return true;
             }
         }

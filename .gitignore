@@ -11,3 +11,4 @@ Thumbs.db
 !.env.example
 **/appsettings.Development.json
 **/*.tsbuildinfo
+.worktrees

@@ -13,7 +13,7 @@ export interface GlobalConfig {
     enforceReadOnly: boolean;
 }
 async function request<T>(action: string, body?: object, signal?: AbortSignal): Promise<T> {
-    const response = await fetch(new URL(`api/addir/${action}`, document.baseURI), {
+    const response = await fetch(new URL(`api/dsh-workspace-manager/${action}`, document.baseURI), {
         method: body === undefined ? 'GET' : 'POST',
         headers: { 'Content-Type': 'application/json' },
         ...(body === undefined ? {} : { body: JSON.stringify(body) }),

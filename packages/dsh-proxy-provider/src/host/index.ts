@@ -17,7 +17,7 @@ import { discoverProviders, type HostDiscoveryContext } from './services/provide
 import { compileRoutingTable } from './services/providerRouting.js';
 import { establishSocks5Tunnel } from './services/socks5.js';
 
-export const name = 'kalex-provider-proxy';
+export const name = 'dsh-proxy-provider';
 
 export interface CordisHostPluginContext extends HostDiscoveryContext, WebServerHostContext {
     readonly logger?: { warn?(msg: string): void };

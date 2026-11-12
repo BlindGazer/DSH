@@ -5,7 +5,10 @@ import { createDshHostViteConfig } from '../../vite.base.ts';
 const packageRoot = resolve(import.meta.dirname, '../../../packages/dsh-openai-codex-provider');
 
 export default defineConfig({
-    ...createDshHostViteConfig({ packageRoot }),
+    ...createDshHostViteConfig({
+        packageRoot,
+        entry: process.env.DSH_OPENAI_CODEX_HOST_ENTRY ?? 'src/index.ts'
+    }),
     worker: {
         format: 'es',
         rollupOptions: { external: [/^node:/, 'undici'] }

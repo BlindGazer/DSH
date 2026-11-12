@@ -5,7 +5,7 @@ const packageRoot = resolve(import.meta.dirname, '../../../packages/dsh-workspac
 
 export default createDshClientViteConfig({
     packageRoot,
-    packageName: 'dsh-plugin-addir',
+    packageName: '@kalex/dsh-workspace-manager',
     external: [
         '@deepseek-ai/cordis',
         '@deepseek-ai/dsh-api-workspace-controller/client',

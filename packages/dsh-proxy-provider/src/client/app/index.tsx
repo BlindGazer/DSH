@@ -8,7 +8,7 @@ import { ProxySettingsModal } from '../features/settings-modal/components/ProxyS
 import { loadProxyLocale, proxyStore, tProxy } from './proxyStore.js';
 import { ensureProxyStyles } from './proxyStyles.js';
 
-export const name = 'kalex-provider-proxy-client';
+export const name = 'dsh-proxy-provider-client';
 export const inject: readonly string[] = ['slots', 'locale'];
 
 /**
@@ -24,7 +24,7 @@ export function apply(ctx: DshClientContext): void {
         ctx.slots.register(
             {
                 name: 'plugins.detail.actions',
-                id: 'kalex-provider-proxy-settings-action',
+                id: 'dsh-proxy-provider-settings-action',
                 order: 50
             },
             ProxyPluginSettingsAction
@@ -35,7 +35,7 @@ export function apply(ctx: DshClientContext): void {
         ctx.slots.register(
             {
                 name: 'settings.models.footer',
-                id: 'kalex-provider-proxy-footer',
+                id: 'dsh-proxy-provider-footer',
                 order: 50,
                 label: tProxy('Proxy settings')
             },
@@ -48,7 +48,7 @@ export function apply(ctx: DshClientContext): void {
             {
                 name: 'plugins.bundle.config',
                 key: '@kalex/dsh-proxy-provider',
-                id: 'kalex-provider-proxy-language',
+                id: 'dsh-proxy-provider-language',
                 order: 50
             },
             ProxyLocaleSettings

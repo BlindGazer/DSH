@@ -1,6 +1,6 @@
-import { _ as lazyStream, g as lazyApi, h as isModelType, i as createProvider, r as createModels$1 } from "./models-Bvrtl03z.js";
-import { a as ANTHROPIC_OAUTH_TOKEN_ENV, c as ANTHROPIC_WORKSPACE_ID_ENV, i as ANTHROPIC_IDENTITY_TOKEN_FILE_ENV, n as ANTHROPIC_AUTH_TOKEN_ENV, o as ANTHROPIC_ORGANIZATION_ID_ENV, r as ANTHROPIC_FEDERATION_RULE_ID_ENV, s as ANTHROPIC_SERVICE_ACCOUNT_ID_ENV, t as ANTHROPIC_API_KEY_ENV } from "./env-api-keys-FyWtjnjB.js";
-import { r as resolveDeploymentName, t as resolveAzureBaseUrl } from "./azure-openai-config-53YKzU6q.js";
+import { _ as lazyStream, g as lazyApi, h as isModelType, i as createProvider, r as createModels$1 } from "./models-BPQdBD5o.js";
+import { a as ANTHROPIC_OAUTH_TOKEN_ENV, c as ANTHROPIC_WORKSPACE_ID_ENV, i as ANTHROPIC_IDENTITY_TOKEN_FILE_ENV, n as ANTHROPIC_AUTH_TOKEN_ENV, o as ANTHROPIC_ORGANIZATION_ID_ENV, r as ANTHROPIC_FEDERATION_RULE_ID_ENV, s as ANTHROPIC_SERVICE_ACCOUNT_ID_ENV, t as ANTHROPIC_API_KEY_ENV } from "./env-api-keys-DuMel4B1.js";
+import { r as resolveDeploymentName, t as resolveAzureBaseUrl } from "./azure-openai-config-d7T7hOgk.js";
 import { createRequire } from "node:module";
 import "node:buffer";
 import "node:os";
@@ -4679,12 +4679,12 @@ function ReasoningEffortId(id) {
 *
 * @module @deepseek-ai/dsh-llm
 */
-var __runInitializers = function(thisArg, initializers, value) {
+var __runInitializers$1 = function(thisArg, initializers, value) {
 	var useValue = arguments.length > 2;
 	for (var i = 0; i < initializers.length; i++) value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
 	return useValue ? value : void 0;
 };
-var __esDecorate = function(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+var __esDecorate$1 = function(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
 	function accept(f) {
 		if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
 		return f;
@@ -4851,7 +4851,7 @@ var LlmAdapter = class {
 			_listProviders_decorators = [Remote];
 			_listConfigurableProviders_decorators = [Remote];
 			_remoteDiscoverModels_decorators = [Remote("discoverModels")];
-			__esDecorate(this, null, _listProviders_decorators, {
+			__esDecorate$1(this, null, _listProviders_decorators, {
 				kind: "method",
 				name: "listProviders",
 				static: false,
@@ -4862,7 +4862,7 @@ var LlmAdapter = class {
 				},
 				metadata: _metadata
 			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _listConfigurableProviders_decorators, {
+			__esDecorate$1(this, null, _listConfigurableProviders_decorators, {
 				kind: "method",
 				name: "listConfigurableProviders",
 				static: false,
@@ -4873,7 +4873,7 @@ var LlmAdapter = class {
 				},
 				metadata: _metadata
 			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _remoteDiscoverModels_decorators, {
+			__esDecorate$1(this, null, _remoteDiscoverModels_decorators, {
 				kind: "method",
 				name: "remoteDiscoverModels",
 				static: false,
@@ -4891,7 +4891,7 @@ var LlmAdapter = class {
 				value: _metadata
 			});
 		}
-		adapters = (__runInitializers(this, _instanceExtraInitializers), /* @__PURE__ */ new Map());
+		adapters = (__runInitializers$1(this, _instanceExtraInitializers), /* @__PURE__ */ new Map());
 		directory = /* @__PURE__ */ new Map();
 		discoveries = /* @__PURE__ */ new Map();
 		constructor(ctx) {
@@ -5578,9 +5578,9 @@ function requestImageDimensions(width, height, maxPixels) {
 		height: projectedHeight
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/amazon-bedrock.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/amazon-bedrock.json
 var amazon_bedrock_default = { "bedrock-converse-stream": /*#__PURE__*/ JSON.parse("{\"chat:amazon.nova-2-lite-v1:0\":{\"id\":\"amazon.nova-2-lite-v1:0\",\"name\":\"Nova 2 Lite\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.33,\"output\":2.75,\"cacheRead\":0.0825,\"cacheWrite\":0.33},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:amazon.nova-lite-v1:0\":{\"id\":\"amazon.nova-lite-v1:0\",\"name\":\"Nova Lite\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.06,\"output\":0.24,\"cacheRead\":0.015,\"cacheWrite\":0.06},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:amazon.nova-micro-v1:0\":{\"id\":\"amazon.nova-micro-v1:0\",\"name\":\"Nova Micro\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.035,\"output\":0.14,\"cacheRead\":0.00875,\"cacheWrite\":0.035},\"contextWindow\":128000,\"maxTokens\":10000,\"type\":\"chat\"},\"chat:amazon.nova-pro-v1:0\":{\"id\":\"amazon.nova-pro-v1:0\",\"name\":\"Nova Pro\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.8,\"output\":3.2,\"cacheRead\":0.2,\"cacheWrite\":0.8},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-fable-5\":{\"id\":\"anthropic.claude-fable-5\",\"name\":\"Claude Fable 5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-fable-5-1\":{\"id\":\"anthropic.claude-fable-5-1\",\"name\":\"Claude Fable 5.1\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":0.25,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-haiku-5-5\":{\"id\":\"anthropic.claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.5,\"output\":2.5,\"cacheRead\":0.05,\"cacheWrite\":0.625}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-opus-4-1-20250805-v1:0\":{\"id\":\"anthropic.claude-opus-4-1-20250805-v1:0\",\"name\":\"Claude Opus 4.1\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":15,\"output\":75,\"cacheRead\":1.5,\"cacheWrite\":18.75},\"contextWindow\":200000,\"maxTokens\":32000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-opus-4-5-20251101-v1:0\":{\"id\":\"anthropic.claude-opus-4-5-20251101-v1:0\",\"name\":\"Claude Opus 4.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-opus-4-6-v1\":{\"id\":\"anthropic.claude-opus-4-6-v1\",\"name\":\"Claude Opus 4.6\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-opus-4-7\":{\"id\":\"anthropic.claude-opus-4-7\",\"name\":\"Claude Opus 4.7\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-opus-4-8\":{\"id\":\"anthropic.claude-opus-4-8\",\"name\":\"Claude Opus 4.8\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-opus-5-5\":{\"id\":\"anthropic.claude-opus-5-5\",\"name\":\"Claude Opus 5.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-sonnet-4-5-20250929-v1:0\":{\"id\":\"anthropic.claude-sonnet-4-5-20250929-v1:0\",\"name\":\"Claude Sonnet 4.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-sonnet-4-6\":{\"id\":\"anthropic.claude-sonnet-4-6\",\"name\":\"Claude Sonnet 4.6\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-sonnet-5\":{\"id\":\"anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic.claude-sonnet-5-5\":{\"id\":\"anthropic.claude-sonnet-5-5\",\"name\":\"Claude Sonnet 5.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:apac.amazon.nova-lite-v1:0\":{\"id\":\"apac.amazon.nova-lite-v1:0\",\"name\":\"Nova Lite (APAC)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.063,\"output\":0.252,\"cacheRead\":0.01575,\"cacheWrite\":0.063},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:apac.amazon.nova-micro-v1:0\":{\"id\":\"apac.amazon.nova-micro-v1:0\",\"name\":\"Nova Micro (APAC)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.037,\"output\":0.148,\"cacheRead\":0.00925,\"cacheWrite\":0.037},\"contextWindow\":128000,\"maxTokens\":10000,\"type\":\"chat\"},\"chat:apac.amazon.nova-pro-v1:0\":{\"id\":\"apac.amazon.nova-pro-v1:0\",\"name\":\"Nova Pro (APAC)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.84,\"output\":3.36,\"cacheRead\":0.21,\"cacheWrite\":0.84},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:apac.anthropic.claude-sonnet-4-20250514-v1:0\":{\"id\":\"apac.anthropic.claude-sonnet-4-20250514-v1:0\",\"name\":\"Claude Sonnet 4 (APAC)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"au.anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":5.5,\"cacheRead\":0.11,\"cacheWrite\":1.375},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-haiku-5-5\":{\"id\":\"au.anthropic.claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.11,\"output\":0.55,\"cacheRead\":0.011,\"cacheWrite\":0.1375,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.55,\"output\":2.75,\"cacheRead\":0.055,\"cacheWrite\":0.6875}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-opus-4-6-v1\":{\"id\":\"au.anthropic.claude-opus-4-6-v1\",\"name\":\"AU Anthropic Claude Opus 4.6\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-opus-4-7\":{\"id\":\"au.anthropic.claude-opus-4-7\",\"name\":\"Claude Opus 4.7 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-opus-4-8\":{\"id\":\"au.anthropic.claude-opus-4-8\",\"name\":\"Claude Opus 4.8 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-opus-5\":{\"id\":\"au.anthropic.claude-opus-5\",\"name\":\"Claude Opus 5 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-opus-5-5\":{\"id\":\"au.anthropic.claude-opus-5-5\",\"name\":\"Claude Opus 5.5 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.4,\"output\":22,\"cacheRead\":0.22,\"cacheWrite\":5.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-sonnet-4-5-20250929-v1:0\":{\"id\":\"au.anthropic.claude-sonnet-4-5-20250929-v1:0\",\"name\":\"Claude Sonnet 4.5 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-sonnet-4-6\":{\"id\":\"au.anthropic.claude-sonnet-4-6\",\"name\":\"AU Anthropic Claude Sonnet 4.6\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:au.anthropic.claude-sonnet-5\":{\"id\":\"au.anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5 (AU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:ca.amazon.nova-lite-v1:0\":{\"id\":\"ca.amazon.nova-lite-v1:0\",\"name\":\"Nova Lite (CA)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.064,\"output\":0.256,\"cacheRead\":0.016,\"cacheWrite\":0.064},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek.v3-v1:0\":{\"id\":\"deepseek.v3-v1:0\",\"name\":\"DeepSeek-V3.1\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.58,\"output\":1.68,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":163840,\"maxTokens\":81920,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:deepseek.v3.2\":{\"id\":\"deepseek.v3.2\",\"name\":\"DeepSeek V3.2\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.62,\"output\":1.85,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":163840,\"maxTokens\":81920,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:eu.amazon.nova-2-lite-v1:0\":{\"id\":\"eu.amazon.nova-2-lite-v1:0\",\"name\":\"Nova 2 Lite (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.374,\"output\":3.157,\"cacheRead\":0.0935,\"cacheWrite\":0.374},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.amazon.nova-lite-v1:0\":{\"id\":\"eu.amazon.nova-lite-v1:0\",\"name\":\"Nova Lite (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.069,\"output\":0.276,\"cacheRead\":0.01725,\"cacheWrite\":0.069},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.amazon.nova-micro-v1:0\":{\"id\":\"eu.amazon.nova-micro-v1:0\",\"name\":\"Nova Micro (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.04,\"output\":0.16,\"cacheRead\":0.01,\"cacheWrite\":0.04},\"contextWindow\":128000,\"maxTokens\":10000,\"type\":\"chat\"},\"chat:eu.amazon.nova-pro-v1:0\":{\"id\":\"eu.amazon.nova-pro-v1:0\",\"name\":\"Nova Pro (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.92,\"output\":3.68,\"cacheRead\":0.23,\"cacheWrite\":0.92},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-fable-5\":{\"id\":\"eu.anthropic.claude-fable-5\",\"name\":\"Claude Fable 5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":11,\"output\":55,\"cacheRead\":1.1,\"cacheWrite\":13.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"eu.anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":5.5,\"cacheRead\":0.11,\"cacheWrite\":1.375},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-haiku-5-5\":{\"id\":\"eu.anthropic.claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.11,\"output\":0.55,\"cacheRead\":0.011,\"cacheWrite\":0.1375,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.55,\"output\":2.75,\"cacheRead\":0.055,\"cacheWrite\":0.6875}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-opus-4-5-20251101-v1:0\":{\"id\":\"eu.anthropic.claude-opus-4-5-20251101-v1:0\",\"name\":\"Claude Opus 4.5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-opus-4-6-v1\":{\"id\":\"eu.anthropic.claude-opus-4-6-v1\",\"name\":\"Claude Opus 4.6 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-opus-4-7\":{\"id\":\"eu.anthropic.claude-opus-4-7\",\"name\":\"Claude Opus 4.7 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-opus-4-8\":{\"id\":\"eu.anthropic.claude-opus-4-8\",\"name\":\"Claude Opus 4.8 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-opus-5\":{\"id\":\"eu.anthropic.claude-opus-5\",\"name\":\"Claude Opus 5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-opus-5-5\":{\"id\":\"eu.anthropic.claude-opus-5-5\",\"name\":\"Claude Opus 5.5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.4,\"output\":22,\"cacheRead\":0.22,\"cacheWrite\":5.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-sonnet-4-20250514-v1:0\":{\"id\":\"eu.anthropic.claude-sonnet-4-20250514-v1:0\",\"name\":\"Claude Sonnet 4 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-sonnet-4-5-20250929-v1:0\":{\"id\":\"eu.anthropic.claude-sonnet-4-5-20250929-v1:0\",\"name\":\"Claude Sonnet 4.5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-sonnet-4-6\":{\"id\":\"eu.anthropic.claude-sonnet-4-6\",\"name\":\"Claude Sonnet 4.6 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-sonnet-5\":{\"id\":\"eu.anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.anthropic.claude-sonnet-5-5\":{\"id\":\"eu.anthropic.claude-sonnet-5-5\",\"name\":\"Claude Sonnet 5.5 (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.11,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:eu.mistral.pixtral-large-2502-v1:0\":{\"id\":\"eu.mistral.pixtral-large-2502-v1:0\",\"name\":\"Pixtral Large (25.02) (EU)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.eu-central-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.amazon.nova-2-lite-v1:0\":{\"id\":\"global.amazon.nova-2-lite-v1:0\",\"name\":\"Nova 2 Lite (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.075,\"cacheWrite\":0.3},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-fable-5\":{\"id\":\"global.anthropic.claude-fable-5\",\"name\":\"Claude Fable 5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-fable-5-1\":{\"id\":\"global.anthropic.claude-fable-5-1\",\"name\":\"Claude Fable 5.1 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":0.25,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"global.anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-haiku-5-5\":{\"id\":\"global.anthropic.claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.5,\"output\":2.5,\"cacheRead\":0.05,\"cacheWrite\":0.625}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-opus-4-5-20251101-v1:0\":{\"id\":\"global.anthropic.claude-opus-4-5-20251101-v1:0\",\"name\":\"Claude Opus 4.5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-opus-4-6-v1\":{\"id\":\"global.anthropic.claude-opus-4-6-v1\",\"name\":\"Claude Opus 4.6 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-opus-4-7\":{\"id\":\"global.anthropic.claude-opus-4-7\",\"name\":\"Claude Opus 4.7 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-opus-4-8\":{\"id\":\"global.anthropic.claude-opus-4-8\",\"name\":\"Claude Opus 4.8 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-opus-5\":{\"id\":\"global.anthropic.claude-opus-5\",\"name\":\"Claude Opus 5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-opus-5-5\":{\"id\":\"global.anthropic.claude-opus-5-5\",\"name\":\"Claude Opus 5.5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-sonnet-4-20250514-v1:0\":{\"id\":\"global.anthropic.claude-sonnet-4-20250514-v1:0\",\"name\":\"Claude Sonnet 4 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-sonnet-4-5-20250929-v1:0\":{\"id\":\"global.anthropic.claude-sonnet-4-5-20250929-v1:0\",\"name\":\"Claude Sonnet 4.5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-sonnet-4-6\":{\"id\":\"global.anthropic.claude-sonnet-4-6\",\"name\":\"Claude Sonnet 4.6 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-sonnet-5\":{\"id\":\"global.anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.anthropic.claude-sonnet-5-5\":{\"id\":\"global.anthropic.claude-sonnet-5-5\",\"name\":\"Claude Sonnet 5.5 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.moonshotai.kimi-k3\":{\"id\":\"global.moonshotai.kimi-k3\",\"name\":\"Kimi K3 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":1048576,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-5.6-luna\":{\"id\":\"global.openai.gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.4,\"output\":1.8,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-5.6-sol\":{\"id\":\"global.openai.gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-5.6-terra\":{\"id\":\"global.openai.gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-6-astra\":{\"id\":\"global.openai.gpt-6-astra\",\"name\":\"GPT-6 Astra (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":20,\"output\":75,\"cacheRead\":2,\"cacheWrite\":25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-6-luna\":{\"id\":\"global.openai.gpt-6-luna\",\"name\":\"GPT-6 Luna (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.2,\"output\":0.75,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-6-sol\":{\"id\":\"global.openai.gpt-6-sol\",\"name\":\"GPT-6 Sol (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.openai.gpt-6.1-sol\":{\"id\":\"global.openai.gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.2,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.xai.grok-4.6\":{\"id\":\"global.xai.grok-4.6\",\"name\":\"Grok 4.6 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":500000,\"maxTokens\":500000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.xai.grok-4.7\":{\"id\":\"global.xai.grok-4.7\",\"name\":\"Grok 4.7 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":500000,\"maxTokens\":500000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:global.zai.glm-5.3\":{\"id\":\"global.zai.glm-5.3\",\"name\":\"GLM-5.3 (Global)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.68,\"output\":5.28,\"cacheRead\":0.312,\"cacheWrite\":2.1},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:google.gemma-4-26b-a4b\":{\"id\":\"google.gemma-4-26b-a4b\",\"name\":\"Gemma 4 26B A4B IT\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.13,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google.gemma-4-31b\":{\"id\":\"google.gemma-4-31b\",\"name\":\"Gemma 4 31B IT\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.14,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google.gemma-4-e2b\":{\"id\":\"google.gemma-4-e2b\",\"name\":\"Gemma 4 E2B IT\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.04,\"output\":0.08,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:in.anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"in.anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5 (India)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":5.5,\"cacheRead\":0.11,\"cacheWrite\":1.375},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:in.anthropic.claude-opus-5\":{\"id\":\"in.anthropic.claude-opus-5\",\"name\":\"Claude Opus 5 (India)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:in.anthropic.claude-sonnet-5\":{\"id\":\"in.anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5 (India)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:in.openai.gpt-5.6-luna\":{\"id\":\"in.openai.gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna (India)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.22,\"output\":1.32,\"cacheRead\":0.022,\"cacheWrite\":0.275,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.44,\"output\":1.98,\"cacheRead\":0.044,\"cacheWrite\":0.55}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:in.openai.gpt-5.6-terra\":{\"id\":\"in.openai.gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra (India)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":13.2,\"cacheRead\":0.22,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":19.8,\"cacheRead\":0.44,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.amazon.nova-2-lite-v1:0\":{\"id\":\"jp.amazon.nova-2-lite-v1:0\",\"name\":\"Nova 2 Lite (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.396,\"output\":3.311,\"cacheRead\":0.099,\"cacheWrite\":0.396},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"jp.anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":5.5,\"cacheRead\":0.11,\"cacheWrite\":1.375},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-haiku-5-5\":{\"id\":\"jp.anthropic.claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.11,\"output\":0.55,\"cacheRead\":0.011,\"cacheWrite\":0.1375,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.55,\"output\":2.75,\"cacheRead\":0.055,\"cacheWrite\":0.6875}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-opus-4-7\":{\"id\":\"jp.anthropic.claude-opus-4-7\",\"name\":\"Claude Opus 4.7 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-opus-4-8\":{\"id\":\"jp.anthropic.claude-opus-4-8\",\"name\":\"Claude Opus 4.8 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-opus-5\":{\"id\":\"jp.anthropic.claude-opus-5\",\"name\":\"Claude Opus 5 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-opus-5-5\":{\"id\":\"jp.anthropic.claude-opus-5-5\",\"name\":\"Claude Opus 5.5 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.4,\"output\":22,\"cacheRead\":0.22,\"cacheWrite\":5.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-sonnet-4-5-20250929-v1:0\":{\"id\":\"jp.anthropic.claude-sonnet-4-5-20250929-v1:0\",\"name\":\"Claude Sonnet 4.5 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-sonnet-4-6\":{\"id\":\"jp.anthropic.claude-sonnet-4-6\",\"name\":\"Claude Sonnet 4.6 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:jp.anthropic.claude-sonnet-5\":{\"id\":\"jp.anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5 (JP)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta.llama3-1-70b-instruct-v1:0\":{\"id\":\"meta.llama3-1-70b-instruct-v1:0\",\"name\":\"Llama 3.1 70B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.72,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:meta.llama3-1-8b-instruct-v1:0\":{\"id\":\"meta.llama3-1-8b-instruct-v1:0\",\"name\":\"Llama 3.1 8B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.22,\"output\":0.22,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:meta.llama3-3-70b-instruct-v1:0\":{\"id\":\"meta.llama3-3-70b-instruct-v1:0\",\"name\":\"Llama 3.3 70B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.72,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:meta.llama4-maverick-17b-instruct-v1:0\":{\"id\":\"meta.llama4-maverick-17b-instruct-v1:0\",\"name\":\"Llama 4 Maverick 17B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.24,\"output\":0.97,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta.llama4-scout-17b-instruct-v1:0\":{\"id\":\"meta.llama4-scout-17b-instruct-v1:0\",\"name\":\"Llama 4 Scout 17B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.17,\"output\":0.66,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":10000000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:minimax.minimax-m2\":{\"id\":\"minimax.minimax-m2\",\"name\":\"MiniMax-M2\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":204608,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:minimax.minimax-m2.1\":{\"id\":\"minimax.minimax-m2.1\",\"name\":\"MiniMax-M2.1\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":196608,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:minimax.minimax-m2.5\":{\"id\":\"minimax.minimax-m2.5\",\"name\":\"MiniMax-M2.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":196608,\"maxTokens\":98304,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:mistral.devstral-2-123b\":{\"id\":\"mistral.devstral-2-123b\",\"name\":\"Devstral 2 123B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:mistral.magistral-small-2509\":{\"id\":\"mistral.magistral-small-2509\",\"name\":\"Magistral Small 1.2\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":40000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral.ministral-3-14b-instruct\":{\"id\":\"mistral.ministral-3-14b-instruct\",\"name\":\"Ministral 14B 3.0\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":0.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral.ministral-3-3b-instruct\":{\"id\":\"mistral.ministral-3-3b-instruct\",\"name\":\"Ministral 3 3B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.1,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral.ministral-3-8b-instruct\":{\"id\":\"mistral.ministral-3-8b-instruct\",\"name\":\"Ministral 3 8B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral.mistral-large-3-675b-instruct\":{\"id\":\"mistral.mistral-large-3-675b-instruct\",\"name\":\"Mistral Large 3\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral.pixtral-large-2502-v1:0\":{\"id\":\"mistral.pixtral-large-2502-v1:0\",\"name\":\"Pixtral Large (25.02)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral.voxtral-mini-3b-2507\":{\"id\":\"mistral.voxtral-mini-3b-2507\",\"name\":\"Voxtral Mini 3B 2507\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.04,\"output\":0.04,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":4096,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:mistral.voxtral-small-24b-2507\":{\"id\":\"mistral.voxtral-small-24b-2507\",\"name\":\"Voxtral Small 24B 2507\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:moonshot.kimi-k2-thinking\":{\"id\":\"moonshot.kimi-k2-thinking\",\"name\":\"Kimi K2 Thinking\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":16000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:moonshotai.kimi-k2.5\":{\"id\":\"moonshotai.kimi-k2.5\",\"name\":\"Kimi K2.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.6,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia.nemotron-nano-12b-v2\":{\"id\":\"nvidia.nemotron-nano-12b-v2\",\"name\":\"NVIDIA Nemotron Nano 12B v2 VL BF16\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia.nemotron-nano-3-30b\":{\"id\":\"nvidia.nemotron-nano-3-30b\",\"name\":\"NVIDIA Nemotron Nano 3 30B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.06,\"output\":0.24,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:nvidia.nemotron-nano-9b-v2\":{\"id\":\"nvidia.nemotron-nano-9b-v2\",\"name\":\"NVIDIA Nemotron Nano 9B v2\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.06,\"output\":0.23,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:nvidia.nemotron-super-3-120b\":{\"id\":\"nvidia.nemotron-super-3-120b\",\"name\":\"NVIDIA Nemotron 3 Super 120B A12B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.65,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:openai.gpt-5.4\":{\"id\":\"openai.gpt-5.4\",\"name\":\"GPT-5.4\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.75,\"output\":16.5,\"cacheRead\":0.275,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-5.5\":{\"id\":\"openai.gpt-5.5\",\"name\":\"GPT-5.5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":33,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-5.6-luna\":{\"id\":\"openai.gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.22,\"output\":1.32,\"cacheRead\":0.022,\"cacheWrite\":0.275,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.44,\"output\":1.98,\"cacheRead\":0.044,\"cacheWrite\":0.55}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-5.6-sol\":{\"id\":\"openai.gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.4,\"output\":22,\"cacheRead\":0.44,\"cacheWrite\":5.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8.8,\"output\":33,\"cacheRead\":0.88,\"cacheWrite\":11}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-5.6-terra\":{\"id\":\"openai.gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":13.2,\"cacheRead\":0.22,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":19.8,\"cacheRead\":0.44,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-6-astra\":{\"id\":\"openai.gpt-6-astra\",\"name\":\"GPT-6 Astra\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":11,\"output\":55,\"cacheRead\":1.1,\"cacheWrite\":13.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":22,\"output\":82.5,\"cacheRead\":2.2,\"cacheWrite\":27.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-6-luna\":{\"id\":\"openai.gpt-6-luna\",\"name\":\"GPT-6 Luna\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.11,\"output\":0.55,\"cacheRead\":0.011,\"cacheWrite\":0.1375,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.22,\"output\":0.825,\"cacheRead\":0.022,\"cacheWrite\":0.275}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-6-sol\":{\"id\":\"openai.gpt-6-sol\",\"name\":\"GPT-6 Sol\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":16.5,\"cacheRead\":0.44,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-6.1-sol\":{\"id\":\"openai.gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.11,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":16.5,\"cacheRead\":0.22,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai.gpt-oss-120b\":{\"id\":\"openai.gpt-oss-120b\",\"name\":\"gpt-oss-120b\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:openai.gpt-oss-120b-1:0\":{\"id\":\"openai.gpt-oss-120b-1:0\",\"name\":\"gpt-oss-120b\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:openai.gpt-oss-20b\":{\"id\":\"openai.gpt-oss-20b\",\"name\":\"gpt-oss-20b\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.07,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:openai.gpt-oss-20b-1:0\":{\"id\":\"openai.gpt-oss-20b-1:0\",\"name\":\"gpt-oss-20b\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.07,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:openai.gpt-oss-safeguard-120b\":{\"id\":\"openai.gpt-oss-safeguard-120b\",\"name\":\"GPT OSS Safeguard 120B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:openai.gpt-oss-safeguard-20b\":{\"id\":\"openai.gpt-oss-safeguard-20b\",\"name\":\"GPT OSS Safeguard 20B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.07,\"output\":0.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-235b-a22b-2507-v1:0\":{\"id\":\"qwen.qwen3-235b-a22b-2507-v1:0\",\"name\":\"Qwen3 235B-A22B Instruct 2507\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.22,\"output\":0.88,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-32b-v1:0\":{\"id\":\"qwen.qwen3-32b-v1:0\",\"name\":\"Qwen3 32B\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-coder-30b-a3b-v1:0\":{\"id\":\"qwen.qwen3-coder-30b-a3b-v1:0\",\"name\":\"Qwen3-Coder 30B-A3B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-coder-480b-a35b-v1:0\":{\"id\":\"qwen.qwen3-coder-480b-a35b-v1:0\",\"name\":\"Qwen3-Coder 480B-A35B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.45,\"output\":1.8,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":65536,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-coder-next\":{\"id\":\"qwen.qwen3-coder-next\",\"name\":\"Qwen3 Coder Next\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.5,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":65536,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-next-80b-a3b\":{\"id\":\"qwen.qwen3-next-80b-a3b\",\"name\":\"Qwen3-Next 80B-A3B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:qwen.qwen3-vl-235b-a22b\":{\"id\":\"qwen.qwen3-vl-235b-a22b\",\"name\":\"Qwen3 VL 235B A22B Instruct\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.53,\"output\":2.66,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us-gov.openai.gpt-oss-120b-1:0\":{\"id\":\"us-gov.openai.gpt-oss-120b-1:0\",\"name\":\"gpt-oss-120b (GovCloud)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.18,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:us-gov.openai.gpt-oss-20b-1:0\":{\"id\":\"us-gov.openai.gpt-oss-20b-1:0\",\"name\":\"gpt-oss-20b (GovCloud)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.084,\"output\":0.36,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:us.amazon.nova-2-lite-v1:0\":{\"id\":\"us.amazon.nova-2-lite-v1:0\",\"name\":\"Nova 2 Lite (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.33,\"output\":2.75,\"cacheRead\":0.0825,\"cacheWrite\":0.33},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.amazon.nova-lite-v1:0\":{\"id\":\"us.amazon.nova-lite-v1:0\",\"name\":\"Nova Lite (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.06,\"output\":0.24,\"cacheRead\":0.015,\"cacheWrite\":0.06},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.amazon.nova-micro-v1:0\":{\"id\":\"us.amazon.nova-micro-v1:0\",\"name\":\"Nova Micro (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.035,\"output\":0.14,\"cacheRead\":0.00875,\"cacheWrite\":0.035},\"contextWindow\":128000,\"maxTokens\":10000,\"type\":\"chat\"},\"chat:us.amazon.nova-premier-v1:0\":{\"id\":\"us.amazon.nova-premier-v1:0\",\"name\":\"Nova Premier (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":12.5,\"cacheRead\":0.625,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.amazon.nova-pro-v1:0\":{\"id\":\"us.amazon.nova-pro-v1:0\",\"name\":\"Nova Pro (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.8,\"output\":3.2,\"cacheRead\":0.2,\"cacheWrite\":0.8},\"contextWindow\":300000,\"maxTokens\":10000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-fable-5\":{\"id\":\"us.anthropic.claude-fable-5\",\"name\":\"Claude Fable 5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":11,\"output\":55,\"cacheRead\":1.1,\"cacheWrite\":13.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-fable-5-1\":{\"id\":\"us.anthropic.claude-fable-5-1\",\"name\":\"Claude Fable 5.1 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":11,\"output\":55,\"cacheRead\":0.275,\"cacheWrite\":13.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-haiku-4-5-20251001-v1:0\":{\"id\":\"us.anthropic.claude-haiku-4-5-20251001-v1:0\",\"name\":\"Claude Haiku 4.5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":5.5,\"cacheRead\":0.11,\"cacheWrite\":1.375},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-haiku-5-5\":{\"id\":\"us.anthropic.claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.11,\"output\":0.55,\"cacheRead\":0.011,\"cacheWrite\":0.1375,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.55,\"output\":2.75,\"cacheRead\":0.055,\"cacheWrite\":0.6875}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-4-1-20250805-v1:0\":{\"id\":\"us.anthropic.claude-opus-4-1-20250805-v1:0\",\"name\":\"Claude Opus 4.1 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":15,\"output\":75,\"cacheRead\":1.5,\"cacheWrite\":18.75},\"contextWindow\":200000,\"maxTokens\":32000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-4-5-20251101-v1:0\":{\"id\":\"us.anthropic.claude-opus-4-5-20251101-v1:0\",\"name\":\"Claude Opus 4.5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-4-6-v1\":{\"id\":\"us.anthropic.claude-opus-4-6-v1\",\"name\":\"Claude Opus 4.6 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-4-7\":{\"id\":\"us.anthropic.claude-opus-4-7\",\"name\":\"Claude Opus 4.7 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-4-8\":{\"id\":\"us.anthropic.claude-opus-4-8\",\"name\":\"Claude Opus 4.8 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-5\":{\"id\":\"us.anthropic.claude-opus-5\",\"name\":\"Claude Opus 5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5.5,\"output\":27.5,\"cacheRead\":0.55,\"cacheWrite\":6.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-opus-5-5\":{\"id\":\"us.anthropic.claude-opus-5-5\",\"name\":\"Claude Opus 5.5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.4,\"output\":22,\"cacheRead\":0.22,\"cacheWrite\":5.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-sonnet-4-20250514-v1:0\":{\"id\":\"us.anthropic.claude-sonnet-4-20250514-v1:0\",\"name\":\"Claude Sonnet 4 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-sonnet-4-5-20250929-v1:0\":{\"id\":\"us.anthropic.claude-sonnet-4-5-20250929-v1:0\",\"name\":\"Claude Sonnet 4.5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-sonnet-4-6\":{\"id\":\"us.anthropic.claude-sonnet-4-6\",\"name\":\"Claude Sonnet 4.6 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-sonnet-5\":{\"id\":\"us.anthropic.claude-sonnet-5\",\"name\":\"Claude Sonnet 5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.anthropic.claude-sonnet-5-5\":{\"id\":\"us.anthropic.claude-sonnet-5-5\",\"name\":\"Claude Sonnet 5.5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.11,\"cacheWrite\":2.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.meta.llama3-1-70b-instruct-v1:0\":{\"id\":\"us.meta.llama3-1-70b-instruct-v1:0\",\"name\":\"Llama 3.1 70B Instruct (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.72,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:us.meta.llama3-1-8b-instruct-v1:0\":{\"id\":\"us.meta.llama3-1-8b-instruct-v1:0\",\"name\":\"Llama 3.1 8B Instruct (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.22,\"output\":0.22,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:us.meta.llama3-3-70b-instruct-v1:0\":{\"id\":\"us.meta.llama3-3-70b-instruct-v1:0\",\"name\":\"Llama 3.3 70B Instruct (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.72,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:us.meta.llama4-maverick-17b-instruct-v1:0\":{\"id\":\"us.meta.llama4-maverick-17b-instruct-v1:0\",\"name\":\"Llama 4 Maverick 17B Instruct (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.24,\"output\":0.97,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.meta.llama4-scout-17b-instruct-v1:0\":{\"id\":\"us.meta.llama4-scout-17b-instruct-v1:0\",\"name\":\"Llama 4 Scout 17B Instruct (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.17,\"output\":0.66,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":10000000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.mistral.pixtral-large-2502-v1:0\":{\"id\":\"us.mistral.pixtral-large-2502-v1:0\",\"name\":\"Pixtral Large (25.02) (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.moonshotai.kimi-k3\":{\"id\":\"us.moonshotai.kimi-k3\",\"name\":\"Kimi K3 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3.3,\"output\":16.5,\"cacheRead\":0.33,\"cacheWrite\":4.125},\"contextWindow\":1048576,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-5.6-luna\":{\"id\":\"us.openai.gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.22,\"output\":1.32,\"cacheRead\":0.022,\"cacheWrite\":0.275,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.44,\"output\":1.98,\"cacheRead\":0.044,\"cacheWrite\":0.55}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-5.6-sol\":{\"id\":\"us.openai.gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.4,\"output\":22,\"cacheRead\":0.44,\"cacheWrite\":5.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8.8,\"output\":33,\"cacheRead\":0.88,\"cacheWrite\":11}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-5.6-terra\":{\"id\":\"us.openai.gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":13.2,\"cacheRead\":0.22,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":19.8,\"cacheRead\":0.44,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-6-astra\":{\"id\":\"us.openai.gpt-6-astra\",\"name\":\"GPT-6 Astra (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":11,\"output\":55,\"cacheRead\":1.1,\"cacheWrite\":13.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":22,\"output\":82.5,\"cacheRead\":2.2,\"cacheWrite\":27.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-6-luna\":{\"id\":\"us.openai.gpt-6-luna\",\"name\":\"GPT-6 Luna (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.11,\"output\":0.55,\"cacheRead\":0.011,\"cacheWrite\":0.1375,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.22,\"output\":0.825,\"cacheRead\":0.022,\"cacheWrite\":0.275}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-6-sol\":{\"id\":\"us.openai.gpt-6-sol\",\"name\":\"GPT-6 Sol (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.22,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":16.5,\"cacheRead\":0.44,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.openai.gpt-6.1-sol\":{\"id\":\"us.openai.gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":11,\"cacheRead\":0.11,\"cacheWrite\":2.75,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4.4,\"output\":16.5,\"cacheRead\":0.22,\"cacheWrite\":5.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.writer.palmyra-x4-v1:0\":{\"id\":\"us.writer.palmyra-x4-v1:0\",\"name\":\"Palmyra X4 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":122880,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:us.writer.palmyra-x5-v1:0\":{\"id\":\"us.writer.palmyra-x5-v1:0\",\"name\":\"Palmyra X5 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1040000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:us.xai.grok-4.6\":{\"id\":\"us.xai.grok-4.6\",\"name\":\"Grok 4.6 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":6.6,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":500000,\"maxTokens\":500000,\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.xai.grok-4.7\":{\"id\":\"us.xai.grok-4.7\",\"name\":\"Grok 4.7 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":6.6,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":500000,\"maxTokens\":500000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:us.zai.glm-5.3\":{\"id\":\"us.zai.glm-5.3\",\"name\":\"GLM-5.3 (US)\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.848,\"output\":5.808,\"cacheRead\":0.3432,\"cacheWrite\":2.31},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:writer.palmyra-x4-v1:0\":{\"id\":\"writer.palmyra-x4-v1:0\",\"name\":\"Palmyra X4\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":122880,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:writer.palmyra-x5-v1:0\":{\"id\":\"writer.palmyra-x5-v1:0\",\"name\":\"Palmyra X5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1040000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:xai.grok-4.3\":{\"id\":\"xai.grok-4.3\",\"name\":\"Grok 4.3\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:xai.grok-4.6\":{\"id\":\"xai.grok-4.6\",\"name\":\"Grok 4.6\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.2,\"output\":6.6,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":500000,\"maxTokens\":500000,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"maxPerMessage\":20,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai.glm-4.7\":{\"id\":\"zai.glm-4.7\",\"name\":\"GLM-4.7\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:zai.glm-4.7-flash\":{\"id\":\"zai.glm-4.7-flash\",\"name\":\"GLM-4.7-Flash\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.07,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:zai.glm-5\":{\"id\":\"zai.glm-5\",\"name\":\"GLM-5\",\"api\":\"bedrock-converse-stream\",\"provider\":\"amazon-bedrock\",\"baseUrl\":\"https://bedrock-runtime.us-east-1.amazonaws.com\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1,\"output\":3.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":131072,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/model-catalog.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/model-catalog.js
 function flattenModelCatalog(groups, type) {
 	return Object.fromEntries(Object.values(groups).flatMap((models) => Object.values(models)).filter((model) => model.type === type).map((model) => [model.id, model]));
 }
@@ -5593,11 +5593,11 @@ function flattenImageModelCatalog(_provider, groups) {
 function flattenClassifierModelCatalog(_provider, groups) {
 	return flattenModelCatalog(groups, "classifier");
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/amazon-bedrock.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/amazon-bedrock.models.js
 var AMAZON_BEDROCK_MODELS = flattenChatModelCatalog("amazon-bedrock", amazon_bedrock_default);
 flattenImageModelCatalog("amazon-bedrock", amazon_bedrock_default);
 flattenClassifierModelCatalog("amazon-bedrock", amazon_bedrock_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/ant-ling.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/ant-ling.json
 var ant_ling_default = { "openai-completions": {
 	"chat:Ling-2.6-1T": {
 		"id": "Ling-2.6-1T",
@@ -5689,17 +5689,17 @@ var ant_ling_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/ant-ling.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/ant-ling.models.js
 var ANT_LING_MODELS = flattenChatModelCatalog("ant-ling", ant_ling_default);
 flattenImageModelCatalog("ant-ling", ant_ling_default);
 flattenClassifierModelCatalog("ant-ling", ant_ling_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/anthropic.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/anthropic.json
 var anthropic_default = { "anthropic-messages": /*#__PURE__*/ JSON.parse("{\"chat:claude-fable-5\":{\"id\":\"claude-fable-5\",\"name\":\"Claude Fable 5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsStrictTools\":true,\"allowedFallbackModels\":[{\"provider\":\"anthropic\",\"model\":\"claude-opus-4-8\",\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25}},{\"provider\":\"anthropic\",\"model\":\"claude-opus-5\",\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25}}]},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-fable-5-1\":{\"id\":\"claude-fable-5-1\",\"name\":\"Claude Fable 5.1\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":0.25,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsMidConvoEffort\":true,\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsStrictTools\":true},\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-haiku-4-5\":{\"id\":\"claude-haiku-4-5\",\"name\":\"Claude Haiku 4.5 (latest)\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":100,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-haiku-4-5-20251001\":{\"id\":\"claude-haiku-4-5-20251001\",\"name\":\"Claude Haiku 4.5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":100,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-haiku-5-5\":{\"id\":\"claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.5,\"output\":2.5,\"cacheRead\":0.05,\"cacheWrite\":0.625}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsMidConvoEffort\":true,\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-5\":{\"id\":\"claude-opus-4-5\",\"name\":\"Claude Opus 4.5 (latest)\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":100,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-5-20251101\":{\"id\":\"claude-opus-4-5-20251101\",\"name\":\"Claude Opus 4.5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":100,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-6\":{\"id\":\"claude-opus-4-6\",\"name\":\"Claude Opus 4.6\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"max\":\"max\"},\"compat\":{\"forceAdaptiveThinking\":true,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-7\":{\"id\":\"claude-opus-4-7\",\"name\":\"Claude Opus 4.7\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"forceAdaptiveThinking\":true,\"supportsTemperature\":false,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-8\":{\"id\":\"claude-opus-4-8\",\"name\":\"Claude Opus 4.8\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false,\"supportsStrictTools\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-5\":{\"id\":\"claude-opus-5\",\"name\":\"Claude Opus 5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"compat\":{\"supportsMidConvoEffort\":true,\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false,\"supportsStrictTools\":true},\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-5-5\":{\"id\":\"claude-opus-5-5\",\"name\":\"Claude Opus 5.5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsMidConvoEffort\":true,\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-4-5\":{\"id\":\"claude-sonnet-4-5\",\"name\":\"Claude Sonnet 4.5 (latest)\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":100,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-4-5-20250929\":{\"id\":\"claude-sonnet-4-5-20250929\",\"name\":\"Claude Sonnet 4.5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":200000,\"maxTokens\":64000,\"compat\":{\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":100,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-4-6\":{\"id\":\"claude-sonnet-4-6\",\"name\":\"Claude Sonnet 4.6\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"max\":\"max\"},\"compat\":{\"forceAdaptiveThinking\":true,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-5\":{\"id\":\"claude-sonnet-5\",\"name\":\"Claude Sonnet 5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"forceAdaptiveThinking\":true,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-5-5\":{\"id\":\"claude-sonnet-5-5\",\"name\":\"Claude Sonnet 5.5\",\"api\":\"anthropic-messages\",\"provider\":\"anthropic\",\"baseUrl\":\"https://api.anthropic.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsMidConvoEffort\":true,\"supportsMidConvoSystemMessages\":true,\"supportsMidConvoToolChanges\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false,\"supportsStrictTools\":true},\"promptCache\":{\"short\":300,\"long\":3600},\"inputLimits\":{\"maxRequestBytes\":33554432,\"images\":{\"maxPerRequest\":600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/anthropic.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/anthropic.models.js
 var ANTHROPIC_MODELS = flattenChatModelCatalog("anthropic", anthropic_default);
 flattenImageModelCatalog("anthropic", anthropic_default);
 flattenClassifierModelCatalog("anthropic", anthropic_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/azure.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/azure.json
 var azure_default = {
 	"azure-openai-responses": /*#__PURE__*/ JSON.parse("{\"chat:gpt-4\":{\"id\":\"gpt-4\",\"name\":\"GPT-4\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":30,\"output\":60,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":8192,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:gpt-4-turbo\":{\"id\":\"gpt-4-turbo\",\"name\":\"GPT-4 Turbo\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":30,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1\":{\"id\":\"gpt-4.1\",\"name\":\"GPT-4.1\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1-mini\":{\"id\":\"gpt-4.1-mini\",\"name\":\"GPT-4.1 mini\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":1.6,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1-nano\":{\"id\":\"gpt-4.1-nano\",\"name\":\"GPT-4.1 nano\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o\":{\"id\":\"gpt-4o\",\"name\":\"GPT-4o\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-2024-05-13\":{\"id\":\"gpt-4o-2024-05-13\",\"name\":\"GPT-4o (2024-05-13)\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":15,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-2024-08-06\":{\"id\":\"gpt-4o-2024-08-06\",\"name\":\"GPT-4o (2024-08-06)\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-2024-11-20\":{\"id\":\"gpt-4o-2024-11-20\",\"name\":\"GPT-4o (2024-11-20)\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-mini\":{\"id\":\"gpt-4o-mini\",\"name\":\"GPT-4o mini\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5\":{\"id\":\"gpt-5\",\"name\":\"GPT-5\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-chat-latest\":{\"id\":\"gpt-5-chat-latest\",\"name\":\"GPT-5 Chat Latest\",\"api\":\"azure-openai-responses\",\"baseUrl\":\"\",\"provider\":\"azure\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-mini\":{\"id\":\"gpt-5-mini\",\"name\":\"GPT-5 Mini\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-nano\":{\"id\":\"gpt-5-nano\",\"name\":\"GPT-5 Nano\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.05,\"output\":0.4,\"cacheRead\":0.005,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-pro\":{\"id\":\"gpt-5-pro\",\"name\":\"GPT-5 Pro\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":15,\"output\":120,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.1\":{\"id\":\"gpt-5.1\",\"name\":\"GPT-5.1\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.2\":{\"id\":\"gpt-5.2\",\"name\":\"GPT-5.2\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.2-pro\":{\"id\":\"gpt-5.2-pro\",\"name\":\"GPT-5.2 Pro\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":21,\"output\":168,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.3-codex\":{\"id\":\"gpt-5.3-codex\",\"name\":\"GPT-5.3 Codex\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.3-codex-spark\":{\"id\":\"gpt-5.3-codex-spark\",\"name\":\"GPT-5.3 Codex Spark\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":32000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4\":{\"id\":\"gpt-5.4\",\"name\":\"GPT-5.4\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-mini\":{\"id\":\"gpt-5.4-mini\",\"name\":\"GPT-5.4 mini\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-nano\":{\"id\":\"gpt-5.4-nano\",\"name\":\"GPT-5.4 nano\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.25,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-pro\":{\"id\":\"gpt-5.4-pro\",\"name\":\"GPT-5.4 Pro\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5\":{\"id\":\"gpt-5.5\",\"name\":\"GPT-5.5\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5-pro\":{\"id\":\"gpt-5.5-pro\",\"name\":\"GPT-5.5 Pro\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"minimal\":null,\"low\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-luna\":{\"id\":\"gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-sol\":{\"id\":\"gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-terra\":{\"id\":\"gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-astra\":{\"id\":\"gpt-6-astra\",\"name\":\"GPT-6 Astra\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-luna\":{\"id\":\"gpt-6-luna\",\"name\":\"GPT-6 Luna\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-sol\":{\"id\":\"gpt-6-sol\",\"name\":\"GPT-6 Sol\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6.1-sol\":{\"id\":\"gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-daybreak-blue-latest\":{\"id\":\"gpt-daybreak-blue-latest\",\"name\":\"Daybreak Blue\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5},\"contextWindow\":1050000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-daybreak-red-latest\":{\"id\":\"gpt-daybreak-red-latest\",\"name\":\"Daybreak Red\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":12.5,\"output\":75,\"cacheRead\":1.25,\"cacheWrite\":15.625},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-realtime-2.1\":{\"id\":\"gpt-realtime-2.1\",\"name\":\"GPT-Realtime-2.1\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":24,\"cacheRead\":0.4,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":32000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o1\":{\"id\":\"o1\",\"name\":\"o1\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":15,\"output\":60,\"cacheRead\":7.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o1-pro\":{\"id\":\"o1-pro\",\"name\":\"o1-pro\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":150,\"output\":600,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o3\":{\"id\":\"o3\",\"name\":\"o3\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o3-mini\":{\"id\":\"o3-mini\",\"name\":\"o3-mini\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"type\":\"chat\"},\"chat:o3-pro\":{\"id\":\"o3-pro\",\"name\":\"o3-pro\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":20,\"output\":80,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o4-mini\":{\"id\":\"o4-mini\",\"name\":\"o4-mini\",\"api\":\"azure-openai-responses\",\"provider\":\"azure\",\"baseUrl\":\"\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.275,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}"),
 	"openai-completions": { "chat:deepseek-v4-pro": {
@@ -5737,17 +5737,17 @@ var azure_default = {
 		"type": "chat"
 	} }
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/azure.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/azure.models.js
 var AZURE_MODELS = flattenChatModelCatalog("azure", azure_default);
 flattenImageModelCatalog("azure", azure_default);
 flattenClassifierModelCatalog("azure", azure_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/baseten.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/baseten.json
 var baseten_default = { "openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:deepseek-ai/DeepSeek-V4-Flash-0731\":{\"id\":\"deepseek-ai/DeepSeek-V4-Flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":0.13,\"output\":0.26,\"cacheRead\":0.028,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4-Pro-0813\":{\"id\":\"deepseek-ai/DeepSeek-V4-Pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":1.32,\"output\":3.96,\"cacheRead\":0.132,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.007,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash-1017\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash-1017\",\"name\":\"DeepSeek V4.1 Flash 1017\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.007,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash-1017-Fast\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash-1017-Fast\",\"name\":\"DeepSeek V4.1 Flash 1017 Fast\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.014,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash-Fast\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash-Fast\",\"name\":\"DeepSeek V4.1 Flash Fast\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.014,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/Kimi-K3\":{\"id\":\"moonshotai/Kimi-K3\",\"name\":\"Kimi K3\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B\":{\"id\":\"nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B\",\"name\":\"Nemotron Ultra\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.12,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":202800,\"maxTokens\":202800,\"type\":\"chat\"},\"chat:openai/gpt-oss-120b\":{\"id\":\"openai/gpt-oss-120b\",\"name\":\"OpenAI GPT 120B\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.1,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":128072,\"maxTokens\":128072,\"type\":\"chat\"},\"chat:zai-org/GLM-5.2\":{\"id\":\"zai-org/GLM-5.2\",\"name\":\"GLM 5.2\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.14,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"baseten\",\"chatTemplateArgs\":{\"enable_thinking\":{\"$var\":\"thinking.enabled\"}}},\"contextWindow\":1048576,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:zai-org/GLM-5.2-Fast\":{\"id\":\"zai-org/GLM-5.2-Fast\",\"name\":\"GLM 5.2 Fast\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":2.1,\"output\":6.6,\"cacheRead\":0.21,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"baseten\",\"chatTemplateArgs\":{\"enable_thinking\":{\"$var\":\"thinking.enabled\"}}},\"contextWindow\":1048576,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:zai-org/GLM-5.3\":{\"id\":\"zai-org/GLM-5.3\",\"name\":\"GLM 5.3\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.14,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai-org/GLM-5.3-Fast\":{\"id\":\"zai-org/GLM-5.3-Fast\",\"name\":\"GLM 5.3 Fast\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.1,\"output\":6.6,\"cacheRead\":0.21,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai-org/GLM-5.3-Flash\":{\"id\":\"zai-org/GLM-5.3-Flash\",\"name\":\"GLM 5.3 Flash\",\"api\":\"openai-completions\",\"provider\":\"baseten\",\"baseUrl\":\"https://inference.baseten.co/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"supportsUsageInStreaming\":true,\"maxTokensField\":\"max_tokens\",\"sendSessionAffinityHeaders\":true,\"supportsLongCacheRetention\":false,\"thinkingFormat\":\"openai\"},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/baseten.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/baseten.models.js
 var BASETEN_MODELS = flattenChatModelCatalog("baseten", baseten_default);
 flattenImageModelCatalog("baseten", baseten_default);
 flattenClassifierModelCatalog("baseten", baseten_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/cerebras.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/cerebras.json
 var cerebras_default = { "openai-completions": {
 	"chat:gpt-oss-120b": {
 		"id": "gpt-oss-120b",
@@ -5818,11 +5818,11 @@ var cerebras_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cerebras.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cerebras.models.js
 var CEREBRAS_MODELS = flattenChatModelCatalog("cerebras", cerebras_default);
 flattenImageModelCatalog("cerebras", cerebras_default);
 flattenClassifierModelCatalog("cerebras", cerebras_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/cloudflare-ai-gateway.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/cloudflare-ai-gateway.json
 var cloudflare_ai_gateway_default = {
 	"anthropic-messages": {
 		"chat:claude-fable-5": {
@@ -6265,11 +6265,11 @@ var cloudflare_ai_gateway_default = {
 	"openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:workers-ai/@cf/deepseek-ai/deepseek-v4-flash-0731\":{\"id\":\"workers-ai/@cf/deepseek-ai/deepseek-v4-flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.44,\"output\":1.32,\"cacheRead\":0.014,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"type\":\"chat\"},\"chat:workers-ai/@cf/deepseek-ai/deepseek-v4-pro-0813\":{\"id\":\"workers-ai/@cf/deepseek-ai/deepseek-v4-pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.32,\"output\":3.96,\"cacheRead\":0.044,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"type\":\"chat\"},\"chat:workers-ai/@cf/deepseek-ai/deepseek-v4.1-flash-1017\":{\"id\":\"workers-ai/@cf/deepseek-ai/deepseek-v4.1-flash-1017\",\"name\":\"Deepseek V4.1 Flash 1017\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/google/gemma-4-26b-a4b-it\":{\"id\":\"workers-ai/@cf/google/gemma-4-26b-a4b-it\",\"name\":\"Gemma 4 26B A4B IT\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/ibm-granite/granite-4.0-h-micro\":{\"id\":\"workers-ai/@cf/ibm-granite/granite-4.0-h-micro\",\"name\":\"Granite 4.0 H Micro\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.017,\"output\":0.112,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131000,\"maxTokens\":131000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast\":{\"id\":\"workers-ai/@cf/meta/llama-3.3-70b-instruct-fp8-fast\",\"name\":\"Llama 3.3 70B Instruct fp8 Fast\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.293,\"output\":2.253,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":24000,\"maxTokens\":24000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/meta/llama-4-scout-17b-16e-instruct\":{\"id\":\"workers-ai/@cf/meta/llama-4-scout-17b-16e-instruct\",\"name\":\"Llama 4 Scout 17B 16E Instruct\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.27,\"output\":0.85,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/mistralai/mistral-small-3.1-24b-instruct\":{\"id\":\"workers-ai/@cf/mistralai/mistral-small-3.1-24b-instruct\",\"name\":\"Mistral Small 3.1 24B Instruct\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.351,\"output\":0.555,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/moonshotai/kimi-k2.6\":{\"id\":\"workers-ai/@cf/moonshotai/kimi-k2.6\",\"name\":\"Kimi K2.6\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.16,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/moonshotai/kimi-k2.7-code\":{\"id\":\"workers-ai/@cf/moonshotai/kimi-k2.7-code\",\"name\":\"Kimi K2.7 Code\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.19,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/nvidia/nemotron-3-120b-a12b\":{\"id\":\"workers-ai/@cf/nvidia/nemotron-3-120b-a12b\",\"name\":\"Nemotron 3 Super 120B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/openai/gpt-oss-120b\":{\"id\":\"workers-ai/@cf/openai/gpt-oss-120b\",\"name\":\"GPT OSS 120B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.35,\"output\":0.75,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/openai/gpt-oss-20b\":{\"id\":\"workers-ai/@cf/openai/gpt-oss-20b\",\"name\":\"GPT OSS 20B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.2,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/qwen/qwen3-30b-a3b-fp8\":{\"id\":\"workers-ai/@cf/qwen/qwen3-30b-a3b-fp8\",\"name\":\"Qwen3 30B A3b fp8\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.0509,\"output\":0.335,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":32768,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/qwen/qwen3.8-27b\":{\"id\":\"workers-ai/@cf/qwen/qwen3.8-27b\",\"name\":\"Qwen3.8 27B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.45,\"output\":3.2,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:workers-ai/@cf/zai-org/glm-4.7-flash\":{\"id\":\"workers-ai/@cf/zai-org/glm-4.7-flash\",\"name\":\"GLM-4.7-Flash\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.0605,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/zai-org/glm-5.2\":{\"id\":\"workers-ai/@cf/zai-org/glm-5.2\",\"name\":\"Glm 5.2\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/zai-org/glm-5.3\":{\"id\":\"workers-ai/@cf/zai-org/glm-5.3\",\"name\":\"Glm 5.3\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:workers-ai/@cf/zai-org/glm-5.3-flash\":{\"id\":\"workers-ai/@cf/zai-org/glm-5.3-flash\",\"name\":\"Glm 5.3 Flash\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/compat\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}"),
 	"openai-responses": /*#__PURE__*/ JSON.parse("{\"chat:gpt-4.1\":{\"id\":\"gpt-4.1\",\"name\":\"GPT-4.1\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1-mini\":{\"id\":\"gpt-4.1-mini\",\"name\":\"GPT-4.1 mini\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":1.6,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1-nano\":{\"id\":\"gpt-4.1-nano\",\"name\":\"GPT-4.1 nano\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o\":{\"id\":\"gpt-4o\",\"name\":\"GPT-4o\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":5,\"cacheRead\":0.625,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-mini\":{\"id\":\"gpt-4o-mini\",\"name\":\"GPT-4o mini\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.075,\"output\":0.3,\"cacheRead\":0.0375,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5\":{\"id\":\"gpt-5\",\"name\":\"GPT-5\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-mini\":{\"id\":\"gpt-5-mini\",\"name\":\"GPT-5 Mini\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-nano\":{\"id\":\"gpt-5-nano\",\"name\":\"GPT-5 Nano\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.05,\"output\":0.4,\"cacheRead\":0.005,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.1\":{\"id\":\"gpt-5.1\",\"name\":\"GPT-5.1\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4\":{\"id\":\"gpt-5.4\",\"name\":\"GPT-5.4\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-mini\":{\"id\":\"gpt-5.4-mini\",\"name\":\"GPT-5.4 mini\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-nano\":{\"id\":\"gpt-5.4-nano\",\"name\":\"GPT-5.4 nano\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.25,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-pro\":{\"id\":\"gpt-5.4-pro\",\"name\":\"GPT-5.4 Pro\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5\":{\"id\":\"gpt-5.5\",\"name\":\"GPT-5.5\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5-pro\":{\"id\":\"gpt-5.5-pro\",\"name\":\"GPT-5.5 Pro\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-luna\":{\"id\":\"gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.4,\"output\":1.8,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-sol\":{\"id\":\"gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-terra\":{\"id\":\"gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-astra\":{\"id\":\"gpt-6-astra\",\"name\":\"GPT-6 Astra\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":20,\"output\":75,\"cacheRead\":2,\"cacheWrite\":25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-luna\":{\"id\":\"gpt-6-luna\",\"name\":\"GPT-6 Luna\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.2,\"output\":0.75,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-sol\":{\"id\":\"gpt-6-sol\",\"name\":\"GPT-6 Sol\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6.1-sol\":{\"id\":\"gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.2,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o3\":{\"id\":\"o3\",\"name\":\"o3\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o3-mini\":{\"id\":\"o3-mini\",\"name\":\"o3-mini\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:o4-mini\":{\"id\":\"o4-mini\",\"name\":\"o4-mini\",\"api\":\"openai-responses\",\"provider\":\"cloudflare-ai-gateway\",\"baseUrl\":\"https://gateway.ai.cloudflare.com/v1/{CLOUDFLARE_ACCOUNT_ID}/{CLOUDFLARE_GATEWAY_ID}/openai\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.275,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}")
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-ai-gateway.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-ai-gateway.models.js
 var CLOUDFLARE_AI_GATEWAY_MODELS = flattenChatModelCatalog("cloudflare-ai-gateway", cloudflare_ai_gateway_default);
 flattenImageModelCatalog("cloudflare-ai-gateway", cloudflare_ai_gateway_default);
 flattenClassifierModelCatalog("cloudflare-ai-gateway", cloudflare_ai_gateway_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/cloudflare-workers-ai.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/cloudflare-workers-ai.json
 var cloudflare_workers_ai_default = {
 	"cloudflare-workers-ai-system-one": {
 		"classifier:@cf/cloudflare/clef": {
@@ -6360,11 +6360,11 @@ var cloudflare_workers_ai_default = {
 	},
 	"openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:@cf/deepseek-ai/deepseek-v4-flash-0731\":{\"id\":\"@cf/deepseek-ai/deepseek-v4-flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.44,\"output\":1.32,\"cacheRead\":0.014,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"type\":\"chat\"},\"chat:@cf/deepseek-ai/deepseek-v4-pro-0813\":{\"id\":\"@cf/deepseek-ai/deepseek-v4-pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.32,\"output\":3.96,\"cacheRead\":0.044,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"type\":\"chat\"},\"chat:@cf/deepseek-ai/deepseek-v4.1-flash-1017\":{\"id\":\"@cf/deepseek-ai/deepseek-v4.1-flash-1017\",\"name\":\"Deepseek V4.1 Flash 1017\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/google/gemma-4-26b-a4b-it\":{\"id\":\"@cf/google/gemma-4-26b-a4b-it\",\"name\":\"Gemma 4 26B A4B IT\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/ibm-granite/granite-4.0-h-micro\":{\"id\":\"@cf/ibm-granite/granite-4.0-h-micro\",\"name\":\"Granite 4.0 H Micro\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.017,\"output\":0.112,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131000,\"maxTokens\":131000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:@cf/meta/llama-3.3-70b-instruct-fp8-fast\":{\"id\":\"@cf/meta/llama-3.3-70b-instruct-fp8-fast\",\"name\":\"Llama 3.3 70B Instruct fp8 Fast\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.293,\"output\":2.253,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":24000,\"maxTokens\":24000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:@cf/meta/llama-4-scout-17b-16e-instruct\":{\"id\":\"@cf/meta/llama-4-scout-17b-16e-instruct\",\"name\":\"Llama 4 Scout 17B 16E Instruct\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.27,\"output\":0.85,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/mistralai/mistral-small-3.1-24b-instruct\":{\"id\":\"@cf/mistralai/mistral-small-3.1-24b-instruct\",\"name\":\"Mistral Small 3.1 24B Instruct\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.351,\"output\":0.555,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/moonshotai/kimi-k2.6\":{\"id\":\"@cf/moonshotai/kimi-k2.6\",\"name\":\"Kimi K2.6\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.16,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/moonshotai/kimi-k2.7-code\":{\"id\":\"@cf/moonshotai/kimi-k2.7-code\",\"name\":\"Kimi K2.7 Code\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.19,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/nvidia/nemotron-3-120b-a12b\":{\"id\":\"@cf/nvidia/nemotron-3-120b-a12b\",\"name\":\"Nemotron 3 Super 120B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:@cf/openai/gpt-oss-120b\":{\"id\":\"@cf/openai/gpt-oss-120b\",\"name\":\"GPT OSS 120B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.35,\"output\":0.75,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:@cf/openai/gpt-oss-20b\":{\"id\":\"@cf/openai/gpt-oss-20b\",\"name\":\"GPT OSS 20B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.2,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:@cf/qwen/qwen3-30b-a3b-fp8\":{\"id\":\"@cf/qwen/qwen3-30b-a3b-fp8\",\"name\":\"Qwen3 30B A3b fp8\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.0509,\"output\":0.335,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":32768,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:@cf/qwen/qwen3.8-27b\":{\"id\":\"@cf/qwen/qwen3.8-27b\",\"name\":\"Qwen3.8 27B\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.45,\"output\":3.2,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:@cf/zai-org/glm-4.7-flash\":{\"id\":\"@cf/zai-org/glm-4.7-flash\",\"name\":\"GLM-4.7-Flash\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.0605,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"type\":\"chat\"},\"chat:@cf/zai-org/glm-5.2\":{\"id\":\"@cf/zai-org/glm-5.2\",\"name\":\"Glm 5.2\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"type\":\"chat\"},\"chat:@cf/zai-org/glm-5.3\":{\"id\":\"@cf/zai-org/glm-5.3\",\"name\":\"Glm 5.3\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"type\":\"chat\"},\"chat:@cf/zai-org/glm-5.3-flash\":{\"id\":\"@cf/zai-org/glm-5.3-flash\",\"name\":\"Glm 5.3 Flash\",\"api\":\"openai-completions\",\"provider\":\"cloudflare-workers-ai\",\"baseUrl\":\"https://api.cloudflare.com/client/v4/accounts/{CLOUDFLARE_ACCOUNT_ID}/ai/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsStrictMode\":true,\"supportsLongCacheRetention\":false,\"sendSessionAffinityHeaders\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}")
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-workers-ai.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-workers-ai.models.js
 var CLOUDFLARE_WORKERS_AI_MODELS = flattenChatModelCatalog("cloudflare-workers-ai", cloudflare_workers_ai_default);
 flattenImageModelCatalog("cloudflare-workers-ai", cloudflare_workers_ai_default);
 var CLOUDFLARE_WORKERS_AI_CLASSIFIER_MODELS = flattenClassifierModelCatalog("cloudflare-workers-ai", cloudflare_workers_ai_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/deepseek.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/deepseek.json
 var deepseek_default = { "openai-completions": {
 	"chat:deepseek-flash": {
 		"id": "deepseek-flash",
@@ -6440,11 +6440,11 @@ var deepseek_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/deepseek.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/deepseek.models.js
 var DEEPSEEK_MODELS = flattenChatModelCatalog("deepseek", deepseek_default);
 flattenImageModelCatalog("deepseek", deepseek_default);
 flattenClassifierModelCatalog("deepseek", deepseek_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/fireworks.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/fireworks.json
 var fireworks_default = {
 	"anthropic-messages": /*#__PURE__*/ JSON.parse("{\"chat:accounts/fireworks/models/deepseek-v4p1-flash\":{\"id\":\"accounts/fireworks/models/deepseek-v4p1-flash\",\"name\":\"DeepSeek V4.1 Flash\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/models/deepseek-v4p1-flash-1017\":{\"id\":\"accounts/fireworks/models/deepseek-v4p1-flash-1017\",\"name\":\"DeepSeek V4.1 Flash 1017\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/models/ember-1\":{\"id\":\"accounts/fireworks/models/ember-1\",\"name\":\"Ember-1\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/models/gpt-oss-120b\":{\"id\":\"accounts/fireworks/models/gpt-oss-120b\",\"name\":\"GPT OSS 120B\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":32768,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:accounts/fireworks/models/inkling\":{\"id\":\"accounts/fireworks/models/inkling\",\"name\":\"Inkling\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":4.05,\"cacheRead\":0.17,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/models/minimax-m3\":{\"id\":\"accounts/fireworks/models/minimax-m3\",\"name\":\"MiniMax-M3\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.06,\"cacheWrite\":0},\"contextWindow\":512000,\"maxTokens\":512000,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:accounts/fireworks/models/muse-spark-open\":{\"id\":\"accounts/fireworks/models/muse-spark-open\",\"name\":\"Muse Spark Open\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":4.25,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/models/nemotron-3-ultra-nvfp4\":{\"id\":\"accounts/fireworks/models/nemotron-3-ultra-nvfp4\",\"name\":\"Nemotron 3 Ultra 550B A55B\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.12,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":128000,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false},\"type\":\"chat\"},\"chat:accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b\":{\"id\":\"accounts/fireworks/models/nemotron-lightning-3p5-30b-a3b\",\"name\":\"Nemotron 3.5 Lightning 30B A3B\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.05,\"output\":0.2,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false},\"type\":\"chat\"},\"chat:accounts/fireworks/models/qwen3p8-2p4t-a95b\":{\"id\":\"accounts/fireworks/models/qwen3p8-2p4t-a95b\",\"name\":\"Qwen3.8 2.4T A95B\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"type\":\"chat\"},\"chat:accounts/fireworks/models/qwen3p8-max\":{\"id\":\"accounts/fireworks/models/qwen3p8-max\",\"name\":\"Qwen3.8 Max\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/routers/deepseek-flash-latest\":{\"id\":\"accounts/fireworks/routers/deepseek-flash-latest\",\"name\":\"DeepSeek Flash Latest\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/routers/kimi-fast-latest\":{\"id\":\"accounts/fireworks/routers/kimi-fast-latest\",\"name\":\"Kimi Fast Latest\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4.5,\"output\":22.5,\"cacheRead\":0.45,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/routers/kimi-latest\":{\"id\":\"accounts/fireworks/routers/kimi-latest\",\"name\":\"Kimi Latest\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:accounts/fireworks/routers/minimax-latest\":{\"id\":\"accounts/fireworks/routers/minimax-latest\",\"name\":\"MiniMax Latest\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.06,\"cacheWrite\":0},\"contextWindow\":512000,\"maxTokens\":512000,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false,\"forceAdaptiveThinking\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:accounts/fireworks/routers/qwen-max-latest\":{\"id\":\"accounts/fireworks/routers/qwen-max-latest\",\"name\":\"Qwen Max Latest (Qwen3.8 Max)\",\"provider\":\"fireworks\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"api\":\"anthropic-messages\",\"baseUrl\":\"https://api.fireworks.ai/inference\",\"compat\":{\"allowEmptySignature\":true,\"sendSessionAffinityHeaders\":true,\"supportsEagerToolInputStreaming\":false,\"supportsCacheControlOnTools\":false,\"supportsLongCacheRetention\":false},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}"),
 	"openai-completions": {
@@ -6754,11 +6754,11 @@ var fireworks_default = {
 		}
 	}
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/fireworks.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/fireworks.models.js
 var FIREWORKS_MODELS = flattenChatModelCatalog("fireworks", fireworks_default);
 flattenImageModelCatalog("fireworks", fireworks_default);
 flattenClassifierModelCatalog("fireworks", fireworks_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/github-copilot.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/github-copilot.json
 var github_copilot_default = {
 	"anthropic-messages": {
 		"chat:claude-fable-5": {
@@ -7263,17 +7263,17 @@ var github_copilot_default = {
 	},
 	"openai-responses": /*#__PURE__*/ JSON.parse("{\"chat:gpt-5.3-codex\":{\"id\":\"gpt-5.3-codex\",\"name\":\"GPT-5.3 Codex\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"low\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-nano\":{\"id\":\"gpt-5.4-nano\",\"name\":\"GPT-5.4 nano\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.25,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"low\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-luna\":{\"id\":\"gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":0.4,\"output\":1.8,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"low\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-sol\":{\"id\":\"gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"low\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-terra\":{\"id\":\"gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"low\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-astra\":{\"id\":\"gpt-6-astra\",\"name\":\"GPT-6 Astra\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":20,\"output\":75,\"cacheRead\":2,\"cacheWrite\":25}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-luna\":{\"id\":\"gpt-6-luna\",\"name\":\"GPT-6 Luna\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.2,\"output\":0.75,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-sol\":{\"id\":\"gpt-6-sol\",\"name\":\"GPT-6 Sol\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6.1-sol\":{\"id\":\"gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.2,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsOpenAIGrammarTools\":true,\"supportsMidConvoSystemMessages\":true,\"supportsAdditionalTools\":true},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:grok-4.5\":{\"id\":\"grok-4.5\",\"name\":\"Grok 4.5\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":500000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:grok-4.6\":{\"id\":\"grok-4.6\",\"name\":\"Grok 4.6\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":500000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:grok-4.7\":{\"id\":\"grok-4.7\",\"name\":\"Grok 4.7\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":500000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mai-code-1.1-flash\":{\"id\":\"mai-code-1.1-flash\",\"name\":\"MAI-Code-1.1-Flash\",\"api\":\"openai-responses\",\"provider\":\"github-copilot\",\"baseUrl\":\"https://api.individual.githubcopilot.com\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":128000,\"headers\":{\"User-Agent\":\"GitHubCopilotChat/0.35.0\",\"Editor-Version\":\"vscode/1.107.0\",\"Editor-Plugin-Version\":\"copilot-chat/0.35.0\",\"Copilot-Integration-Id\":\"vscode-chat\"},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}")
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/github-copilot.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/github-copilot.models.js
 var GITHUB_COPILOT_MODELS = flattenChatModelCatalog("github-copilot", github_copilot_default);
 flattenImageModelCatalog("github-copilot", github_copilot_default);
 flattenClassifierModelCatalog("github-copilot", github_copilot_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/google.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/google.json
 var google_default = { "google-generative-ai": /*#__PURE__*/ JSON.parse("{\"chat:deep-research-max-preview-04-2026\":{\"id\":\"deep-research-max-preview-04-2026\",\"name\":\"Deep Research Max Preview (Apr-21-2026)\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":131072,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deep-research-preview-04-2026\":{\"id\":\"deep-research-preview-04-2026\",\"name\":\"Deep Research Preview (Apr-21-2026)\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":131072,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-2.5-computer-use-preview-10-2025\":{\"id\":\"gemini-2.5-computer-use-preview-10-2025\",\"name\":\"Gemini 2.5 Computer Use Preview 10-2025\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":15,\"cacheRead\":0,\"cacheWrite\":0}]},\"contextWindow\":128000,\"maxTokens\":64000,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-2.5-flash\":{\"id\":\"gemini-2.5-flash\",\"name\":\"Gemini 2.5 Flash\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-2.5-flash-lite\":{\"id\":\"gemini-2.5-flash-lite\",\"name\":\"Gemini 2.5 Flash-Lite\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-2.5-pro\":{\"id\":\"gemini-2.5-pro\",\"name\":\"Gemini 2.5 Pro\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0}]},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3-flash-preview\":{\"id\":\"gemini-3-flash-preview\",\"name\":\"Gemini 3 Flash Preview\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.1-flash-lite\":{\"id\":\"gemini-3.1-flash-lite\",\"name\":\"Gemini 3.1 Flash Lite\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":1.5,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.1-flash-lite-image\":{\"id\":\"gemini-3.1-flash-lite-image\",\"name\":\"Nano Banana 2 Lite\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":30,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":65536,\"maxTokens\":4096,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.1-flash-lite-preview\":{\"id\":\"gemini-3.1-flash-lite-preview\",\"name\":\"Gemini 3.1 Flash Lite Preview\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":1.5,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.1-flash-live-preview\":{\"id\":\"gemini-3.1-flash-live-preview\",\"name\":\"Gemini 3.1 Flash Live Preview\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.1-pro-preview\":{\"id\":\"gemini-3.1-pro-preview\",\"name\":\"Gemini 3.1 Pro Preview\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.1-pro-preview-customtools\":{\"id\":\"gemini-3.1-pro-preview-customtools\",\"name\":\"Gemini 3.1 Pro Preview Custom Tools\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.5-flash\":{\"id\":\"gemini-3.5-flash\",\"name\":\"Gemini 3.5 Flash\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.5,\"output\":9,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.5-flash-lite\":{\"id\":\"gemini-3.5-flash-lite\",\"name\":\"Gemini 3.5 Flash Lite\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.6-flash\":{\"id\":\"gemini-3.6-flash\",\"name\":\"Gemini 3.6 Flash\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":3.75,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.7-flash\":{\"id\":\"gemini-3.7-flash\",\"name\":\"Gemini 3.7 Flash\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":3.75,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-3.8-flash\":{\"id\":\"gemini-3.8-flash\",\"name\":\"Gemini 3.8 Flash\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":3.75,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-4-argon\":{\"id\":\"gemini-4-argon\",\"name\":\"Gemini 4 Argon\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":32768,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-flash-latest\":{\"id\":\"gemini-flash-latest\",\"name\":\"Gemini Flash Latest\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.5,\"output\":9,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-flash-lite-latest\":{\"id\":\"gemini-flash-lite-latest\",\"name\":\"Gemini Flash-Lite Latest\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":1.5,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemini-pro-latest\":{\"id\":\"gemini-pro-latest\",\"name\":\"Gemini Pro Latest\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":1048576,\"maxTokens\":65536,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemma-4-26b-a4b-it\":{\"id\":\"gemma-4-26b-a4b-it\",\"name\":\"Gemma 4 26B A4B IT\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"MINIMAL\",\"low\":null,\"medium\":null,\"high\":\"HIGH\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gemma-4-31b-it\":{\"id\":\"gemma-4-31b-it\",\"name\":\"Gemma 4 31B IT\",\"api\":\"google-generative-ai\",\"provider\":\"google\",\"baseUrl\":\"https://generativelanguage.googleapis.com/v1beta\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"MINIMAL\",\"low\":null,\"medium\":null,\"high\":\"HIGH\"},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"inputLimits\":{\"maxRequestBytes\":20971520,\"images\":{\"maxPerRequest\":3600,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/google.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/google.models.js
 var GOOGLE_MODELS = flattenChatModelCatalog("google", google_default);
 flattenImageModelCatalog("google", google_default);
 flattenClassifierModelCatalog("google", google_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/google-vertex.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/google-vertex.json
 var google_vertex_default = { "google-vertex": {
 	"chat:gemini-2.5-flash": {
 		"id": "gemini-2.5-flash",
@@ -7711,11 +7711,11 @@ var google_vertex_default = { "google-vertex": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/google-vertex.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/google-vertex.models.js
 var GOOGLE_VERTEX_MODELS = flattenChatModelCatalog("google-vertex", google_vertex_default);
 flattenImageModelCatalog("google-vertex", google_vertex_default);
 flattenClassifierModelCatalog("google-vertex", google_vertex_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/groq.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/groq.json
 var groq_default = { "openai-completions": {
 	"chat:llama-3.1-8b-instant": {
 		"id": "llama-3.1-8b-instant",
@@ -7908,17 +7908,17 @@ var groq_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/groq.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/groq.models.js
 var GROQ_MODELS = flattenChatModelCatalog("groq", groq_default);
 flattenImageModelCatalog("groq", groq_default);
 flattenClassifierModelCatalog("groq", groq_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/huggingface.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/huggingface.json
 var huggingface_default = { "openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:deepseek-ai/DeepSeek-R1\":{\"id\":\"deepseek-ai/DeepSeek-R1\",\"name\":\"DeepSeek-R1\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.7,\"output\":2.5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":64000,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-R1-0528\":{\"id\":\"deepseek-ai/DeepSeek-R1-0528\",\"name\":\"DeepSeek-R1-0528\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":3,\"output\":5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":163840,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V3\":{\"id\":\"deepseek-ai/DeepSeek-V3\",\"name\":\"DeepSeek-V3\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":1.3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":64000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V3-0324\":{\"id\":\"deepseek-ai/DeepSeek-V3-0324\",\"name\":\"DeepSeek V3 0324\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.27,\"output\":1.12,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":163840,\"maxTokens\":163840,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V3.1\":{\"id\":\"deepseek-ai/DeepSeek-V3.1\",\"name\":\"DeepSeek-V3.1\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.27,\"output\":1,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V3.2\":{\"id\":\"deepseek-ai/DeepSeek-V3.2\",\"name\":\"DeepSeek-V3.2\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.28,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":163840,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4-Flash\":{\"id\":\"deepseek-ai/DeepSeek-V4-Flash\",\"name\":\"DeepSeek V4 Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.14,\"output\":0.28,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4-Flash-0731\":{\"id\":\"deepseek-ai/DeepSeek-V4-Flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.14,\"output\":0.28,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4-Flash-Vision-Exp\":{\"id\":\"deepseek-ai/DeepSeek-V4-Flash-Vision-Exp\",\"name\":\"DeepSeek V4 Flash Vision Exp\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.44,\"output\":1.32,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4-Pro\":{\"id\":\"deepseek-ai/DeepSeek-V4-Pro\",\"name\":\"DeepSeek V4 Pro\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.435,\"output\":0.87,\"cacheRead\":0.003625,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":393216,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4-Pro-0813\":{\"id\":\"deepseek-ai/DeepSeek-V4-Pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.32,\"output\":3.96,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1000000,\"maxTokens\":384000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash-1017\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash-1017\",\"name\":\"DeepSeek V4.1 Flash 1017\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-3-12b-it\":{\"id\":\"google/gemma-3-12b-it\",\"name\":\"Gemma 3 12B IT\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.05,\"output\":0.15,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-3-27b-it\":{\"id\":\"google/gemma-3-27b-it\",\"name\":\"Gemma 3 27B IT\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.08,\"output\":0.16,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-3-4b-it\":{\"id\":\"google/gemma-3-4b-it\",\"name\":\"Gemma 3 4B IT\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.05,\"output\":0.1,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-4-26B-A4B-it\":{\"id\":\"google/gemma-4-26B-A4B-it\",\"name\":\"Gemma 4 26B A4B IT\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.13,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-4-31B-it\":{\"id\":\"google/gemma-4-31B-it\",\"name\":\"Gemma 4 31B IT\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.14,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta-llama/Llama-3.1-8B-Instruct\":{\"id\":\"meta-llama/Llama-3.1-8B-Instruct\",\"name\":\"Llama-3.1-8B-Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.06,\"output\":0.06,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:meta-llama/Llama-3.3-70B-Instruct\":{\"id\":\"meta-llama/Llama-3.3-70B-Instruct\",\"name\":\"Llama-3.3-70B-Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.59,\"output\":0.79,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M1-80k\":{\"id\":\"MiniMaxAI/MiniMax-M1-80k\",\"name\":\"MiniMax M1 80K\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.55,\"output\":2.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1000000,\"maxTokens\":80000,\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M2\":{\"id\":\"MiniMaxAI/MiniMax-M2\",\"name\":\"MiniMax-M2\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M2.1\":{\"id\":\"MiniMaxAI/MiniMax-M2.1\",\"name\":\"MiniMax-M2.1\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M2.5\":{\"id\":\"MiniMaxAI/MiniMax-M2.5\",\"name\":\"MiniMax-M2.5\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.03,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M2.7\":{\"id\":\"MiniMaxAI/MiniMax-M2.7\",\"name\":\"MiniMax-M2.7\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.06,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M3\":{\"id\":\"MiniMaxAI/MiniMax-M3\",\"name\":\"MiniMax-M3\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":524288,\"maxTokens\":512000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/Kimi-K2-Instruct\":{\"id\":\"moonshotai/Kimi-K2-Instruct\",\"name\":\"Kimi-K2-Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":1,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:moonshotai/Kimi-K2-Instruct-0905\":{\"id\":\"moonshotai/Kimi-K2-Instruct-0905\",\"name\":\"Kimi-K2-Instruct-0905\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":1,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:moonshotai/Kimi-K2-Thinking\":{\"id\":\"moonshotai/Kimi-K2-Thinking\",\"name\":\"Kimi-K2-Thinking\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.5,\"cacheRead\":0.15,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:moonshotai/Kimi-K2.5\":{\"id\":\"moonshotai/Kimi-K2.5\",\"name\":\"Kimi-K2.5\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.6,\"output\":3,\"cacheRead\":0.1,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/Kimi-K2.6\":{\"id\":\"moonshotai/Kimi-K2.6\",\"name\":\"Kimi-K2.6\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.16,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/Kimi-K2.7-Code\":{\"id\":\"moonshotai/Kimi-K2.7-Code\",\"name\":\"Kimi K2.7 Code\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/Kimi-K3\":{\"id\":\"moonshotai/Kimi-K3\",\"name\":\"Kimi K3\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1000000,\"maxTokens\":131072,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-oss-120b\":{\"id\":\"openai/gpt-oss-120b\",\"name\":\"GPT OSS 120B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.25,\"output\":0.69,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:openai/gpt-oss-20b\":{\"id\":\"openai/gpt-oss-20b\",\"name\":\"GPT OSS 20B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:Qwen/Qwen2.5-Coder-32B-Instruct\":{\"id\":\"Qwen/Qwen2.5-Coder-32B-Instruct\",\"name\":\"Qwen2.5-Coder-32B-Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.06,\"output\":0.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:Qwen/Qwen3-235B-A22B\":{\"id\":\"Qwen/Qwen3-235B-A22B\",\"name\":\"Qwen3 235B-A22B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.2,\"output\":0.8,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":40960,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:Qwen/Qwen3-235B-A22B-Instruct-2507\":{\"id\":\"Qwen/Qwen3-235B-A22B-Instruct-2507\",\"name\":\"Qwen3 235B-A22B Instruct 2507\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.855,\"output\":2.565,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:Qwen/Qwen3-235B-A22B-Thinking-2507\":{\"id\":\"Qwen/Qwen3-235B-A22B-Thinking-2507\",\"name\":\"Qwen3-235B-A22B-Thinking-2507\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":81920,\"type\":\"chat\"},\"chat:Qwen/Qwen3-30B-A3B\":{\"id\":\"Qwen/Qwen3-30B-A3B\",\"name\":\"Qwen3 30B A3B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.12,\"output\":0.5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":40960,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:Qwen/Qwen3-32B\":{\"id\":\"Qwen/Qwen3-32B\",\"name\":\"Qwen3 32B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.29,\"output\":0.59,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:Qwen/Qwen3-8B\":{\"id\":\"Qwen/Qwen3-8B\",\"name\":\"Qwen3 8B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.07,\"output\":0.18,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":40960,\"maxTokens\":32768,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:Qwen/Qwen3-Coder-30B-A3B-Instruct\":{\"id\":\"Qwen/Qwen3-Coder-30B-A3B-Instruct\",\"name\":\"Qwen3-Coder 30B-A3B Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.07,\"output\":0.26,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:Qwen/Qwen3-Coder-480B-A35B-Instruct\":{\"id\":\"Qwen/Qwen3-Coder-480B-A35B-Instruct\",\"name\":\"Qwen3-Coder-480B-A35B-Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":2,\"output\":2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:Qwen/Qwen3-Coder-Next\":{\"id\":\"Qwen/Qwen3-Coder-Next\",\"name\":\"Qwen3-Coder-Next\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.2,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:Qwen/Qwen3-Next-80B-A3B-Instruct\":{\"id\":\"Qwen/Qwen3-Next-80B-A3B-Instruct\",\"name\":\"Qwen3-Next-80B-A3B-Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.25,\"output\":1,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:Qwen/Qwen3-Next-80B-A3B-Thinking\":{\"id\":\"Qwen/Qwen3-Next-80B-A3B-Thinking\",\"name\":\"Qwen3-Next-80B-A3B-Thinking\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:Qwen/Qwen3-VL-235B-A22B-Instruct\":{\"id\":\"Qwen/Qwen3-VL-235B-A22B-Instruct\",\"name\":\"Qwen3 VL 235B A22B Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3-VL-235B-A22B-Thinking\":{\"id\":\"Qwen/Qwen3-VL-235B-A22B-Thinking\",\"name\":\"Qwen3 VL 235B A22B Thinking\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.98,\"output\":3.95,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3-VL-30B-A3B-Instruct\":{\"id\":\"Qwen/Qwen3-VL-30B-A3B-Instruct\",\"name\":\"Qwen3 VL 30B A3B Instruct\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":0.7,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.5-122B-A10B\":{\"id\":\"Qwen/Qwen3.5-122B-A10B\",\"name\":\"Qwen3.5 122B-A10B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":3.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.5-27B\":{\"id\":\"Qwen/Qwen3.5-27B\",\"name\":\"Qwen3.5 27B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":2.4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.5-35B-A3B\":{\"id\":\"Qwen/Qwen3.5-35B-A3B\",\"name\":\"Qwen3.5 35B-A3B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.5-397B-A17B\":{\"id\":\"Qwen/Qwen3.5-397B-A17B\",\"name\":\"Qwen3.5-397B-A17B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.6,\"output\":3.6,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":32768,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.5-9B\":{\"id\":\"Qwen/Qwen3.5-9B\",\"name\":\"Qwen3.5 9B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.17,\"output\":0.25,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.6-27B\":{\"id\":\"Qwen/Qwen3.6-27B\",\"name\":\"Qwen3.6 27B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.47,\"output\":3.19,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.6-35B-A3B\":{\"id\":\"Qwen/Qwen3.6-35B-A3B\",\"name\":\"Qwen3.6 35B-A3B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.95,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.8-2.4T-A95B\":{\"id\":\"Qwen/Qwen3.8-2.4T-A95B\",\"name\":\"Qwen3.8 2.4T A95B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":2.5,\"output\":6.25,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":131072,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"type\":\"chat\"},\"chat:Qwen/Qwen3.8-27B\":{\"id\":\"Qwen/Qwen3.8-27B\",\"name\":\"Qwen3.8 27B\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":32768,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:stepfun-ai/Step-3.5-Flash\":{\"id\":\"stepfun-ai/Step-3.5-Flash\",\"name\":\"Step 3.5 Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":256000,\"type\":\"chat\"},\"chat:stepfun-ai/Step-3.7-Flash\":{\"id\":\"stepfun-ai/Step-3.7-Flash\",\"name\":\"Step 3.7 Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.15,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":256000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:tencent/Hy3\":{\"id\":\"tencent/Hy3\",\"name\":\"Hy3\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.14,\"output\":0.58,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:tencent/Hy4-preview\":{\"id\":\"tencent/Hy4-preview\",\"name\":\"Hy4 preview\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.834,\"output\":2.501,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1000000,\"maxTokens\":64000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"type\":\"chat\"},\"chat:thinkingmachines/Inkling\":{\"id\":\"thinkingmachines/Inkling\",\"name\":\"Inkling\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":4.05,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":1048576,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:thinkingmachines/Inkling-Small\":{\"id\":\"thinkingmachines/Inkling-Small\",\"name\":\"Inkling Small\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.5,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":524288,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:XiaomiMiMo/MiMo-V2-Flash\":{\"id\":\"XiaomiMiMo/MiMo-V2-Flash\",\"name\":\"MiMo-V2-Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:XiaomiMiMo/MiMo-V2.5\":{\"id\":\"XiaomiMiMo/MiMo-V2.5\",\"name\":\"MiMo-V2.5\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":131072,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"type\":\"chat\"},\"chat:XiaomiMiMo/MiMo-V2.5-Pro\":{\"id\":\"XiaomiMiMo/MiMo-V2.5-Pro\",\"name\":\"MiMo-V2.5-Pro\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":131072,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"type\":\"chat\"},\"chat:zai-org/GLM-4.5\":{\"id\":\"zai-org/GLM-4.5\",\"name\":\"GLM-4.5\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":98304,\"type\":\"chat\"},\"chat:zai-org/GLM-4.5-Air\":{\"id\":\"zai-org/GLM-4.5-Air\",\"name\":\"GLM-4.5-Air\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.13,\"output\":0.85,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":98304,\"type\":\"chat\"},\"chat:zai-org/GLM-4.5V\":{\"id\":\"zai-org/GLM-4.5V\",\"name\":\"GLM-4.5V\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.6,\"output\":1.8,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":65536,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai-org/GLM-4.6\":{\"id\":\"zai-org/GLM-4.6\",\"name\":\"GLM-4.6\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.55,\"output\":2.2,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:zai-org/GLM-4.6V-Flash\":{\"id\":\"zai-org/GLM-4.6V-Flash\",\"name\":\"GLM-4.6V-Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":0.9,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai-org/GLM-4.7\":{\"id\":\"zai-org/GLM-4.7\",\"name\":\"GLM-4.7\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0.6,\"output\":2.2,\"cacheRead\":0.11,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:zai-org/GLM-4.7-Flash\":{\"id\":\"zai-org/GLM-4.7-Flash\",\"name\":\"GLM-4.7-Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":200000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:zai-org/GLM-5\":{\"id\":\"zai-org/GLM-5\",\"name\":\"GLM-5\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1,\"output\":3.2,\"cacheRead\":0.2,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":202752,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:zai-org/GLM-5.1\":{\"id\":\"zai-org/GLM-5.1\",\"name\":\"GLM-5.1\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1,\"output\":3.2,\"cacheRead\":0.2,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":202752,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:zai-org/GLM-5.2\":{\"id\":\"zai-org/GLM-5.2\",\"name\":\"GLM-5.2\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":262144,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:zai-org/GLM-5.3\":{\"id\":\"zai-org/GLM-5.3\",\"name\":\"GLM-5.3\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":131072,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"type\":\"chat\"},\"chat:zai-org/GLM-5.3-Flash\":{\"id\":\"zai-org/GLM-5.3-Flash\",\"name\":\"GLM-5.3-Flash\",\"api\":\"openai-completions\",\"provider\":\"huggingface\",\"baseUrl\":\"https://router.huggingface.co/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStrictMode\":true,\"supportsDeveloperRole\":false},\"contextWindow\":1048576,\"maxTokens\":131072,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/huggingface.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/huggingface.models.js
 var HUGGINGFACE_MODELS = flattenChatModelCatalog("huggingface", huggingface_default);
 flattenImageModelCatalog("huggingface", huggingface_default);
 flattenClassifierModelCatalog("huggingface", huggingface_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/kimi-coding.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/kimi-coding.json
 var kimi_coding_default = { "openai-completions": {
 	"chat:k3": {
 		"id": "k3",
@@ -8087,11 +8087,11 @@ var kimi_coding_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/kimi-coding.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/kimi-coding.models.js
 var KIMI_CODING_MODELS = flattenChatModelCatalog("kimi-coding", kimi_coding_default);
 flattenImageModelCatalog("kimi-coding", kimi_coding_default);
 flattenClassifierModelCatalog("kimi-coding", kimi_coding_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/meta.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/meta.json
 var meta_default = { "openai-responses": {
 	"chat:muse-spark-1.1": {
 		"id": "muse-spark-1.1",
@@ -8292,11 +8292,11 @@ var meta_default = { "openai-responses": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/meta.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/meta.models.js
 var META_MODELS = flattenChatModelCatalog("meta", meta_default);
 flattenImageModelCatalog("meta", meta_default);
 flattenClassifierModelCatalog("meta", meta_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/minimax.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/minimax.json
 var minimax_default = { "anthropic-messages": {
 	"chat:MiniMax-M2.7": {
 		"id": "MiniMax-M2.7",
@@ -8400,11 +8400,11 @@ var minimax_default = { "anthropic-messages": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/minimax.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/minimax.models.js
 var MINIMAX_MODELS = flattenChatModelCatalog("minimax", minimax_default);
 flattenImageModelCatalog("minimax", minimax_default);
 flattenClassifierModelCatalog("minimax", minimax_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/minimax-cn.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/minimax-cn.json
 var minimax_cn_default = { "anthropic-messages": {
 	"chat:MiniMax-M2.7": {
 		"id": "MiniMax-M2.7",
@@ -8508,17 +8508,17 @@ var minimax_cn_default = { "anthropic-messages": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/minimax-cn.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/minimax-cn.models.js
 var MINIMAX_CN_MODELS = flattenChatModelCatalog("minimax-cn", minimax_cn_default);
 flattenImageModelCatalog("minimax-cn", minimax_cn_default);
 flattenClassifierModelCatalog("minimax-cn", minimax_cn_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/mistral.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/mistral.json
 var mistral_default = { "mistral-conversations": /*#__PURE__*/ JSON.parse("{\"chat:codestral-2508\":{\"id\":\"codestral-2508\",\"name\":\"Codestral 25.08\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":0.9,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:codestral-latest\":{\"id\":\"codestral-latest\",\"name\":\"Codestral (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.3,\"output\":0.9,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:devstral-2512\":{\"id\":\"devstral-2512\",\"name\":\"Devstral 2\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:devstral-latest\":{\"id\":\"devstral-latest\",\"name\":\"Devstral 2\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:devstral-medium-2507\":{\"id\":\"devstral-medium-2507\",\"name\":\"Devstral Medium\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:devstral-medium-latest\":{\"id\":\"devstral-medium-latest\",\"name\":\"Devstral 2 (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:devstral-small-2505\":{\"id\":\"devstral-small-2505\",\"name\":\"Devstral Small 2505\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:devstral-small-2507\":{\"id\":\"devstral-small-2507\",\"name\":\"Devstral Small\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:glm-5-2\":{\"id\":\"glm-5-2\",\"name\":\"GLM-5.2\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.14,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:labs-devstral-small-2512\":{\"id\":\"labs-devstral-small-2512\",\"name\":\"Devstral Small 2\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:labs-leanstral-1-5-1\":{\"id\":\"labs-leanstral-1-5-1\",\"name\":\"Leanstral 1.5\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:magistral-medium-latest\":{\"id\":\"magistral-medium-latest\",\"name\":\"Magistral Medium (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":5,\"cacheRead\":0.2,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:ministral-14b-2512\":{\"id\":\"ministral-14b-2512\",\"name\":\"Ministral 3 14B\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":0.2,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:ministral-3b-2512\":{\"id\":\"ministral-3b-2512\",\"name\":\"Ministral 3 3B\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.1,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:ministral-3b-latest\":{\"id\":\"ministral-3b-latest\",\"name\":\"Ministral 3B (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.1,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:ministral-8b-2512\":{\"id\":\"ministral-8b-2512\",\"name\":\"Ministral 3 8B\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:ministral-8b-latest\":{\"id\":\"ministral-8b-latest\",\"name\":\"Ministral 8B (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-large-2411\":{\"id\":\"mistral-large-2411\",\"name\":\"Mistral Large 2.1\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.2,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:mistral-large-2512\":{\"id\":\"mistral-large-2512\",\"name\":\"Mistral Large 3\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-large-4\":{\"id\":\"mistral-large-4\",\"name\":\"Mistral Large 4\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.68,\"output\":2.09,\"cacheRead\":0.07,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-large-latest\":{\"id\":\"mistral-large-latest\",\"name\":\"Mistral Large (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-medium-2505\":{\"id\":\"mistral-medium-2505\",\"name\":\"Mistral Medium 3\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-medium-2508\":{\"id\":\"mistral-medium-2508\",\"name\":\"Mistral Medium 3.1\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":2,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-medium-2604\":{\"id\":\"mistral-medium-2604\",\"name\":\"Mistral Medium 3.5\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-medium-3.5\":{\"id\":\"mistral-medium-3.5\",\"name\":\"Mistral Medium 3.5\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-medium-latest\":{\"id\":\"mistral-medium-latest\",\"name\":\"Mistral Medium (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-nemo\":{\"id\":\"mistral-nemo\",\"name\":\"Mistral Nemo\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:mistral-small-2506\":{\"id\":\"mistral-small-2506\",\"name\":\"Mistral Small 3.2\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.3,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-small-2603\":{\"id\":\"mistral-small-2603\",\"name\":\"Mistral Small 4\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral-small-latest\":{\"id\":\"mistral-small-latest\",\"name\":\"Mistral Small (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:open-mistral-nemo\":{\"id\":\"open-mistral-nemo\",\"name\":\"Open Mistral Nemo\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:pixtral-12b\":{\"id\":\"pixtral-12b\",\"name\":\"Pixtral 12B\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:pixtral-large-latest\":{\"id\":\"pixtral-large-latest\",\"name\":\"Pixtral Large (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.2,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:voxtral-small-2507\":{\"id\":\"voxtral-small-2507\",\"name\":\"Voxtral Small\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":32000,\"type\":\"chat\"},\"chat:voxtral-small-latest\":{\"id\":\"voxtral-small-latest\",\"name\":\"Voxtral Small (latest)\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":32768,\"maxTokens\":32000,\"type\":\"chat\"},\"chat:zai-glm-5-2\":{\"id\":\"zai-glm-5-2\",\"name\":\"GLM-5.2\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.14,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:zai-glm-5-3\":{\"id\":\"zai-glm-5-3\",\"name\":\"GLM-5.3\",\"api\":\"mistral-conversations\",\"provider\":\"mistral\",\"baseUrl\":\"https://api.mistral.ai\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.14,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/mistral.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/mistral.models.js
 var MISTRAL_MODELS = flattenChatModelCatalog("mistral", mistral_default);
 flattenImageModelCatalog("mistral", mistral_default);
 flattenClassifierModelCatalog("mistral", mistral_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/moonshotai.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/moonshotai.json
 var moonshotai_default = { "openai-completions": {
 	"chat:kimi-k2.6": {
 		"id": "kimi-k2.6",
@@ -8666,11 +8666,11 @@ var moonshotai_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai.models.js
 var MOONSHOTAI_MODELS = flattenChatModelCatalog("moonshotai", moonshotai_default);
 flattenImageModelCatalog("moonshotai", moonshotai_default);
 flattenClassifierModelCatalog("moonshotai", moonshotai_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/moonshotai-cn.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/moonshotai-cn.json
 var moonshotai_cn_default = { "openai-completions": {
 	"chat:kimi-k2.6": {
 		"id": "kimi-k2.6",
@@ -8818,17 +8818,17 @@ var moonshotai_cn_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai-cn.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai-cn.models.js
 var MOONSHOTAI_CN_MODELS = flattenChatModelCatalog("moonshotai-cn", moonshotai_cn_default);
 flattenImageModelCatalog("moonshotai-cn", moonshotai_cn_default);
 flattenClassifierModelCatalog("moonshotai-cn", moonshotai_cn_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/nvidia.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/nvidia.json
 var nvidia_default = { "openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:deepseek-ai/deepseek-v4.1-flash\":{\"id\":\"deepseek-ai/deepseek-v4.1-flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false,\"requiresReasoningContentOnAssistantMessages\":true,\"thinkingFormat\":\"deepseek\"},\"contextWindow\":1000000,\"maxTokens\":384000,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/diffusiongemma-26b-a4b-it\":{\"id\":\"google/diffusiongemma-26b-a4b-it\",\"name\":\"DiffusionGemma 26B A4B IT\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":250000,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-3-12b-it\":{\"id\":\"google/gemma-3-12b-it\",\"name\":\"Gemma 3 12B IT\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":131072,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-3-4b-it\":{\"id\":\"google/gemma-3-4b-it\",\"name\":\"Gemma 3 4B IT\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":131072,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/llama-3.2-11b-vision-instruct\":{\"id\":\"meta/llama-3.2-11b-vision-instruct\",\"name\":\"Llama 3.2 11b Vision Instruct\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":128000,\"maxTokens\":4096,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/llama-3.2-90b-vision-instruct\":{\"id\":\"meta/llama-3.2-90b-vision-instruct\",\"name\":\"Llama-3.2-90B-Vision-Instruct\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":128000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-glimmer-30b\":{\"id\":\"meta/muse-glimmer-30b\",\"name\":\"Muse Glimmer 30B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistralai/mistral-7b-instruct-v0.3\":{\"id\":\"mistralai/mistral-7b-instruct-v0.3\",\"name\":\"Mistral-7B-Instruct-v0.3\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":65536,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:moonshotai/kimi-k2.6\":{\"id\":\"moonshotai/kimi-k2.6\",\"name\":\"Kimi K2.6\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/cosmos-reason2-8b\":{\"id\":\"nvidia/cosmos-reason2-8b\",\"name\":\"Cosmos Reason2 8B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":131072,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/llama-3.1-nemotron-70b-instruct\":{\"id\":\"nvidia/llama-3.1-nemotron-70b-instruct\",\"name\":\"Llama 3.1 Nemotron 70B Instruct\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:nvidia/llama-3.1-nemotron-ultra-253b-v1\":{\"id\":\"nvidia/llama-3.1-nemotron-ultra-253b-v1\",\"name\":\"Llama 3.1 Nemotron Ultra 253B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":128000,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:nvidia/nemotron-3-nano-omni-30b-a3b-reasoning\":{\"id\":\"nvidia/nemotron-3-nano-omni-30b-a3b-reasoning\",\"name\":\"Nemotron 3 Nano Omni\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":256000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/nemotron-3-ultra-550b-a55b\":{\"id\":\"nvidia/nemotron-3-ultra-550b-a55b\",\"name\":\"Nemotron 3 Ultra 550B A55B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1000000,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:nvidia/nemotron-3.5-lightning-30b-a3b\":{\"id\":\"nvidia/nemotron-3.5-lightning-30b-a3b\",\"name\":\"Nemotron 3.5 Lightning 30B A3B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:nvidia/nemotron-3.5-super-vl-120b-a12b\":{\"id\":\"nvidia/nemotron-3.5-super-vl-120b-a12b\",\"name\":\"Nemotron 3.5 Super VL 120B A12B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-oss-20b\":{\"id\":\"openai/gpt-oss-20b\",\"name\":\"GPT OSS 20B\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":131072,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:poolside/laguna-xs-2.1\":{\"id\":\"poolside/laguna-xs-2.1\",\"name\":\"Laguna XS 2.1\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":262144,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:stepfun-ai/step-5-preview\":{\"id\":\"stepfun-ai/step-5-preview\",\"name\":\"Step 5 Preview\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:z-ai/glm-5.3\":{\"id\":\"z-ai/glm-5.3\",\"name\":\"GLM-5.3\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:z-ai/glm-5.3-flash\":{\"id\":\"z-ai/glm-5.3-flash\",\"name\":\"GLM-5.3-Flash\",\"api\":\"openai-completions\",\"provider\":\"nvidia\",\"baseUrl\":\"https://integrate.api.nvidia.com/v1\",\"headers\":{\"NVCF-POLL-SECONDS\":\"3600\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/nvidia.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/nvidia.models.js
 var NVIDIA_MODELS = flattenChatModelCatalog("nvidia", nvidia_default);
 flattenImageModelCatalog("nvidia", nvidia_default);
 flattenClassifierModelCatalog("nvidia", nvidia_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/openai.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/openai.json
 var openai_default = {
 	"openai-decisions": { "classifier:gpt-6-luna": {
 		"type": "classifier",
@@ -8855,11 +8855,11 @@ var openai_default = {
 	} },
 	"openai-responses": /*#__PURE__*/ JSON.parse("{\"chat:gpt-4\":{\"id\":\"gpt-4\",\"name\":\"GPT-4\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\"],\"cost\":{\"input\":30,\"output\":60,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":8192,\"maxTokens\":8192,\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:gpt-4-turbo\":{\"id\":\"gpt-4-turbo\",\"name\":\"GPT-4 Turbo\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":30,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1\":{\"id\":\"gpt-4.1\",\"name\":\"GPT-4.1\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1-mini\":{\"id\":\"gpt-4.1-mini\",\"name\":\"GPT-4.1 mini\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.4,\"output\":1.6,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4.1-nano\":{\"id\":\"gpt-4.1-nano\",\"name\":\"GPT-4.1 nano\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o\":{\"id\":\"gpt-4o\",\"name\":\"GPT-4o\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-2024-05-13\":{\"id\":\"gpt-4o-2024-05-13\",\"name\":\"GPT-4o (2024-05-13)\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":15,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-2024-08-06\":{\"id\":\"gpt-4o-2024-08-06\",\"name\":\"GPT-4o (2024-08-06)\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-2024-11-20\":{\"id\":\"gpt-4o-2024-11-20\",\"name\":\"GPT-4o (2024-11-20)\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-4o-mini\":{\"id\":\"gpt-4o-mini\",\"name\":\"GPT-4o mini\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5\":{\"id\":\"gpt-5\",\"name\":\"GPT-5\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-chat-latest\":{\"id\":\"gpt-5-chat-latest\",\"name\":\"GPT-5 Chat Latest\",\"api\":\"openai-responses\",\"baseUrl\":\"https://api.openai.com/v1\",\"provider\":\"openai\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"thinkingLevelMap\":{\"off\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-mini\":{\"id\":\"gpt-5-mini\",\"name\":\"GPT-5 Mini\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-nano\":{\"id\":\"gpt-5-nano\",\"name\":\"GPT-5 Nano\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.05,\"output\":0.4,\"cacheRead\":0.005,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5-pro\":{\"id\":\"gpt-5-pro\",\"name\":\"GPT-5 Pro\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":15,\"output\":120,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.1\":{\"id\":\"gpt-5.1\",\"name\":\"GPT-5.1\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.2\":{\"id\":\"gpt-5.2\",\"name\":\"GPT-5.2\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.2-pro\":{\"id\":\"gpt-5.2-pro\",\"name\":\"GPT-5.2 Pro\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":21,\"output\":168,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.3-codex\":{\"id\":\"gpt-5.3-codex\",\"name\":\"GPT-5.3 Codex\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.3-codex-spark\":{\"id\":\"gpt-5.3-codex-spark\",\"name\":\"GPT-5.3 Codex Spark\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":32000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4\":{\"id\":\"gpt-5.4\",\"name\":\"GPT-5.4\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":5,\"output\":22.5,\"cacheRead\":0.5,\"cacheWrite\":0}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-mini\":{\"id\":\"gpt-5.4-mini\",\"name\":\"GPT-5.4 mini\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-nano\":{\"id\":\"gpt-5.4-nano\",\"name\":\"GPT-5.4 nano\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.25,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-pro\":{\"id\":\"gpt-5.4-pro\",\"name\":\"GPT-5.4 Pro\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":60,\"output\":270,\"cacheRead\":0,\"cacheWrite\":0}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5\":{\"id\":\"gpt-5.5\",\"name\":\"GPT-5.5\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":10,\"output\":45,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5-pro\":{\"id\":\"gpt-5.5-pro\",\"name\":\"GPT-5.5 Pro\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":60,\"output\":270,\"cacheRead\":0,\"cacheWrite\":0}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-luna\":{\"id\":\"gpt-5.6-luna\",\"name\":\"GPT-5.6 Luna\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.4,\"output\":1.8,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-sol\":{\"id\":\"gpt-5.6-sol\",\"name\":\"GPT-5.6 Sol\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-terra\":{\"id\":\"gpt-5.6-terra\",\"name\":\"GPT-5.6 Terra\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-astra\":{\"id\":\"gpt-6-astra\",\"name\":\"GPT-6 Astra\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":20,\"output\":75,\"cacheRead\":2,\"cacheWrite\":25}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true,\"supportsMidConvoEffort\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-luna\":{\"id\":\"gpt-6-luna\",\"name\":\"GPT-6 Luna\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.2,\"output\":0.75,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true,\"supportsMidConvoEffort\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-sol\":{\"id\":\"gpt-6-sol\",\"name\":\"GPT-6 Sol\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true,\"supportsMidConvoEffort\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6.1-sol\":{\"id\":\"gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.2,\"cacheWrite\":5}]},\"contextWindow\":272000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsOpenAIGrammarTools\":true,\"supportsAdditionalTools\":true,\"supportsToolSearch\":true,\"supportsMidConvoSystemMessages\":true,\"supportsExplicitPromptCacheMode\":true,\"supportsMidConvoEffort\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-daybreak-blue-latest\":{\"id\":\"gpt-daybreak-blue-latest\",\"name\":\"Daybreak Blue\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsExplicitPromptCacheMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-daybreak-red-latest\":{\"id\":\"gpt-daybreak-red-latest\",\"name\":\"Daybreak Red\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":12.5,\"output\":75,\"cacheRead\":1.25,\"cacheWrite\":15.625},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"compat\":{\"supportsStrictMode\":true,\"supportsExplicitPromptCacheMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-realtime-2.1\":{\"id\":\"gpt-realtime-2.1\",\"name\":\"GPT-Realtime-2.1\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":4,\"output\":24,\"cacheRead\":0.4,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":32000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o1\":{\"id\":\"o1\",\"name\":\"o1\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":15,\"output\":60,\"cacheRead\":7.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o1-pro\":{\"id\":\"o1-pro\",\"name\":\"o1-pro\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":150,\"output\":600,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o3\":{\"id\":\"o3\",\"name\":\"o3\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o3-mini\":{\"id\":\"o3-mini\",\"name\":\"o3-mini\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"type\":\"chat\"},\"chat:o3-pro\":{\"id\":\"o3-pro\",\"name\":\"o3-pro\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":20,\"output\":80,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:o4-mini\":{\"id\":\"o4-mini\",\"name\":\"o4-mini\",\"api\":\"openai-responses\",\"provider\":\"openai\",\"baseUrl\":\"https://api.openai.com/v1\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.275,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"compat\":{\"supportsStrictMode\":true},\"inputLimits\":{\"maxRequestBytes\":536870912,\"images\":{\"maxPerRequest\":1500,\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}")
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/openai.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openai.models.js
 var OPENAI_MODELS = flattenChatModelCatalog("openai", openai_default);
 flattenImageModelCatalog("openai", openai_default);
 var OPENAI_CLASSIFIER_MODELS = flattenClassifierModelCatalog("openai", openai_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/openai-codex.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/openai-codex.json
 var openai_codex_default = { "openai-codex-responses": {
 	"chat:gpt-5.6-luna": {
 		"id": "gpt-5.6-luna",
@@ -9172,11 +9172,11 @@ var openai_codex_default = { "openai-codex-responses": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.models.js
 var OPENAI_CODEX_MODELS = flattenChatModelCatalog("openai-codex", openai_codex_default);
 flattenImageModelCatalog("openai-codex", openai_codex_default);
 flattenClassifierModelCatalog("openai-codex", openai_codex_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/opencode.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/opencode.json
 var opencode_default = {
 	"anthropic-messages": {
 		"chat:claude-fable-5": {
@@ -9993,11 +9993,11 @@ var opencode_default = {
 		}
 	}
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/opencode.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/opencode.models.js
 var OPENCODE_MODELS = flattenChatModelCatalog("opencode", opencode_default);
 flattenImageModelCatalog("opencode", opencode_default);
 var OPENCODE_CLASSIFIER_MODELS = flattenClassifierModelCatalog("opencode", opencode_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/opencode-go.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/opencode-go.json
 var opencode_go_default = {
 	"anthropic-messages": {
 		"chat:claude-haiku-5-5": {
@@ -10387,11 +10387,11 @@ var opencode_go_default = {
 		}
 	}
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/opencode-go.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/opencode-go.models.js
 var OPENCODE_GO_MODELS = flattenChatModelCatalog("opencode-go", opencode_go_default);
 flattenImageModelCatalog("opencode-go", opencode_go_default);
 flattenClassifierModelCatalog("opencode-go", opencode_go_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/openrouter.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/openrouter.json
 var openrouter_default = {
 	"anthropic-messages": {
 		"chat:anthropic/claude-fable-5": {
@@ -10907,23 +10907,23 @@ var openrouter_default = {
 	"openrouter-images": /*#__PURE__*/ JSON.parse("{\"image:black-forest-labs/flux-3-image\":{\"type\":\"image\",\"id\":\"black-forest-labs/flux-3-image\",\"name\":\"Black Forest Labs: FLUX 3 Image\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:black-forest-labs/flux-3-image-klein\":{\"type\":\"image\",\"id\":\"black-forest-labs/flux-3-image-klein\",\"name\":\"Black Forest Labs: FLUX 3 Image Klein\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:black-forest-labs/flux.2-flex\":{\"type\":\"image\",\"id\":\"black-forest-labs/flux.2-flex\",\"name\":\"Black Forest Labs: FLUX.2 Flex\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:black-forest-labs/flux.2-klein-4b\":{\"type\":\"image\",\"id\":\"black-forest-labs/flux.2-klein-4b\",\"name\":\"Black Forest Labs: FLUX.2 Klein 4B\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:black-forest-labs/flux.2-max\":{\"type\":\"image\",\"id\":\"black-forest-labs/flux.2-max\",\"name\":\"Black Forest Labs: FLUX.2 Max\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:black-forest-labs/flux.2-pro\":{\"type\":\"image\",\"id\":\"black-forest-labs/flux.2-pro\",\"name\":\"Black Forest Labs: FLUX.2 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:bytedance-seed/seedream-4.5\":{\"type\":\"image\",\"id\":\"bytedance-seed/seedream-4.5\",\"name\":\"ByteDance Seed: Seedream 4.5\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:bytedance-seed/seedream-5-0-flash\":{\"type\":\"image\",\"id\":\"bytedance-seed/seedream-5-0-flash\",\"name\":\"ByteDance Seed: Seedream 5.0 Flash\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:bytedance-seed/seedream-5-0-lite\":{\"type\":\"image\",\"id\":\"bytedance-seed/seedream-5-0-lite\",\"name\":\"ByteDance Seed: Seedream 5.0 Lite\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:bytedance-seed/seedream-5-0-pro\":{\"type\":\"image\",\"id\":\"bytedance-seed/seedream-5-0-pro\",\"name\":\"ByteDance Seed: Seedream 5.0 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-2.5-flash-image\":{\"type\":\"image\",\"id\":\"google/gemini-2.5-flash-image\",\"name\":\"Google: Nano Banana (Gemini 2.5 Flash Image)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.03,\"cacheWrite\":0.083333},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-3-pro-image\":{\"type\":\"image\",\"id\":\"google/gemini-3-pro-image\",\"name\":\"Google: Nano Banana Pro (Gemini 3 Pro Image)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0.375},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-3-pro-image-preview\":{\"type\":\"image\",\"id\":\"google/gemini-3-pro-image-preview\",\"name\":\"Google: Nano Banana Pro (Gemini 3 Pro Image Preview)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0.375},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-3.1-flash-image\":{\"type\":\"image\",\"id\":\"google/gemini-3.1-flash-image\",\"name\":\"Google: Nano Banana 2 (Gemini 3.1 Flash Image)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-3.1-flash-image-preview\":{\"type\":\"image\",\"id\":\"google/gemini-3.1-flash-image-preview\",\"name\":\"Google: Nano Banana 2 (Gemini 3.1 Flash Image Preview)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-3.1-flash-lite-image\":{\"type\":\"image\",\"id\":\"google/gemini-3.1-flash-lite-image\",\"name\":\"Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":0.25,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:google/gemini-nano-banana-2.1\":{\"type\":\"image\",\"id\":\"google/gemini-nano-banana-2.1\",\"name\":\"Google: Nano Banana 2.1\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:krea/k3-edit\":{\"type\":\"image\",\"id\":\"krea/k3-edit\",\"name\":\"Krea: K3 Edit\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:krea/krea-2-large\":{\"type\":\"image\",\"id\":\"krea/krea-2-large\",\"name\":\"Krea: Krea 2 Large\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:krea/krea-2-medium\":{\"type\":\"image\",\"id\":\"krea/krea-2-medium\",\"name\":\"Krea: Krea 2 Medium\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:krea/krea-2-medium-turbo\":{\"type\":\"image\",\"id\":\"krea/krea-2-medium-turbo\",\"name\":\"Krea: Krea 2 Medium Turbo\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:meta/muse-image\":{\"type\":\"image\",\"id\":\"meta/muse-image\",\"name\":\"Meta: Muse Image\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:microsoft/mai-image-2.5\":{\"type\":\"image\",\"id\":\"microsoft/mai-image-2.5\",\"name\":\"Microsoft AI: MAI-Image-2.5\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":5,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:microsoft/mai-image-2.5-pro\":{\"type\":\"image\",\"id\":\"microsoft/mai-image-2.5-pro\",\"name\":\"Microsoft AI: MAI-Image-2.5 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":5,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:microsoft/mai-image-2.6\":{\"type\":\"image\",\"id\":\"microsoft/mai-image-2.6\",\"name\":\"Microsoft AI: MAI-Image-2.6\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":5,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:microsoft/mai-image-2.6-flash\":{\"type\":\"image\",\"id\":\"microsoft/mai-image-2.6-flash\",\"name\":\"Microsoft AI: MAI-Image-2.6 Flash\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":1.75,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-5-image\":{\"type\":\"image\",\"id\":\"openai/gpt-5-image\",\"name\":\"OpenAI: GPT-5 Image\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":10,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-5-image-mini\":{\"type\":\"image\",\"id\":\"openai/gpt-5-image-mini\",\"name\":\"OpenAI: GPT-5 Image Mini\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":2.5,\"output\":2,\"cacheRead\":0.25,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-5.4-image-2\":{\"type\":\"image\",\"id\":\"openai/gpt-5.4-image-2\",\"name\":\"OpenAI: GPT-5.4 Image 2\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"image\",\"text\"],\"output\":[\"image\",\"text\"],\"cost\":{\"input\":8,\"output\":15,\"cacheRead\":2,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-image-1\":{\"type\":\"image\",\"id\":\"openai/gpt-image-1\",\"name\":\"OpenAI: GPT Image 1\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":10,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-image-1-mini\":{\"type\":\"image\",\"id\":\"openai/gpt-image-1-mini\",\"name\":\"OpenAI: GPT Image 1 Mini\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":2.5,\"output\":2.5,\"cacheRead\":0.25,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-image-2\":{\"type\":\"image\",\"id\":\"openai/gpt-image-2\",\"name\":\"OpenAI: GPT Image 2\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":8,\"output\":8,\"cacheRead\":2,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-image-2.5-flare\":{\"type\":\"image\",\"id\":\"openai/gpt-image-2.5-flare\",\"name\":\"OpenAI: GPT Image 2.5 Flare\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":8,\"output\":8,\"cacheRead\":2,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openai/gpt-image-2.5-sunburst\":{\"type\":\"image\",\"id\":\"openai/gpt-image-2.5-sunburst\",\"name\":\"OpenAI: GPT Image 2.5 Sunburst\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":8,\"output\":8,\"cacheRead\":2,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openrouter/auto\":{\"type\":\"image\",\"id\":\"openrouter/auto\",\"name\":\"Auto Router\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:openrouter/auto-beta\":{\"type\":\"image\",\"id\":\"openrouter/auto-beta\",\"name\":\"Auto Router (Beta)\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:qwen/qwen-image-2.1-pro\":{\"type\":\"image\",\"id\":\"qwen/qwen-image-2.1-pro\",\"name\":\"Qwen: Qwen Image 2.1 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:qwen/qwen-image-2.1-turbo\":{\"type\":\"image\",\"id\":\"qwen/qwen-image-2.1-turbo\",\"name\":\"Qwen: Qwen Image 2.1 Turbo\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:qwen/qwen-image-3\":{\"type\":\"image\",\"id\":\"qwen/qwen-image-3\",\"name\":\"Qwen: Qwen Image 3\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:qwen/qwen-image-3-pro\":{\"type\":\"image\",\"id\":\"qwen/qwen-image-3-pro\",\"name\":\"Qwen: Qwen Image 3 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v3\":{\"type\":\"image\",\"id\":\"recraft/recraft-v3\",\"name\":\"Recraft: Recraft V3\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4\",\"name\":\"Recraft: Recraft V4\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-pro\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-pro\",\"name\":\"Recraft: Recraft V4 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-pro-vector\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-pro-vector\",\"name\":\"Recraft: Recraft V4 Pro Vector\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-styles\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-styles\",\"name\":\"Recraft: Recraft V4 Styles\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-styles-pro\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-styles-pro\",\"name\":\"Recraft: Recraft V4 Styles Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-styles-pro-vector\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-styles-pro-vector\",\"name\":\"Recraft: Recraft V4 Styles Pro Vector\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-styles-vector\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-styles-vector\",\"name\":\"Recraft: Recraft V4 Styles Vector\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4-vector\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4-vector\",\"name\":\"Recraft: Recraft V4 Vector\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4.1\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1\",\"name\":\"Recraft: Recraft V4.1\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4.1-flash\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1-flash\",\"name\":\"Recraft: Recraft V4.1 Flash\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0}},\"image:recraft/recraft-v4.1-pro\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1-pro\",\"name\":\"Recraft: Recraft V4.1 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4.1-pro-vector\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1-pro-vector\",\"name\":\"Recraft: Recraft V4.1 Pro Vector\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4.1-utility\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1-utility\",\"name\":\"Recraft: Recraft V4.1 Utility\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4.1-utility-pro\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1-utility-pro\",\"name\":\"Recraft: Recraft V4.1 Utility Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:recraft/recraft-v4.1-vector\":{\"type\":\"image\",\"id\":\"recraft/recraft-v4.1-vector\",\"name\":\"Recraft: Recraft V4.1 Vector\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:sourceful/riverflow-v2-fast\":{\"type\":\"image\",\"id\":\"sourceful/riverflow-v2-fast\",\"name\":\"Sourceful: Riverflow V2 Fast\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:sourceful/riverflow-v2-pro\":{\"type\":\"image\",\"id\":\"sourceful/riverflow-v2-pro\",\"name\":\"Sourceful: Riverflow V2 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:sourceful/riverflow-v2.5-fast\":{\"type\":\"image\",\"id\":\"sourceful/riverflow-v2.5-fast\",\"name\":\"Sourceful: Riverflow V2.5 Fast\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:sourceful/riverflow-v2.5-pro\":{\"type\":\"image\",\"id\":\"sourceful/riverflow-v2.5-pro\",\"name\":\"Sourceful: Riverflow V2.5 Pro\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:tencent/hy-image-v3.5-preview\":{\"type\":\"image\",\"id\":\"tencent/hy-image-v3.5-preview\",\"name\":\"Tencent: Hy Image 3.5 Preview\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:x-ai/grok-imagine-image-2.0\":{\"type\":\"image\",\"id\":\"x-ai/grok-imagine-image-2.0\",\"name\":\"xAI: Grok Imagine Image 2.0\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}},\"image:x-ai/grok-imagine-image-quality\":{\"type\":\"image\",\"id\":\"x-ai/grok-imagine-image-quality\",\"name\":\"SpaceXAI: Grok Imagine Image Quality\",\"api\":\"openrouter-images\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"output\":[\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}}}}"),
 	"typesafe-system-one": /*#__PURE__*/ JSON.parse("{\"classifier:~perplexity/pplx-decider-flash-latest\":{\"type\":\"classifier\",\"id\":\"~perplexity/pplx-decider-flash-latest\",\"name\":\"Perplexity: Decider Flash Latest\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.01,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:~perplexity/pplx-decider-latest\":{\"type\":\"classifier\",\"id\":\"~perplexity/pplx-decider-latest\",\"name\":\"Perplexity: Decider Latest\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.02,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:~typesafe/jev-latest\":{\"type\":\"classifier\",\"id\":\"~typesafe/jev-latest\",\"name\":\"TypeSafe: Jev Latest\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:cloudflare/clef\":{\"type\":\"classifier\",\"id\":\"cloudflare/clef\",\"name\":\"Cloudflare: Clef\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.24,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":65536,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:cloudflare/clef-flash\":{\"type\":\"classifier\",\"id\":\"cloudflare/clef-flash\",\"name\":\"Cloudflare: Clef Flash\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.038,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":24576,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:cloudflare/clef-omni\":{\"type\":\"classifier\",\"id\":\"cloudflare/clef-omni\",\"name\":\"Cloudflare: Clef Omni\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":65536,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:inception/mercury-decide\":{\"type\":\"classifier\",\"id\":\"inception/mercury-decide\",\"name\":\"Inception: Mercury Decide\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.02,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":65536,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:inception/mercury-decide:free\":{\"type\":\"classifier\",\"id\":\"inception/mercury-decide:free\",\"name\":\"Inception: Mercury Decide (free)\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":65536,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:jaredpalmer/kev-4b\":{\"type\":\"classifier\",\"id\":\"jaredpalmer/kev-4b\",\"name\":\"Jared Palmer: Kev 4B\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":8192,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:liquid/d1\":{\"type\":\"classifier\",\"id\":\"liquid/d1\",\"name\":\"LiquidAI: d1\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.02,\"output\":0,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":65536,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:liquid/d1-ultra\":{\"type\":\"classifier\",\"id\":\"liquid/d1-ultra\",\"name\":\"LiquidAI: d1-ultra\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0.042,\"cacheWrite\":0},\"contextWindow\":32768,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:microsoft/microsoft-decision-1\":{\"type\":\"classifier\",\"id\":\"microsoft/microsoft-decision-1\",\"name\":\"Microsoft: Microsoft-Decision-1\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:nace-ai/drex-max\":{\"type\":\"classifier\",\"id\":\"nace-ai/drex-max\",\"name\":\"Nace.AI: Drex Max\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.06,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:nace-ai/drex-v1.5\":{\"type\":\"classifier\",\"id\":\"nace-ai/drex-v1.5\",\"name\":\"Nace.AI: Drex v1.5\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.04,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:nace-ai/drex-v2.0\":{\"type\":\"classifier\",\"id\":\"nace-ai/drex-v2.0\",\"name\":\"Nace.AI: Drex v2.0\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.06,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:openai/gpt-6-luna-decisions\":{\"type\":\"classifier\",\"id\":\"openai/gpt-6-luna-decisions\",\"name\":\"OpenAI: GPT-6 Luna Decisions\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.1,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1050000,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:perplexity/pplx-decider-flash-v1.2\":{\"type\":\"classifier\",\"id\":\"perplexity/pplx-decider-flash-v1.2\",\"name\":\"Perplexity: Decider Flash V1.2\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.01,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:perplexity/pplx-decider-v1.2\":{\"type\":\"classifier\",\"id\":\"perplexity/pplx-decider-v1.2\",\"name\":\"Perplexity: Decider V1.2\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.02,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:respan/span-01\":{\"type\":\"classifier\",\"id\":\"respan/span-01\",\"name\":\"Respan: Span-01\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.02,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":4096,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:respan/span-01-lite\":{\"type\":\"classifier\",\"id\":\"respan/span-01-lite\",\"name\":\"Respan: Span-01 Lite\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":4096,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:respan/span-01-lite:free\":{\"type\":\"classifier\",\"id\":\"respan/span-01-lite:free\",\"name\":\"Respan: Span-01 Lite (free)\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":4096,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:respan/span-02\":{\"type\":\"classifier\",\"id\":\"respan/span-02\",\"name\":\"Respan: Span-02\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.01,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:scaledown/classify-1\":{\"type\":\"classifier\",\"id\":\"scaledown/classify-1\",\"name\":\"ScaleDown: Classify-1\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.04,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:togethercomputer/tev1-4b-experimental\":{\"type\":\"classifier\",\"id\":\"togethercomputer/tev1-4b-experimental\",\"name\":\"Together: Tev1 4B Experimental\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32768,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:typesafe/jev-1.13\":{\"type\":\"classifier\",\"id\":\"typesafe/jev-1.13\",\"name\":\"TypeSafe: Jev 1.13\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:typesafe/jev-1.14\":{\"type\":\"classifier\",\"id\":\"typesafe/jev-1.14\",\"name\":\"TypeSafe: Jev 1.14\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.042,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:upstage/solar-decide\":{\"type\":\"classifier\",\"id\":\"upstage/solar-decide\",\"name\":\"Upstage: Solar Decide\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.05,\"output\":0,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":524288,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}},\"classifier:upstage/solar-decide-flash\":{\"type\":\"classifier\",\"id\":\"upstage/solar-decide-flash\",\"name\":\"Upstage: Solar Decide Flash\",\"api\":\"typesafe-system-one\",\"provider\":\"openrouter\",\"baseUrl\":\"https://openrouter.ai/api/v1\",\"input\":[\"text\"],\"cost\":{\"input\":0.05,\"output\":0,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":524288,\"compat\":{\"imageInput\":\"state-image-urls\",\"sendImageOptInHeader\":false}}}")
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/openrouter.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openrouter.models.js
 var OPENROUTER_MODELS = flattenChatModelCatalog("openrouter", openrouter_default);
 var OPENROUTER_IMAGE_MODELS = flattenImageModelCatalog("openrouter", openrouter_default);
 var OPENROUTER_CLASSIFIER_MODELS = flattenClassifierModelCatalog("openrouter", openrouter_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/qwen-token-plan.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/qwen-token-plan.json
 var qwen_token_plan_default = { "openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:deepseek-v3.2\":{\"id\":\"deepseek-v3.2\",\"name\":\"DeepSeek V3.2\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:deepseek-v4-flash\":{\"id\":\"deepseek-v4-flash\",\"name\":\"DeepSeek V4 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4-flash-0731\":{\"id\":\"deepseek-v4-flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4-pro\":{\"id\":\"deepseek-v4-pro\",\"name\":\"DeepSeek V4 Pro\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4-pro-0813\":{\"id\":\"deepseek-v4-pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4.1-flash\":{\"id\":\"deepseek-v4.1-flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-v4.1-flash-1017\":{\"id\":\"deepseek-v4.1-flash-1017\",\"name\":\"DeepSeek V4.1 Flash 1017\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:glm-5\":{\"id\":\"glm-5\",\"name\":\"GLM-5\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:glm-5.1\":{\"id\":\"glm-5.1\",\"name\":\"GLM-5.1\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:glm-5.2\":{\"id\":\"glm-5.2\",\"name\":\"GLM-5.2\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:glm-5.3\":{\"id\":\"glm-5.3\",\"name\":\"GLM-5.3\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:kimi-k2.5\":{\"id\":\"kimi-k2.5\",\"name\":\"Kimi K2.5\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":98304,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:kimi-k2.6\":{\"id\":\"kimi-k2.6\",\"name\":\"Kimi K2.6\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:kimi-k2.7-code\":{\"id\":\"kimi-k2.7-code\",\"name\":\"Kimi K2.7 Code\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:MiniMax-M2.5\":{\"id\":\"MiniMax-M2.5\",\"name\":\"MiniMax-M2.5\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":196608,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:qwen3.6-flash\":{\"id\":\"qwen3.6-flash\",\"name\":\"Qwen3.6 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.6-plus\":{\"id\":\"qwen3.6-plus\",\"name\":\"Qwen3.6 Plus\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.7-max\":{\"id\":\"qwen3.7-max\",\"name\":\"Qwen3.7 Max\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:qwen3.7-plus\":{\"id\":\"qwen3.7-plus\",\"name\":\"Qwen3.7 Plus\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.8-flash\":{\"id\":\"qwen3.8-flash\",\"name\":\"Qwen3.8 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.8-max\":{\"id\":\"qwen3.8-max\",\"name\":\"Qwen3.8 Max\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan\",\"baseUrl\":\"https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan.models.js
 var QWEN_TOKEN_PLAN_MODELS = flattenChatModelCatalog("qwen-token-plan", qwen_token_plan_default);
 flattenImageModelCatalog("qwen-token-plan", qwen_token_plan_default);
 flattenClassifierModelCatalog("qwen-token-plan", qwen_token_plan_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/qwen-token-plan-cn.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/qwen-token-plan-cn.json
 var qwen_token_plan_cn_default = { "openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:deepseek-v3.2\":{\"id\":\"deepseek-v3.2\",\"name\":\"DeepSeek V3.2\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:deepseek-v4-flash\":{\"id\":\"deepseek-v4-flash\",\"name\":\"DeepSeek V4 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4-flash-0731\":{\"id\":\"deepseek-v4-flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4-pro\":{\"id\":\"deepseek-v4-pro\",\"name\":\"DeepSeek V4 Pro\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4-pro-0813\":{\"id\":\"deepseek-v4-pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-v4.1-flash\":{\"id\":\"deepseek-v4.1-flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-v4.1-flash-1017\":{\"id\":\"deepseek-v4.1-flash-1017\",\"name\":\"DeepSeek V4.1 Flash 1017\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:glm-5\":{\"id\":\"glm-5\",\"name\":\"GLM-5\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:glm-5.1\":{\"id\":\"glm-5.1\",\"name\":\"GLM-5.1\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202752,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:glm-5.2\":{\"id\":\"glm-5.2\",\"name\":\"GLM-5.2\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:glm-5.3\":{\"id\":\"glm-5.3\",\"name\":\"GLM-5.3\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:kimi-k2.5\":{\"id\":\"kimi-k2.5\",\"name\":\"Kimi K2.5\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":98304,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:kimi-k2.6\":{\"id\":\"kimi-k2.6\",\"name\":\"Kimi K2.6\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:kimi-k2.7-code\":{\"id\":\"kimi-k2.7-code\",\"name\":\"Kimi K2.7 Code\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:MiniMax-M2.5\":{\"id\":\"MiniMax-M2.5\",\"name\":\"MiniMax-M2.5\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":196608,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:qwen3.6-flash\":{\"id\":\"qwen3.6-flash\",\"name\":\"Qwen3.6 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.6-plus\":{\"id\":\"qwen3.6-plus\",\"name\":\"Qwen3.6 Plus\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.7-max\":{\"id\":\"qwen3.7-max\",\"name\":\"Qwen3.7 Max\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:qwen3.7-plus\":{\"id\":\"qwen3.7-plus\",\"name\":\"Qwen3.7 Plus\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":false},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.8-flash\":{\"id\":\"qwen3.8-flash\",\"name\":\"Qwen3.8 Flash\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:qwen3.8-max\":{\"id\":\"qwen3.8-max\",\"name\":\"Qwen3.8 Max\",\"api\":\"openai-completions\",\"provider\":\"qwen-token-plan-cn\",\"baseUrl\":\"https://token-plan.cn-beijing.maas.aliyuncs.com/compatible-mode/v1\",\"compat\":{\"supportsStrictMode\":true,\"thinkingFormat\":\"qwen\",\"supportsDeveloperRole\":false,\"supportsStore\":false,\"supportsReasoningEffort\":true},\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":null,\"xhigh\":\"xhigh\",\"max\":null},\"reasoning\":true,\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-cn.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-cn.models.js
 var QWEN_TOKEN_PLAN_CN_MODELS = flattenChatModelCatalog("qwen-token-plan-cn", qwen_token_plan_cn_default);
 flattenImageModelCatalog("qwen-token-plan-cn", qwen_token_plan_cn_default);
 flattenClassifierModelCatalog("qwen-token-plan-cn", qwen_token_plan_cn_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/qwen-token-plan-individual.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/qwen-token-plan-individual.json
 var qwen_token_plan_individual_default = { "openai-completions": {
 	"chat:deepseek-v4-flash-0731": {
 		"id": "deepseek-v4-flash-0731",
@@ -11229,23 +11229,23 @@ var qwen_token_plan_individual_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-individual.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-individual.models.js
 var QWEN_TOKEN_PLAN_INDIVIDUAL_MODELS = flattenChatModelCatalog("qwen-token-plan-individual", qwen_token_plan_individual_default);
 flattenImageModelCatalog("qwen-token-plan-individual", qwen_token_plan_individual_default);
 flattenClassifierModelCatalog("qwen-token-plan-individual", qwen_token_plan_individual_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/radius.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/radius.json
 var radius_default = { "pi-messages": /*#__PURE__*/ JSON.parse("{\"chat:balanced\":{\"id\":\"balanced\",\"name\":\"Balanced\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1048576,\"maxTokens\":131072,\"lab\":\"Moonshot AI\",\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"fireworks\",\"name\":\"Fireworks AI\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"relace\",\"name\":\"Relace\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"sference\",\"name\":\"sference\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"baseten\",\"name\":\"Baseten\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:cheap\":{\"id\":\"cheap\",\"name\":\"Cheap\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":32768,\"lab\":\"DeepSeek\",\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"fireworks\",\"name\":\"Fireworks AI\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"relace\",\"name\":\"Relace\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"baseten\",\"name\":\"Baseten\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-fable-5\":{\"id\":\"claude-fable-5\",\"name\":\"Claude Fable 5\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-fable-5-1\":{\"id\":\"claude-fable-5-1\",\"name\":\"Claude Fable 5.1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":0.25,\"cacheWrite\":12.5},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-haiku-4-5\":{\"id\":\"claude-haiku-4-5\",\"name\":\"Claude Haiku 4.5\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"contextWindow\":200000,\"maxTokens\":64000,\"lab\":\"Anthropic\",\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-haiku-5-5\":{\"id\":\"claude-haiku-5-5\",\"name\":\"Claude Haiku 5.5\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.5,\"output\":2.5,\"cacheRead\":0.05,\"cacheWrite\":0.625}]},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-5\":{\"id\":\"claude-opus-4-5\",\"name\":\"Claude Opus 4.5\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"contextWindow\":200000,\"maxTokens\":64000,\"lab\":\"Anthropic\",\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-4-8\":{\"id\":\"claude-opus-4-8\",\"name\":\"Claude Opus 4.8\",\"reasoning\":true,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-5\":{\"id\":\"claude-opus-5\",\"name\":\"Claude Opus 5\",\"reasoning\":true,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-opus-5-5\":{\"id\":\"claude-opus-5-5\",\"name\":\"Claude Opus 5.5\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":5},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-4-5\":{\"id\":\"claude-sonnet-4-5\",\"name\":\"Claude Sonnet 4.5\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"contextWindow\":200000,\"maxTokens\":64000,\"lab\":\"Anthropic\",\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-5\":{\"id\":\"claude-sonnet-5\",\"name\":\"Claude Sonnet 5\",\"reasoning\":true,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:claude-sonnet-5-5\":{\"id\":\"claude-sonnet-5-5\",\"name\":\"Claude Sonnet 5.5\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":128000,\"lab\":\"Anthropic\",\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"enabled\":true,\"providers\":[{\"id\":\"anthropic\",\"name\":\"Anthropic\",\"credential\":\"radius\",\"source\":\"radius\"}],\"promptCache\":{\"short\":300,\"long\":3600},\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek-v4.1-flash\":{\"id\":\"deepseek-v4.1-flash\",\"name\":\"DeepSeek V4.1 Flash\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":32768,\"lab\":\"DeepSeek\",\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"fireworks\",\"name\":\"Fireworks AI\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"relace\",\"name\":\"Relace\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"baseten\",\"name\":\"Baseten\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:glm-5.3\":{\"id\":\"glm-5.3\",\"name\":\"GLM-5.3\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":\"minimal\",\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"xhigh\"},\"input\":[\"text\"],\"contextWindow\":1000000,\"maxTokens\":131072,\"lab\":\"Z.ai\",\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"sference\",\"name\":\"sference\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"fireworks\",\"name\":\"Fireworks AI\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"baseten\",\"name\":\"Baseten\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"openrouter\",\"name\":\"OpenRouter\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"vercel-ai-gateway\",\"name\":\"Vercel AI Gateway\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"type\":\"chat\"},\"chat:glm-5.3-flash\":{\"id\":\"glm-5.3-flash\",\"name\":\"GLM-5.3 Flash\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\"],\"contextWindow\":1000000,\"maxTokens\":131072,\"lab\":\"Z.ai\",\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"fireworks\",\"name\":\"Fireworks AI\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"relace\",\"name\":\"Relace\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"baseten\",\"name\":\"Baseten\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"sference\",\"name\":\"sference\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"type\":\"chat\"},\"chat:gpt-5.3-codex\":{\"id\":\"gpt-5.3-codex\",\"name\":\"GPT 5.3 Codex\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"input\":[\"text\",\"image\"],\"contextWindow\":400000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4\":{\"id\":\"gpt-5.4\",\"name\":\"GPT 5.4\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":5,\"output\":22.5,\"cacheRead\":0.5,\"cacheWrite\":0}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.4-mini\":{\"id\":\"gpt-5.4-mini\",\"name\":\"GPT 5.4 Mini\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"input\":[\"text\",\"image\"],\"contextWindow\":400000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.5\":{\"id\":\"gpt-5.5\",\"name\":\"GPT 5.5\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":10,\"output\":45,\"cacheRead\":1,\"cacheWrite\":0}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-luna\":{\"id\":\"gpt-5.6-luna\",\"name\":\"GPT 5.6 Luna\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.4,\"output\":1.8,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-sol\":{\"id\":\"gpt-5.6-sol\",\"name\":\"GPT 5.6 Sol\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-5.6-terra\":{\"id\":\"gpt-5.6-terra\",\"name\":\"GPT 5.6 Terra\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-astra\":{\"id\":\"gpt-6-astra\",\"name\":\"GPT 6 Astra\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":20,\"output\":75,\"cacheRead\":2,\"cacheWrite\":25}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-luna\":{\"id\":\"gpt-6-luna\",\"name\":\"GPT 6 Luna\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1050000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.2,\"output\":0.75,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6-sol\":{\"id\":\"gpt-6-sol\",\"name\":\"GPT 6 Sol\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1050000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:gpt-6.1-sol\":{\"id\":\"gpt-6.1-sol\",\"name\":\"GPT 6.1 Sol\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.2,\"cacheWrite\":5}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:grok-4.7\":{\"id\":\"grok-4.7\",\"name\":\"Grok 4.7\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":null},\"input\":[\"text\",\"image\"],\"contextWindow\":500000,\"maxTokens\":500000,\"lab\":\"xAI\",\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":1,\"cacheWrite\":0}]},\"enabled\":true,\"providers\":[{\"id\":\"xai\",\"name\":\"xAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:kimi-k3\":{\"id\":\"kimi-k3\",\"name\":\"Kimi K3\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":\"high\",\"xhigh\":null,\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1048576,\"maxTokens\":131072,\"lab\":\"Moonshot AI\",\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"fireworks\",\"name\":\"Fireworks AI\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"relace\",\"name\":\"Relace\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"sference\",\"name\":\"sference\",\"credential\":\"radius\",\"source\":\"radius\"},{\"id\":\"baseten\",\"name\":\"Baseten\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:minimax-m3.1-flash\":{\"id\":\"minimax-m3.1-flash\",\"name\":\"MiniMax M3.1 Flash\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":1000000,\"maxTokens\":524288,\"lab\":\"MiniMax\",\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.015,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"minimax\",\"name\":\"MiniMax\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:precise\":{\"id\":\"precise\",\"name\":\"Precise\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":\"none\",\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":\"xhigh\",\"max\":\"max\"},\"input\":[\"text\",\"image\"],\"contextWindow\":272000,\"maxTokens\":128000,\"lab\":\"OpenAI\",\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"enabled\":true,\"providers\":[{\"id\":\"openai\",\"name\":\"OpenAI\",\"credential\":\"radius\",\"source\":\"radius\"}],\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:recursive/flint\":{\"id\":\"recursive/flint\",\"name\":\"Flint (free, trains on data)\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":null,\"high\":null,\"xhigh\":null,\"max\":null},\"input\":[\"text\"],\"contextWindow\":262144,\"maxTokens\":65536,\"lab\":\"Recursive\",\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"enabled\":true,\"providers\":[{\"id\":\"recursive\",\"name\":\"Recursive\",\"credential\":\"radius\",\"source\":\"radius\"}],\"free\":true,\"api\":\"pi-messages\",\"provider\":\"radius\",\"baseUrl\":\"https://radius.pi.dev/v1\",\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/radius.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/radius.models.js
 var RADIUS_MODELS = flattenChatModelCatalog("radius", radius_default);
 flattenImageModelCatalog("radius", radius_default);
 flattenClassifierModelCatalog("radius", radius_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/together.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/together.json
 var together_default = { "openai-completions": /*#__PURE__*/ JSON.parse("{\"chat:deepseek-ai/DeepSeek-V4-Pro-0813\":{\"id\":\"deepseek-ai/DeepSeek-V4-Pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null,\"high\":\"high\",\"xhigh\":null},\"input\":[\"text\"],\"cost\":{\"input\":1.32,\"output\":3.96,\"cacheRead\":0.13,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek-ai/DeepSeek-V4.1-Flash\":{\"id\":\"deepseek-ai/DeepSeek-V4.1-Flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":384000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta-models/Muse-Spark-Open-816B-A42B\":{\"id\":\"meta-models/Muse-Spark-Open-816B-A42B\",\"name\":\"Muse Spark Open\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1.25,\"output\":4.25,\"cacheRead\":0.15,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:MiniMaxAI/MiniMax-M3\":{\"id\":\"MiniMaxAI/MiniMax-M3\",\"name\":\"MiniMax-M3\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.06,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":524288,\"maxTokens\":524288,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/Kimi-K3\":{\"id\":\"moonshotai/Kimi-K3\",\"name\":\"Kimi K3\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/NVIDIA-Nemotron-3.5-Super-VL\":{\"id\":\"nvidia/NVIDIA-Nemotron-3.5-Super-VL\",\"name\":\"Nemotron 3.5 Super VL 120B A12B\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.02,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-oss-120b\":{\"id\":\"openai/gpt-oss-120b\",\"name\":\"GPT OSS 120B\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"off\":null,\"minimal\":null,\"low\":\"low\",\"medium\":\"medium\",\"high\":\"high\",\"xhigh\":null,\"max\":null},\"input\":[\"text\"],\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":true,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"openai\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":131072,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:Qwen/Qwen3.5-9B\":{\"id\":\"Qwen/Qwen3.5-9B\",\"name\":\"Qwen3.5 9B\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.17,\"output\":0.25,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":262144,\"maxTokens\":65536,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:Qwen/Qwen3.6-Plus\":{\"id\":\"Qwen/Qwen3.6-Plus\",\"name\":\"Qwen3.6 Plus\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\"],\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1000000,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:Qwen/Qwen3.7-Max\":{\"id\":\"Qwen/Qwen3.7-Max\",\"name\":\"Qwen3.7 Max\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\"],\"cost\":{\"input\":2.5,\"output\":7.5,\"cacheRead\":0.5,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:reflection/Beam-1.0-501B-A23B\":{\"id\":\"reflection/Beam-1.0-501B-A23B\",\"name\":\"Beam 1.0 501B A23B\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\"],\"cost\":{\"input\":0.4,\"output\":1.2,\"cacheRead\":0.04,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048576,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:thinkingmachines/Inkling\":{\"id\":\"thinkingmachines/Inkling\",\"name\":\"Inkling\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":1,\"output\":4.05,\"cacheRead\":0.17,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":524288,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai-org/GLM-5.2\":{\"id\":\"zai-org/GLM-5.2\",\"name\":\"GLM-5.2\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048575,\"maxTokens\":164000,\"type\":\"chat\"},\"chat:zai-org/GLM-5.3\":{\"id\":\"zai-org/GLM-5.3\",\"name\":\"GLM-5.3\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\"],\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048575,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:zai-org/GLM-5.3-Flash\":{\"id\":\"zai-org/GLM-5.3-Flash\",\"name\":\"GLM-5.3-Flash\",\"api\":\"openai-completions\",\"provider\":\"together\",\"baseUrl\":\"https://api.together.ai/v1\",\"reasoning\":true,\"thinkingLevelMap\":{\"minimal\":null,\"low\":null,\"medium\":null},\"input\":[\"text\",\"image\"],\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"compat\":{\"supportsStore\":false,\"supportsDeveloperRole\":false,\"supportsReasoningEffort\":false,\"maxTokensField\":\"max_tokens\",\"thinkingFormat\":\"together\",\"supportsLongCacheRetention\":false,\"supportsStrictMode\":false},\"contextWindow\":1048575,\"maxTokens\":400000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}") };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/together.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/together.models.js
 var TOGETHER_MODELS = flattenChatModelCatalog("together", together_default);
 flattenImageModelCatalog("together", together_default);
 flattenClassifierModelCatalog("together", together_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/typesafe.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/typesafe.json
 var typesafe_default = { "typesafe-system-one": { "classifier:jev-latest": {
 	"type": "classifier",
 	"id": "jev-latest",
@@ -11269,7 +11269,7 @@ var typesafe_default = { "typesafe-system-one": { "classifier:jev-latest": {
 flattenChatModelCatalog("typesafe", typesafe_default);
 flattenImageModelCatalog("typesafe", typesafe_default);
 var TYPESAFE_CLASSIFIER_MODELS = flattenClassifierModelCatalog("typesafe", typesafe_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/vercel-ai-gateway.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/vercel-ai-gateway.json
 var vercel_ai_gateway_default = {
 	"anthropic-messages": /*#__PURE__*/ JSON.parse("{\"chat:alibaba/qwen-3-14b\":{\"id\":\"alibaba/qwen-3-14b\",\"name\":\"Qwen3-14B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.12,\"output\":0.24,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":40960,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:alibaba/qwen-3-235b\":{\"id\":\"alibaba/qwen-3-235b\",\"name\":\"Qwen3 235B A22B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.22,\"output\":0.88,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:alibaba/qwen-3-30b\":{\"id\":\"alibaba/qwen-3-30b\",\"name\":\"Qwen3-30B-A3B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.12,\"output\":0.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":40960,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:alibaba/qwen-3-32b\":{\"id\":\"alibaba/qwen-3-32b\",\"name\":\"Qwen 3 32B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:alibaba/qwen3-coder\":{\"id\":\"alibaba/qwen3-coder\",\"name\":\"Qwen3 Coder 480B A35B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.22,\"output\":1.8,\"cacheRead\":0.022,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:alibaba/qwen3-coder-30b-a3b\":{\"id\":\"alibaba/qwen3-coder-30b-a3b\",\"name\":\"Qwen 3 Coder 30B A3B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:alibaba/qwen3-coder-next\":{\"id\":\"alibaba/qwen3-coder-next\",\"name\":\"Qwen3 Coder Next\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"type\":\"chat\"},\"chat:alibaba/qwen3-max-thinking\":{\"id\":\"alibaba/qwen3-max-thinking\",\"name\":\"Qwen 3 Max Thinking\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.2,\"output\":6,\"cacheRead\":0.24,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":32000,\"input\":2.4,\"output\":12,\"cacheRead\":0.48,\"cacheWrite\":0},{\"inputTokensAbove\":128000,\"input\":3,\"output\":15,\"cacheRead\":0.6,\"cacheWrite\":0}]},\"contextWindow\":256000,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:alibaba/qwen3-next-80b-a3b-instruct\":{\"id\":\"alibaba/qwen3-next-80b-a3b-instruct\",\"name\":\"Qwen3 Next 80B A3B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262114,\"maxTokens\":262114,\"type\":\"chat\"},\"chat:alibaba/qwen3-next-80b-a3b-thinking\":{\"id\":\"alibaba/qwen3-next-80b-a3b-thinking\",\"name\":\"Qwen3 Next 80B A3B Thinking\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":1.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:alibaba/qwen3-vl-instruct\":{\"id\":\"alibaba/qwen3-vl-instruct\",\"name\":\"Qwen3 VL 235B A22B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.88,\"cacheRead\":0.11,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.5-flash\":{\"id\":\"alibaba/qwen3.5-flash\",\"name\":\"Qwen 3.5 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.01,\"cacheWrite\":0.125},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.5-plus\":{\"id\":\"alibaba/qwen3.5-plus\",\"name\":\"Qwen 3.5 Plus\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.4,\"output\":2.4,\"cacheRead\":0.04,\"cacheWrite\":0.5,\"tiers\":[{\"inputTokensAbove\":256000,\"input\":0.5,\"output\":3,\"cacheRead\":0.05,\"cacheWrite\":0.625}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.6-27b\":{\"id\":\"alibaba/qwen3.6-27b\",\"name\":\"Qwen 3.6 27B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":3.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.6-plus\":{\"id\":\"alibaba/qwen3.6-plus\",\"name\":\"Qwen 3.6 Plus\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0.05,\"cacheWrite\":0.625,\"tiers\":[{\"inputTokensAbove\":255999,\"input\":2,\"output\":6,\"cacheRead\":0.2,\"cacheWrite\":2.5}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.7-flash\":{\"id\":\"alibaba/qwen3.7-flash\",\"name\":\"Qwen 3.7 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.03,\"output\":0.13,\"cacheRead\":0.006,\"cacheWrite\":0.038,\"tiers\":[{\"inputTokensAbove\":31999,\"input\":0.1,\"output\":0.4,\"cacheRead\":0.02,\"cacheWrite\":0.125},{\"inputTokensAbove\":255999,\"input\":0.2,\"output\":0.8,\"cacheRead\":0.04,\"cacheWrite\":0.25}]},\"contextWindow\":991000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.7-max\":{\"id\":\"alibaba/qwen3.7-max\",\"name\":\"Qwen 3.7 Max\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":7.5,\"cacheRead\":0.5,\"cacheWrite\":3.125},\"contextWindow\":991000,\"maxTokens\":64000,\"type\":\"chat\"},\"chat:alibaba/qwen3.7-plus\":{\"id\":\"alibaba/qwen3.7-plus\",\"name\":\"Qwen 3.7 Plus\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.4,\"output\":1.6,\"cacheRead\":0.08,\"cacheWrite\":0.5,\"tiers\":[{\"inputTokensAbove\":255999,\"input\":1.2,\"output\":4.8,\"cacheRead\":0.24,\"cacheWrite\":1.5}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-2.4t-a95b\":{\"id\":\"alibaba/qwen3.8-2.4t-a95b\",\"name\":\"Qwen3.8 2.4T A95B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-27b\":{\"id\":\"alibaba/qwen3.8-27b\",\"name\":\"Qwen3.8 27B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0.1,\"cacheWrite\":0.625},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-flash\":{\"id\":\"alibaba/qwen3.8-flash\",\"name\":\"Qwen 3.8 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.47,\"cacheRead\":0.016,\"cacheWrite\":0.2},\"contextWindow\":991000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-max\":{\"id\":\"alibaba/qwen3.8-max\",\"name\":\"Qwen 3.8 Max\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-max-0902\":{\"id\":\"alibaba/qwen3.8-max-0902\",\"name\":\"Qwen3.8 Max 0902\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":2.5},\"contextWindow\":991000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-max-prime\":{\"id\":\"alibaba/qwen3.8-max-prime\",\"name\":\"Qwen 3.8 Max Prime\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":12,\"cacheRead\":0.5,\"cacheWrite\":5},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:alibaba/qwen3.8-omni-flash\":{\"id\":\"alibaba/qwen3.8-omni-flash\",\"name\":\"Qwen 3.8 Omni Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.47,\"cacheRead\":0.016,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:amazon/nova-2-lite\":{\"id\":\"amazon/nova-2-lite\",\"name\":\"Nova 2 Lite\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:amazon/nova-lite\":{\"id\":\"amazon/nova-lite\",\"name\":\"Nova Lite\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.06,\"output\":0.24,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":300000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:amazon/nova-micro\":{\"id\":\"amazon/nova-micro\",\"name\":\"Nova Micro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.035,\"output\":0.14,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:amazon/nova-pro\":{\"id\":\"amazon/nova-pro\",\"name\":\"Nova Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.8,\"output\":3.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":300000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-fable-5\":{\"id\":\"anthropic/claude-fable-5\",\"name\":\"Claude Fable 5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-fable-5-batch\":{\"id\":\"anthropic/claude-fable-5-batch\",\"name\":\"Claude Fable 5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-fable-5.1\":{\"id\":\"anthropic/claude-fable-5.1\",\"name\":\"Claude Fable 5.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":0.25,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-fable-5.1-batch\":{\"id\":\"anthropic/claude-fable-5.1-batch\",\"name\":\"Claude Fable 5.1 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.125,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"off\":null,\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-haiku-4.5\":{\"id\":\"anthropic/claude-haiku-4.5\",\"name\":\"Claude Haiku 4.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-haiku-4.5-batch\":{\"id\":\"anthropic/claude-haiku-4.5-batch\",\"name\":\"Claude Haiku 4.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":2.5,\"cacheRead\":0.05,\"cacheWrite\":0.625},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-haiku-5.5\":{\"id\":\"anthropic/claude-haiku-5.5\",\"name\":\"Claude Haiku 5.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.5,\"output\":2.5,\"cacheRead\":0.05,\"cacheWrite\":0.625}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-haiku-5.5-batch\":{\"id\":\"anthropic/claude-haiku-5.5-batch\",\"name\":\"Claude Haiku 5.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":0.05,\"output\":0.25,\"cacheRead\":0.005,\"cacheWrite\":0.0625,\"tiers\":[{\"inputTokensAbove\":100000,\"input\":0.25,\"output\":1.25,\"cacheRead\":0.025,\"cacheWrite\":0.3125}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.5\":{\"id\":\"anthropic/claude-opus-4.5\",\"name\":\"Claude Opus 4.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.5-batch\":{\"id\":\"anthropic/claude-opus-4.5-batch\",\"name\":\"Claude Opus 4.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":12.5,\"cacheRead\":0.25,\"cacheWrite\":3.125},\"contextWindow\":200000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.6\":{\"id\":\"anthropic/claude-opus-4.6\",\"name\":\"Claude Opus 4.6\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.6-batch\":{\"id\":\"anthropic/claude-opus-4.6-batch\",\"name\":\"Claude Opus 4.6 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":2.5,\"output\":12.5,\"cacheRead\":0.25,\"cacheWrite\":3.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.7\":{\"id\":\"anthropic/claude-opus-4.7\",\"name\":\"Claude Opus 4.7\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.7-batch\":{\"id\":\"anthropic/claude-opus-4.7-batch\",\"name\":\"Claude Opus 4.7 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":2.5,\"output\":12.5,\"cacheRead\":0.25,\"cacheWrite\":3.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.8\":{\"id\":\"anthropic/claude-opus-4.8\",\"name\":\"Claude Opus 4.8\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.8-batch\":{\"id\":\"anthropic/claude-opus-4.8-batch\",\"name\":\"Claude Opus 4.8 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":2.5,\"output\":12.5,\"cacheRead\":0.25,\"cacheWrite\":3.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-4.8-fast\":{\"id\":\"anthropic/claude-opus-4.8-fast\",\"name\":\"Claude Opus 4.8 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-5\":{\"id\":\"anthropic/claude-opus-5\",\"name\":\"Claude Opus 5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-5-batch\":{\"id\":\"anthropic/claude-opus-5-batch\",\"name\":\"Claude Opus 5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":2.5,\"output\":12.5,\"cacheRead\":0.25,\"cacheWrite\":3.125},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-5-fast\":{\"id\":\"anthropic/claude-opus-5-fast\",\"name\":\"Claude Opus 5 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-5.5\":{\"id\":\"anthropic/claude-opus-5.5\",\"name\":\"Claude Opus 5.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-5.5-batch\":{\"id\":\"anthropic/claude-opus-5.5-batch\",\"name\":\"Claude Opus 5.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-opus-5.5-fast\":{\"id\":\"anthropic/claude-opus-5.5-fast\",\"name\":\"Claude Opus 5.5 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":8,\"output\":40,\"cacheRead\":0.4,\"cacheWrite\":10},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-4.5\":{\"id\":\"anthropic/claude-sonnet-4.5\",\"name\":\"Claude Sonnet 4.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":6,\"output\":22.5,\"cacheRead\":0.6,\"cacheWrite\":7.5}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-4.5-batch\":{\"id\":\"anthropic/claude-sonnet-4.5-batch\",\"name\":\"Claude Sonnet 4.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0.15,\"cacheWrite\":1.875,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":3,\"output\":11.25,\"cacheRead\":0.3,\"cacheWrite\":3.75}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-4.6\":{\"id\":\"anthropic/claude-sonnet-4.6\",\"name\":\"Claude Sonnet 4.6\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":3.75},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-4.6-batch\":{\"id\":\"anthropic/claude-sonnet-4.6-batch\",\"name\":\"Claude Sonnet 4.6 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0.15,\"cacheWrite\":1.875},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-5\":{\"id\":\"anthropic/claude-sonnet-5\",\"name\":\"Claude Sonnet 5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-5-batch\":{\"id\":\"anthropic/claude-sonnet-5-batch\",\"name\":\"Claude Sonnet 5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true},\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-5.5\":{\"id\":\"anthropic/claude-sonnet-5.5\",\"name\":\"Claude Sonnet 5.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:anthropic/claude-sonnet-5.5-batch\":{\"id\":\"anthropic/claude-sonnet-5.5-batch\",\"name\":\"Claude Sonnet 5.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true,\"forceAdaptiveThinking\":true,\"supportsTemperature\":false},\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.05,\"cacheWrite\":1.25},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"max\":\"max\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:arcee-ai/trinity-large-thinking\":{\"id\":\"arcee-ai/trinity-large-thinking\",\"name\":\"Trinity Large Thinking\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":0.8,\"cacheRead\":0.06,\"cacheWrite\":0},\"contextWindow\":262100,\"maxTokens\":80000,\"type\":\"chat\"},\"chat:bytedance/seed-1.6\":{\"id\":\"bytedance/seed-1.6\",\"name\":\"Seed 1.6\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.05,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":128000,\"input\":0.5,\"output\":4,\"cacheRead\":0.05,\"cacheWrite\":0}]},\"contextWindow\":256000,\"maxTokens\":32000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:bytedance/seed-1.8\":{\"id\":\"bytedance/seed-1.8\",\"name\":\"Bytedance Seed 1.8\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.05,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":128000,\"input\":0.5,\"output\":4,\"cacheRead\":0.05,\"cacheWrite\":0}]},\"contextWindow\":256000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:bytedance/seed-2.1-turbo\":{\"id\":\"bytedance/seed-2.1-turbo\",\"name\":\"Seed 2.1 Turbo\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":2.5,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:callstack/apex\":{\"id\":\"callstack/apex\",\"name\":\"Apex\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0.2,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:cohere/command-a\":{\"id\":\"cohere/command-a\",\"name\":\"Command A\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":8000,\"type\":\"chat\"},\"chat:deepseek/deepseek-r1\":{\"id\":\"deepseek/deepseek-r1\",\"name\":\"DeepSeek-R1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.35,\"output\":5.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:deepseek/deepseek-v3.1\":{\"id\":\"deepseek/deepseek-v3.1\",\"name\":\"DeepSeek V3.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":0.95,\"cacheRead\":0.13,\"cacheWrite\":0},\"contextWindow\":163840,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v3.2\":{\"id\":\"deepseek/deepseek-v3.2\",\"name\":\"DeepSeek V3.2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.62,\"output\":1.85,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v3.2-thinking\":{\"id\":\"deepseek/deepseek-v3.2-thinking\",\"name\":\"DeepSeek V3.2 Thinking\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.62,\"output\":1.85,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v4-flash\":{\"id\":\"deepseek/deepseek-v4-flash\",\"name\":\"DeepSeek V4 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.13,\"output\":0.26,\"cacheRead\":0.028,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v4-flash-0731\":{\"id\":\"deepseek/deepseek-v4-flash-0731\",\"name\":\"DeepSeek V4 Flash 0731\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.076,\"output\":0.153,\"cacheRead\":0.014,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v4-flash-vision-exp\":{\"id\":\"deepseek/deepseek-v4-flash-vision-exp\",\"name\":\"DeepSeek V4 Flash Vision Exp\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2156,\"output\":0.6468,\"cacheRead\":0.0068,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek/deepseek-v4-pro\":{\"id\":\"deepseek/deepseek-v4-pro\",\"name\":\"DeepSeek V4 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.66,\"output\":1.98,\"cacheRead\":0.022,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v4-pro-0813\":{\"id\":\"deepseek/deepseek-v4-pro-0813\",\"name\":\"DeepSeek V4 Pro 0813\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.66,\"output\":1.98,\"cacheRead\":0.066,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":384000,\"type\":\"chat\"},\"chat:deepseek/deepseek-v4.1-flash\":{\"id\":\"deepseek/deepseek-v4.1-flash\",\"name\":\"DeepSeek V4.1 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.075,\"output\":0.3,\"cacheRead\":0.0015,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek/deepseek-v4.1-flash-1017\":{\"id\":\"deepseek/deepseek-v4.1-flash-1017\",\"name\":\"DeepSeek V4.1 Flash 1017\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.075,\"output\":0.3,\"cacheRead\":0.0015,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek/deepseek-v4.1-flash-1017-fast\":{\"id\":\"deepseek/deepseek-v4.1-flash-1017-fast\",\"name\":\"DeepSeek V4.1 Flash 1017 Fast\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.014,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:deepseek/deepseek-v4.1-flash-fast\":{\"id\":\"deepseek/deepseek-v4.1-flash-fast\",\"name\":\"DeepSeek V4.1 Flash Fast\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.014,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:fireworks/ember-1\":{\"id\":\"fireworks/ember-1\",\"name\":\"Ember-1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-2.5-flash\":{\"id\":\"google/gemini-2.5-flash\",\"name\":\"Gemini 2.5 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-2.5-flash-batch\":{\"id\":\"google/gemini-2.5-flash-batch\",\"name\":\"Gemini 2.5 Flash (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":1.25,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-2.5-flash-lite\":{\"id\":\"google/gemini-2.5-flash-lite\",\"name\":\"Gemini 2.5 Flash Lite\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-2.5-flash-lite-batch\":{\"id\":\"google/gemini-2.5-flash-lite-batch\",\"name\":\"Gemini 2.5 Flash Lite (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.2,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-2.5-pro\":{\"id\":\"google/gemini-2.5-pro\",\"name\":\"Gemini 2.5 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0}]},\"contextWindow\":1048576,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-2.5-pro-batch\":{\"id\":\"google/gemini-2.5-pro-batch\",\"name\":\"Gemini 2.5 Pro (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.625,\"output\":5,\"cacheRead\":0.125,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":1.25,\"output\":7.5,\"cacheRead\":0.25,\"cacheWrite\":0}]},\"contextWindow\":1048576,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3-flash\":{\"id\":\"google/gemini-3-flash\",\"name\":\"Gemini 3 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":3,\"cacheRead\":0.05,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":0.5,\"output\":3,\"cacheRead\":0.05,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":65000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3-flash-batch\":{\"id\":\"google/gemini-3-flash-batch\",\"name\":\"Gemini 3 Flash (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":1.5,\"cacheRead\":0.05,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":0.25,\"output\":1.5,\"cacheRead\":0.05,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.1-flash-lite\":{\"id\":\"google/gemini-3.1-flash-lite\",\"name\":\"Gemini 3.1 Flash Lite\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":1.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.1-flash-lite-batch\":{\"id\":\"google/gemini-3.1-flash-lite-batch\",\"name\":\"Gemini 3.1 Flash Lite (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.125,\"output\":0.75,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.1-pro-preview\":{\"id\":\"google/gemini-3.1-pro-preview\",\"name\":\"Gemini 3.1 Pro Preview\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.1-pro-preview-batch\":{\"id\":\"google/gemini-3.1-pro-preview-batch\",\"name\":\"Gemini 3.1 Pro Preview (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":6,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2,\"output\":9,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.5-flash\":{\"id\":\"google/gemini-3.5-flash\",\"name\":\"Gemini 3.5 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.5,\"output\":9,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.5-flash-batch\":{\"id\":\"google/gemini-3.5-flash-batch\",\"name\":\"Gemini 3.5 Flash (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.5-flash-lite\":{\"id\":\"google/gemini-3.5-flash-lite\",\"name\":\"Gemini 3.5 Flash Lite\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":2.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.5-flash-lite-batch\":{\"id\":\"google/gemini-3.5-flash-lite-batch\",\"name\":\"Gemini 3.5 Flash Lite (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":1.25,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.6-flash\":{\"id\":\"google/gemini-3.6-flash\",\"name\":\"Gemini 3.6 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.75,\"output\":3.75,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.6-flash-batch\":{\"id\":\"google/gemini-3.6-flash-batch\",\"name\":\"Gemini 3.6 Flash (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.375,\"output\":1.875,\"cacheRead\":0.0375,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":64000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.7-flash\":{\"id\":\"google/gemini-3.7-flash\",\"name\":\"Gemini 3.7 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.75,\"output\":3.75,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.7-flash-batch\":{\"id\":\"google/gemini-3.7-flash-batch\",\"name\":\"Gemini 3.7 Flash (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.375,\"output\":1.875,\"cacheRead\":0.0375,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-3.8-flash\":{\"id\":\"google/gemini-3.8-flash\",\"name\":\"Gemini 3.8 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.75,\"output\":3.75,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65535,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemini-4-argon\":{\"id\":\"google/gemini-4-argon\",\"name\":\"Gemini 4 Argon\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-4-26b-a4b-it\":{\"id\":\"google/gemma-4-26b-a4b-it\",\"name\":\"Google Gemma 4 26B A4B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:google/gemma-4-31b-it\":{\"id\":\"google/gemma-4-31b-it\",\"name\":\"Gemma 4 31B IT\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.14,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:inception/mercury-2\":{\"id\":\"inception/mercury-2\",\"name\":\"Mercury 2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":0.75,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:inception/mercury-2.5\":{\"id\":\"inception/mercury-2.5\",\"name\":\"Mercury 2.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.04,\"output\":0.15,\"cacheRead\":0.004,\"cacheWrite\":0},\"contextWindow\":260000,\"maxTokens\":65536,\"type\":\"chat\"},\"chat:inception/mercury-3\":{\"id\":\"inception/mercury-3\",\"name\":\"Mercury 3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.35,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:inception/mercury-coder-small\":{\"id\":\"inception/mercury-coder-small\",\"name\":\"Mercury Coder Small Beta\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":1,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":32000,\"maxTokens\":16384,\"type\":\"chat\"},\"chat:inclusionai/ling-3.0-flash\":{\"id\":\"inclusionai/ling-3.0-flash\",\"name\":\"Ling 3.0 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.021,\"output\":0.063,\"cacheRead\":0.0042,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32000,\"type\":\"chat\"},\"chat:inclusionai/ling-3.0-flash-fin\":{\"id\":\"inclusionai/ling-3.0-flash-fin\",\"name\":\"Ling 3.0 Flash Fin\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.075,\"output\":0.22,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32000,\"type\":\"chat\"},\"chat:inclusionai/ling-3.0-flash-sante\":{\"id\":\"inclusionai/ling-3.0-flash-sante\",\"name\":\"Ling 3.0 Flash Sante\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.075,\"output\":0.22,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32000,\"type\":\"chat\"},\"chat:inclusionai/ling-3.0-flash-vl\":{\"id\":\"inclusionai/ling-3.0-flash-vl\",\"name\":\"Ling 3.0 Flash VL\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.075,\"output\":0.22,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:inclusionai/ling-3.1-flash\":{\"id\":\"inclusionai/ling-3.1-flash\",\"name\":\"Ling 3.1 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":0.9,\"cacheRead\":0.06,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:interfaze/interfaze-beta\":{\"id\":\"interfaze/interfaze-beta\",\"name\":\"Interfaze Beta\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.5,\"output\":3.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":32000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:liquid/lfm2.5-24b-a2b\":{\"id\":\"liquid/lfm2.5-24b-a2b\",\"name\":\"LFM2.5-24B-A2B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.7,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8200,\"type\":\"chat\"},\"chat:meituan/longcat-2.5-preview\":{\"id\":\"meituan/longcat-2.5-preview\",\"name\":\"LongCat 2.5 Preview\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.006,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/llama-3.1-70b\":{\"id\":\"meta/llama-3.1-70b\",\"name\":\"Llama 3.1 70B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.72,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:meta/llama-3.1-8b\":{\"id\":\"meta/llama-3.1-8b\",\"name\":\"Llama 3.1 8B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.22,\"output\":0.22,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:meta/llama-3.3-70b\":{\"id\":\"meta/llama-3.3-70b\",\"name\":\"Llama 3.3 70B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.72,\"output\":0.72,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:meta/llama-4-maverick\":{\"id\":\"meta/llama-4-maverick\",\"name\":\"Llama 4 Maverick 17B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.24,\"output\":0.97,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/llama-4-scout\":{\"id\":\"meta/llama-4-scout\",\"name\":\"Llama 4 Scout 17B Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.17,\"output\":0.66,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":8192,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-glimmer-30b\":{\"id\":\"meta/muse-glimmer-30b\",\"name\":\"Muse Glimmer 30B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.35,\"output\":1.5,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-spark-1.1\":{\"id\":\"meta/muse-spark-1.1\",\"name\":\"Muse Spark 1.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":4.25,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-spark-1.2\":{\"id\":\"meta/muse-spark-1.2\",\"name\":\"Muse Spark 1.2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":4.25,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-spark-1.2-contributor\":{\"id\":\"meta/muse-spark-1.2-contributor\",\"name\":\"Muse Spark 1.2 Contributor\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.2,\"cacheRead\":0.002,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-spark-1.3\":{\"id\":\"meta/muse-spark-1.3\",\"name\":\"Muse Spark 1.3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":4.25,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-spark-1.3-contributor\":{\"id\":\"meta/muse-spark-1.3-contributor\",\"name\":\"Muse Spark 1.3 Contributor\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.2,\"cacheRead\":0.002,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-spark-open\":{\"id\":\"meta/muse-spark-open\",\"name\":\"Muse Spark Open\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":4.25,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:meta/muse-wonder-1.0\":{\"id\":\"meta/muse-wonder-1.0\",\"name\":\"Muse Wonder\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:minimax/minimax-m2\":{\"id\":\"minimax/minimax-m2\",\"name\":\"MiniMax M2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.03,\"cacheWrite\":0.375},\"contextWindow\":205000,\"maxTokens\":205000,\"type\":\"chat\"},\"chat:minimax/minimax-m2.1\":{\"id\":\"minimax/minimax-m2.1\",\"name\":\"MiniMax M2.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.03,\"cacheWrite\":0.375},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:minimax/minimax-m2.1-lightning\":{\"id\":\"minimax/minimax-m2.1-lightning\",\"name\":\"MiniMax M2.1 Lightning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":2.4,\"cacheRead\":0.03,\"cacheWrite\":0.375},\"contextWindow\":204800,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:minimax/minimax-m2.5\":{\"id\":\"minimax/minimax-m2.5\",\"name\":\"MiniMax M2.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.03,\"cacheWrite\":0.375},\"contextWindow\":204800,\"maxTokens\":131000,\"type\":\"chat\"},\"chat:minimax/minimax-m2.5-highspeed\":{\"id\":\"minimax/minimax-m2.5-highspeed\",\"name\":\"MiniMax M2.5 High Speed\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.03,\"cacheWrite\":0.375},\"contextWindow\":204800,\"maxTokens\":131000,\"type\":\"chat\"},\"chat:minimax/minimax-m2.7\":{\"id\":\"minimax/minimax-m2.7\",\"name\":\"MiniMax M2.7\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.06,\"cacheWrite\":0.375},\"contextWindow\":204800,\"maxTokens\":131000,\"type\":\"chat\"},\"chat:minimax/minimax-m2.7-highspeed\":{\"id\":\"minimax/minimax-m2.7-highspeed\",\"name\":\"MiniMax M2.7 High Speed\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.06,\"cacheWrite\":0.375},\"contextWindow\":204800,\"maxTokens\":131100,\"type\":\"chat\"},\"chat:minimax/minimax-m3\":{\"id\":\"minimax/minimax-m3\",\"name\":\"MiniMax M3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":1.2,\"cacheRead\":0.06,\"cacheWrite\":0},\"contextWindow\":512000,\"maxTokens\":512000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:minimax/minimax-m3.1-flash\":{\"id\":\"minimax/minimax-m3.1-flash\",\"name\":\"MiniMax-M3.1-Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":524288,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/codestral\":{\"id\":\"mistral/codestral\",\"name\":\"Mistral Codestral\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":0.9,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4000,\"type\":\"chat\"},\"chat:mistral/ministral-14b\":{\"id\":\"mistral/ministral-14b\",\"name\":\"Ministral 14B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.2,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/ministral-3b\":{\"id\":\"mistral/ministral-3b\",\"name\":\"Ministral 3B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.1,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":4000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/ministral-8b\":{\"id\":\"mistral/ministral-8b\",\"name\":\"Ministral 8B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.15,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":4000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/mistral-large-3\":{\"id\":\"mistral/mistral-large-3\",\"name\":\"Mistral Large 3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/mistral-large-4\":{\"id\":\"mistral/mistral-large-4\",\"name\":\"Mistral Large 4\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.36,\"output\":4.18,\"cacheRead\":0.14,\"cacheWrite\":0},\"contextWindow\":524288,\"maxTokens\":262144,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/mistral-medium-3.5\":{\"id\":\"mistral/mistral-medium-3.5\",\"name\":\"Mistral Medium Latest\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.5,\"output\":7.5,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mistral/mistral-nemo\":{\"id\":\"mistral/mistral-nemo\",\"name\":\"Mistral Nemo 12B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.029,\"output\":0.03,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:mistral/mistral-small\":{\"id\":\"mistral/mistral-small\",\"name\":\"Mistral Small\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.015,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":4000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:mixedbread/toast-1\":{\"id\":\"mixedbread/toast-1\",\"name\":\"Toast 1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3,\"output\":0.72,\"cacheRead\":0.036,\"cacheWrite\":0},\"contextWindow\":131000,\"maxTokens\":4000,\"type\":\"chat\"},\"chat:moonshotai/kimi-k2\":{\"id\":\"moonshotai/kimi-k2\",\"name\":\"Kimi K2 Instruct\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.57,\"output\":2.3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:moonshotai/kimi-k2.5\":{\"id\":\"moonshotai/kimi-k2.5\",\"name\":\"Kimi K2.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":3,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/kimi-k2.6\":{\"id\":\"moonshotai/kimi-k2.6\",\"name\":\"Kimi K2.6\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.16,\"cacheWrite\":0},\"contextWindow\":262000,\"maxTokens\":262000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/kimi-k2.7-code\":{\"id\":\"moonshotai/kimi-k2.7-code\",\"name\":\"Kimi K2.7 Code\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.19,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/kimi-k2.7-code-highspeed\":{\"id\":\"moonshotai/kimi-k2.7-code-highspeed\",\"name\":\"Kimi K2.7 Code High Speed\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.9,\"output\":8,\"cacheRead\":0.38,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/kimi-k3\":{\"id\":\"moonshotai/kimi-k3\",\"name\":\"Kimi K3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3,\"output\":15,\"cacheRead\":0.3,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:moonshotai/kimi-k3-fast\":{\"id\":\"moonshotai/kimi-k3-fast\",\"name\":\"Kimi K3 Fast\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4.5,\"output\":22.5,\"cacheRead\":0.45,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/nemotron-3-nano-30b-a3b\":{\"id\":\"nvidia/nemotron-3-nano-30b-a3b\",\"name\":\"Nemotron 3 Nano 30B A3B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.2,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:nvidia/nemotron-3-super-120b-a12b\":{\"id\":\"nvidia/nemotron-3-super-120b-a12b\",\"name\":\"NVIDIA Nemotron 3 Super 120B A12B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.65,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32000,\"type\":\"chat\"},\"chat:nvidia/nemotron-3-ultra-550b-a55b\":{\"id\":\"nvidia/nemotron-3-ultra-550b-a55b\",\"name\":\"Nemotron 3 Ultra\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.4,\"cacheRead\":0.12,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65000,\"type\":\"chat\"},\"chat:nvidia/nemotron-3.5-lightning\":{\"id\":\"nvidia/nemotron-3.5-lightning\",\"name\":\"Nemotron 3.5 Lightning 30B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.2,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:nvidia/nemotron-3.5-lightning-free\":{\"id\":\"nvidia/nemotron-3.5-lightning-free\",\"name\":\"Nemotron 3.5 Lightning Free\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":65000,\"type\":\"chat\"},\"chat:nvidia/nemotron-3.5-super-vl\":{\"id\":\"nvidia/nemotron-3.5-super-vl\",\"name\":\"NVIDIA Nemotron 3.5 Super VL\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.5,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/nemotron-nano-12b-v2-vl\":{\"id\":\"nvidia/nemotron-nano-12b-v2-vl\",\"name\":\"Nvidia Nemotron Nano 12B V2 VL\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:nvidia/nemotron-nano-9b-v2\":{\"id\":\"nvidia/nemotron-nano-9b-v2\",\"name\":\"Nvidia Nemotron Nano 9B V2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.06,\"output\":0.23,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:openai/gpt-3.5-turbo\":{\"id\":\"openai/gpt-3.5-turbo\",\"name\":\"GPT-3.5 Turbo\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.5,\"output\":1.5,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":16385,\"maxTokens\":4096,\"type\":\"chat\"},\"chat:openai/gpt-4-turbo\":{\"id\":\"openai/gpt-4-turbo\",\"name\":\"GPT-4 Turbo\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":10,\"output\":30,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":4096,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1\":{\"id\":\"openai/gpt-4.1\",\"name\":\"GPT-4.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-batch\":{\"id\":\"openai/gpt-4.1-batch\",\"name\":\"GPT-4.1 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":4,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-fast\":{\"id\":\"openai/gpt-4.1-fast\",\"name\":\"GPT-4.1 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3.5,\"output\":14,\"cacheRead\":0.875,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-mini\":{\"id\":\"openai/gpt-4.1-mini\",\"name\":\"GPT-4.1 mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.4,\"output\":1.6,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-mini-batch\":{\"id\":\"openai/gpt-4.1-mini-batch\",\"name\":\"GPT-4.1 mini (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.8,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-mini-fast\":{\"id\":\"openai/gpt-4.1-mini-fast\",\"name\":\"GPT-4.1 mini (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.7,\"output\":2.8,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-nano\":{\"id\":\"openai/gpt-4.1-nano\",\"name\":\"GPT-4.1 nano\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.4,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-nano-batch\":{\"id\":\"openai/gpt-4.1-nano-batch\",\"name\":\"GPT-4.1 nano (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.2,\"cacheRead\":0.0125,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4.1-nano-fast\":{\"id\":\"openai/gpt-4.1-nano-fast\",\"name\":\"GPT-4.1 nano (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.8,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":1047576,\"maxTokens\":32768,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4o\":{\"id\":\"openai/gpt-4o\",\"name\":\"GPT-4o\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":10,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4o-batch\":{\"id\":\"openai/gpt-4o-batch\",\"name\":\"GPT-4o (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":5,\"cacheRead\":0.625,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4o-fast\":{\"id\":\"openai/gpt-4o-fast\",\"name\":\"GPT-4o (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4.25,\"output\":17,\"cacheRead\":2.125,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4o-mini\":{\"id\":\"openai/gpt-4o-mini\",\"name\":\"GPT-4o mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4o-mini-batch\":{\"id\":\"openai/gpt-4o-mini-batch\",\"name\":\"GPT-4o mini (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.075,\"output\":0.3,\"cacheRead\":0.0375,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-4o-mini-fast\":{\"id\":\"openai/gpt-4o-mini-fast\",\"name\":\"GPT-4o mini (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":1,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16384,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5\":{\"id\":\"openai/gpt-5\",\"name\":\"GPT-5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-batch\":{\"id\":\"openai/gpt-5-batch\",\"name\":\"GPT-5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.625,\"output\":5,\"cacheRead\":0.0625,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-codex\":{\"id\":\"openai/gpt-5-codex\",\"name\":\"GPT-5-Codex\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.13,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-fast\":{\"id\":\"openai/gpt-5-fast\",\"name\":\"GPT-5 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":20,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-mini\":{\"id\":\"openai/gpt-5-mini\",\"name\":\"GPT-5 mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.025,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-mini-batch\":{\"id\":\"openai/gpt-5-mini-batch\",\"name\":\"GPT-5 mini (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.125,\"output\":1,\"cacheRead\":0.0125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-mini-fast\":{\"id\":\"openai/gpt-5-mini-fast\",\"name\":\"GPT-5 mini (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.45,\"output\":3.6,\"cacheRead\":0.045,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-nano\":{\"id\":\"openai/gpt-5-nano\",\"name\":\"GPT-5 nano\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.4,\"cacheRead\":0.005,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-nano-batch\":{\"id\":\"openai/gpt-5-nano-batch\",\"name\":\"GPT-5 nano (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.025,\"output\":0.2,\"cacheRead\":0.0025,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-pro\":{\"id\":\"openai/gpt-5-pro\",\"name\":\"GPT-5 pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":15,\"output\":120,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":272000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5-pro-batch\":{\"id\":\"openai/gpt-5-pro-batch\",\"name\":\"GPT-5 pro (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":7.5,\"output\":60,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":272000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.1-codex\":{\"id\":\"openai/gpt-5.1-codex\",\"name\":\"GPT-5.1-Codex\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.13,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.1-codex-max\":{\"id\":\"openai/gpt-5.1-codex-max\",\"name\":\"GPT 5.1 Codex Max\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.1-codex-mini\":{\"id\":\"openai/gpt-5.1-codex-mini\",\"name\":\"GPT 5.1 Codex Mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.25,\"output\":2,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.1-thinking\":{\"id\":\"openai/gpt-5.1-thinking\",\"name\":\"GPT 5.1 Thinking\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":10,\"cacheRead\":0.125,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.1-thinking-fast\":{\"id\":\"openai/gpt-5.1-thinking-fast\",\"name\":\"GPT 5.1 Thinking (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":20,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.2\":{\"id\":\"openai/gpt-5.2\",\"name\":\"GPT 5.2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.2-batch\":{\"id\":\"openai/gpt-5.2-batch\",\"name\":\"GPT 5.2 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.875,\"output\":7,\"cacheRead\":0.0875,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.2-codex\":{\"id\":\"openai/gpt-5.2-codex\",\"name\":\"GPT 5.2 Codex\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.2-fast\":{\"id\":\"openai/gpt-5.2-fast\",\"name\":\"GPT 5.2 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3.5,\"output\":28,\"cacheRead\":0.35,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.2-pro\":{\"id\":\"openai/gpt-5.2-pro\",\"name\":\"GPT 5.2 \",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":21,\"output\":168,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.3-codex\":{\"id\":\"openai/gpt-5.3-codex\",\"name\":\"GPT 5.3 Codex\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.75,\"output\":14,\"cacheRead\":0.175,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.3-codex-fast\":{\"id\":\"openai/gpt-5.3-codex-fast\",\"name\":\"GPT 5.3 Codex (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3.5,\"output\":28,\"cacheRead\":0.35,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4\":{\"id\":\"openai/gpt-5.4\",\"name\":\"GPT 5.4\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":5,\"output\":22.5,\"cacheRead\":0.5,\"cacheWrite\":0}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-batch\":{\"id\":\"openai/gpt-5.4-batch\",\"name\":\"GPT 5.4 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":7.5,\"cacheRead\":0.125,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":2.5,\"output\":11.25,\"cacheRead\":0.25,\"cacheWrite\":0}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-fast\":{\"id\":\"openai/gpt-5.4-fast\",\"name\":\"GPT 5.4 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-mini\":{\"id\":\"openai/gpt-5.4-mini\",\"name\":\"GPT 5.4 Mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.75,\"output\":4.5,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-mini-batch\":{\"id\":\"openai/gpt-5.4-mini-batch\",\"name\":\"GPT 5.4 Mini (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.375,\"output\":2.25,\"cacheRead\":0.0375,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-mini-fast\":{\"id\":\"openai/gpt-5.4-mini-fast\",\"name\":\"GPT 5.4 Mini (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.5,\"output\":9,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-nano\":{\"id\":\"openai/gpt-5.4-nano\",\"name\":\"GPT 5.4 Nano\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":1.25,\"cacheRead\":0.02,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-nano-batch\":{\"id\":\"openai/gpt-5.4-nano-batch\",\"name\":\"GPT 5.4 Nano (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.625,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":400000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.4-pro\":{\"id\":\"openai/gpt-5.4-pro\",\"name\":\"GPT 5.4 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":60,\"output\":270,\"cacheRead\":0,\"cacheWrite\":0}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.5\":{\"id\":\"openai/gpt-5.5\",\"name\":\"GPT 5.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":10,\"output\":45,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.5-batch\":{\"id\":\"openai/gpt-5.5-batch\",\"name\":\"GPT 5.5 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.5,\"output\":15,\"cacheRead\":0.25,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":5,\"output\":22.5,\"cacheRead\":0.5,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.5-fast\":{\"id\":\"openai/gpt-5.5-fast\",\"name\":\"GPT 5.5 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":12.5,\"output\":75,\"cacheRead\":1.25,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.5-pro\":{\"id\":\"openai/gpt-5.5-pro\",\"name\":\"GPT 5.5 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":30,\"output\":180,\"cacheRead\":0,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":60,\"output\":270,\"cacheRead\":0,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\",\"off\":null,\"minimal\":null,\"low\":null},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.5-pro-batch\":{\"id\":\"openai/gpt-5.5-pro-batch\",\"name\":\"GPT 5.5 Pro (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":15,\"output\":90,\"cacheRead\":0,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":30,\"output\":135,\"cacheRead\":0,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-luna\":{\"id\":\"openai/gpt-5.6-luna\",\"name\":\"GPT 5.6 Luna\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":1.2,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":0.4,\"output\":1.8,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-luna-batch\":{\"id\":\"openai/gpt-5.6-luna-batch\",\"name\":\"GPT 5.6 Luna (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.6,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":0.2,\"output\":0.9,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-luna-fast\":{\"id\":\"openai/gpt-5.6-luna-fast\",\"name\":\"GPT 5.6 Luna (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.4,\"output\":2.4,\"cacheRead\":0.04,\"cacheWrite\":0.5,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":0.8,\"output\":3.6,\"cacheRead\":0.08,\"cacheWrite\":1}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-sol\":{\"id\":\"openai/gpt-5.6-sol\",\"name\":\"GPT 5.6 Sol\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-sol-batch\":{\"id\":\"openai/gpt-5.6-sol-batch\",\"name\":\"GPT 5.6 Sol (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-sol-fast\":{\"id\":\"openai/gpt-5.6-sol-fast\",\"name\":\"GPT 5.6 Sol (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":8,\"output\":40,\"cacheRead\":0.8,\"cacheWrite\":10,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":16,\"output\":60,\"cacheRead\":1.6,\"cacheWrite\":20}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-terra\":{\"id\":\"openai/gpt-5.6-terra\",\"name\":\"GPT 5.6 Terra\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":12,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":4,\"output\":18,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-terra-batch\":{\"id\":\"openai/gpt-5.6-terra-batch\",\"name\":\"GPT 5.6 Terra (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":6,\"cacheRead\":0.1,\"cacheWrite\":1.25,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":2,\"output\":9,\"cacheRead\":0.2,\"cacheWrite\":2.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-5.6-terra-fast\":{\"id\":\"openai/gpt-5.6-terra-fast\",\"name\":\"GPT 5.6 Terra (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":24,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":271999,\"input\":8,\"output\":36,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-astra\":{\"id\":\"openai/gpt-6-astra\",\"name\":\"GPT-6 Astra\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":10,\"output\":50,\"cacheRead\":1,\"cacheWrite\":12.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":20,\"output\":75,\"cacheRead\":2,\"cacheWrite\":25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-astra-batch\":{\"id\":\"openai/gpt-6-astra-batch\",\"name\":\"GPT-6 Astra (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":5,\"output\":25,\"cacheRead\":0.5,\"cacheWrite\":6.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":10,\"output\":37.5,\"cacheRead\":1,\"cacheWrite\":12.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-astra-fast\":{\"id\":\"openai/gpt-6-astra-fast\",\"name\":\"GPT-6 Astra (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":20,\"output\":100,\"cacheRead\":2,\"cacheWrite\":25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":40,\"output\":150,\"cacheRead\":4,\"cacheWrite\":50}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-luna\":{\"id\":\"openai/gpt-6-luna\",\"name\":\"GPT-6 Luna\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.01,\"cacheWrite\":0.125,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.2,\"output\":0.75,\"cacheRead\":0.02,\"cacheWrite\":0.25}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-luna-batch\":{\"id\":\"openai/gpt-6-luna-batch\",\"name\":\"GPT-6 Luna (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.05,\"output\":0.25,\"cacheRead\":0.005,\"cacheWrite\":0.0625,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.1,\"output\":0.375,\"cacheRead\":0.01,\"cacheWrite\":0.125}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-luna-fast\":{\"id\":\"openai/gpt-6-luna-fast\",\"name\":\"GPT-6 Luna (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":1,\"cacheRead\":0.02,\"cacheWrite\":0.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":0.4,\"output\":1.5,\"cacheRead\":0.04,\"cacheWrite\":0.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-sol\":{\"id\":\"openai/gpt-6-sol\",\"name\":\"GPT-6 Sol\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.2,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.4,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-sol-batch\":{\"id\":\"openai/gpt-6-sol-batch\",\"name\":\"GPT-6 Sol (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.1,\"cacheWrite\":1.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":2,\"output\":7.5,\"cacheRead\":0.2,\"cacheWrite\":2.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6-sol-fast\":{\"id\":\"openai/gpt-6-sol-fast\",\"name\":\"GPT-6 Sol (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.8,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6.1-sol\":{\"id\":\"openai/gpt-6.1-sol\",\"name\":\"GPT-6.1 Sol\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":10,\"cacheRead\":0.1,\"cacheWrite\":2.5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":4,\"output\":15,\"cacheRead\":0.2,\"cacheWrite\":5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6.1-sol-batch\":{\"id\":\"openai/gpt-6.1-sol-batch\",\"name\":\"GPT-6.1 Sol (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":5,\"cacheRead\":0.05,\"cacheWrite\":1.25,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":2,\"output\":7.5,\"cacheRead\":0.1,\"cacheWrite\":2.5}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-6.1-sol-fast\":{\"id\":\"openai/gpt-6.1-sol-fast\",\"name\":\"GPT-6.1 Sol (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.2,\"cacheWrite\":5,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":8,\"output\":30,\"cacheRead\":0.4,\"cacheWrite\":10}]},\"contextWindow\":1050000,\"maxTokens\":128000,\"thinkingLevelMap\":{\"xhigh\":\"xhigh\"},\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/gpt-oss-120b\":{\"id\":\"openai/gpt-oss-120b\",\"name\":\"GPT OSS 120B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.1,\"output\":0.5,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:openai/gpt-oss-20b\":{\"id\":\"openai/gpt-oss-20b\",\"name\":\"GPT OSS 20B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.03,\"output\":0.14,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":131072,\"maxTokens\":8192,\"type\":\"chat\"},\"chat:openai/gpt-oss-safeguard-120b\":{\"id\":\"openai/gpt-oss-safeguard-120b\",\"name\":\"GPT OSS Safeguard 120B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.6,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16000,\"type\":\"chat\"},\"chat:openai/gpt-oss-safeguard-20b\":{\"id\":\"openai/gpt-oss-safeguard-20b\",\"name\":\"GPT OSS Safeguard 20B\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.07,\"output\":0.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":16000,\"type\":\"chat\"},\"chat:openai/o1\":{\"id\":\"openai/o1\",\"name\":\"o1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":15,\"output\":60,\"cacheRead\":7.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/o3\":{\"id\":\"openai/o3\",\"name\":\"o3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/o3-fast\":{\"id\":\"openai/o3-fast\",\"name\":\"o3 (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":3.5,\"output\":14,\"cacheRead\":0.875,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/o3-mini\":{\"id\":\"openai/o3-mini\",\"name\":\"o3-mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.55,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"type\":\"chat\"},\"chat:openai/o3-pro\":{\"id\":\"openai/o3-pro\",\"name\":\"o3 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":20,\"output\":80,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/o4-mini\":{\"id\":\"openai/o4-mini\",\"name\":\"o4-mini\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.1,\"output\":4.4,\"cacheRead\":0.275,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:openai/o4-mini-fast\":{\"id\":\"openai/o4-mini-fast\",\"name\":\"o4-mini (Fast)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":8,\"cacheRead\":0.5,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":100000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:poolside/laguna-s-2.1\":{\"id\":\"poolside/laguna-s-2.1\",\"name\":\"Laguna S 2.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.09,\"output\":0.18,\"cacheRead\":0.009,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:poolside/laguna-s-2.1-free\":{\"id\":\"poolside/laguna-s-2.1-free\",\"name\":\"Laguna S 2.1 Free\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":32768,\"type\":\"chat\"},\"chat:quiverai/arrow-2\":{\"id\":\"quiverai/arrow-2\",\"name\":\"Arrow 2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4,\"output\":20,\"cacheRead\":0.4,\"cacheWrite\":5},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:quiverai/arrow-2-telos\":{\"id\":\"quiverai/arrow-2-telos\",\"name\":\"Arrow 2 Telos\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":6,\"output\":30,\"cacheRead\":0.6,\"cacheWrite\":7.5},\"contextWindow\":131072,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:reflection/beam\":{\"id\":\"reflection/beam\",\"name\":\"Beam 1.0\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:reflection/beam-free\":{\"id\":\"reflection/beam-free\",\"name\":\"Beam 1.0 (Free)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"type\":\"chat\"},\"chat:sakana/fugu-max\":{\"id\":\"sakana/fugu-max\",\"name\":\"Fugu Max\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.25,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:sakana/fugu-ultra\":{\"id\":\"sakana/fugu-ultra\",\"name\":\"Fugu Ultra\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":10,\"output\":45,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:sakana/fugu-ultra-v2\":{\"id\":\"sakana/fugu-ultra-v2\",\"name\":\"Fugu Ultra v2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":5,\"output\":30,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":272000,\"input\":10,\"output\":45,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:sakana/namazu\":{\"id\":\"sakana/namazu\",\"name\":\"Sakana Namazu\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.95,\"output\":4,\"cacheRead\":0.15,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.1-fast-non-reasoning\":{\"id\":\"spacexai/grok-4.1-fast-non-reasoning\",\"name\":\"Grok 4.1 Fast Non-Reasoning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.5,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.1-fast-reasoning\":{\"id\":\"spacexai/grok-4.1-fast-reasoning\",\"name\":\"Grok 4.1 Fast Reasoning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":0.5,\"cacheRead\":0.05,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-multi-agent\":{\"id\":\"spacexai/grok-4.20-multi-agent\",\"name\":\"Grok 4.20 Multi-Agent\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-multi-agent-batch\":{\"id\":\"spacexai/grok-4.20-multi-agent-batch\",\"name\":\"Grok 4.20 Multi-Agent (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":2,\"cacheRead\":0.16,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2,\"output\":4,\"cacheRead\":0.32,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-multi-agent-beta\":{\"id\":\"spacexai/grok-4.20-multi-agent-beta\",\"name\":\"Grok 4.20 Multi Agent Beta\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-non-reasoning\":{\"id\":\"spacexai/grok-4.20-non-reasoning\",\"name\":\"Grok 4.20 Non-Reasoning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-non-reasoning-batch\":{\"id\":\"spacexai/grok-4.20-non-reasoning-batch\",\"name\":\"Grok 4.20 Non-Reasoning (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":2,\"cacheRead\":0.16,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2,\"output\":4,\"cacheRead\":0.32,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-non-reasoning-beta\":{\"id\":\"spacexai/grok-4.20-non-reasoning-beta\",\"name\":\"Grok 4.20 Beta Non-Reasoning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":false,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-reasoning\":{\"id\":\"spacexai/grok-4.20-reasoning\",\"name\":\"Grok 4.20 Reasoning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-reasoning-batch\":{\"id\":\"spacexai/grok-4.20-reasoning-batch\",\"name\":\"Grok 4.20 Reasoning (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":2,\"cacheRead\":0.16,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2,\"output\":4,\"cacheRead\":0.32,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.20-reasoning-beta\":{\"id\":\"spacexai/grok-4.20-reasoning-beta\",\"name\":\"Grok 4.20 Beta Reasoning\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":2000000,\"maxTokens\":2000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.3\":{\"id\":\"spacexai/grok-4.3\",\"name\":\"Grok 4.3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.25,\"output\":2.5,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2.5,\"output\":5,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.3-batch\":{\"id\":\"spacexai/grok-4.3-batch\",\"name\":\"Grok 4.3 (Batch)\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":2,\"cacheRead\":0.16,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2,\"output\":4,\"cacheRead\":0.32,\"cacheWrite\":0}]},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.5\":{\"id\":\"spacexai/grok-4.5\",\"name\":\"Grok 4.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.3,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":0.6,\"cacheWrite\":0}]},\"contextWindow\":500000,\"maxTokens\":500000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.6\":{\"id\":\"spacexai/grok-4.6\",\"name\":\"Grok 4.6\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":500000,\"maxTokens\":500000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-4.7\":{\"id\":\"spacexai/grok-4.7\",\"name\":\"Grok 4.7\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2,\"output\":6,\"cacheRead\":0.5,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":4,\"output\":12,\"cacheRead\":1,\"cacheWrite\":0}]},\"contextWindow\":500000,\"maxTokens\":500000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:spacexai/grok-build-0.1\":{\"id\":\"spacexai/grok-build-0.1\",\"name\":\"Grok Build 0.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":2,\"cacheRead\":0.2,\"cacheWrite\":0,\"tiers\":[{\"inputTokensAbove\":200000,\"input\":2,\"output\":4,\"cacheRead\":0.4,\"cacheWrite\":0}]},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:stealth/glyph-cluster\":{\"id\":\"stealth/glyph-cluster\",\"name\":\"Glyph Cluster\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0,\"output\":0,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"type\":\"chat\"},\"chat:stepfun/step-3.7-flash\":{\"id\":\"stepfun/step-3.7-flash\",\"name\":\"Step 3.7 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":1.15,\"cacheRead\":0.04,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:stepfun/step-5-preview\":{\"id\":\"stepfun/step-5-preview\",\"name\":\"Step 5 Preview\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":2.7,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":1048576,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:tencent/hy3\":{\"id\":\"tencent/hy3\",\"name\":\"Hy3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.14,\"output\":0.58,\"cacheRead\":0.035,\"cacheWrite\":0},\"contextWindow\":262144,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:tencent/hy4-preview\":{\"id\":\"tencent/hy4-preview\",\"name\":\"Tencent Hy4 Preview\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.834,\"output\":2.501,\"cacheRead\":0.042,\"cacheWrite\":0},\"contextWindow\":1024000,\"maxTokens\":64000,\"type\":\"chat\"},\"chat:thinkingmachines/inkling\":{\"id\":\"thinkingmachines/inkling\",\"name\":\"Inkling\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":4.05,\"cacheRead\":0.17,\"cacheWrite\":0},\"contextWindow\":256000,\"maxTokens\":256000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:thinkingmachines/inkling-small\":{\"id\":\"thinkingmachines/inkling-small\",\"name\":\"Inkling Small\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.45,\"output\":1.2,\"cacheRead\":0.1,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:xiaomi/mimo-v2.5\":{\"id\":\"xiaomi/mimo-v2.5\",\"name\":\"MiMo M2.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.119,\"output\":0.238,\"cacheRead\":0.0025,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":131100,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:xiaomi/mimo-v2.5-pro\":{\"id\":\"xiaomi/mimo-v2.5-pro\",\"name\":\"MiMo V2.5 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.3045,\"output\":0.609,\"cacheRead\":0.0028,\"cacheWrite\":0},\"contextWindow\":1050000,\"maxTokens\":131000,\"type\":\"chat\"},\"chat:xiaomi/mimo-v2.6-flash\":{\"id\":\"xiaomi/mimo-v2.6-flash\",\"name\":\"MiMo V2.6 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.14,\"output\":0.28,\"cacheRead\":0.0028,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:xiaomi/mimo-v2.6-pro\":{\"id\":\"xiaomi/mimo-v2.6-pro\",\"name\":\"MiMo V2.6 Pro\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.435,\"output\":0.87,\"cacheRead\":0.0036,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:xiaomi/mimo-v2.6-pro-ultraspeed\":{\"id\":\"xiaomi/mimo-v2.6-pro-ultraspeed\",\"name\":\"MiMo V2.6 Pro UltraSpeed\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":4.35,\"output\":8.7,\"cacheRead\":0.036,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai/glm-4.5\":{\"id\":\"zai/glm-4.5\",\"name\":\"GLM 4.5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.2,\"cacheRead\":0.11,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":96000,\"type\":\"chat\"},\"chat:zai/glm-4.5-air\":{\"id\":\"zai/glm-4.5-air\",\"name\":\"GLM 4.5 Air\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.2,\"output\":1.1,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":128000,\"maxTokens\":96000,\"type\":\"chat\"},\"chat:zai/glm-4.5v\":{\"id\":\"zai/glm-4.5v\",\"name\":\"GLM 4.5V\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":1.8,\"cacheRead\":0.11,\"cacheWrite\":0},\"contextWindow\":66000,\"maxTokens\":16000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai/glm-4.6\":{\"id\":\"zai/glm-4.6\",\"name\":\"GLM 4.6\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.2,\"cacheRead\":0.11,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":96000,\"type\":\"chat\"},\"chat:zai/glm-4.7\":{\"id\":\"zai/glm-4.7\",\"name\":\"GLM 4.7\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.6,\"output\":2.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":120000,\"type\":\"chat\"},\"chat:zai/glm-4.7-flash\":{\"id\":\"zai/glm-4.7-flash\",\"name\":\"GLM 4.7 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.07,\"output\":0.4,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":131000,\"type\":\"chat\"},\"chat:zai/glm-4.7-flashx\":{\"id\":\"zai/glm-4.7-flashx\",\"name\":\"GLM 4.7 FlashX\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.06,\"output\":0.4,\"cacheRead\":0.01,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:zai/glm-5\":{\"id\":\"zai/glm-5\",\"name\":\"GLM 5\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1,\"output\":3.2,\"cacheRead\":0,\"cacheWrite\":0},\"contextWindow\":202800,\"maxTokens\":131100,\"type\":\"chat\"},\"chat:zai/glm-5-turbo\":{\"id\":\"zai/glm-5-turbo\",\"name\":\"GLM 5 Turbo\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.2,\"output\":4,\"cacheRead\":0.24,\"cacheWrite\":0},\"contextWindow\":202800,\"maxTokens\":131100,\"type\":\"chat\"},\"chat:zai/glm-5.1\":{\"id\":\"zai/glm-5.1\",\"name\":\"GLM 5.1\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.26,\"cacheWrite\":0},\"contextWindow\":202800,\"maxTokens\":64000,\"type\":\"chat\"},\"chat:zai/glm-5.2\":{\"id\":\"zai/glm-5.2\",\"name\":\"GLM 5.2\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.8,\"output\":2.55,\"cacheRead\":0.16,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:zai/glm-5.2-fast\":{\"id\":\"zai/glm-5.2-fast\",\"name\":\"GLM 5.2 Fast\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.8,\"output\":8.8,\"cacheRead\":0.56,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":128000,\"type\":\"chat\"},\"chat:zai/glm-5.3\":{\"id\":\"zai/glm-5.3\",\"name\":\"GLM 5.3\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.4,\"output\":4.4,\"cacheRead\":0.14,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":1000000,\"type\":\"chat\"},\"chat:zai/glm-5.3-fast\":{\"id\":\"zai/glm-5.3-fast\",\"name\":\"GLM 5.3 Fast\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":2.1,\"output\":6.6,\"cacheRead\":0.21,\"cacheWrite\":0},\"contextWindow\":1048576,\"maxTokens\":262144,\"type\":\"chat\"},\"chat:zai/glm-5.3-flash\":{\"id\":\"zai/glm-5.3-flash\",\"name\":\"GLM 5.3 Flash\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.15,\"output\":0.5,\"cacheRead\":0.03,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai/glm-5.3-flashx\":{\"id\":\"zai/glm-5.3-flashx\",\"name\":\"GLM 5.3 FlashX\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":0.37,\"output\":1.25,\"cacheRead\":0.075,\"cacheWrite\":0},\"contextWindow\":1000000,\"maxTokens\":131072,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"},\"chat:zai/glm-5v-turbo\":{\"id\":\"zai/glm-5v-turbo\",\"name\":\"GLM 5V Turbo\",\"api\":\"anthropic-messages\",\"baseUrl\":\"https://ai-gateway.vercel.sh\",\"provider\":\"vercel-ai-gateway\",\"reasoning\":true,\"input\":[\"text\",\"image\"],\"compat\":{\"allowEmptySignature\":true},\"cost\":{\"input\":1.2,\"output\":4,\"cacheRead\":0.24,\"cacheWrite\":0},\"contextWindow\":200000,\"maxTokens\":128000,\"inputLimits\":{\"images\":{\"resize\":{\"maxWidth\":2000,\"maxHeight\":2000,\"maxBytes\":4718592,\"jpegQuality\":80}}},\"type\":\"chat\"}}"),
 	"typesafe-system-one": {
@@ -11499,11 +11499,11 @@ var vercel_ai_gateway_default = {
 		}
 	}
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/vercel-ai-gateway.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/vercel-ai-gateway.models.js
 var VERCEL_AI_GATEWAY_MODELS = flattenChatModelCatalog("vercel-ai-gateway", vercel_ai_gateway_default);
 flattenImageModelCatalog("vercel-ai-gateway", vercel_ai_gateway_default);
 var VERCEL_AI_GATEWAY_CLASSIFIER_MODELS = flattenClassifierModelCatalog("vercel-ai-gateway", vercel_ai_gateway_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/xai.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/xai.json
 var xai_default = { "openai-responses": {
 	"chat:grok-4.3": {
 		"id": "grok-4.3",
@@ -11670,11 +11670,11 @@ var xai_default = { "openai-responses": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xai.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xai.models.js
 var XAI_MODELS = flattenChatModelCatalog("xai", xai_default);
 flattenImageModelCatalog("xai", xai_default);
 flattenClassifierModelCatalog("xai", xai_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi.json
 var xiaomi_default = { "openai-completions": {
 	"chat:mimo-v2.6-flash": {
 		"id": "mimo-v2.6-flash",
@@ -11794,11 +11794,11 @@ var xiaomi_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi.models.js
 var XIAOMI_MODELS = flattenChatModelCatalog("xiaomi", xiaomi_default);
 flattenImageModelCatalog("xiaomi", xiaomi_default);
 flattenClassifierModelCatalog("xiaomi", xiaomi_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi-token-plan-ams.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi-token-plan-ams.json
 var xiaomi_token_plan_ams_default = { "openai-completions": {
 	"chat:mimo-v2.6-flash": {
 		"id": "mimo-v2.6-flash",
@@ -11879,11 +11879,11 @@ var xiaomi_token_plan_ams_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-ams.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-ams.models.js
 var XIAOMI_TOKEN_PLAN_AMS_MODELS = flattenChatModelCatalog("xiaomi-token-plan-ams", xiaomi_token_plan_ams_default);
 flattenImageModelCatalog("xiaomi-token-plan-ams", xiaomi_token_plan_ams_default);
 flattenClassifierModelCatalog("xiaomi-token-plan-ams", xiaomi_token_plan_ams_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi-token-plan-cn.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi-token-plan-cn.json
 var xiaomi_token_plan_cn_default = { "openai-completions": {
 	"chat:mimo-v2.6-flash": {
 		"id": "mimo-v2.6-flash",
@@ -11964,11 +11964,11 @@ var xiaomi_token_plan_cn_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-cn.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-cn.models.js
 var XIAOMI_TOKEN_PLAN_CN_MODELS = flattenChatModelCatalog("xiaomi-token-plan-cn", xiaomi_token_plan_cn_default);
 flattenImageModelCatalog("xiaomi-token-plan-cn", xiaomi_token_plan_cn_default);
 flattenClassifierModelCatalog("xiaomi-token-plan-cn", xiaomi_token_plan_cn_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi-token-plan-sgp.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/xiaomi-token-plan-sgp.json
 var xiaomi_token_plan_sgp_default = { "openai-completions": {
 	"chat:mimo-v2.6-flash": {
 		"id": "mimo-v2.6-flash",
@@ -12049,11 +12049,11 @@ var xiaomi_token_plan_sgp_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-sgp.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-sgp.models.js
 var XIAOMI_TOKEN_PLAN_SGP_MODELS = flattenChatModelCatalog("xiaomi-token-plan-sgp", xiaomi_token_plan_sgp_default);
 flattenImageModelCatalog("xiaomi-token-plan-sgp", xiaomi_token_plan_sgp_default);
 flattenClassifierModelCatalog("xiaomi-token-plan-sgp", xiaomi_token_plan_sgp_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/zai.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/zai.json
 var zai_default = { "openai-completions": {
 	"chat:glm-4.7": {
 		"id": "glm-4.7",
@@ -12296,11 +12296,11 @@ var zai_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/zai.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/zai.models.js
 var ZAI_MODELS = flattenChatModelCatalog("zai", zai_default);
 flattenImageModelCatalog("zai", zai_default);
 flattenClassifierModelCatalog("zai", zai_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/data/zai-coding-cn.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/zai-coding-cn.json
 var zai_coding_cn_default = { "openai-completions": {
 	"chat:glm-4.6v": {
 		"id": "glm-4.6v",
@@ -12450,11 +12450,11 @@ var zai_coding_cn_default = { "openai-completions": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/zai-coding-cn.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/zai-coding-cn.models.js
 var ZAI_CODING_CN_MODELS = flattenChatModelCatalog("zai-coding-cn", zai_coding_cn_default);
 flattenImageModelCatalog("zai-coding-cn", zai_coding_cn_default);
 flattenClassifierModelCatalog("zai-coding-cn", zai_coding_cn_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/bedrock-converse-stream.lazy.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/bedrock-converse-stream.lazy.js
 var __rewriteRelativeImportExtension$1 = function(path, preserveJsx) {
 	if (typeof path === "string" && /^\.\.?\//.test(path)) return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function(m, tsx, d, ext, cm) {
 		return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : d + ext + "." + cm.toLowerCase() + "js";
@@ -12471,7 +12471,7 @@ var importNodeOnlyApi = (specifier) => {
 	return import(__rewriteRelativeImportExtension$1(import.meta.url.endsWith(".js") ? specifier.replace(/\.ts$/, ".js") : specifier));
 };
 var bedrockConverseStreamApi = () => lazyApi(async () => await importNodeOnlyApi("./bedrock-converse-stream.ts"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/amazon-bedrock.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/amazon-bedrock.js
 /**
 * Bedrock accepts a bearer token or the AWS SDK's default credential chain.
 * The login flow can store a token/profile choice; resolve also detects ambient
@@ -12577,9 +12577,9 @@ function amazonBedrockProvider() {
 		api: bedrockConverseStreamApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/openai-completions.lazy.js
-var openAICompletionsApi = () => lazyApi(() => import("./openai-completions-DG8Z1dtp.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/auth/helpers.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-completions.lazy.js
+var openAICompletionsApi = () => lazyApi(() => import("./openai-completions-DDvo3OXK.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/auth/helpers.js
 /**
 * Standard api-key auth: a stored credential key wins, otherwise the first
 * set env var resolves. Includes a `login` that prompts for the key.
@@ -12641,7 +12641,7 @@ function lazyOAuth(input) {
 		toAuth: async (credential) => (await loaded()).toAuth(credential)
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/ant-ling.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/ant-ling.js
 function antLingProvider() {
 	return createProvider({
 		id: "ant-ling",
@@ -12652,9 +12652,9 @@ function antLingProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/anthropic-messages.lazy.js
-var anthropicMessagesApi = () => lazyApi(() => import("./anthropic-messages-C5vbfwnd.js").then((n) => n.t));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/auth/oauth/load.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/anthropic-messages.lazy.js
+var anthropicMessagesApi = () => lazyApi(() => import("./anthropic-messages-DKEZ1HvS.js").then((n) => n.t));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/auth/oauth/load.js
 var __rewriteRelativeImportExtension = function(path, preserveJsx) {
 	if (typeof path === "string" && /^\.\.?\//.test(path)) return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function(m, tsx, d, ext, cm) {
 		return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : d + ext + "." + cm.toLowerCase() + "js";
@@ -12697,7 +12697,7 @@ var loadXaiOAuth = async () => {
 var loadRadiusOAuth = async (options) => {
 	return (await importOAuthModule("./radius.ts")).createRadiusOAuth(options);
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/anthropic.js
 function anthropicApiKeyAuth() {
 	return {
 		name: "Anthropic API key",
@@ -12775,9 +12775,9 @@ function anthropicProvider() {
 		api: anthropicMessagesApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/azure-openai-responses.lazy.js
-var azureOpenAIResponsesApi = () => lazyApi(() => import("./azure-openai-responses-xVo9Rw0Z.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/azure.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/azure-openai-responses.lazy.js
+var azureOpenAIResponsesApi = () => lazyApi(() => import("./azure-openai-responses-CkaBVEUi.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/azure.js
 function resolveAzureModel(model, options) {
 	return {
 		...model,
@@ -12821,7 +12821,7 @@ function azureProvider() {
 		}
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/baseten.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/baseten.js
 function basetenProvider() {
 	return createProvider({
 		id: "baseten",
@@ -12832,7 +12832,7 @@ function basetenProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cerebras.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cerebras.js
 function cerebrasProvider() {
 	return createProvider({
 		id: "cerebras",
@@ -12843,9 +12843,9 @@ function cerebrasProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/openai-responses.lazy.js
-var openAIResponsesApi = () => lazyApi(() => import("./openai-responses-C7jE-g82.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-auth.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-responses.lazy.js
+var openAIResponsesApi = () => lazyApi(() => import("./openai-responses-DLMwOA9P.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-auth.js
 var CLOUDFLARE_API_KEY = "CLOUDFLARE_API_KEY";
 var CLOUDFLARE_ACCOUNT_ID$1 = "CLOUDFLARE_ACCOUNT_ID";
 var CLOUDFLARE_GATEWAY_ID$1 = "CLOUDFLARE_GATEWAY_ID";
@@ -12935,7 +12935,7 @@ function cloudflareAIGatewayAuth() {
 		}
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-stream.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-stream.js
 var CLOUDFLARE_ACCOUNT_ID = "CLOUDFLARE_ACCOUNT_ID";
 var CLOUDFLARE_GATEWAY_ID = "CLOUDFLARE_GATEWAY_ID";
 function resolveCloudflareModel(model, env) {
@@ -12960,7 +12960,7 @@ function cloudflareStreams(streams) {
 function cloudflareClassifier(classifier) {
 	return { classify: (model, context, options) => classifier.classify(resolveCloudflareModel(model, options?.env), context, options) };
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-ai-gateway.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-ai-gateway.js
 function cloudflareAIGatewayProvider() {
 	return createProvider({
 		id: "cloudflare-ai-gateway",
@@ -12974,9 +12974,9 @@ function cloudflareAIGatewayProvider() {
 		}
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/cloudflare-workers-ai-system-one.lazy.js
-var cloudflareWorkersAISystemOneApi = () => ({ classify: async (model, context, options) => (await import("./cloudflare-workers-ai-system-one-7tL2Ts9o.js")).classify(model, context, options) });
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-workers-ai.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/cloudflare-workers-ai-system-one.lazy.js
+var cloudflareWorkersAISystemOneApi = () => ({ classify: async (model, context, options) => (await import("./cloudflare-workers-ai-system-one-B3PmgGG9.js")).classify(model, context, options) });
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/cloudflare-workers-ai.js
 function cloudflareWorkersAIProvider() {
 	return createProvider({
 		id: "cloudflare-workers-ai",
@@ -12987,7 +12987,7 @@ function cloudflareWorkersAIProvider() {
 		classifiers: { "cloudflare-workers-ai-system-one": cloudflareClassifier(cloudflareWorkersAISystemOneApi()) }
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/deepseek.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/deepseek.js
 function deepseekProvider() {
 	return createProvider({
 		id: "deepseek",
@@ -12998,7 +12998,7 @@ function deepseekProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/fireworks.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/fireworks.js
 function fireworksProvider() {
 	return createProvider({
 		id: "fireworks",
@@ -13012,7 +13012,7 @@ function fireworksProvider() {
 		}
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/github-copilot.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/github-copilot.js
 function githubCopilotProvider() {
 	return createProvider({
 		id: "github-copilot",
@@ -13041,9 +13041,9 @@ function githubCopilotProvider() {
 		}
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/google-generative-ai.lazy.js
-var googleGenerativeAIApi = () => lazyApi(() => import("./google-generative-ai-T4pV3g37.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/google.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/google-generative-ai.lazy.js
+var googleGenerativeAIApi = () => lazyApi(() => import("./google-generative-ai-CQ7lTYJZ.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/google.js
 function googleProvider() {
 	return createProvider({
 		id: "google",
@@ -13054,9 +13054,9 @@ function googleProvider() {
 		api: googleGenerativeAIApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/google-vertex.lazy.js
-var googleVertexApi = () => lazyApi(() => import("./google-vertex-DI1b_7PV.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/google-vertex.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/google-vertex.lazy.js
+var googleVertexApi = () => lazyApi(() => import("./google-vertex-DpKOe_T9.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/google-vertex.js
 var VERTEX_ADC_PATH = "~/.config/gcloud/application_default_credentials.json";
 /**
 * Vertex accepts an explicit API key or Application Default Credentials
@@ -13157,7 +13157,7 @@ function googleVertexProvider() {
 		api: googleVertexApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/groq.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/groq.js
 function groqProvider() {
 	return createProvider({
 		id: "groq",
@@ -13168,7 +13168,7 @@ function groqProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/huggingface.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/huggingface.js
 function huggingfaceProvider() {
 	return createProvider({
 		id: "huggingface",
@@ -13179,7 +13179,7 @@ function huggingfaceProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/kimi-coding.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/kimi-coding.js
 function kimiCodingProvider() {
 	return createProvider({
 		id: "kimi-coding",
@@ -13198,7 +13198,7 @@ function kimiCodingProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/meta.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/meta.js
 function metaProvider() {
 	return createProvider({
 		id: "meta",
@@ -13217,7 +13217,7 @@ function metaProvider() {
 		api: openAIResponsesApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/minimax.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/minimax.js
 function minimaxProvider() {
 	return createProvider({
 		id: "minimax",
@@ -13228,7 +13228,7 @@ function minimaxProvider() {
 		api: anthropicMessagesApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/minimax-cn.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/minimax-cn.js
 function minimaxCnProvider() {
 	return createProvider({
 		id: "minimax-cn",
@@ -13239,9 +13239,9 @@ function minimaxCnProvider() {
 		api: anthropicMessagesApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/mistral-conversations.lazy.js
-var mistralConversationsApi = () => lazyApi(() => import("./mistral-conversations-f71mGD7J.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/mistral.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/mistral-conversations.lazy.js
+var mistralConversationsApi = () => lazyApi(() => import("./mistral-conversations-CLp8vcHN.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/mistral.js
 function mistralProvider() {
 	return createProvider({
 		id: "mistral",
@@ -13252,7 +13252,7 @@ function mistralProvider() {
 		api: mistralConversationsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai.js
 function moonshotaiProvider() {
 	return createProvider({
 		id: "moonshotai",
@@ -13263,7 +13263,7 @@ function moonshotaiProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai-cn.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/moonshotai-cn.js
 function moonshotaiCnProvider() {
 	return createProvider({
 		id: "moonshotai-cn",
@@ -13274,7 +13274,7 @@ function moonshotaiCnProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/nvidia.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/nvidia.js
 function nvidiaProvider() {
 	return createProvider({
 		id: "nvidia",
@@ -13285,9 +13285,9 @@ function nvidiaProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/openai-decisions.lazy.js
-var openAIDecisionsApi = () => ({ classify: async (model, context, options) => (await import("./openai-decisions-YWssagyF.js")).classify(model, context, options) });
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/openai.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-decisions.lazy.js
+var openAIDecisionsApi = () => ({ classify: async (model, context, options) => (await import("./openai-decisions-IMckD1ws.js")).classify(model, context, options) });
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openai.js
 function openaiProvider() {
 	return createProvider({
 		id: "openai",
@@ -13308,9 +13308,9 @@ function openaiProvider() {
 		classifiers: { "openai-decisions": openAIDecisionsApi() }
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/openai-codex-responses.lazy.js
-var openAICodexResponsesApi = () => lazyApi(() => import("./openai-codex-responses-DhPBAayD.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-codex-responses.lazy.js
+var openAICodexResponsesApi = () => lazyApi(() => import("./openai-codex-responses-Cujsf2Yc.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.js
 function openaiCodexProvider() {
 	return createProvider({
 		id: "openai-codex",
@@ -13325,9 +13325,9 @@ function openaiCodexProvider() {
 		api: openAICodexResponsesApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/typesafe-system-one.lazy.js
-var typesafeSystemOneApi = () => ({ classify: async (model, context, options) => (await import("./typesafe-system-one-r_aC9lwK.js")).classify(model, context, options) });
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/opencode-headers.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/typesafe-system-one.lazy.js
+var typesafeSystemOneApi = () => ({ classify: async (model, context, options) => (await import("./typesafe-system-one-CzorO7lt.js")).classify(model, context, options) });
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/opencode-headers.js
 var OPENCODE_SESSION_HEADER = "x-opencode-session";
 function hasHeader(headers, name) {
 	const expected = name.toLowerCase();
@@ -13351,7 +13351,7 @@ function withOpenCodeSessionHeader(streams) {
 		streamSimple: (model, context, options) => streams.streamSimple(model, context, withSessionHeader(options))
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/opencode.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/opencode.js
 function opencodeProvider() {
 	return createProvider({
 		id: "opencode",
@@ -13367,7 +13367,7 @@ function opencodeProvider() {
 		classifiers: { "typesafe-system-one": typesafeSystemOneApi() }
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/opencode-go.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/opencode-go.js
 function opencodeGoProvider() {
 	return createProvider({
 		id: "opencode-go",
@@ -13382,9 +13382,9 @@ function opencodeGoProvider() {
 		}
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/openrouter-images.lazy.js
-var openrouterImagesApi = () => ({ generateImages: async (model, context, options) => (await import("./openrouter-images-CsyeAcVo.js")).generateImages(model, context, options) });
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/openrouter.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openrouter-images.lazy.js
+var openrouterImagesApi = () => ({ generateImages: async (model, context, options) => (await import("./openrouter-images-EkVwnVcN.js")).generateImages(model, context, options) });
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openrouter.js
 var OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
 function openrouterProvider() {
 	return createProvider({
@@ -13412,7 +13412,7 @@ function openrouterProvider() {
 		classifiers: { "typesafe-system-one": typesafeSystemOneApi() }
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan.js
 function qwenTokenPlanProvider() {
 	return createProvider({
 		id: "qwen-token-plan",
@@ -13423,7 +13423,7 @@ function qwenTokenPlanProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-cn.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-cn.js
 function qwenTokenPlanCnProvider() {
 	return createProvider({
 		id: "qwen-token-plan-cn",
@@ -13434,7 +13434,7 @@ function qwenTokenPlanCnProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-individual.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/qwen-token-plan-individual.js
 function qwenTokenPlanIndividualProvider() {
 	return createProvider({
 		id: "qwen-token-plan-individual",
@@ -13445,8 +13445,8 @@ function qwenTokenPlanIndividualProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/api/pi-messages.lazy.js
-var piMessagesApi = () => lazyApi(() => import("./pi-messages-whCHkLoP.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/pi-messages.lazy.js
+var piMessagesApi = () => lazyApi(() => import("./pi-messages-CCa_mhON.js"));
 function isRadiusGatewayModel(value) {
 	if (typeof value !== "object" || value === null || Array.isArray(value)) return false;
 	const model = value;
@@ -13495,7 +13495,7 @@ async function loadRadiusGatewayConfig(gateway, apiKey, signal) {
 	if (!config) throw new Error(`Invalid Radius config from ${gateway}`);
 	return config;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/radius.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/radius.js
 /** Radius gateway provider with a persisted, dynamically refreshed catalog. */
 function radiusProvider(options = {}) {
 	const id = options.id ?? "radius";
@@ -13562,7 +13562,7 @@ function radiusProvider(options = {}) {
 		streamSimple: (model, context, streamOptions) => streams.streamSimple(model, context, streamOptions)
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/together.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/together.js
 function togetherProvider() {
 	return createProvider({
 		id: "together",
@@ -13573,7 +13573,7 @@ function togetherProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/typesafe.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/typesafe.js
 function typesafeProvider() {
 	return createProvider({
 		id: "typesafe",
@@ -13583,7 +13583,7 @@ function typesafeProvider() {
 		classifiers: { "typesafe-system-one": typesafeSystemOneApi() }
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/vercel-ai-gateway.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/vercel-ai-gateway.js
 function vercelAIGatewayProvider() {
 	return createProvider({
 		id: "vercel-ai-gateway",
@@ -13595,7 +13595,7 @@ function vercelAIGatewayProvider() {
 		classifiers: { "typesafe-system-one": typesafeSystemOneApi() }
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xai.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xai.js
 function xaiProvider() {
 	return createProvider({
 		id: "xai",
@@ -13614,7 +13614,7 @@ function xaiProvider() {
 		api: openAIResponsesApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi.js
 function xiaomiProvider() {
 	return createProvider({
 		id: "xiaomi",
@@ -13625,7 +13625,7 @@ function xiaomiProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-ams.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-ams.js
 function xiaomiTokenPlanAmsProvider() {
 	return createProvider({
 		id: "xiaomi-token-plan-ams",
@@ -13636,7 +13636,7 @@ function xiaomiTokenPlanAmsProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-cn.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-cn.js
 function xiaomiTokenPlanCnProvider() {
 	return createProvider({
 		id: "xiaomi-token-plan-cn",
@@ -13647,7 +13647,7 @@ function xiaomiTokenPlanCnProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-sgp.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/xiaomi-token-plan-sgp.js
 function xiaomiTokenPlanSgpProvider() {
 	return createProvider({
 		id: "xiaomi-token-plan-sgp",
@@ -13658,7 +13658,7 @@ function xiaomiTokenPlanSgpProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/zai.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/zai.js
 function zaiProvider() {
 	return createProvider({
 		id: "zai",
@@ -13669,7 +13669,7 @@ function zaiProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/zai-coding-cn.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/zai-coding-cn.js
 function zaiCodingCnProvider() {
 	return createProvider({
 		id: "zai-coding-cn",
@@ -13680,7 +13680,7 @@ function zaiCodingCnProvider() {
 		api: openAICompletionsApi()
 	});
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/providers/all.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/all.js
 /** All built-in providers, freshly constructed. */
 function builtinProviders() {
 	return [
@@ -13734,7 +13734,7 @@ function builtinModels(options) {
 	for (const provider of builtinProviders()) models.setProvider(provider);
 	return models;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_3bf58d7374c681b779d3d6ab046752bb/node_modules/@earendil-works/pi-ai/dist/utils/overflow.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/overflow.js
 /**
 * Regex patterns to detect context overflow errors from different providers.
 *
@@ -13884,7 +13884,7 @@ function isContextOverflow(message, contextWindow) {
 	}
 	return false;
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@_666477b5bd191145b440aa11ec923ef4/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@_ae18a8626fb7cee7aa3d9a209c5206f1/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js
 /**
 * Durable pi-ai replay metadata and assistant-history reconstruction.
 *
@@ -16699,82 +16699,34 @@ var ToolsService = class extends Service {
 		}
 	}
 };
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/core.js
-var _a$1;
-/* @__NO_SIDE_EFFECTS__ */
-function $constructor(name, initializer, params) {
-	function init(inst, def) {
-		if (!inst._zod) Object.defineProperty(inst, "_zod", {
-			value: {
-				def,
-				constr: _,
-				traits: /* @__PURE__ */ new Set()
-			},
-			enumerable: false
-		});
-		if (inst._zod.traits.has(name)) return;
-		inst._zod.traits.add(name);
-		initializer(inst, def);
-		const proto = _.prototype;
-		const keys = Object.keys(proto);
-		for (let i = 0; i < keys.length; i++) {
-			const k = keys[i];
-			if (!(k in inst)) inst[k] = proto[k].bind(inst);
-		}
-	}
-	const Parent = params?.Parent ?? Object;
-	class Definition extends Parent {}
-	Object.defineProperty(Definition, "name", { value: name });
-	function _(def) {
-		var _a;
-		const inst = params?.Parent ? new Definition() : this;
-		init(inst, def);
-		(_a = inst._zod).deferred ?? (_a.deferred = []);
-		for (const fn of inst._zod.deferred) fn();
-		return inst;
-	}
-	Object.defineProperty(_, "init", { value: init });
-	Object.defineProperty(_, Symbol.hasInstance, { value: (inst) => {
-		if (params?.Parent && inst instanceof params.Parent) return true;
-		return inst?._zod?.traits?.has(name);
-	} });
-	Object.defineProperty(_, "name", { value: name });
-	return _;
-}
-var $ZodAsyncError = class extends Error {
-	constructor() {
-		super(`Encountered Promise during synchronous parse. Use .parseAsync() instead.`);
-	}
-};
-var $ZodEncodeError = class extends Error {
-	constructor(name) {
-		super(`Encountered unidirectional transform during encode: ${name}`);
-		this.name = "ZodEncodeError";
-	}
-};
-(_a$1 = globalThis).__zod_globalConfig ?? (_a$1.__zod_globalConfig = {});
-var globalConfig = globalThis.__zod_globalConfig;
-function config(newConfig) {
-	if (newConfig) Object.assign(globalConfig, newConfig);
-	return globalConfig;
-}
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/util.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js
 function getEnumValues(entries) {
 	const numericValues = Object.values(entries).filter((v) => typeof v === "number");
 	return Object.entries(entries).filter(([k, _]) => numericValues.indexOf(+k) === -1).map(([_, v]) => v);
+}
+function joinValues(array, separator = "|") {
+	return array.map((val) => stringifyPrimitive(val)).join(separator);
 }
 function jsonStringifyReplacer(_, value) {
 	if (typeof value === "bigint") return value.toString();
 	return value;
 }
-function cached(getter) {
-	return { get value() {
-		{
-			const value = getter();
-			Object.defineProperty(this, "value", { value });
-			return value;
+var Cached = class {
+	constructor(getter) {
+		this._getter = getter;
+		this._value = void 0;
+	}
+	get value() {
+		const getter = this._getter;
+		if (getter !== void 0) {
+			this._value = getter();
+			this._getter = void 0;
 		}
-	} };
+		return this._value;
+	}
+};
+function cached(getter) {
+	return new Cached(getter);
 }
 function nullish(input) {
 	return input === null || input === void 0;
@@ -16787,27 +16739,9 @@ function cleanRegex(source) {
 function floatSafeRemainder(val, step) {
 	const ratio = val / step;
 	const roundedRatio = Math.round(ratio);
-	const tolerance = Number.EPSILON * Math.max(Math.abs(ratio), 1);
+	const tolerance = 4 * Number.EPSILON * Math.max(Math.abs(ratio), 1);
 	if (Math.abs(ratio - roundedRatio) < tolerance) return 0;
 	return ratio - roundedRatio;
-}
-var EVALUATING = /* @__PURE__*/ Symbol("evaluating");
-function defineLazy(object, key, getter) {
-	let value = void 0;
-	Object.defineProperty(object, key, {
-		get() {
-			if (value === EVALUATING) return;
-			if (value === void 0) {
-				value = EVALUATING;
-				value = getter();
-			}
-			return value;
-		},
-		set(v) {
-			Object.defineProperty(object, key, { value: v });
-		},
-		configurable: true
-	});
 }
 function assignProp(target, prop, value) {
 	Object.defineProperty(target, prop, {
@@ -16816,6 +16750,58 @@ function assignProp(target, prop, value) {
 		enumerable: true,
 		configurable: true
 	});
+}
+/**
+* Whichever object a def's `shape` currently answers from: the one the caller passed until the first read, the frozen copy after it.
+*
+* Its keys and descriptors read without invoking anything, which is what lets a discriminated union check its discriminator, and the cycle walk read a shape, without resolving a getter that references the schema being constructed. A def that answers `shape` from an accessor of its own has none.
+*/
+function rawShape(def) {
+	const desc = Object.getOwnPropertyDescriptor(def, "shape");
+	return desc?.get ? desc.get.raw : desc?.value;
+}
+function sourceShape(schema) {
+	return rawShape(schema._zod.def) ?? schema._zod.def.shape;
+}
+function deferProp(target, key, getter) {
+	Object.defineProperty(target, key, {
+		get() {
+			const value = getter();
+			assignProp(this, key, value);
+			return value;
+		},
+		enumerable: true,
+		configurable: true
+	});
+}
+function putProp(target, key, value) {
+	if (key in target) assignProp(target, key, value);
+	else target[key] = value;
+}
+/**
+* Copies `keys` of `source`'s shape onto `target`, each value passed through `wrap`.
+*
+* A key the source has resolved is copied through now, so the derived shape states it outright and nothing has to resolve it to learn what it holds. A key the source still defers stays deferred, and reads back through the source's own `shape`, so it resolves once and both shapes get that one schema.
+*/
+function mirrorShape(target, source, keys, wrap) {
+	const raw = sourceShape(source);
+	for (const key of keys) {
+		const desc = Object.getOwnPropertyDescriptor(raw, key);
+		if (!desc.enumerable) continue;
+		if (desc.get) deferProp(target, key, () => {
+			const value = source._zod.def.shape[key];
+			return wrap ? wrap(value, key) : value;
+		});
+		else putProp(target, key, wrap ? wrap(desc.value, key) : desc.value);
+	}
+}
+function mirrorProps(target, source) {
+	for (const key of Reflect.ownKeys(source)) {
+		const desc = Object.getOwnPropertyDescriptor(source, key);
+		if (!desc.enumerable) continue;
+		if (desc.get) deferProp(target, key, () => source[key]);
+		else putProp(target, key, desc.value);
+	}
 }
 function mergeDefs(...defs) {
 	const mergedDescriptors = {};
@@ -16890,51 +16876,56 @@ function normalizeParams(_params) {
 	};
 	return params;
 }
+function stringifyPrimitive(value) {
+	if (typeof value === "bigint") return value.toString() + "n";
+	if (typeof value === "string") return `"${value}"`;
+	return `${value}`;
+}
 function optionalKeys(shape) {
 	return Object.keys(shape).filter((k) => {
-		return shape[k]._zod.optin === "optional" && shape[k]._zod.optout === "optional";
+		return shape[k]._zod.optin !== void 0 && shape[k]._zod.optout === "optional";
 	});
 }
-var NUMBER_FORMAT_RANGES = {
+var NUMBER_FORMAT_RANGES = /*@__PURE__*/ (() => ({
 	safeint: [Number.MIN_SAFE_INTEGER, Number.MAX_SAFE_INTEGER],
 	int32: [-2147483648, 2147483647],
 	uint32: [0, 4294967295],
 	float32: [-34028234663852886e22, 34028234663852886e22],
 	float64: [-Number.MAX_VALUE, Number.MAX_VALUE]
+}))();
+var BIGINT_FORMAT_RANGES = {
+	int64: [/* @__PURE__*/ BigInt("-9223372036854775808"), /* @__PURE__*/ BigInt("9223372036854775807")],
+	uint64: [/* @__PURE__*/ BigInt(0), /* @__PURE__*/ BigInt("18446744073709551615")]
 };
 function pick(schema, mask) {
 	const currDef = schema._zod.def;
 	const checks = currDef.checks;
 	if (checks && checks.length > 0) throw new Error(".pick() cannot be used on object schemas containing refinements");
-	return clone(schema, mergeDefs(schema._zod.def, {
-		get shape() {
-			const newShape = {};
-			for (const key in mask) {
-				if (!(key in currDef.shape)) throw new Error(`Unrecognized key: "${key}"`);
-				if (!mask[key]) continue;
-				newShape[key] = currDef.shape[key];
-			}
-			assignProp(this, "shape", newShape);
-			return newShape;
-		},
+	const newShape = {};
+	mirrorShape(newShape, schema, maskedKeys(schema, mask));
+	return clone(schema, mergeDefs(currDef, {
+		shape: newShape,
 		checks: []
 	}));
+}
+function maskedKeys(schema, mask) {
+	const raw = sourceShape(schema);
+	const keys = [];
+	for (const key of Reflect.ownKeys(mask)) {
+		if (!Object.getOwnPropertyDescriptor(raw, key)?.enumerable) throw new Error(`Unrecognized key: "${String(key)}"`);
+		if (mask[key]) keys.push(key);
+	}
+	return keys;
 }
 function omit(schema, mask) {
 	const currDef = schema._zod.def;
 	const checks = currDef.checks;
 	if (checks && checks.length > 0) throw new Error(".omit() cannot be used on object schemas containing refinements");
-	return clone(schema, mergeDefs(schema._zod.def, {
-		get shape() {
-			const newShape = { ...schema._zod.def.shape };
-			for (const key in mask) {
-				if (!(key in currDef.shape)) throw new Error(`Unrecognized key: "${key}"`);
-				if (!mask[key]) continue;
-				delete newShape[key];
-			}
-			assignProp(this, "shape", newShape);
-			return newShape;
-		},
+	const omitted = new Set(maskedKeys(schema, mask));
+	const newShape = {};
+	mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)).filter((key) => !omitted.has(key)));
+	return clone(schema, mergeDefs(currDef, {
+		shape: newShape,
 		checks: []
 	}));
 }
@@ -16942,90 +16933,57 @@ function extend(schema, shape) {
 	if (!isPlainObject(shape)) throw new Error("Invalid input to extend: expected a plain object");
 	const checks = schema._zod.def.checks;
 	if (checks && checks.length > 0) {
-		const existingShape = schema._zod.def.shape;
-		for (const key in shape) if (Object.getOwnPropertyDescriptor(existingShape, key) !== void 0) throw new Error("Cannot overwrite keys on object schemas containing refinements. Use `.safeExtend()` instead.");
+		const existingShape = sourceShape(schema);
+		for (const key of Reflect.ownKeys(shape)) if (Object.getOwnPropertyDescriptor(existingShape, key) !== void 0) throw new Error("Cannot overwrite keys on object schemas containing refinements. Use `.safeExtend()` instead.");
 	}
-	return clone(schema, mergeDefs(schema._zod.def, { get shape() {
-		const _shape = {
-			...schema._zod.def.shape,
-			...shape
-		};
-		assignProp(this, "shape", _shape);
-		return _shape;
-	} }));
+	return clone(schema, mergeDefs(schema._zod.def, { shape: extended(schema, shape) }));
+}
+function extended(schema, shape) {
+	const newShape = {};
+	mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)));
+	mirrorProps(newShape, shape);
+	return newShape;
 }
 function safeExtend(schema, shape) {
 	if (!isPlainObject(shape)) throw new Error("Invalid input to safeExtend: expected a plain object");
-	return clone(schema, mergeDefs(schema._zod.def, { get shape() {
-		const _shape = {
-			...schema._zod.def.shape,
-			...shape
-		};
-		assignProp(this, "shape", _shape);
-		return _shape;
-	} }));
+	return clone(schema, mergeDefs(schema._zod.def, { shape: extended(schema, shape) }));
 }
 function merge(a, b) {
+	if (!b?._zod?.def) throw new Error("Invalid input to merge: expected an object schema. To merge a plain shape, use `.extend()`.");
 	if (a._zod.def.checks?.length) throw new Error(".merge() cannot be used on object schemas containing refinements. Use .safeExtend() instead.");
+	const newShape = {};
+	mirrorShape(newShape, a, Reflect.ownKeys(sourceShape(a)));
+	mirrorShape(newShape, b, Reflect.ownKeys(sourceShape(b)));
 	return clone(a, mergeDefs(a._zod.def, {
-		get shape() {
-			const _shape = {
-				...a._zod.def.shape,
-				...b._zod.def.shape
-			};
-			assignProp(this, "shape", _shape);
-			return _shape;
-		},
+		shape: newShape,
 		get catchall() {
 			return b._zod.def.catchall;
 		},
 		checks: b._zod.def.checks ?? []
 	}));
 }
-function partial(Class, schema, mask) {
+function partial(Class, schema, mask, name = "partial") {
 	const checks = schema._zod.def.checks;
-	if (checks && checks.length > 0) throw new Error(".partial() cannot be used on object schemas containing refinements");
+	if (checks && checks.length > 0) throw new Error(`.${name}() cannot be used on object schemas containing refinements`);
+	const selected = mask ? new Set(maskedKeys(schema, mask)) : void 0;
+	const newShape = {};
+	mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)), Class && ((value, key) => selected && !selected.has(key) ? value : new Class({
+		type: "optional",
+		innerType: value
+	})));
 	return clone(schema, mergeDefs(schema._zod.def, {
-		get shape() {
-			const oldShape = schema._zod.def.shape;
-			const shape = { ...oldShape };
-			if (mask) for (const key in mask) {
-				if (!(key in oldShape)) throw new Error(`Unrecognized key: "${key}"`);
-				if (!mask[key]) continue;
-				shape[key] = Class ? new Class({
-					type: "optional",
-					innerType: oldShape[key]
-				}) : oldShape[key];
-			}
-			else for (const key in oldShape) shape[key] = Class ? new Class({
-				type: "optional",
-				innerType: oldShape[key]
-			}) : oldShape[key];
-			assignProp(this, "shape", shape);
-			return shape;
-		},
+		shape: newShape,
 		checks: []
 	}));
 }
 function required(Class, schema, mask) {
-	return clone(schema, mergeDefs(schema._zod.def, { get shape() {
-		const oldShape = schema._zod.def.shape;
-		const shape = { ...oldShape };
-		if (mask) for (const key in mask) {
-			if (!(key in shape)) throw new Error(`Unrecognized key: "${key}"`);
-			if (!mask[key]) continue;
-			shape[key] = new Class({
-				type: "nonoptional",
-				innerType: oldShape[key]
-			});
-		}
-		else for (const key in oldShape) shape[key] = new Class({
-			type: "nonoptional",
-			innerType: oldShape[key]
-		});
-		assignProp(this, "shape", shape);
-		return shape;
-	} }));
+	const selected = mask ? new Set(maskedKeys(schema, mask)) : void 0;
+	const newShape = {};
+	mirrorShape(newShape, schema, Reflect.ownKeys(sourceShape(schema)), (value, key) => selected && !selected.has(key) ? value : new Class({
+		type: "nonoptional",
+		innerType: value
+	}));
+	return clone(schema, mergeDefs(schema._zod.def, { shape: newShape }));
 }
 function aborted(x, startIndex = 0) {
 	if (x.aborted === true) return true;
@@ -17048,18 +17006,68 @@ function prefixIssues(path, issues) {
 function unwrapMessage(message) {
 	return typeof message === "string" ? message : message?.message;
 }
+/** The leading size checks of `defChecks` that set an upper bound, each paired with it. */
+function sizeCaps(defChecks) {
+	const caps = [];
+	for (const ch of defChecks ?? []) {
+		const d = ch._zod.def;
+		if (!/_(length|size)$|_equals$/.test(d.check)) break;
+		const max = d.maximum ?? d.length ?? d.size;
+		if (max >= 0) caps.push([max, ch]);
+	}
+	return caps;
+}
+function attachSchema(issues, start, inst) {
+	var _a;
+	for (let i = start; i < issues.length; i++) (_a = issues[i]).schema ?? (_a.schema = inst);
+}
 function finalizeIssue(iss, ctx, config) {
-	const message = iss.message ? iss.message : unwrapMessage(iss.inst?._zod.def?.error?.(iss)) ?? unwrapMessage(ctx?.error?.(iss)) ?? unwrapMessage(config.customError?.(iss)) ?? unwrapMessage(config.localeError?.(iss)) ?? "Invalid input";
-	const { inst: _inst, continue: _continue, input: _input, ...rest } = iss;
-	rest.path ?? (rest.path = []);
-	rest.message = message;
-	if (ctx?.reportInput) rest.input = _input;
-	return rest;
+	var _a;
+	const traits = iss.inst?._zod?.traits;
+	if (traits?.has("$ZodType")) {
+		if (traits.has("$ZodCheck")) (_a = iss).schema ?? (_a.schema = iss.inst);
+		else iss.schema = iss.inst;
+	}
+	const schemaError = iss.schema !== iss.inst ? iss.schema?._zod.def?.error : void 0;
+	const message = iss.message ? iss.message : unwrapMessage(iss.inst?._zod.def?.error?.(iss)) ?? unwrapMessage(schemaError?.(iss)) ?? unwrapMessage(ctx?.error?.(iss)) ?? unwrapMessage(config.customError?.(iss)) ?? unwrapMessage(config.localeError?.(iss)) ?? "Invalid input";
+	const full = {};
+	for (const k of Object.keys(iss)) {
+		if (k === "inst" || k === "schema" || k === "continue" || k === "input" || k === "__proto__") continue;
+		full[k] = iss[k];
+	}
+	full.path ?? (full.path = []);
+	full.message = message;
+	if (ctx?.reportInput) full.input = iss.input;
+	return full;
+}
+var highSurrogate = /[\uD800-\uDBFF]/;
+function codePointLength(str) {
+	const units = str.length;
+	if (!highSurrogate.test(str)) return units;
+	let count = units;
+	for (let i = 0; i < units - 1; i++) if ((str.charCodeAt(i) & 64512) === 55296 && (str.charCodeAt(i + 1) & 64512) === 56320) {
+		count--;
+		i++;
+	}
+	return count;
 }
 function getLengthableOrigin(input) {
 	if (Array.isArray(input)) return "array";
 	if (typeof input === "string") return "string";
 	return "unknown";
+}
+function parsedType(data) {
+	const t = typeof data;
+	switch (t) {
+		case "number": return Number.isNaN(data) ? "nan" : "number";
+		case "object": {
+			if (data === null) return "null";
+			if (Array.isArray(data)) return "array";
+			const obj = data;
+			if (obj && Object.getPrototypeOf(obj) !== Object.prototype && "constructor" in obj && obj.constructor) return obj.constructor.name;
+		}
+	}
+	return t;
 }
 function issue(...args) {
 	const [iss, input, inst] = args;
@@ -17071,32 +17079,338 @@ function issue(...args) {
 	};
 	return { ...iss };
 }
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/errors.js
+/**
+* Installs a trait's members on its prototype. Each value builds that member for the instance on first read; the built value shadows the accessor as an own property, so a detached `const { parse } = schema` keeps working.
+*
+* Call this from a `proto` initializer, which runs once per prototype — never per instance.
+*/
+function members(proto, table) {
+	for (const key in table) {
+		const desc = Object.getOwnPropertyDescriptor(table, key);
+		if (desc.get) Object.defineProperty(proto, key, {
+			...desc,
+			enumerable: false
+		});
+		else defineBound(proto, key, desc.value);
+	}
+}
+/** Shadows a prototype member with an own value, so a getter that builds from the instance runs once. */
+function own(inst, key, value, enumerable = true) {
+	Object.defineProperty(inst, key, {
+		configurable: true,
+		writable: true,
+		enumerable,
+		value
+	});
+	return value;
+}
+/** Like {@link own}, for a member that was never an own data property and has to stay out of `Object.keys`. */
+function hide(inst, key, value) {
+	return own(inst, key, value, false);
+}
+/** Adds members a table derives from the instance: each builds on first read and shadows as own data, and assignment shadows the same way, as when these were own properties. */
+/* @__NO_SIDE_EFFECTS__ */
+function derived(computes, table) {
+	for (const key in computes) {
+		const compute = computes[key];
+		Object.defineProperty(table, key, {
+			configurable: true,
+			enumerable: true,
+			get() {
+				return own(this, key, compute(this));
+			},
+			set(value) {
+				own(this, key, value);
+			}
+		});
+	}
+	return table;
+}
+function defineBound(proto, key, fn) {
+	Object.defineProperty(proto, key, {
+		configurable: true,
+		get() {
+			return this == null ? fn : own(this, key, fn.bind(this));
+		},
+		set(value) {
+			own(this, key, value);
+		}
+	});
+}
+/** Returns the prototype to install on, or `undefined` if this group is already installed on it. */
+function claim(inst, sentinel) {
+	const proto = Object.getPrototypeOf(inst);
+	return sentinel in proto ? void 0 : proto;
+}
+var installing;
+var broke = false;
+var breaker = {
+	configurable: true,
+	get() {
+		broke = true;
+	}
+};
+/**
+* Installs a lazily-derived internal on the `_zod` prototype of `inst`'s
+* constructor, computed from the internals object itself and cached there on
+* first read. One accessor per constructor rather than one per instance.
+*/
+function defineLazyInternal(inst, key, compute) {
+	const proto = Object.getPrototypeOf(inst._zod);
+	if (key in proto && installing !== inst._zod) {
+		installing = void 0;
+		return;
+	}
+	installing = inst._zod;
+	Object.defineProperty(proto, key, {
+		configurable: true,
+		get() {
+			Object.defineProperty(this, key, breaker);
+			const outer = broke;
+			broke = false;
+			try {
+				const value = compute(this);
+				if (broke) delete this[key];
+				else Object.defineProperty(this, key, {
+					configurable: true,
+					writable: true,
+					value
+				});
+				broke = broke || outer;
+				return value;
+			} catch (err) {
+				delete this[key];
+				broke = broke || outer;
+				throw err;
+			}
+		},
+		set(value) {
+			Object.defineProperty(this, key, {
+				configurable: true,
+				writable: true,
+				value
+			});
+		}
+	});
+}
+/**
+* Installs `key` on `inst`'s prototype, computed by `make` on first read and cached there as an own
+* data property. One accessor per constructor rather than one per instance, because an own accessor
+* puts every instance after the first into v8 dictionary mode. The key doubles as the sentinel.
+*/
+function installLazyProp(inst, key, make, enumerable) {
+	const proto = claim(inst, key);
+	if (!proto) return;
+	Object.defineProperty(proto, key, {
+		configurable: true,
+		get() {
+			const desc = {
+				configurable: true,
+				writable: true,
+				enumerable,
+				value: void 0
+			};
+			Object.defineProperty(this, key, desc);
+			desc.value = make(this);
+			Object.defineProperty(this, key, desc);
+			return desc.value;
+		},
+		set(value) {
+			Object.defineProperty(this, key, {
+				configurable: true,
+				writable: true,
+				enumerable,
+				value
+			});
+		}
+	});
+}
+/** Marks the thunk `_catch` synthesises for a constant catch value. `Function.length` cannot tell that thunk from a user callback — rest and defaulted parameters both report arity 0 — and a user callback reads `ctx.error`, whose issues only finalize correctly against the caller's per-parse error map. Provenance can say what arity cannot. A plain string key rather than `Symbol.for`, whose call at module scope no bundler can prove pure — the same shape that anchored `urlCanParse` into every build. */
+var CONSTANT_CATCH = "~constantCatch";
+/** Wraps a constant catch value in a thunk tagged with {@link CONSTANT_CATCH}. */
+function constantCatch(value) {
+	const fn = () => value;
+	fn[CONSTANT_CATCH] = true;
+	return fn;
+}
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/core.js
+var _a$1;
+var _zodDesc = {
+	value: void 0,
+	enumerable: false
+};
+var _E = "captureStackTrace" in Error ? Error : null;
+function newError(Definition) {
+	const E = _E;
+	if (E) {
+		const saved = E.stackTraceLimit;
+		if (typeof saved === "number") {
+			try {
+				E.stackTraceLimit = 0;
+			} catch {
+				_E = null;
+				return new Definition();
+			}
+			try {
+				return new Definition();
+			} finally {
+				E.stackTraceLimit = saved;
+			}
+		}
+	}
+	return new Definition();
+}
+/* @__NO_SIDE_EFFECTS__ */
+function $constructor(name, initializer, proto, params) {
+	const zodProto = {};
+	function Internals(def) {
+		this.def = def;
+		this.constr = _;
+		this.traits = /* @__PURE__ */ new Set();
+	}
+	Internals.prototype = zodProto;
+	const protoMembers = proto;
+	const initialized = protoMembers && /* @__PURE__ */ new WeakSet();
+	function init(inst, def) {
+		if (!inst._zod) {
+			_zodDesc.value = new Internals(def);
+			try {
+				Object.defineProperty(inst, "_zod", _zodDesc);
+			} finally {
+				_zodDesc.value = void 0;
+			}
+		} else if (inst._zod.traits.has(name)) return;
+		inst._zod.traits.add(name);
+		initializer(inst, def);
+		if (initialized) {
+			const own = Object.getPrototypeOf(inst);
+			const ctorProto = inst._zod.constr.prototype;
+			let up = own;
+			while (up && up !== ctorProto) up = Object.getPrototypeOf(up);
+			const target = up ?? own;
+			if (!initialized.has(target)) {
+				initialized.add(target);
+				members(target, protoMembers);
+			}
+		}
+		const proto = _.prototype;
+		for (const k in proto) {
+			if (!Object.prototype.hasOwnProperty.call(proto, k)) continue;
+			if (!(k in inst)) inst[k] = proto[k].bind(inst);
+		}
+	}
+	const Parent = params?.Parent ?? Object;
+	class Definition extends Parent {}
+	Object.defineProperty(Definition, "name", { value: name });
+	function _(def) {
+		const inst = params?.Parent ? newError(Definition) : this;
+		init(inst, def);
+		const deferred = inst._zod.deferred;
+		if (deferred) {
+			for (const fn of deferred) fn();
+			inst._zod.deferred = void 0;
+		}
+		const pp = globalThis.__zod_globalConfig?.postProcessor;
+		if (pp) pp(inst);
+		return inst;
+	}
+	Object.defineProperty(_, "init", { value: init });
+	Object.defineProperty(_, Symbol.hasInstance, { value: (inst) => {
+		if (params?.Parent && inst instanceof params.Parent) return true;
+		return inst?._zod?.traits?.has(name);
+	} });
+	Object.defineProperty(_, "name", { value: name });
+	return _;
+}
+var $ZodAsyncError = class extends Error {
+	constructor() {
+		super(`Encountered Promise during synchronous parse. Use .parseAsync() instead.`);
+	}
+};
+var $ZodEncodeError = class extends Error {
+	constructor(name) {
+		super(`Encountered unidirectional transform during encode: ${name}`);
+		this.name = "ZodEncodeError";
+	}
+};
+(_a$1 = globalThis).__zod_globalConfig ?? (_a$1.__zod_globalConfig = {});
+var globalConfig = globalThis.__zod_globalConfig;
+function config(newConfig) {
+	if (newConfig) Object.assign(globalConfig, newConfig);
+	return globalConfig;
+}
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/errors.js
+function _getMessage() {
+	const internals = this._zod;
+	internals.message ?? (internals.message = JSON.stringify(internals.def, jsonStringifyReplacer, 2));
+	return internals.message;
+}
+function _setMessage(value) {
+	this._zod.message = value;
+}
+var _messageDesc = {
+	get: _getMessage,
+	set: _setMessage,
+	enumerable: true,
+	configurable: true
+};
+var _issuesDesc = {
+	value: void 0,
+	enumerable: false
+};
+var _installedToString = /* @__PURE__ */ new WeakSet([Object.prototype, Error.prototype]);
 var initializer$1 = (inst, def) => {
 	inst.name = "$ZodError";
-	Object.defineProperty(inst, "_zod", {
-		value: inst._zod,
-		enumerable: false
-	});
-	Object.defineProperty(inst, "issues", {
-		value: def,
-		enumerable: false
-	});
-	inst.message = JSON.stringify(def, jsonStringifyReplacer, 2);
-	Object.defineProperty(inst, "toString", {
-		value: () => inst.message,
-		enumerable: false
-	});
+	_issuesDesc.value = def;
+	Object.defineProperty(inst, "issues", _issuesDesc);
+	_issuesDesc.value = void 0;
+	Object.defineProperty(inst, "message", _messageDesc);
+	const proto = Object.getPrototypeOf(inst);
+	if (!_installedToString.has(proto)) {
+		_installedToString.add(proto);
+		Object.defineProperty(proto, "toString", {
+			configurable: true,
+			enumerable: false,
+			get() {
+				const value = () => this.message;
+				Object.defineProperty(this, "toString", {
+					value,
+					configurable: true,
+					writable: true
+				});
+				return value;
+			},
+			set(value) {
+				Object.defineProperty(this, "toString", {
+					value,
+					configurable: true,
+					writable: true
+				});
+			}
+		});
+	}
 };
 var $ZodError = /* @__PURE__ */ $constructor("$ZodError", initializer$1);
-var $ZodRealError = /* @__PURE__ */ $constructor("$ZodError", initializer$1, { Parent: Error });
+/** Get-or-create `obj[key]` as an own data property. A path segment naming an inherited member
+* ("toString", "constructor") would otherwise read through to the prototype, and assigning
+* "__proto__" would hit the setter instead of creating a key. */
+function node(obj, key, make) {
+	if (!Object.prototype.hasOwnProperty.call(obj, key)) {
+		if (key === "__proto__") Object.defineProperty(obj, key, {
+			value: make(),
+			writable: true,
+			enumerable: true,
+			configurable: true
+		});
+		else obj[key] = make();
+	}
+	return obj[key];
+}
 function flattenError(error, mapper = (issue) => issue.message) {
 	const fieldErrors = {};
 	const formErrors = [];
-	for (const sub of error.issues) if (sub.path.length > 0) {
-		fieldErrors[sub.path[0]] = fieldErrors[sub.path[0]] || [];
-		fieldErrors[sub.path[0]].push(mapper(sub));
-	} else formErrors.push(mapper(sub));
+	for (const sub of error.issues) if (sub.path.length > 0) node(fieldErrors, sub.path[0], () => []).push(mapper(sub));
+	else formErrors.push(mapper(sub));
 	return {
 		formErrors,
 		fieldErrors
@@ -17116,12 +17430,21 @@ function formatError(error, mapper = (issue) => issue.message) {
 				let i = 0;
 				while (i < fullpath.length) {
 					const el = fullpath[i];
-					if (!(i === fullpath.length - 1)) curr[el] = curr[el] || { _errors: [] };
-					else {
-						curr[el] = curr[el] || { _errors: [] };
-						curr[el]._errors.push(mapper(issue));
+					const terminal = i === fullpath.length - 1;
+					if (el === "_errors") {
+						if (terminal) curr._errors.push(mapper(issue));
+						i++;
+						continue;
 					}
-					curr = curr[el];
+					if (!Object.prototype.hasOwnProperty.call(curr, el)) Object.defineProperty(curr, el, {
+						value: { _errors: [] },
+						enumerable: true,
+						writable: true,
+						configurable: true
+					});
+					const node = curr[el];
+					if (terminal) node._errors.push(mapper(issue));
+					curr = node;
 					i++;
 				}
 			}
@@ -17130,40 +17453,52 @@ function formatError(error, mapper = (issue) => issue.message) {
 	processError(error);
 	return fieldErrors;
 }
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/parse.js
-var _parse = (_Err) => (schema, value, _ctx, _params) => {
-	const ctx = _ctx ? {
-		..._ctx,
-		async: false
-	} : { async: false };
-	const result = schema._zod.run({
-		value,
-		issues: []
-	}, ctx);
-	if (result instanceof Promise) throw new $ZodAsyncError();
-	if (result.issues.length) {
-		const e = new ((_params?.Err) ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
-		captureStackTrace(e, _params?.callee);
-		throw e;
-	}
-	return result.value;
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/parse.js
+function finalizeParams(callee, params) {
+	return {
+		callee: params?.callee ?? callee,
+		Err: params?.Err
+	};
+}
+var _parse = (_Err) => {
+	const fn = (schema, value, _ctx, _params) => {
+		const ctx = _ctx ? {
+			..._ctx,
+			async: false
+		} : { async: false };
+		const result = schema._zod.run({
+			value,
+			issues: []
+		}, ctx);
+		if (result instanceof Promise) throw new $ZodAsyncError();
+		if (result.issues.length) {
+			const e = new ((_params?.Err) ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+			captureStackTrace(e, _params?.callee ?? fn);
+			throw e;
+		}
+		return result.value;
+	};
+	return fn;
 };
-var _parseAsync = (_Err) => async (schema, value, _ctx, params) => {
-	const ctx = _ctx ? {
-		..._ctx,
-		async: true
-	} : { async: true };
-	let result = schema._zod.run({
-		value,
-		issues: []
-	}, ctx);
-	if (result instanceof Promise) result = await result;
-	if (result.issues.length) {
-		const e = new ((params?.Err) ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
-		captureStackTrace(e, params?.callee);
-		throw e;
-	}
-	return result.value;
+var _parseAsync = (_Err) => {
+	const fn = async (schema, value, _ctx, params) => {
+		const ctx = _ctx ? {
+			..._ctx,
+			async: true
+		} : { async: true };
+		let result = schema._zod.run({
+			value,
+			issues: []
+		}, ctx);
+		if (result instanceof Promise) result = await result;
+		if (result.issues.length) {
+			const e = new ((params?.Err) ?? _Err)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())));
+			captureStackTrace(e, params?.callee ?? fn);
+			throw e;
+		}
+		return result.value;
+	};
+	return fn;
 };
 var _safeParse = (_Err) => (schema, value, _ctx) => {
 	const ctx = _ctx ? {
@@ -17175,15 +17510,30 @@ var _safeParse = (_Err) => (schema, value, _ctx) => {
 		issues: []
 	}, ctx);
 	if (result instanceof Promise) throw new $ZodAsyncError();
-	return result.issues.length ? {
-		success: false,
-		error: new (_Err ?? $ZodError)(result.issues.map((iss) => finalizeIssue(iss, ctx, config())))
-	} : {
+	return result.issues.length ? failure(_Err, result.issues, ctx) : {
 		success: true,
 		data: result.value
 	};
 };
-var safeParse$1 = /* @__PURE__*/ _safeParse($ZodRealError);
+function failure(Err, issues, ctx) {
+	let error;
+	return {
+		success: false,
+		get error() {
+			if (!error) {
+				error = new Err(issues.map((iss) => finalizeIssue(iss, ctx, config())));
+				issues = void 0;
+				ctx = void 0;
+			}
+			return error;
+		},
+		set error(e) {
+			error = e;
+			issues = void 0;
+			ctx = void 0;
+		}
+	};
+}
 var _safeParseAsync = (_Err) => async (schema, value, _ctx) => {
 	const ctx = _ctx ? {
 		..._ctx,
@@ -17194,34 +17544,96 @@ var _safeParseAsync = (_Err) => async (schema, value, _ctx) => {
 		issues: []
 	}, ctx);
 	if (result instanceof Promise) result = await result;
-	return result.issues.length ? {
-		success: false,
-		error: new _Err(result.issues.map((iss) => finalizeIssue(iss, ctx, config())))
-	} : {
+	return result.issues.length ? failure(_Err, result.issues, ctx) : {
 		success: true,
 		data: result.value
 	};
 };
-var safeParseAsync$1 = /* @__PURE__*/ _safeParseAsync($ZodRealError);
-var _encode = (_Err) => (schema, value, _ctx) => {
+var COMPILE_INVALID = /* @__PURE__ */ Symbol.for("zod.compile.invalid");
+var COMPILE_FALLBACK = /* @__PURE__ */ Symbol.for("zod.compile.fallback");
+var validate = ((schema, value, _ctx) => {
+	const validator = schema._zod.bag.validator;
+	if (validator !== void 0) {
+		if (validator(value) !== COMPILE_INVALID) return true;
+		if (validator.definite === true && _ctx === void 0) return false;
+	}
+	return validateFallback(schema, value, _ctx);
+});
+function validateFallback(schema, value, _ctx) {
 	const ctx = _ctx ? {
 		..._ctx,
-		direction: "backward"
-	} : { direction: "backward" };
-	return _parse(_Err)(schema, value, ctx);
-};
-var _decode = (_Err) => (schema, value, _ctx) => {
-	return _parse(_Err)(schema, value, _ctx);
-};
-var _encodeAsync = (_Err) => async (schema, value, _ctx) => {
+		async: false,
+		abortEarly: true
+	} : {
+		async: false,
+		abortEarly: true
+	};
+	const fallbackRun = schema._zod.bag.fallbackRun;
+	let result;
+	if (fallbackRun) {
+		ctx[COMPILE_FALLBACK] = true;
+		result = fallbackRun({
+			value,
+			issues: []
+		}, ctx);
+	} else result = schema._zod.run({
+		value,
+		issues: []
+	}, ctx);
+	if (result instanceof Promise) throw new $ZodAsyncError();
+	return result.issues.length === 0;
+}
+var validateAsync$1 = async (schema, value, _ctx) => {
 	const ctx = _ctx ? {
 		..._ctx,
-		direction: "backward"
-	} : { direction: "backward" };
-	return _parseAsync(_Err)(schema, value, ctx);
+		async: true,
+		abortEarly: true
+	} : {
+		async: true,
+		abortEarly: true
+	};
+	let result = schema._zod.run({
+		value,
+		issues: []
+	}, ctx);
+	if (result instanceof Promise) result = await result;
+	return result.issues.length === 0;
 };
-var _decodeAsync = (_Err) => async (schema, value, _ctx) => {
-	return _parseAsync(_Err)(schema, value, _ctx);
+var _encode = (_Err) => {
+	const parse = _parse(_Err);
+	const fn = (schema, value, _ctx, _params) => {
+		const ctx = _ctx ? {
+			..._ctx,
+			direction: "backward"
+		} : { direction: "backward" };
+		return parse(schema, value, ctx, finalizeParams(fn, _params));
+	};
+	return fn;
+};
+var _decode = (_Err) => {
+	const parse = _parse(_Err);
+	const fn = (schema, value, _ctx, _params) => {
+		return parse(schema, value, _ctx, finalizeParams(fn, _params));
+	};
+	return fn;
+};
+var _encodeAsync = (_Err) => {
+	const parseAsync = _parseAsync(_Err);
+	const fn = async (schema, value, _ctx, _params) => {
+		const ctx = _ctx ? {
+			..._ctx,
+			direction: "backward"
+		} : { direction: "backward" };
+		return await parseAsync(schema, value, ctx, finalizeParams(fn, _params));
+	};
+	return fn;
+};
+var _decodeAsync = (_Err) => {
+	const parseAsync = _parseAsync(_Err);
+	const fn = async (schema, value, _ctx, _params) => {
+		return await parseAsync(schema, value, _ctx, finalizeParams(fn, _params));
+	};
+	return fn;
 };
 var _safeEncode = (_Err) => (schema, value, _ctx) => {
 	const ctx = _ctx ? {
@@ -17243,7 +17655,7 @@ var _safeEncodeAsync = (_Err) => async (schema, value, _ctx) => {
 var _safeDecodeAsync = (_Err) => async (schema, value, _ctx) => {
 	return _safeParseAsync(_Err)(schema, value, _ctx);
 };
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/regexes.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/regexes.js
 /**
 * @deprecated CUID v1 is deprecated by its authors due to information leakage
 * (timestamps embedded in the id). Use {@link cuid2} instead.
@@ -17251,12 +17663,15 @@ var _safeDecodeAsync = (_Err) => async (schema, value, _ctx) => {
 */
 var cuid = /^[cC][0-9a-z]{6,}$/;
 var cuid2 = /^[0-9a-z]+$/;
-var ulid = /^[0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{26}$/;
+var ulid = /^[0-7][0-9A-HJKMNP-TV-Za-hjkmnp-tv-z]{25}$/;
 var xid = /^[0-9a-vA-V]{20}$/;
 var ksuid = /^[A-Za-z0-9]{27}$/;
 var nanoid = /^[a-zA-Z0-9_-]{21}$/;
+function nanoidOfLength(length) {
+	return new RegExp(`^[a-zA-Z0-9_-]{${length}}$`);
+}
 /** ISO 8601-1 duration regex. Does not support the 8601-2 extensions like negative durations or fractional/negative components. */
-var duration$1 = /^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$/;
+var duration = /^P(?:(\d+W)|(?!.*W)(?=\d|T\d)(\d+Y)?(\d+M)?(\d+D)?(T(?=\d)(\d+H)?(\d+M)?(\d+([.,]\d+)?S)?)?)$/;
 /** A regex for any UUID-like identifier: 8-4-4-4-12 hex pattern */
 var guid = /^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12})$/;
 /** Returns a regex for validating an RFC 9562/4122 UUID.
@@ -17267,52 +17682,61 @@ var uuid$1 = (version) => {
 	return new RegExp(`^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-${version}[0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12})$`);
 };
 /** Practical email validation */
-var email = /^(?!\.)(?!.*\.\.)([A-Za-z0-9_'+\-\.]*)[A-Za-z0-9_+-]@([A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/;
-var _emoji$1 = `^(\\p{Extended_Pictographic}|\\p{Emoji_Component})+$`;
+var email = /^(?:[A-Za-z0-9_'+\-]+\.)*[A-Za-z0-9_'+\-]*[A-Za-z0-9_+-]@(?:[A-Za-z0-9][A-Za-z0-9\-]*\.)+[A-Za-z]{2,}$/;
+var _emoji$1 = `^(?=[\\s\\S]*[\\p{Extended_Pictographic}\\p{Regional_Indicator}\\u20E3])[\\p{Extended_Pictographic}\\p{Emoji_Component}]+$`;
 function emoji() {
 	return new RegExp(_emoji$1, "u");
 }
 var ipv4 = /^(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])$/;
 var ipv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))$/;
 var cidrv4 = /^((25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.){3}(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\/([0-9]|[1-2][0-9]|3[0-2])$/;
-var cidrv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|::|([0-9a-fA-F]{1,4})?::([0-9a-fA-F]{1,4}:?){0,6})\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])$/;
+var cidrv6 = /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:))\/(12[0-8]|1[01][0-9]|[1-9]?[0-9])$/;
 var base64 = /^$|^(?:[0-9a-zA-Z+/]{4})*(?:(?:[0-9a-zA-Z+/]{2}==)|(?:[0-9a-zA-Z+/]{3}=))?$/;
-var base64url = /^[A-Za-z0-9_-]*$/;
+var base64url = /^(?:[A-Za-z0-9_-]{4})*(?:[A-Za-z0-9_-]{2,3})?$/;
 var httpProtocol = /^https?$/;
 var e164 = /^\+[1-9]\d{6,14}$/;
 var dateSource = `(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))`;
-var date$1 = /*@__PURE__*/ new RegExp(`^${dateSource}$`);
+/** Anchors a pattern source. The interpolation lives here rather than at the call site because
+* esbuild will not drop a `@__PURE__` call whose own argument interpolates a variable, but it
+* will drop `anchor(dateSource)`. Keeping it inline pinned `date` into every bundle. */
+function anchor(source) {
+	return new RegExp(`^${source}$`);
+}
+var date = /*@__PURE__*/ anchor(dateSource);
 function timeSource(args) {
 	const hhmm = `(?:[01]\\d|2[0-3]):[0-5]\\d`;
-	return typeof args.precision === "number" ? args.precision === -1 ? `${hhmm}` : args.precision === 0 ? `${hhmm}:[0-5]\\d` : `${hhmm}:[0-5]\\d\\.\\d{${args.precision}}` : `${hhmm}(?::[0-5]\\d(?:\\.\\d+)?)?`;
+	return typeof args.precision === "number" ? args.precision === -1 ? `${hhmm}` : args.precision === 0 ? `${hhmm}:[0-5]\\d` : `${hhmm}:[0-5]\\d\\.\\d{${args.precision}}` : args.seconds ? `${hhmm}:[0-5]\\d(?:\\.\\d+)?` : `${hhmm}(?::[0-5]\\d(?:\\.\\d+)?)?`;
 }
-function time$1(args) {
+function time(args) {
 	return new RegExp(`^${timeSource(args)}$`);
 }
-function datetime$1(args) {
-	const time = timeSource({ precision: args.precision });
+function datetime(args) {
 	const opts = ["Z"];
-	if (args.local) opts.push("");
 	if (args.offset) opts.push(`([+-](?:[01]\\d|2[0-3]):[0-5]\\d)`);
-	const timeRegex = `${time}(?:${opts.join("|")})`;
+	const qualified = `${timeSource({
+		precision: args.precision,
+		seconds: true
+	})}(?:${opts.join("|")})`;
+	const timeRegex = args.local ? `${qualified}|${timeSource({ precision: args.precision })}` : qualified;
 	return new RegExp(`^${dateSource}T(?:${timeRegex})$`);
 }
-var string$1 = (params) => {
-	const regex = params ? `[\\s\\S]{${params?.minimum ?? 0},${params?.maximum ?? ""}}` : `[\\s\\S]*`;
-	return new RegExp(`^${regex}$`);
-};
-var integer = /^-?\d+$/;
+var anyString = /^[\s\S]{0,}$/;
 var number$1 = /^-?\d+(?:\.\d+)?$/;
 var boolean$1 = /^(?:true|false)$/i;
 var lowercase = /^[^A-Z]*$/;
 var uppercase = /^[^a-z]*$/;
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/checks.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/checks.js
 var $ZodCheck = /*@__PURE__*/ $constructor("$ZodCheck", (inst, def) => {
 	var _a;
 	inst._zod ?? (inst._zod = {});
 	inst._zod.def = def;
 	(_a = inst._zod).onattach ?? (_a.onattach = []);
 });
+/** Default `when` for length-based checks: run only on non-nullish values with a `length`. */
+var _whenHasLength = (payload) => {
+	const val = payload.value;
+	return !nullish(val) && val.length !== void 0;
+};
 var numericOriginMap = {
 	number: "number",
 	bigint: "bigint",
@@ -17321,18 +17745,10 @@ var numericOriginMap = {
 var $ZodCheckLessThan = /*@__PURE__*/ $constructor("$ZodCheckLessThan", (inst, def) => {
 	$ZodCheck.init(inst, def);
 	const origin = numericOriginMap[typeof def.value];
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		const curr = (def.inclusive ? bag.maximum : bag.exclusiveMaximum) ?? Number.POSITIVE_INFINITY;
-		if (def.value < curr) {
-			if (def.inclusive) bag.maximum = def.value;
-			else bag.exclusiveMaximum = def.value;
-		}
-	});
 	inst._zod.check = (payload) => {
 		if (def.inclusive ? payload.value <= def.value : payload.value < def.value) return;
 		payload.issues.push({
-			origin,
+			origin: numericOriginMap[typeof payload.value] ?? origin,
 			code: "too_big",
 			maximum: typeof def.value === "object" ? def.value.getTime() : def.value,
 			input: payload.value,
@@ -17345,18 +17761,10 @@ var $ZodCheckLessThan = /*@__PURE__*/ $constructor("$ZodCheckLessThan", (inst, d
 var $ZodCheckGreaterThan = /*@__PURE__*/ $constructor("$ZodCheckGreaterThan", (inst, def) => {
 	$ZodCheck.init(inst, def);
 	const origin = numericOriginMap[typeof def.value];
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		const curr = (def.inclusive ? bag.minimum : bag.exclusiveMinimum) ?? Number.NEGATIVE_INFINITY;
-		if (def.value > curr) {
-			if (def.inclusive) bag.minimum = def.value;
-			else bag.exclusiveMinimum = def.value;
-		}
-	});
 	inst._zod.check = (payload) => {
 		if (def.inclusive ? payload.value >= def.value : payload.value > def.value) return;
 		payload.issues.push({
-			origin,
+			origin: numericOriginMap[typeof payload.value] ?? origin,
 			code: "too_small",
 			minimum: typeof def.value === "object" ? def.value.getTime() : def.value,
 			input: payload.value,
@@ -17368,13 +17776,9 @@ var $ZodCheckGreaterThan = /*@__PURE__*/ $constructor("$ZodCheckGreaterThan", (i
 });
 var $ZodCheckMultipleOf = /*@__PURE__*/ $constructor("$ZodCheckMultipleOf", (inst, def) => {
 	$ZodCheck.init(inst, def);
-	inst._zod.onattach.push((inst) => {
-		var _a;
-		(_a = inst._zod.bag).multipleOf ?? (_a.multipleOf = def.value);
-	});
 	inst._zod.check = (payload) => {
 		if (typeof payload.value !== typeof def.value) throw new Error("Cannot mix number and bigint in multiple_of check.");
-		if (typeof payload.value === "bigint" ? payload.value % def.value === BigInt(0) : floatSafeRemainder(payload.value, def.value) === 0) return;
+		if (typeof payload.value === "bigint" ? def.value !== BigInt(0) && payload.value % def.value === BigInt(0) : floatSafeRemainder(payload.value, def.value) === 0) return;
 		payload.issues.push({
 			origin: typeof payload.value,
 			code: "not_multiple_of",
@@ -17391,13 +17795,6 @@ var $ZodCheckNumberFormat = /*@__PURE__*/ $constructor("$ZodCheckNumberFormat", 
 	const isInt = def.format?.includes("int");
 	const origin = isInt ? "int" : "number";
 	const [minimum, maximum] = NUMBER_FORMAT_RANGES[def.format];
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		bag.format = def.format;
-		bag.minimum = minimum;
-		bag.maximum = maximum;
-		if (isInt) bag.pattern = integer;
-	});
 	inst._zod.check = (payload) => {
 		const input = payload.value;
 		if (isInt) {
@@ -17459,17 +17856,11 @@ var $ZodCheckNumberFormat = /*@__PURE__*/ $constructor("$ZodCheckNumberFormat", 
 var $ZodCheckMaxLength = /*@__PURE__*/ $constructor("$ZodCheckMaxLength", (inst, def) => {
 	var _a;
 	$ZodCheck.init(inst, def);
-	(_a = inst._zod.def).when ?? (_a.when = (payload) => {
-		const val = payload.value;
-		return !nullish(val) && val.length !== void 0;
-	});
-	inst._zod.onattach.push((inst) => {
-		const curr = inst._zod.bag.maximum ?? Number.POSITIVE_INFINITY;
-		if (def.maximum < curr) inst._zod.bag.maximum = def.maximum;
-	});
+	(_a = inst._zod.def).when ?? (_a.when = _whenHasLength);
 	inst._zod.check = (payload) => {
 		const input = payload.value;
-		if (input.length <= def.maximum) return;
+		const units = input.length;
+		if ((typeof input === "string" && units > def.maximum ? codePointLength(input) : units) <= def.maximum) return;
 		const origin = getLengthableOrigin(input);
 		payload.issues.push({
 			origin,
@@ -17485,17 +17876,11 @@ var $ZodCheckMaxLength = /*@__PURE__*/ $constructor("$ZodCheckMaxLength", (inst,
 var $ZodCheckMinLength = /*@__PURE__*/ $constructor("$ZodCheckMinLength", (inst, def) => {
 	var _a;
 	$ZodCheck.init(inst, def);
-	(_a = inst._zod.def).when ?? (_a.when = (payload) => {
-		const val = payload.value;
-		return !nullish(val) && val.length !== void 0;
-	});
-	inst._zod.onattach.push((inst) => {
-		const curr = inst._zod.bag.minimum ?? Number.NEGATIVE_INFINITY;
-		if (def.minimum > curr) inst._zod.bag.minimum = def.minimum;
-	});
+	(_a = inst._zod.def).when ?? (_a.when = _whenHasLength);
 	inst._zod.check = (payload) => {
 		const input = payload.value;
-		if (input.length >= def.minimum) return;
+		const units = input.length;
+		if ((typeof input === "string" && units >= def.minimum && units < def.minimum * 2 ? codePointLength(input) : units) >= def.minimum) return;
 		const origin = getLengthableOrigin(input);
 		payload.issues.push({
 			origin,
@@ -17511,19 +17896,11 @@ var $ZodCheckMinLength = /*@__PURE__*/ $constructor("$ZodCheckMinLength", (inst,
 var $ZodCheckLengthEquals = /*@__PURE__*/ $constructor("$ZodCheckLengthEquals", (inst, def) => {
 	var _a;
 	$ZodCheck.init(inst, def);
-	(_a = inst._zod.def).when ?? (_a.when = (payload) => {
-		const val = payload.value;
-		return !nullish(val) && val.length !== void 0;
-	});
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		bag.minimum = def.length;
-		bag.maximum = def.length;
-		bag.length = def.length;
-	});
+	(_a = inst._zod.def).when ?? (_a.when = _whenHasLength);
 	inst._zod.check = (payload) => {
 		const input = payload.value;
-		const length = input.length;
+		const units = input.length;
+		const length = typeof input === "string" && units >= def.length && units <= def.length * 2 ? codePointLength(input) : units;
 		if (length === def.length) return;
 		const origin = getLengthableOrigin(input);
 		const tooBig = length > def.length;
@@ -17547,14 +17924,6 @@ var $ZodCheckLengthEquals = /*@__PURE__*/ $constructor("$ZodCheckLengthEquals", 
 var $ZodCheckStringFormat = /*@__PURE__*/ $constructor("$ZodCheckStringFormat", (inst, def) => {
 	var _a, _b;
 	$ZodCheck.init(inst, def);
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		bag.format = def.format;
-		if (def.pattern) {
-			bag.patterns ?? (bag.patterns = /* @__PURE__ */ new Set());
-			bag.patterns.add(def.pattern);
-		}
-	});
 	if (def.pattern) (_a = inst._zod).check ?? (_a.check = (payload) => {
 		def.pattern.lastIndex = 0;
 		if (def.pattern.test(payload.value)) return;
@@ -17597,13 +17966,7 @@ var $ZodCheckUpperCase = /*@__PURE__*/ $constructor("$ZodCheckUpperCase", (inst,
 var $ZodCheckIncludes = /*@__PURE__*/ $constructor("$ZodCheckIncludes", (inst, def) => {
 	$ZodCheck.init(inst, def);
 	const escapedRegex = escapeRegex(def.includes);
-	const pattern = new RegExp(typeof def.position === "number" ? `^.{${def.position}}${escapedRegex}` : escapedRegex);
-	def.pattern = pattern;
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		bag.patterns ?? (bag.patterns = /* @__PURE__ */ new Set());
-		bag.patterns.add(pattern);
-	});
+	def.pattern = new RegExp(typeof def.position === "number" ? `^.{${def.position},}${escapedRegex}` : escapedRegex);
 	inst._zod.check = (payload) => {
 		if (payload.value.includes(def.includes, def.position)) return;
 		payload.issues.push({
@@ -17621,11 +17984,6 @@ var $ZodCheckStartsWith = /*@__PURE__*/ $constructor("$ZodCheckStartsWith", (ins
 	$ZodCheck.init(inst, def);
 	const pattern = new RegExp(`^${escapeRegex(def.prefix)}.*`);
 	def.pattern ?? (def.pattern = pattern);
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		bag.patterns ?? (bag.patterns = /* @__PURE__ */ new Set());
-		bag.patterns.add(pattern);
-	});
 	inst._zod.check = (payload) => {
 		if (payload.value.startsWith(def.prefix)) return;
 		payload.issues.push({
@@ -17643,11 +18001,6 @@ var $ZodCheckEndsWith = /*@__PURE__*/ $constructor("$ZodCheckEndsWith", (inst, d
 	$ZodCheck.init(inst, def);
 	const pattern = new RegExp(`.*${escapeRegex(def.suffix)}$`);
 	def.pattern ?? (def.pattern = pattern);
-	inst._zod.onattach.push((inst) => {
-		const bag = inst._zod.bag;
-		bag.patterns ?? (bag.patterns = /* @__PURE__ */ new Set());
-		bag.patterns.add(pattern);
-	});
 	inst._zod.check = (payload) => {
 		if (payload.value.endsWith(def.suffix)) return;
 		payload.issues.push({
@@ -17667,17 +18020,21 @@ var $ZodCheckOverwrite = /*@__PURE__*/ $constructor("$ZodCheckOverwrite", (inst,
 		payload.value = def.tx(payload.value);
 	};
 });
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/doc.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/doc.js
 var Doc = class {
-	constructor(args = []) {
+	constructor(args = [], closed = {}) {
 		this.content = [];
 		this.indent = 0;
-		if (this) this.args = args;
+		this.args = args;
+		this.closed = closed;
 	}
 	indented(fn) {
 		this.indent += 1;
-		fn(this);
-		this.indent -= 1;
+		try {
+			fn(this);
+		} finally {
+			this.indent -= 1;
+		}
 	}
 	write(arg) {
 		if (typeof arg === "function") {
@@ -17692,26 +18049,25 @@ var Doc = class {
 	}
 	compile() {
 		const F = Function;
-		const args = this?.args;
-		const lines = [...(this?.content ?? [``]).map((x) => `  ${x}`)];
-		return new F(...args, lines.join("\n"));
+		const content = this?.content ?? [``];
+		return new F(...Object.keys(this.closed), `return function (${this.args.join(", ")}) {\n${content.join("\n")}\n};`)(...Object.values(this.closed));
 	}
 };
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/versions.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/versions.js
 var version = {
 	major: 4,
-	minor: 4,
-	patch: 3
+	minor: 6,
+	patch: 7
 };
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/schemas.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/schemas.js
 var $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
 	var _a;
 	inst ?? (inst = {});
 	inst._zod.def = def;
 	inst._zod.bag = inst._zod.bag || {};
 	inst._zod.version = version;
-	const checks = [...inst._zod.def.checks ?? []];
-	if (inst._zod.traits.has("$ZodCheck")) checks.unshift(inst);
+	const defChecks = inst._zod.def.checks;
+	const checks = inst._zod.traits.has("$ZodCheck") ? [inst, ...defChecks ?? []] : defChecks?.length ? [...defChecks] : [];
 	for (const ch of checks) for (const fn of ch._zod.onattach) fn(inst);
 	if (checks.length === 0) {
 		(_a = inst._zod).deferred ?? (_a.deferred = []);
@@ -17720,6 +18076,7 @@ var $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
 		});
 	} else {
 		const runChecks = (payload, checks, ctx) => {
+			if (payload.memo) return payload;
 			let isAborted = aborted(payload);
 			let asyncResult;
 			for (const ch of checks) {
@@ -17733,10 +18090,12 @@ var $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
 				if (asyncResult || _ instanceof Promise) asyncResult = (asyncResult ?? Promise.resolve()).then(async () => {
 					await _;
 					if (payload.issues.length === currLen) return;
+					attachSchema(payload.issues, currLen, inst);
 					if (!isAborted) isAborted = aborted(payload, currLen);
 				});
 				else {
 					if (payload.issues.length === currLen) continue;
+					attachSchema(payload.issues, currLen, inst);
 					if (!isAborted) isAborted = aborted(payload, currLen);
 				}
 			}
@@ -17780,22 +18139,43 @@ var $ZodType = /*@__PURE__*/ $constructor("$ZodType", (inst, def) => {
 			return runChecks(result, checks, ctx);
 		};
 	}
-	defineLazy(inst, "~standard", () => ({
+}, {
+	get "~standard"() {
+		return hide(this, "~standard", standardProps(this));
+	},
+	set "~standard"(value) {
+		own(this, "~standard", value);
+	}
+});
+/** The Standard Schema surface for `inst`. Shared so wrappers can extend it without forcing it. */
+var toStandardResult = (r, ctx) => r.issues.length ? { issues: r.issues.map((iss) => finalizeIssue(iss, ctx, config())) } : { value: r.value };
+async function validateAsync(inst, value) {
+	const ctx = { async: true };
+	return toStandardResult(await inst._zod.run({
+		value,
+		issues: []
+	}, ctx), ctx);
+}
+function standardProps(inst) {
+	return {
 		validate: (value) => {
+			const ctx = { async: false };
 			try {
-				const r = safeParse$1(inst, value);
-				return r.success ? { value: r.data } : { issues: r.error?.issues };
-			} catch (_) {
-				return safeParseAsync$1(inst, value).then((r) => r.success ? { value: r.data } : { issues: r.error?.issues });
-			}
+				const r = inst._zod.run({
+					value,
+					issues: []
+				}, ctx);
+				if (!(r instanceof Promise)) return toStandardResult(r, ctx);
+			} catch (_) {}
+			return validateAsync(inst, value);
 		},
 		vendor: "zod",
 		version: 1
-	}));
-});
+	};
+}
 var $ZodString = /*@__PURE__*/ $constructor("$ZodString", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.pattern = [...inst?._zod.bag?.patterns ?? []].pop() ?? string$1(inst._zod.bag);
+	inst._zod.pattern = def.pattern ?? anyString;
 	inst._zod.parse = (payload, _) => {
 		if (def.coerce) try {
 			payload.value = String(payload.value);
@@ -17839,51 +18219,95 @@ var $ZodEmail = /*@__PURE__*/ $constructor("$ZodEmail", (inst, def) => {
 	def.pattern ?? (def.pattern = email);
 	$ZodStringFormat.init(inst, def);
 });
+function canParseURL(input) {
+	try {
+		if (typeof URL !== "undefined" && typeof URL.canParse === "function") return URL.canParse(input);
+		new URL(input);
+		return true;
+	} catch {
+		return false;
+	}
+}
+function validateURL(trimmed, def) {
+	if (!("normalize" in def) && !("hostname" in def) && !("protocol" in def)) return canParseURL(trimmed) || 2;
+	return parseURLObject(trimmed, def);
+}
+/** Parses a URL while preserving the non-normalizing HTTP guard. */
+function parseURLObject(trimmed, def) {
+	if (!def.normalize && def.protocol?.source === httpProtocol.source && !/^https?:\/\//i.test(trimmed)) return 1;
+	try {
+		if (typeof URL !== "undefined") {
+			const URLStatic = URL;
+			if (typeof URLStatic.parse === "function") return URLStatic.parse(trimmed) ?? 2;
+		}
+		return new URL(trimmed);
+	} catch {
+		return 2;
+	}
+}
+var asciiTabOrNewline = /[\t\n\r]/g;
+/** The URL parser deletes every ASCII tab, LF and CR from its input before it parses, so `new URL("https://exa\nmple.com")` reports on `example.com`. Applying the same deletion to the returned value closes the half of that divergence which can move the host; the parser's other rewrite, stripping C0 controls at the edges, cannot. */
+function stripTabAndNewline(value) {
+	return value.replace(asciiTabOrNewline, "");
+}
+function urlHostnameOk(url, hostname) {
+	hostname.lastIndex = 0;
+	return hostname.test(url.hostname);
+}
+function urlProtocolOk(url, protocol) {
+	protocol.lastIndex = 0;
+	return protocol.test(url.protocol.endsWith(":") ? url.protocol.slice(0, -1) : url.protocol);
+}
 var $ZodURL = /*@__PURE__*/ $constructor("$ZodURL", (inst, def) => {
 	$ZodStringFormat.init(inst, def);
 	inst._zod.check = (payload) => {
 		try {
 			const trimmed = payload.value.trim();
-			if (!def.normalize && def.protocol?.source === httpProtocol.source) {
-				if (!/^https?:\/\//i.test(trimmed)) {
-					payload.issues.push({
-						code: "invalid_format",
-						format: "url",
-						note: "Invalid URL format",
-						input: payload.value,
-						inst,
-						continue: !def.abort
-					});
-					return;
-				}
-			}
-			const url = new URL(trimmed);
-			if (def.hostname) {
-				def.hostname.lastIndex = 0;
-				if (!def.hostname.test(url.hostname)) payload.issues.push({
+			const url = validateURL(trimmed, def);
+			if (url === 1) {
+				payload.issues.push({
 					code: "invalid_format",
 					format: "url",
-					note: "Invalid hostname",
-					pattern: def.hostname.source,
+					note: "Invalid URL format",
 					input: payload.value,
 					inst,
 					continue: !def.abort
 				});
+				return;
 			}
-			if (def.protocol) {
-				def.protocol.lastIndex = 0;
-				if (!def.protocol.test(url.protocol.endsWith(":") ? url.protocol.slice(0, -1) : url.protocol)) payload.issues.push({
+			if (url === 2) {
+				payload.issues.push({
 					code: "invalid_format",
 					format: "url",
-					note: "Invalid protocol",
-					pattern: def.protocol.source,
 					input: payload.value,
 					inst,
 					continue: !def.abort
 				});
+				return;
 			}
-			if (def.normalize) payload.value = url.href;
-			else payload.value = trimmed;
+			if (url === true) {
+				payload.value = stripTabAndNewline(trimmed);
+				return;
+			}
+			if (def.hostname && !urlHostnameOk(url, def.hostname)) payload.issues.push({
+				code: "invalid_format",
+				format: "url",
+				note: "Invalid hostname",
+				pattern: def.hostname.source,
+				input: payload.value,
+				inst,
+				continue: !def.abort
+			});
+			if (def.protocol && !urlProtocolOk(url, def.protocol)) payload.issues.push({
+				code: "invalid_format",
+				format: "url",
+				note: "Invalid protocol",
+				pattern: def.protocol.source,
+				input: payload.value,
+				inst,
+				continue: !def.abort
+			});
+			payload.value = def.normalize ? url.href : stripTabAndNewline(trimmed);
 			return;
 		} catch (_) {
 			payload.issues.push({
@@ -17901,7 +18325,8 @@ var $ZodEmoji = /*@__PURE__*/ $constructor("$ZodEmoji", (inst, def) => {
 	$ZodStringFormat.init(inst, def);
 });
 var $ZodNanoID = /*@__PURE__*/ $constructor("$ZodNanoID", (inst, def) => {
-	def.pattern ?? (def.pattern = nanoid);
+	if (def.length !== void 0 && (!Number.isInteger(def.length) || def.length < 1)) throw new Error(`Invalid nanoid length: ${def.length}`);
+	def.pattern ?? (def.pattern = def.length === void 0 ? nanoid : nanoidOfLength(def.length));
 	$ZodStringFormat.init(inst, def);
 });
 /**
@@ -17930,70 +18355,69 @@ var $ZodKSUID = /*@__PURE__*/ $constructor("$ZodKSUID", (inst, def) => {
 	$ZodStringFormat.init(inst, def);
 });
 var $ZodISODateTime = /*@__PURE__*/ $constructor("$ZodISODateTime", (inst, def) => {
-	def.pattern ?? (def.pattern = datetime$1(def));
+	def.pattern ?? (def.pattern = datetime(def));
 	$ZodStringFormat.init(inst, def);
 });
 var $ZodISODate = /*@__PURE__*/ $constructor("$ZodISODate", (inst, def) => {
-	def.pattern ?? (def.pattern = date$1);
+	def.pattern ?? (def.pattern = date);
 	$ZodStringFormat.init(inst, def);
 });
 var $ZodISOTime = /*@__PURE__*/ $constructor("$ZodISOTime", (inst, def) => {
-	def.pattern ?? (def.pattern = time$1(def));
+	def.pattern ?? (def.pattern = time(def));
 	$ZodStringFormat.init(inst, def);
 });
 var $ZodISODuration = /*@__PURE__*/ $constructor("$ZodISODuration", (inst, def) => {
-	def.pattern ?? (def.pattern = duration$1);
+	def.pattern ?? (def.pattern = duration);
 	$ZodStringFormat.init(inst, def);
 });
 var $ZodIPv4 = /*@__PURE__*/ $constructor("$ZodIPv4", (inst, def) => {
 	def.pattern ?? (def.pattern = ipv4);
 	$ZodStringFormat.init(inst, def);
-	inst._zod.bag.format = `ipv4`;
 });
+/** An IPv6 address is written with hex digits, colons and dots, and nothing else. The guard is what makes the check below an IPv6 check: `new URL("http://[...]")` parses an authority, not an address, so `@` and `\` re-delimit it and `"::@1\\"` validates against the host `0.0.0.1`. The URL parser also deletes ASCII tab, LF and CR rather than failing, which is how `"::1\n"` validated as `::1`. */
+var ipv6Alphabet = /^[0-9a-fA-F:.]+$/;
+function isValidIPv6(value) {
+	if (!ipv6Alphabet.test(value)) return false;
+	return canParseURL(`http://[${value}]`);
+}
 var $ZodIPv6 = /*@__PURE__*/ $constructor("$ZodIPv6", (inst, def) => {
 	def.pattern ?? (def.pattern = ipv6);
 	$ZodStringFormat.init(inst, def);
-	inst._zod.bag.format = `ipv6`;
 	inst._zod.check = (payload) => {
-		try {
-			new URL(`http://[${payload.value}]`);
-		} catch {
-			payload.issues.push({
-				code: "invalid_format",
-				format: "ipv6",
-				input: payload.value,
-				inst,
-				continue: !def.abort
-			});
-		}
+		if (!isValidIPv6(payload.value)) payload.issues.push({
+			code: "invalid_format",
+			format: "ipv6",
+			input: payload.value,
+			inst,
+			continue: !def.abort
+		});
 	};
 });
 var $ZodCIDRv4 = /*@__PURE__*/ $constructor("$ZodCIDRv4", (inst, def) => {
 	def.pattern ?? (def.pattern = cidrv4);
 	$ZodStringFormat.init(inst, def);
 });
+function isValidCIDRv6(value) {
+	const parts = value.split("/");
+	if (parts.length !== 2) return false;
+	const [address, prefix] = parts;
+	if (!prefix) return false;
+	const prefixNum = Number(prefix);
+	if (`${prefixNum}` !== prefix) return false;
+	if (prefixNum < 0 || prefixNum > 128) return false;
+	return isValidIPv6(address);
+}
 var $ZodCIDRv6 = /*@__PURE__*/ $constructor("$ZodCIDRv6", (inst, def) => {
 	def.pattern ?? (def.pattern = cidrv6);
 	$ZodStringFormat.init(inst, def);
 	inst._zod.check = (payload) => {
-		const parts = payload.value.split("/");
-		try {
-			if (parts.length !== 2) throw new Error();
-			const [address, prefix] = parts;
-			if (!prefix) throw new Error();
-			const prefixNum = Number(prefix);
-			if (`${prefixNum}` !== prefix) throw new Error();
-			if (prefixNum < 0 || prefixNum > 128) throw new Error();
-			new URL(`http://[${address}]`);
-		} catch {
-			payload.issues.push({
-				code: "invalid_format",
-				format: "cidrv6",
-				input: payload.value,
-				inst,
-				continue: !def.abort
-			});
-		}
+		if (!isValidCIDRv6(payload.value)) payload.issues.push({
+			code: "invalid_format",
+			format: "cidrv6",
+			input: payload.value,
+			inst,
+			continue: !def.abort
+		});
 	};
 });
 function isValidBase64(data) {
@@ -18007,10 +18431,10 @@ function isValidBase64(data) {
 		return false;
 	}
 }
+var base64Charset = /^[0-9a-zA-Z+/]*={0,2}$/;
 var $ZodBase64 = /*@__PURE__*/ $constructor("$ZodBase64", (inst, def) => {
-	def.pattern ?? (def.pattern = base64);
+	def.pattern ?? (def.pattern = base64Charset);
 	$ZodStringFormat.init(inst, def);
-	inst._zod.bag.contentEncoding = "base64";
 	inst._zod.check = (payload) => {
 		if (isValidBase64(payload.value)) return;
 		payload.issues.push({
@@ -18022,15 +18446,15 @@ var $ZodBase64 = /*@__PURE__*/ $constructor("$ZodBase64", (inst, def) => {
 		});
 	};
 });
+var base64urlCharset = /^[A-Za-z0-9_-]*$/;
 function isValidBase64URL(data) {
-	if (!base64url.test(data)) return false;
+	if (!base64urlCharset.test(data)) return false;
 	const base64 = data.replace(/[-_]/g, (c) => c === "-" ? "+" : "/");
 	return isValidBase64(base64.padEnd(Math.ceil(base64.length / 4) * 4, "="));
 }
 var $ZodBase64URL = /*@__PURE__*/ $constructor("$ZodBase64URL", (inst, def) => {
-	def.pattern ?? (def.pattern = base64url);
+	def.pattern ?? (def.pattern = base64urlCharset);
 	$ZodStringFormat.init(inst, def);
-	inst._zod.bag.contentEncoding = "base64url";
 	inst._zod.check = (payload) => {
 		if (isValidBase64URL(payload.value)) return;
 		payload.issues.push({
@@ -18076,14 +18500,14 @@ var $ZodJWT = /*@__PURE__*/ $constructor("$ZodJWT", (inst, def) => {
 });
 var $ZodNumber = /*@__PURE__*/ $constructor("$ZodNumber", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.pattern = inst._zod.bag.pattern ?? number$1;
+	inst._zod.pattern = number$1;
 	inst._zod.parse = (payload, _ctx) => {
 		if (def.coerce) try {
 			payload.value = Number(payload.value);
 		} catch (_) {}
 		const input = payload.value;
 		if (typeof input === "number" && !Number.isNaN(input) && Number.isFinite(input)) return payload;
-		const received = typeof input === "number" ? Number.isNaN(input) ? "NaN" : !Number.isFinite(input) ? "Infinity" : void 0 : void 0;
+		const received = typeof input === "number" ? Number.isNaN(input) ? "NaN" : !Number.isFinite(input) ? String(input) : void 0 : void 0;
 		payload.issues.push({
 			expected: "number",
 			code: "invalid_type",
@@ -18132,12 +18556,34 @@ var $ZodNever = /*@__PURE__*/ $constructor("$ZodNever", (inst, def) => {
 		return payload;
 	};
 });
+function capSize(inst, size) {
+	const caps = sizeCaps(inst._zod.def.checks);
+	if (!caps.length) return;
+	const cap = Math.min(...caps.map((c) => c[0]));
+	const parse = inst._zod.parse;
+	inst._zod.parse = (payload, ctx) => {
+		const n = size(payload.value);
+		if (n > cap && !ctx?.skipChecks && ctx?.direction !== "backward") {
+			for (const [max, ch] of sizeCaps(inst._zod.def.checks)) if (n > max && ch._zod.def.when(payload)) {
+				const start = payload.issues.length;
+				ch._zod.check(payload);
+				payload.issues[start].continue = false;
+				attachSchema(payload.issues, start, inst);
+				return payload;
+			}
+		}
+		return parse(payload, ctx);
+	};
+}
+var arraySize = (input) => Array.isArray(input) ? input.length : -1;
 function handleArrayResult(result, final, index) {
 	if (result.issues.length) final.issues.push(...prefixIssues(index, result.issues));
 	final.value[index] = result.value;
 }
 var $ZodArray = /*@__PURE__*/ $constructor("$ZodArray", (inst, def) => {
 	$ZodType.init(inst, def);
+	const memo = globalConfig.memoizer;
+	memo?.attach(inst);
 	inst._zod.parse = (payload, ctx) => {
 		const input = payload.value;
 		if (!Array.isArray(input)) {
@@ -18149,8 +18595,9 @@ var $ZodArray = /*@__PURE__*/ $constructor("$ZodArray", (inst, def) => {
 			});
 			return payload;
 		}
-		payload.value = Array(input.length);
+		payload.value = memo ? memo.alloc(inst, payload, Array(input.length), ctx) : Array(input.length);
 		const proms = [];
+		const abortEarly = ctx?.abortEarly;
 		for (let i = 0; i < input.length; i++) {
 			const item = input[i];
 			const result = def.element._zod.run({
@@ -18158,19 +18605,25 @@ var $ZodArray = /*@__PURE__*/ $constructor("$ZodArray", (inst, def) => {
 				issues: []
 			}, ctx);
 			if (result instanceof Promise) proms.push(result.then((result) => handleArrayResult(result, payload, i)));
-			else handleArrayResult(result, payload, i);
+			else {
+				handleArrayResult(result, payload, i);
+				if (abortEarly && result.issues.length !== 0 && aborted(result)) break;
+			}
 		}
 		if (proms.length) return Promise.all(proms).then(() => payload);
 		return payload;
 	};
+	capSize(inst, arraySize);
 });
-function handlePropertyResult(result, final, key, input, isOptionalIn, isOptionalOut) {
+function handlePropertyResult(result, final, key, input, optin, optout) {
 	const isPresent = key in input;
+	const isOptionalOut = optout === "optional";
+	if (!isPresent && isOptionalOut && optin === "optional") return;
 	if (result.issues.length) {
-		if (isOptionalIn && isOptionalOut && !isPresent) return;
+		if (optin !== void 0 && isOptionalOut && !isPresent) return;
 		final.issues.push(...prefixIssues(key, result.issues));
 	}
-	if (!isPresent && !isOptionalIn) {
+	if (!isPresent && optin === void 0) {
 		if (!result.issues.length) final.issues.push({
 			code: "invalid_type",
 			expected: "nonoptional",
@@ -18180,31 +18633,44 @@ function handlePropertyResult(result, final, key, input, isOptionalIn, isOptiona
 		return;
 	}
 	if (result.value === void 0) {
-		if (isPresent) final.value[key] = void 0;
+		if (isPresent || optin === "defaulted" && !isOptionalOut) final.value[key] = void 0;
 	} else final.value[key] = result.value;
 }
+var NO_SYMBOL_KEYS = [];
 function normalizeDef(def) {
 	const keys = Object.keys(def.shape);
-	for (const k of keys) if (!def.shape?.[k]?._zod?.traits?.has("$ZodType")) throw new Error(`Invalid element at key "${k}": expected a Zod schema`);
+	const ownSymbols = Object.getOwnPropertySymbols(def.shape);
+	const symbolKeys = ownSymbols.length ? ownSymbols : NO_SYMBOL_KEYS;
+	const allKeys = symbolKeys.length ? [...keys, ...symbolKeys] : keys;
+	for (const k of allKeys) if (!def.shape?.[k]?._zod?.traits?.has("$ZodType")) throw new Error(`Invalid element at key "${String(k)}": expected a Zod schema`);
 	const okeys = optionalKeys(def.shape);
 	return {
 		...def,
-		keys,
+		allKeys,
+		symbolKeys,
 		keySet: new Set(keys),
 		numKeys: keys.length,
 		optionalKeys: new Set(okeys)
 	};
 }
-function handleCatchall(proms, input, payload, ctx, def, inst) {
+function handleCatchall(proms, input, payload, ctx, def, inst, abortEarly) {
 	const unrecognized = [];
 	const keySet = def.keySet;
 	const _catchall = def.catchall._zod;
 	const t = _catchall.def.type;
-	const isOptionalIn = _catchall.optin === "optional";
-	const isOptionalOut = _catchall.optout === "optional";
+	const optin = _catchall.optin;
+	const optout = _catchall.optout;
+	let seen = 0;
 	for (const key in input) {
-		if (key === "__proto__") continue;
+		if (abortEarly && payload.issues.length !== seen) {
+			if (aborted(payload, seen)) break;
+			seen = payload.issues.length;
+		}
 		if (keySet.has(key)) continue;
+		if (key === "__proto__") {
+			if (t === "never") unrecognized.push(key);
+			continue;
+		}
 		if (t === "never") {
 			unrecognized.push(key);
 			continue;
@@ -18213,14 +18679,15 @@ function handleCatchall(proms, input, payload, ctx, def, inst) {
 			value: input[key],
 			issues: []
 		}, ctx);
-		if (r instanceof Promise) proms.push(r.then((r) => handlePropertyResult(r, payload, key, input, isOptionalIn, isOptionalOut)));
-		else handlePropertyResult(r, payload, key, input, isOptionalIn, isOptionalOut);
+		if (r instanceof Promise) proms.push(r.then((r) => handlePropertyResult(r, payload, key, input, optin, optout)));
+		else handlePropertyResult(r, payload, key, input, optin, optout);
 	}
 	if (unrecognized.length) payload.issues.push({
 		code: "unrecognized_keys",
 		keys: unrecognized,
 		input,
-		inst
+		inst,
+		continue: true
 	});
 	if (!proms.length) return payload;
 	return Promise.all(proms).then(() => {
@@ -18229,23 +18696,28 @@ function handleCatchall(proms, input, payload, ctx, def, inst) {
 }
 var $ZodObject = /*@__PURE__*/ $constructor("$ZodObject", (inst, def) => {
 	$ZodType.init(inst, def);
-	if (!Object.getOwnPropertyDescriptor(def, "shape")?.get) {
-		const sh = def.shape;
-		Object.defineProperty(def, "shape", { get: () => {
+	const desc = Object.getOwnPropertyDescriptor(def, "shape");
+	const sh = desc?.get ? desc.get.raw : def.shape ?? {};
+	if (sh) {
+		const get = () => {
 			const newSh = { ...sh };
 			Object.defineProperty(def, "shape", { value: newSh });
+			get.raw = newSh;
 			return newSh;
-		} });
+		};
+		get.raw = sh;
+		Object.defineProperty(def, "shape", { get });
 	}
 	const _normalized = cached(() => normalizeDef(def));
-	defineLazy(inst._zod, "propValues", () => {
-		const shape = def.shape;
+	defineLazyInternal(inst, "propValues", (zod) => {
+		const shape = zod.def.shape;
 		const propValues = {};
 		for (const key in shape) {
 			const field = shape[key]._zod;
 			if (field.values) {
-				propValues[key] ?? (propValues[key] = /* @__PURE__ */ new Set());
+				if (!Object.prototype.hasOwnProperty.call(propValues, key)) assignProp(propValues, key, /* @__PURE__ */ new Set());
 				for (const v of field.values) propValues[key].add(v);
+				if (field.optin !== void 0) propValues[key].add(void 0);
 			}
 		}
 		return propValues;
@@ -18253,6 +18725,8 @@ var $ZodObject = /*@__PURE__*/ $constructor("$ZodObject", (inst, def) => {
 	const isObject$2 = isObject;
 	const catchall = def.catchall;
 	let value;
+	const memo = globalConfig.memoizer;
+	memo?.attach(inst);
 	inst._zod.parse = (payload, ctx) => {
 		value ?? (value = _normalized.value);
 		const input = payload.value;
@@ -18265,77 +18739,90 @@ var $ZodObject = /*@__PURE__*/ $constructor("$ZodObject", (inst, def) => {
 			});
 			return payload;
 		}
-		payload.value = {};
+		payload.value = memo ? memo.alloc(inst, payload, {}, ctx) : {};
 		const proms = [];
 		const shape = value.shape;
-		for (const key of value.keys) {
+		const abortEarly = ctx?.abortEarly;
+		let seen = payload.issues.length;
+		for (const key of value.allKeys) {
+			if (abortEarly && payload.issues.length !== seen) {
+				if (aborted(payload, seen)) break;
+				seen = payload.issues.length;
+			}
+			if (key === "__proto__") continue;
 			const el = shape[key];
-			const isOptionalIn = el._zod.optin === "optional";
-			const isOptionalOut = el._zod.optout === "optional";
+			const optin = el._zod.optin;
+			const optout = el._zod.optout;
 			const r = el._zod.run({
 				value: input[key],
 				issues: []
 			}, ctx);
-			if (r instanceof Promise) proms.push(r.then((r) => handlePropertyResult(r, payload, key, input, isOptionalIn, isOptionalOut)));
-			else handlePropertyResult(r, payload, key, input, isOptionalIn, isOptionalOut);
+			if (r instanceof Promise) proms.push(r.then((r) => handlePropertyResult(r, payload, key, input, optin, optout)));
+			else handlePropertyResult(r, payload, key, input, optin, optout);
 		}
 		if (!catchall) return proms.length ? Promise.all(proms).then(() => payload) : payload;
-		return handleCatchall(proms, input, payload, ctx, _normalized.value, inst);
+		return handleCatchall(proms, input, payload, ctx, _normalized.value, inst, abortEarly === true);
 	};
 });
 var $ZodObjectJIT = /*@__PURE__*/ $constructor("$ZodObjectJIT", (inst, def) => {
 	$ZodObject.init(inst, def);
 	const superParse = inst._zod.parse;
 	const _normalized = cached(() => normalizeDef(def));
+	const memo = globalConfig.memoizer;
 	const generateFastpass = (shape) => {
-		const doc = new Doc([
-			"shape",
-			"payload",
-			"ctx"
-		]);
 		const normalized = _normalized.value;
-		const parseStr = (key) => {
-			const k = esc(key);
-			return `shape[${k}]._zod.run({ value: input[${k}], issues: [] }, ctx)`;
-		};
+		const syms = normalized.symbolKeys;
+		const doc = new Doc(["payload", "ctx"], {
+			shape,
+			inst,
+			memo,
+			syms
+		});
+		const parseStr = (k) => `shape[${k}]._zod.run({ value: input[${k}], issues: [] }, ctx)`;
+		const prefixStr = (id, k) => `
+          let ${id}_ab = false;
+          for (let i = 0; i < ${id}.issues.length; i++) {
+            const iss = ${id}.issues[i];
+            iss.path = iss.path ? [${k}, ...iss.path] : [${k}];
+            payload.issues.push(iss);
+            if (iss.continue !== true) ${id}_ab = true;
+          }
+          if (${id}_ab && ctx && ctx.abortEarly) {
+            payload.value = newResult;
+            return payload;
+          }`;
 		doc.write(`const input = payload.value;`);
 		const ids = Object.create(null);
 		let counter = 0;
-		for (const key of normalized.keys) ids[key] = `key_${counter++}`;
-		doc.write(`const newResult = {};`);
-		for (const key of normalized.keys) {
+		for (const key of normalized.allKeys) ids[key] = `key_${counter++}`;
+		doc.write(memo ? `const newResult = memo.alloc(inst, payload, {}, ctx);` : `const newResult = {};`);
+		for (const key of normalized.allKeys) {
+			if (key === "__proto__") continue;
 			const id = ids[key];
-			const k = esc(key);
+			const k = typeof key === "symbol" ? `syms[${syms.indexOf(key)}]` : esc(key);
+			const isPresent = `${k} in input`;
 			const schema = shape[key];
-			const isOptionalIn = schema?._zod?.optin === "optional";
+			const optin = schema?._zod?.optin;
+			const isOptionalIn = optin !== void 0;
 			const isOptionalOut = schema?._zod?.optout === "optional";
-			doc.write(`const ${id} = ${parseStr(key)};`);
-			if (isOptionalIn && isOptionalOut) doc.write(`
-        if (${id}.issues.length) {
-          if (${k} in input) {
-            payload.issues = payload.issues.concat(${id}.issues.map(iss => ({
-              ...iss,
-              path: iss.path ? [${k}, ...iss.path] : [${k}]
-            })));
+			doc.write(`const ${id} = ${parseStr(k)};`);
+			if (isOptionalIn && isOptionalOut) {
+				const assign = optin === "optional" ? `${id}_present` : `${id}.value !== undefined || ${id}_present`;
+				doc.write(`
+        const ${id}_present = ${isPresent};
+        if (!${id}.issues.length || ${id}_present) {
+          if (${id}.issues.length) {${prefixStr(id, k)}
+          }
+
+          if (${assign}) {
+            newResult[${k}] = ${id}.value;
           }
         }
-        
-        if (${id}.value === undefined) {
-          if (${k} in input) {
-            newResult[${k}] = undefined;
-          }
-        } else {
-          newResult[${k}] = ${id}.value;
-        }
-        
+
       `);
-			else if (!isOptionalIn) doc.write(`
-        const ${id}_present = ${k} in input;
-        if (${id}.issues.length) {
-          payload.issues = payload.issues.concat(${id}.issues.map(iss => ({
-            ...iss,
-            path: iss.path ? [${k}, ...iss.path] : [${k}]
-          })));
+			} else if (!isOptionalIn) doc.write(`
+        const ${id}_present = ${isPresent};
+        if (${id}.issues.length) {${prefixStr(id, k)}
         }
         if (!${id}_present && !${id}.issues.length) {
           payload.issues.push({
@@ -18344,39 +18831,33 @@ var $ZodObjectJIT = /*@__PURE__*/ $constructor("$ZodObjectJIT", (inst, def) => {
             input: undefined,
             path: [${k}]
           });
+          if (ctx && ctx.abortEarly) {
+            payload.value = newResult;
+            return payload;
+          }
         }
 
         if (${id}_present) {
-          if (${id}.value === undefined) {
-            newResult[${k}] = undefined;
-          } else {
-            newResult[${k}] = ${id}.value;
-          }
+          newResult[${k}] = ${id}.value;
         }
 
       `);
-			else doc.write(`
-        if (${id}.issues.length) {
-          payload.issues = payload.issues.concat(${id}.issues.map(iss => ({
-            ...iss,
-            path: iss.path ? [${k}, ...iss.path] : [${k}]
-          })));
+			else {
+				doc.write(`
+        if (${id}.issues.length) {${prefixStr(id, k)}
         }
-        
-        if (${id}.value === undefined) {
-          if (${k} in input) {
-            newResult[${k}] = undefined;
-          }
-        } else {
+      `);
+				if (optin === "defaulted") doc.write(`newResult[${k}] = ${id}.value;`);
+				else doc.write(`
+        if (${id}.value !== undefined || ${isPresent}) {
           newResult[${k}] = ${id}.value;
         }
-        
       `);
+			}
 		}
 		doc.write(`payload.value = newResult;`);
 		doc.write(`return payload;`);
-		const fn = doc.compile();
-		return (payload, ctx) => fn(shape, payload, ctx);
+		return doc.compile();
 	};
 	let fastpass;
 	const isObject$3 = isObject;
@@ -18400,7 +18881,7 @@ var $ZodObjectJIT = /*@__PURE__*/ $constructor("$ZodObjectJIT", (inst, def) => {
 			if (!fastpass) fastpass = generateFastpass(def.shape);
 			payload = fastpass(payload, ctx);
 			if (!catchall) return payload;
-			return handleCatchall([], input, payload, ctx, value, inst);
+			return handleCatchall([], input, payload, ctx, value, inst, ctx?.abortEarly === true);
 		}
 		return superParse(payload, ctx);
 	};
@@ -18425,14 +18906,14 @@ function handleUnionResults(results, final, inst, ctx) {
 }
 var $ZodUnion = /*@__PURE__*/ $constructor("$ZodUnion", (inst, def) => {
 	$ZodType.init(inst, def);
-	defineLazy(inst._zod, "optin", () => def.options.some((o) => o._zod.optin === "optional") ? "optional" : void 0);
-	defineLazy(inst._zod, "optout", () => def.options.some((o) => o._zod.optout === "optional") ? "optional" : void 0);
-	defineLazy(inst._zod, "values", () => {
-		if (def.options.every((o) => o._zod.values)) return new Set(def.options.flatMap((option) => Array.from(option._zod.values)));
+	defineLazyInternal(inst, "optin", (zod) => zod.def.options.some((o) => o._zod.optin === "defaulted") ? "defaulted" : zod.def.options.some((o) => o._zod.optin !== void 0) ? "optional" : void 0);
+	defineLazyInternal(inst, "optout", (zod) => zod.def.options.some((o) => o._zod.optout === "optional") ? "optional" : void 0);
+	defineLazyInternal(inst, "values", (zod) => {
+		if (zod.def.options.every((o) => o._zod.values)) return new Set(zod.def.options.flatMap((option) => Array.from(option._zod.values)));
 	});
-	defineLazy(inst._zod, "pattern", () => {
-		if (def.options.every((o) => o._zod.pattern)) {
-			const patterns = def.options.map((o) => o._zod.pattern);
+	defineLazyInternal(inst, "pattern", (zod) => {
+		if (zod.def.options.every((o) => o._zod.pattern)) {
+			const patterns = zod.def.options.map((o) => o._zod.pattern);
 			return new RegExp(`^(${patterns.map((p) => cleanRegex(p.source)).join("|")})$`);
 		}
 	});
@@ -18494,7 +18975,9 @@ function mergeValues(a, b) {
 			...a,
 			...b
 		};
+		if (Object.prototype.hasOwnProperty.call(newObj, "__proto__")) delete newObj.__proto__;
 		for (const key of sharedKeys) {
+			if (key === "__proto__") continue;
 			const sharedValue = mergeValues(a[key], b[key]);
 			if (!sharedValue.valid) return {
 				valid: false,
@@ -18536,26 +19019,39 @@ function mergeValues(a, b) {
 function handleIntersectionResults(result, left, right) {
 	const unrecKeys = /* @__PURE__ */ new Map();
 	let unrecIssue;
-	for (const iss of left.issues) if (iss.code === "unrecognized_keys") {
-		unrecIssue ?? (unrecIssue = iss);
-		for (const k of iss.keys) {
+	const keyIssues = /* @__PURE__ */ new Map();
+	const collect = (iss, side) => {
+		let keys;
+		if (iss.code === "unrecognized_keys" && !iss.path?.length) {
+			unrecIssue ?? (unrecIssue = iss);
+			keys = iss.keys;
+		} else if (iss.code === "invalid_key" && iss.origin === "record" && iss.path?.length === 1) {
+			const k = String(iss.path[0]);
+			if (!keyIssues.has(k)) keyIssues.set(k, iss);
+			keys = [k];
+		} else return false;
+		for (const k of keys) {
 			if (!unrecKeys.has(k)) unrecKeys.set(k, {});
-			unrecKeys.get(k).l = true;
+			unrecKeys.get(k)[side] = true;
 		}
-	} else result.issues.push(iss);
-	for (const iss of right.issues) if (iss.code === "unrecognized_keys") for (const k of iss.keys) {
-		if (!unrecKeys.has(k)) unrecKeys.set(k, {});
-		unrecKeys.get(k).r = true;
-	}
-	else result.issues.push(iss);
+		return true;
+	};
+	for (const iss of left.issues) if (!collect(iss, "l")) result.issues.push(iss);
+	for (const iss of right.issues) if (!collect(iss, "r")) result.issues.push(iss);
 	const bothKeys = [...unrecKeys].filter(([, f]) => f.l && f.r).map(([k]) => k);
-	if (bothKeys.length && unrecIssue) result.issues.push({
-		...unrecIssue,
-		keys: bothKeys
-	});
-	if (aborted(result)) return result;
+	if (bothKeys.length) {
+		const aggregated = unrecIssue ? bothKeys.filter((k) => unrecIssue.keys.includes(k)) : [];
+		if (aggregated.length) result.issues.push({
+			...unrecIssue,
+			keys: aggregated
+		});
+		for (const k of bothKeys) if (!aggregated.includes(k) && keyIssues.has(k)) result.issues.push(keyIssues.get(k));
+	}
 	const merged = mergeValues(left.value, right.value);
-	if (!merged.valid) throw new Error(`Unmergable intersection. Error path: ${JSON.stringify(merged.mergeErrorPath)}`);
+	if (!merged.valid) {
+		if (aborted(result)) return result;
+		throw new Error(`Unmergable intersection. Error path: ${JSON.stringify(merged.mergeErrorPath)}`);
+	}
 	result.value = merged.data;
 	return result;
 }
@@ -18564,7 +19060,10 @@ var $ZodEnum = /*@__PURE__*/ $constructor("$ZodEnum", (inst, def) => {
 	const values = getEnumValues(def.entries);
 	const valuesSet = new Set(values);
 	inst._zod.values = valuesSet;
-	inst._zod.pattern = new RegExp(`^(${values.filter((k) => propertyKeyTypes.has(typeof k)).map((o) => typeof o === "string" ? escapeRegex(o) : o.toString()).join("|")})$`);
+	defineLazyInternal(inst, "pattern", (zod) => {
+		const patternValues = getEnumValues(zod.def.entries).filter((k) => propertyKeyTypes.has(typeof k));
+		return new RegExp(patternValues.length ? `^(${patternValues.map((o) => escapeRegex(o.toString())).join("|")})$` : "^[^\\s\\S]$");
+	});
 	inst._zod.parse = (payload, _ctx) => {
 		const input = payload.value;
 		if (valuesSet.has(input)) return payload;
@@ -18579,10 +19078,12 @@ var $ZodEnum = /*@__PURE__*/ $constructor("$ZodEnum", (inst, def) => {
 });
 var $ZodLiteral = /*@__PURE__*/ $constructor("$ZodLiteral", (inst, def) => {
 	$ZodType.init(inst, def);
-	if (def.values.length === 0) throw new Error("Cannot create literal schema with no valid values");
 	const values = new Set(def.values);
 	inst._zod.values = values;
-	inst._zod.pattern = new RegExp(`^(${def.values.map((o) => typeof o === "string" ? escapeRegex(o) : o ? escapeRegex(o.toString()) : String(o)).join("|")})$`);
+	defineLazyInternal(inst, "pattern", (zod) => {
+		const vals = zod.def.values;
+		return new RegExp(vals.length ? `^(${vals.map((o) => typeof o === "string" ? escapeRegex(o) : o ? escapeRegex(o.toString()) : String(o)).join("|")})$` : "^[^\\s\\S]$");
+	});
 	inst._zod.parse = (payload, _ctx) => {
 		const input = payload.value;
 		if (values.has(input)) return payload;
@@ -18598,67 +19099,66 @@ var $ZodLiteral = /*@__PURE__*/ $constructor("$ZodLiteral", (inst, def) => {
 var $ZodTransform = /*@__PURE__*/ $constructor("$ZodTransform", (inst, def) => {
 	$ZodType.init(inst, def);
 	inst._zod.optin = "optional";
+	globalConfig.memoizer?.guard(inst);
 	inst._zod.parse = (payload, ctx) => {
 		if (ctx.direction === "backward") throw new $ZodEncodeError(inst.constructor.name);
 		const _out = def.transform(payload.value, payload);
 		if (ctx.async) return (_out instanceof Promise ? _out : Promise.resolve(_out)).then((output) => {
 			payload.value = output;
-			payload.fallback = true;
 			return payload;
 		});
 		if (_out instanceof Promise) throw new $ZodAsyncError();
 		payload.value = _out;
-		payload.fallback = true;
 		return payload;
 	};
 });
-function handleOptionalResult(result, input) {
-	if (input === void 0 && (result.issues.length || result.fallback)) return {
-		issues: [],
-		value: void 0
-	};
-	return result;
+function handleOptionalResult(payload, result) {
+	payload.value = result.issues.length ? void 0 : result.value;
+	return payload;
 }
 var $ZodOptional = /*@__PURE__*/ $constructor("$ZodOptional", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.optin = "optional";
+	defineLazyInternal(inst, "optin", (zod) => zod.def.innerType._zod.optin === "defaulted" ? "defaulted" : "optional");
 	inst._zod.optout = "optional";
-	defineLazy(inst._zod, "values", () => {
-		return def.innerType._zod.values ? /* @__PURE__ */ new Set([...def.innerType._zod.values, void 0]) : void 0;
+	defineLazyInternal(inst, "values", (zod) => {
+		const values = zod.def.innerType._zod.values;
+		return values ? /* @__PURE__ */ new Set([...values, void 0]) : void 0;
 	});
-	defineLazy(inst._zod, "pattern", () => {
-		const pattern = def.innerType._zod.pattern;
+	defineLazyInternal(inst, "pattern", (zod) => {
+		const pattern = zod.def.innerType._zod.pattern;
 		return pattern ? new RegExp(`^(${cleanRegex(pattern.source)})?$`) : void 0;
 	});
 	inst._zod.parse = (payload, ctx) => {
-		if (def.innerType._zod.optin === "optional") {
-			const input = payload.value;
-			const result = def.innerType._zod.run(payload, ctx);
-			if (result instanceof Promise) return result.then((r) => handleOptionalResult(r, input));
-			return handleOptionalResult(result, input);
+		if (payload.value === void 0) {
+			if (def.innerType._zod.optin !== "defaulted") return payload;
+			const result = def.innerType._zod.run({
+				value: payload.value,
+				issues: []
+			}, ctx);
+			if (result instanceof Promise) return result.then((result) => handleOptionalResult(payload, result));
+			return handleOptionalResult(payload, result);
 		}
-		if (payload.value === void 0) return payload;
 		return def.innerType._zod.run(payload, ctx);
 	};
 });
 var $ZodExactOptional = /*@__PURE__*/ $constructor("$ZodExactOptional", (inst, def) => {
 	$ZodOptional.init(inst, def);
-	defineLazy(inst._zod, "values", () => def.innerType._zod.values);
-	defineLazy(inst._zod, "pattern", () => def.innerType._zod.pattern);
+	defineLazyInternal(inst, "values", (zod) => zod.def.innerType._zod.values);
+	defineLazyInternal(inst, "pattern", (zod) => zod.def.innerType._zod.pattern);
 	inst._zod.parse = (payload, ctx) => {
 		return def.innerType._zod.run(payload, ctx);
 	};
 });
 var $ZodNullable = /*@__PURE__*/ $constructor("$ZodNullable", (inst, def) => {
 	$ZodType.init(inst, def);
-	defineLazy(inst._zod, "optin", () => def.innerType._zod.optin);
-	defineLazy(inst._zod, "optout", () => def.innerType._zod.optout);
-	defineLazy(inst._zod, "pattern", () => {
-		const pattern = def.innerType._zod.pattern;
+	defineLazyInternal(inst, "optin", (zod) => zod.def.innerType._zod.optin);
+	defineLazyInternal(inst, "optout", (zod) => zod.def.innerType._zod.optout);
+	defineLazyInternal(inst, "pattern", (zod) => {
+		const pattern = zod.def.innerType._zod.pattern;
 		return pattern ? new RegExp(`^(${cleanRegex(pattern.source)}|null)$`) : void 0;
 	});
-	defineLazy(inst._zod, "values", () => {
-		return def.innerType._zod.values ? /* @__PURE__ */ new Set([...def.innerType._zod.values, null]) : void 0;
+	defineLazyInternal(inst, "values", (zod) => {
+		return zod.def.innerType._zod.values ? /* @__PURE__ */ new Set([...zod.def.innerType._zod.values, null]) : void 0;
 	});
 	inst._zod.parse = (payload, ctx) => {
 		if (payload.value === null) return payload;
@@ -18667,8 +19167,8 @@ var $ZodNullable = /*@__PURE__*/ $constructor("$ZodNullable", (inst, def) => {
 });
 var $ZodDefault = /*@__PURE__*/ $constructor("$ZodDefault", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.optin = "optional";
-	defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+	inst._zod.optin = "defaulted";
+	defineLazyInternal(inst, "values", (zod) => zod.def.innerType._zod.values);
 	inst._zod.parse = (payload, ctx) => {
 		if (ctx.direction === "backward") return def.innerType._zod.run(payload, ctx);
 		if (payload.value === void 0) {
@@ -18689,8 +19189,8 @@ function handleDefaultResult(payload, def) {
 }
 var $ZodPrefault = /*@__PURE__*/ $constructor("$ZodPrefault", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.optin = "optional";
-	defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+	inst._zod.optin = "defaulted";
+	defineLazyInternal(inst, "values", (zod) => zod.def.innerType._zod.values);
 	inst._zod.parse = (payload, ctx) => {
 		if (ctx.direction === "backward") return def.innerType._zod.run(payload, ctx);
 		if (payload.value === void 0) payload.value = def.defaultValue;
@@ -18699,8 +19199,8 @@ var $ZodPrefault = /*@__PURE__*/ $constructor("$ZodPrefault", (inst, def) => {
 });
 var $ZodNonOptional = /*@__PURE__*/ $constructor("$ZodNonOptional", (inst, def) => {
 	$ZodType.init(inst, def);
-	defineLazy(inst._zod, "values", () => {
-		const v = def.innerType._zod.values;
+	defineLazyInternal(inst, "values", (zod) => {
+		const v = zod.def.innerType._zod.values;
 		return v ? new Set([...v].filter((x) => x !== void 0)) : void 0;
 	});
 	inst._zod.parse = (payload, ctx) => {
@@ -18718,46 +19218,41 @@ function handleNonOptionalResult(payload, inst) {
 	});
 	return payload;
 }
+function handleCatchResult(payload, result, def, ctx) {
+	if (!result.issues.length) {
+		payload.value = result.value;
+		if (result.memo) payload.memo = true;
+		return payload;
+	}
+	payload.value = def.catchValue({
+		...result,
+		value: payload.value,
+		error: { issues: result.issues.map((iss) => finalizeIssue(iss, ctx, config())) },
+		input: payload.value
+	});
+	return payload;
+}
 var $ZodCatch = /*@__PURE__*/ $constructor("$ZodCatch", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.optin = "optional";
-	defineLazy(inst._zod, "optout", () => def.innerType._zod.optout);
-	defineLazy(inst._zod, "values", () => def.innerType._zod.values);
+	defineLazyInternal(inst, "optin", (zod) => zod.def.innerType._zod.optin === "defaulted" ? "defaulted" : "optional");
+	defineLazyInternal(inst, "optout", (zod) => zod.def.innerType._zod.optout);
+	defineLazyInternal(inst, "values", (zod) => zod.def.innerType._zod.values);
 	inst._zod.parse = (payload, ctx) => {
 		if (ctx.direction === "backward") return def.innerType._zod.run(payload, ctx);
-		const result = def.innerType._zod.run(payload, ctx);
-		if (result instanceof Promise) return result.then((result) => {
-			payload.value = result.value;
-			if (result.issues.length) {
-				payload.value = def.catchValue({
-					...payload,
-					error: { issues: result.issues.map((iss) => finalizeIssue(iss, ctx, config())) },
-					input: payload.value
-				});
-				payload.issues = [];
-				payload.fallback = true;
-			}
-			return payload;
-		});
-		payload.value = result.value;
-		if (result.issues.length) {
-			payload.value = def.catchValue({
-				...payload,
-				error: { issues: result.issues.map((iss) => finalizeIssue(iss, ctx, config())) },
-				input: payload.value
-			});
-			payload.issues = [];
-			payload.fallback = true;
-		}
-		return payload;
+		const result = def.innerType._zod.run({
+			value: payload.value,
+			issues: []
+		}, ctx);
+		if (result instanceof Promise) return result.then((result) => handleCatchResult(payload, result, def, ctx));
+		return handleCatchResult(payload, result, def, ctx);
 	};
 });
 var $ZodPipe = /*@__PURE__*/ $constructor("$ZodPipe", (inst, def) => {
 	$ZodType.init(inst, def);
-	defineLazy(inst._zod, "values", () => def.in._zod.values);
-	defineLazy(inst._zod, "optin", () => def.in._zod.optin);
-	defineLazy(inst._zod, "optout", () => def.out._zod.optout);
-	defineLazy(inst._zod, "propValues", () => def.in._zod.propValues);
+	defineLazyInternal(inst, "values", (zod) => zod.def.in._zod.values);
+	defineLazyInternal(inst, "optin", (zod) => zod.def.in._zod.optin);
+	defineLazyInternal(inst, "optout", (zod) => zod.def.out._zod.optout);
+	defineLazyInternal(inst, "propValues", (zod) => zod.def.in._zod.propValues);
 	inst._zod.parse = (payload, ctx) => {
 		if (ctx.direction === "backward") {
 			const right = def.out._zod.run(payload, ctx);
@@ -18770,22 +19265,21 @@ var $ZodPipe = /*@__PURE__*/ $constructor("$ZodPipe", (inst, def) => {
 	};
 });
 function handlePipeResult(left, next, ctx) {
-	if (left.issues.length) {
+	if (left.issues.some((iss) => iss.code !== "unrecognized_keys")) {
 		left.aborted = true;
 		return left;
 	}
 	return next._zod.run({
 		value: left.value,
-		issues: left.issues,
-		fallback: left.fallback
+		issues: left.issues
 	}, ctx);
 }
 var $ZodReadonly = /*@__PURE__*/ $constructor("$ZodReadonly", (inst, def) => {
 	$ZodType.init(inst, def);
-	defineLazy(inst._zod, "propValues", () => def.innerType._zod.propValues);
-	defineLazy(inst._zod, "values", () => def.innerType._zod.values);
-	defineLazy(inst._zod, "optin", () => def.innerType?._zod?.optin);
-	defineLazy(inst._zod, "optout", () => def.innerType?._zod?.optout);
+	defineLazyInternal(inst, "propValues", (zod) => zod.def.innerType._zod.propValues);
+	defineLazyInternal(inst, "values", (zod) => zod.def.innerType._zod.values);
+	defineLazyInternal(inst, "optin", (zod) => zod.def.innerType?._zod?.optin);
+	defineLazyInternal(inst, "optout", (zod) => zod.def.innerType?._zod?.optout);
 	inst._zod.parse = (payload, ctx) => {
 		if (ctx.direction === "backward") return def.innerType._zod.run(payload, ctx);
 		const result = def.innerType._zod.run(payload, ctx);
@@ -18794,7 +19288,7 @@ var $ZodReadonly = /*@__PURE__*/ $constructor("$ZodReadonly", (inst, def) => {
 	};
 });
 function handleReadonlyResult(payload) {
-	payload.value = Object.freeze(payload.value);
+	if (!payload.memo) payload.value = Object.freeze(payload.value);
 	return payload;
 }
 var $ZodCustom = /*@__PURE__*/ $constructor("$ZodCustom", (inst, def) => {
@@ -18823,7 +19317,366 @@ function handleRefineResult(result, payload, input, inst) {
 		payload.issues.push(issue(_iss));
 	}
 }
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/registries.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/memoizer.js
+var $ZodCyclicError = class extends Error {
+	constructor() {
+		super(`Cannot parse a reference cycle that closes through a transform`);
+		this.name = "ZodCyclicError";
+	}
+};
+/** Keyed off the context object every schema in one parse call already shares. */
+var STATE = "~memo";
+var NO_ISSUES = [];
+function isRef(value) {
+	return value !== null && typeof value === "object";
+}
+function cloneIssues(issues) {
+	return issues.map((iss) => iss.path ? {
+		...iss,
+		path: iss.path.slice()
+	} : { ...iss });
+}
+var recursive = /*@__PURE__*/ new WeakMap();
+/** What the walk established, in order of certainty: ordered so the strongest answer among children wins. */
+var NONE = 0;
+var ASSUMED = 1;
+var PROVEN = 2;
+/** Whether this schema's subtree contains a cycle, so one parse can re-enter it. */
+function isRecursive(inst, stack, resolve) {
+	const cached = recursive.get(inst);
+	if (cached !== void 0) return cached ? PROVEN : NONE;
+	if (stack.has(inst)) return PROVEN;
+	stack.add(inst);
+	let result = NONE;
+	const check = (child) => {
+		if (result !== PROVEN && child?._zod) {
+			const answer = isRecursive(child, stack, resolve);
+			if (answer > result) result = answer;
+		}
+	};
+	const shape = (sh, spread) => {
+		let answer = NONE;
+		for (const key of Reflect.ownKeys(sh)) {
+			const desc = Object.getOwnPropertyDescriptor(sh, key);
+			if (spread && !desc.enumerable) continue;
+			const child = desc.get ? ASSUMED : desc.value?._zod ? isRecursive(desc.value, stack, resolve) : NONE;
+			if (child > answer) answer = child;
+		}
+		return answer;
+	};
+	const merge = (answer) => {
+		if (answer > result) result = answer;
+	};
+	const def = inst._zod.def;
+	switch (def.type) {
+		case "object": {
+			const raw = rawShape(def);
+			merge(raw ? shape(raw, true) : ASSUMED);
+			check(def.catchall);
+			break;
+		}
+		case "array":
+			check(def.element);
+			break;
+		case "tuple":
+			for (const el of def.items) check(el);
+			check(def.rest);
+			break;
+		case "record":
+		case "map":
+			check(def.keyType);
+			check(def.valueType);
+			break;
+		case "set":
+			check(def.valueType);
+			break;
+		case "union":
+			for (const el of def.options) check(el);
+			break;
+		case "intersection":
+			check(def.left);
+			check(def.right);
+			break;
+		case "optional":
+		case "nullable":
+		case "default":
+		case "prefault":
+		case "catch":
+		case "readonly":
+		case "nonoptional":
+		case "promise":
+		case "success":
+			check(def.innerType);
+			break;
+		case "pipe":
+			check(def.in);
+			check(def.out);
+			break;
+		case "function":
+			check(def.input);
+			check(def.output);
+			break;
+		case "lazy": {
+			const inner = def._cachedInner ?? (resolve ? inst._zod.innerType : void 0);
+			merge(inner ? isRecursive(inner, stack, false) : ASSUMED);
+			break;
+		}
+		case "template_literal":
+		case "string":
+		case "number":
+		case "int":
+		case "boolean":
+		case "bigint":
+		case "symbol":
+		case "undefined":
+		case "null":
+		case "void":
+		case "never":
+		case "any":
+		case "unknown":
+		case "date":
+		case "nan":
+		case "enum":
+		case "literal":
+		case "file":
+		case "transform":
+		case "custom": break;
+		default: for (const key in def) {
+			const desc = Object.getOwnPropertyDescriptor(def, key);
+			if (!desc || desc.get) continue;
+			const value = desc.value;
+			if (!value || typeof value !== "object") continue;
+			if (value._zod) check(value);
+			else if (Array.isArray(value)) for (const el of value) check(el);
+		}
+	}
+	stack.delete(inst);
+	return settle(inst, result);
+}
+/** An assumed answer must not outlive the resolution that settles it, so only a certain one is cached. */
+function settle(inst, answer) {
+	if (answer !== ASSUMED) recursive.set(inst, answer === PROVEN);
+	return answer;
+}
+function bucketFor(state, inst) {
+	let bucket = state.buckets.get(inst);
+	if (!bucket) {
+		bucket = /* @__PURE__ */ new WeakMap();
+		state.buckets.set(inst, bucket);
+	}
+	return bucket;
+}
+var handoff;
+var open = [];
+var memo = {
+	alloc(_inst, payload, empty) {
+		const bucket = handoff;
+		if (!bucket) return empty;
+		handoff = void 0;
+		const entry = {
+			value: empty,
+			issues: null
+		};
+		bucket.set(payload.value, entry);
+		open.push(entry);
+		return empty;
+	},
+	guard(inst) {
+		var _a;
+		(_a = inst._zod).deferred ?? (_a.deferred = []);
+		inst._zod.deferred.push(() => {
+			const base = inst._zod.parse;
+			const wrapped = (payload, ctx) => {
+				if (ctx.direction !== "backward" && isBackEdge(ctx, payload.value)) throw new $ZodCyclicError();
+				return base(payload, ctx);
+			};
+			inst._zod.parse = wrapped;
+			if (inst._zod.run === base) inst._zod.run = wrapped;
+		});
+	},
+	attach(inst) {
+		var _a;
+		let isRecursiveInst;
+		let rechecked = false;
+		let lastCtx;
+		let lastBucket;
+		(_a = inst._zod).deferred ?? (_a.deferred = []);
+		inst._zod.deferred.push(() => {
+			const base = inst._zod.parse;
+			const wrapped = (payload, ctx) => {
+				if (isRecursiveInst === void 0) {
+					const walked = isRecursive(inst, /* @__PURE__ */ new Set(), false);
+					if (walked === NONE) {
+						inst._zod.parse = base;
+						if (inst._zod.run === wrapped) inst._zod.run = base;
+						return base(payload, ctx);
+					}
+					if (walked === PROVEN || rechecked) isRecursiveInst = true;
+					else rechecked = true;
+				}
+				const input = payload.value;
+				if (!isRef(input)) return base(payload, ctx);
+				let state = ctx[STATE];
+				if (!state) {
+					state = {
+						buckets: /* @__PURE__ */ new WeakMap(),
+						backEdges: void 0
+					};
+					ctx[STATE] = state;
+				}
+				let bucket;
+				if (lastCtx === ctx) bucket = lastBucket;
+				else {
+					bucket = bucketFor(state, inst);
+					lastCtx = ctx;
+					lastBucket = bucket;
+				}
+				const hit = bucket.get(input);
+				if (hit) {
+					payload.value = hit.value;
+					if (hit.issues) {
+						if (hit.issues.length) payload.issues.push(...cloneIssues(hit.issues));
+					} else {
+						payload.memo = true;
+						state.backEdges ?? (state.backEdges = /* @__PURE__ */ new WeakSet());
+						state.backEdges.add(hit.value);
+					}
+					return payload;
+				}
+				handoff = bucket;
+				const depth = open.length;
+				const result = base(payload, ctx);
+				handoff = void 0;
+				const entry = open.length > depth ? open.pop() : void 0;
+				if (result instanceof Promise) return result.then((r) => {
+					if (entry) entry.issues = r.issues.length ? cloneIssues(r.issues) : NO_ISSUES;
+					return r;
+				});
+				if (entry) entry.issues = result.issues.length ? cloneIssues(result.issues) : NO_ISSUES;
+				return result;
+			};
+			inst._zod.parse = wrapped;
+			if (inst._zod.run === base) inst._zod.run = wrapped;
+		});
+	}
+};
+/** The memoizer that gives containers cycle support. `zod` installs it by default; `zod/mini` opts in with `config({ memoizer: memoizer() })`. */
+function memoizer() {
+	return memo;
+}
+/** Whether this value is a node a back-edge resolved to before it finished. */
+function isBackEdge(ctx, value) {
+	const backEdges = ctx[STATE]?.backEdges;
+	return backEdges !== void 0 && isRef(value) && backEdges.has(value);
+}
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/locales/en.js
+var error = () => {
+	const Sizable = {
+		string: {
+			unit: "characters",
+			verb: "to have"
+		},
+		file: {
+			unit: "bytes",
+			verb: "to have"
+		},
+		array: {
+			unit: "items",
+			verb: "to have"
+		},
+		set: {
+			unit: "items",
+			verb: "to have"
+		},
+		map: {
+			unit: "entries",
+			verb: "to have"
+		}
+	};
+	function getSizing(origin) {
+		return Sizable[origin] ?? null;
+	}
+	const FormatDictionary = {
+		regex: "input",
+		email: "email address",
+		url: "URL",
+		emoji: "emoji",
+		uuid: "UUID",
+		uuidv4: "UUIDv4",
+		uuidv6: "UUIDv6",
+		nanoid: "nanoid",
+		guid: "GUID",
+		cuid: "cuid",
+		cuid2: "cuid2",
+		ulid: "ULID",
+		xid: "XID",
+		ksuid: "KSUID",
+		datetime: "ISO datetime",
+		date: "ISO date",
+		time: "ISO time",
+		duration: "ISO duration",
+		ipv4: "IPv4 address",
+		ipv6: "IPv6 address",
+		mac: "MAC address",
+		cidrv4: "IPv4 range",
+		cidrv6: "IPv6 range",
+		base64: "base64-encoded string",
+		base64url: "base64url-encoded string",
+		json_string: "JSON string",
+		e164: "E.164 number",
+		currency_code: "currency code",
+		credit_card: "credit card number",
+		iban: "IBAN",
+		jwt: "JWT",
+		template_literal: "input"
+	};
+	const TypeDictionary = { nan: "NaN" };
+	function getTypeName(type, input) {
+		if (type === "number" && typeof input === "number" && !Number.isFinite(input)) return String(input);
+		return TypeDictionary[type] ?? type;
+	}
+	return (issue) => {
+		switch (issue.code) {
+			case "invalid_type": return `Invalid input: expected ${getTypeName(issue.expected)}, received ${getTypeName(parsedType(issue.input), issue.input)}`;
+			case "invalid_value":
+				if (issue.values.length === 1) return `Invalid input: expected ${stringifyPrimitive(issue.values[0])}`;
+				return `Invalid option: expected one of ${joinValues(issue.values, "|")}`;
+			case "too_big": {
+				const adj = issue.exact ? "exactly " : issue.inclusive ? "<=" : "<";
+				const sizing = getSizing(issue.origin);
+				if (sizing) return `Too big: expected ${issue.origin ?? "value"} to have ${adj}${issue.maximum.toString()} ${sizing.unit ?? "elements"}`;
+				return `Too big: expected ${issue.origin ?? "value"} to be ${adj}${issue.maximum.toString()}`;
+			}
+			case "too_small": {
+				const adj = issue.exact ? "exactly " : issue.inclusive ? ">=" : ">";
+				const sizing = getSizing(issue.origin);
+				if (sizing) return `Too small: expected ${issue.origin} to have ${adj}${issue.minimum.toString()} ${sizing.unit}`;
+				return `Too small: expected ${issue.origin} to be ${adj}${issue.minimum.toString()}`;
+			}
+			case "invalid_format": {
+				const _issue = issue;
+				if (_issue.format === "starts_with") return `Invalid string: must start with "${_issue.prefix}"`;
+				if (_issue.format === "ends_with") return `Invalid string: must end with "${_issue.suffix}"`;
+				if (_issue.format === "includes") return `Invalid string: must include "${_issue.includes}"`;
+				if (_issue.format === "regex") return `Invalid string: must match pattern ${_issue.pattern}`;
+				return `Invalid ${FormatDictionary[_issue.format] ?? issue.format}`;
+			}
+			case "not_multiple_of": return `Invalid number: must be a multiple of ${issue.divisor}`;
+			case "unrecognized_keys": return `Unrecognized key${issue.keys.length > 1 ? "s" : ""}: ${joinValues(issue.keys, ", ")}`;
+			case "invalid_key": return `Invalid key in ${issue.origin}`;
+			case "invalid_union":
+				if (issue.options && Array.isArray(issue.options) && issue.options.length > 0) return `Invalid discriminator value. Expected ${issue.options.map((o) => `'${o}'`).join(" | ")}`;
+				if (issue.inclusive === false) return "Invalid input: more than one option matched";
+				return "Invalid input";
+			case "invalid_element": return `Invalid value in ${issue.origin}`;
+			default: return `Invalid input`;
+		}
+	};
+};
+function en_default() {
+	return { localeError: error() };
+}
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/registries.js
 var _a;
 var $ZodRegistry = class {
 	constructor() {
@@ -18869,13 +19722,17 @@ function registry() {
 }
 (_a = globalThis).__zod_globalRegistry ?? (_a.__zod_globalRegistry = registry());
 var globalRegistry = globalThis.__zod_globalRegistry;
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/api.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/api.js
+function snapshotChecks(def) {
+	if (def.checks) def.checks = [...def.checks];
+	return def;
+}
 // @__NO_SIDE_EFFECTS__
 function _string(Class, params) {
-	return new Class({
+	return new Class(snapshotChecks({
 		type: "string",
 		...normalizeParams(params)
-	});
+	}));
 }
 // @__NO_SIDE_EFFECTS__
 function _email(Class, params) {
@@ -19147,11 +20004,11 @@ function _isoDuration(Class, params) {
 }
 // @__NO_SIDE_EFFECTS__
 function _number(Class, params) {
-	return new Class({
+	return new Class(snapshotChecks({
 		type: "number",
 		checks: [],
 		...normalizeParams(params)
-	});
+	}));
 }
 // @__NO_SIDE_EFFECTS__
 function _int(Class, params) {
@@ -19354,7 +20211,7 @@ function _superRefine(fn, params) {
 				const _issue = issue$2;
 				if (_issue.fatal) _issue.continue = false;
 				_issue.code ?? (_issue.code = "custom");
-				_issue.input ?? (_issue.input = payload.value);
+				if (!("input" in _issue)) _issue.input = payload.value;
 				_issue.inst ?? (_issue.inst = ch);
 				_issue.continue ?? (_issue.continue = !ch._zod.def.abort);
 				payload.issues.push(issue(_issue));
@@ -19373,7 +20230,11 @@ function _check(fn, params) {
 	ch._zod.check = fn;
 	return ch;
 }
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/to-json-schema.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/to-json-schema.js
+function assignProps(target, ...sources) {
+	for (const source of sources) for (const key of Reflect.ownKeys(source)) if (Object.prototype.propertyIsEnumerable.call(source, key)) assignProp(target, key, source[key]);
+	return target;
+}
 function initializeContext(params) {
 	let target = params?.target ?? "draft-2020-12";
 	if (target === "draft-4") target = "draft-04";
@@ -19387,12 +20248,32 @@ function initializeContext(params) {
 		io: params?.io ?? "output",
 		counter: 0,
 		seen: /* @__PURE__ */ new Map(),
+		sharedDefsExtractedFor: void 0,
+		sharedEmitDoneFor: void 0,
 		cycles: params?.cycles ?? "ref",
 		reused: params?.reused ?? "inline",
+		intersections: [],
+		deferred: [],
 		external: params?.external ?? void 0
 	};
 }
-function process$1(schema, ctx, _params = {
+/**
+* Applies the `unrepresentable` setting at a site that has no JSON Schema equivalent. Throws
+* `message` unless the setting (or the handler's return value) says otherwise. Returns `true` if a
+* custom JSON Schema was written into `json`, in which case the caller must not write its own.
+*/
+function handleUnrepresentable(schema, ctx, json, params, message) {
+	const result = typeof ctx.unrepresentable === "function" ? ctx.unrepresentable({
+		zodSchema: schema,
+		path: params.path,
+		message
+	}) : ctx.unrepresentable;
+	if (result === "any") return false;
+	if (result === void 0 || result === "throw") throw new Error(message);
+	Object.assign(json, result);
+	return true;
+}
+function processSchema(schema, ctx, _params = {
 	path: [],
 	schemaPath: []
 }) {
@@ -19411,6 +20292,8 @@ function process$1(schema, ctx, _params = {
 		path: _params.path
 	};
 	ctx.seen.set(schema, result);
+	ctx.sharedDefsExtractedFor = void 0;
+	ctx.sharedEmitDoneFor = void 0;
 	const overrideSchema = schema._zod.toJSONSchema?.();
 	if (overrideSchema) result.schema = overrideSchema;
 	else {
@@ -19429,12 +20312,12 @@ function process$1(schema, ctx, _params = {
 		const parent = schema._zod.parent;
 		if (parent) {
 			if (!result.ref) result.ref = parent;
-			process$1(parent, ctx, params);
+			processSchema(parent, ctx, params);
 			ctx.seen.get(parent).isParent = true;
 		}
 	}
 	const meta = ctx.metadataRegistry.get(schema);
-	if (meta) Object.assign(result.schema, meta);
+	if (meta) assignProps(result.schema, meta);
 	if (ctx.io === "input" && isTransforming(schema)) {
 		delete result.schema.examples;
 		delete result.schema.default;
@@ -19443,9 +20326,13 @@ function process$1(schema, ctx, _params = {
 	delete result.schema._prefault;
 	return ctx.seen.get(schema).schema;
 }
+function encodeJSONPointerSegment(segment) {
+	return segment.replace(/~/g, "~0").replace(/\//g, "~1");
+}
 function extractDefs(ctx, schema) {
 	const root = ctx.seen.get(schema);
 	if (!root) throw new Error("Unprocessed schema. This is a bug in Zod.");
+	if (ctx.external && ctx.sharedDefsExtractedFor === ctx.external) return;
 	const idToSchema = /* @__PURE__ */ new Map();
 	for (const entry of ctx.seen.entries()) {
 		const id = ctx.metadataRegistry.get(entry[0])?.id;
@@ -19465,15 +20352,16 @@ function extractDefs(ctx, schema) {
 			entry[1].defId = id;
 			return {
 				defId: id,
-				ref: `${uriGenerator("__shared")}#/${defsSegment}/${id}`
+				ref: `${uriGenerator("__shared")}#/${defsSegment}/${encodeJSONPointerSegment(id)}`
 			};
 		}
-		if (entry[1] === root) return { ref: "#" };
-		const defUriPrefix = `#/${defsSegment}/`;
+		const uriPrefix = `#`;
+		const defUriPrefix = `${uriPrefix}/${defsSegment}/`;
+		if (entry[1] === root && !entry[1].schema.id) return { ref: uriPrefix };
 		const defId = entry[1].schema.id ?? `__schema${ctx.counter++}`;
 		return {
 			defId,
-			ref: defUriPrefix + defId
+			ref: defUriPrefix + encodeJSONPointerSegment(defId)
 		};
 	};
 	const extractToDef = (entry) => {
@@ -19514,12 +20402,114 @@ Set the \`cycles\` parameter to \`"ref"\` to resolve cyclical schemas with defs.
 			continue;
 		}
 		if (seen.count > 1) {
-			if (ctx.reused === "ref") {
-				extractToDef(entry);
-				continue;
-			}
+			if (ctx.reused === "ref") extractToDef(entry);
 		}
 	}
+	if (ctx.external) ctx.sharedDefsExtractedFor = ctx.external;
+}
+/** Rewrites `anyOf: [{type: "a"}, {type: "b"}]` to `type: ["a", "b"]`, which every JSON Schema draft treats as equivalent and most consumers render far better for the nullable case. Only branches that are a bare type assertion qualify — anything carrying a constraint, `$ref`, `const` or metadata is left alone. Runs after `flattenRef`, so a branch an override decorated or `$defs` extraction turned into a `$ref` is no longer bare and correctly stays in `anyOf`. `oneOf` is excluded: `integer` and `number` overlap, so "exactly one" and "at least one" are not the same there. OpenAPI 3.0 is excluded: its `type` must be a single string. */
+function compactTypeUnion(schema) {
+	const options = schema.anyOf;
+	if (!Array.isArray(options) || options.length === 0 || schema.type !== void 0) return;
+	const types = [];
+	for (const option of options) {
+		if (!option || typeof option !== "object") return;
+		compactTypeUnion(option);
+		const keys = Object.keys(option);
+		if (keys.length !== 1 || keys[0] !== "type") return;
+		const type = option.type;
+		for (const member of Array.isArray(type) ? type : [type]) {
+			if (typeof member !== "string") return;
+			if (!types.includes(member)) types.push(member);
+		}
+	}
+	delete schema.anyOf;
+	schema.type = types.length === 1 ? types[0] : types;
+}
+/** Keywords `foldIntersection` knows how to combine. Anything else — `$ref`, `patternProperties`,
+* an annotation like `description` — makes a member unfoldable, so a constraint this does not
+* understand leaves the `allOf` alone instead of being silently dropped or misattributed. */
+var FOLDABLE_KEYS = /* @__PURE__ */ new Set([
+	"type",
+	"properties",
+	"required",
+	"additionalProperties"
+]);
+var UNION_KEYS = ["oneOf", "anyOf"];
+/** A member's constraint on a key it does not declare itself. A `catchall` states one; `false`, an absent `additionalProperties`, and the empty schema a loose object emits state nothing. */
+function undeclaredConstraint(member) {
+	const extra = member.additionalProperties;
+	if (extra === void 0 || extra === false || typeof extra !== "object" || extra === null) return null;
+	return Object.keys(extra).length ? extra : null;
+}
+/** Combines object members into the single object they describe together, or returns `null` if any of them carries a keyword outside {@link FOLDABLE_KEYS}. */
+function foldObjects(members) {
+	const objects = [];
+	for (const member of members) {
+		if (typeof member !== "object" || member.type !== "object") return null;
+		for (const key in member) if (!FOLDABLE_KEYS.has(key)) return null;
+		objects.push(member);
+	}
+	const properties = {};
+	const required = /* @__PURE__ */ new Set();
+	for (const object of objects) {
+		for (const key in object.properties) {
+			if (Object.prototype.hasOwnProperty.call(properties, key)) continue;
+			const parts = [];
+			for (const other of objects) {
+				const part = other.properties?.[key] ?? undeclaredConstraint(other);
+				if (part === null || part === void 0) continue;
+				if (!parts.some((seen) => JSON.stringify(seen) === JSON.stringify(part))) parts.push(part);
+			}
+			assignProp(properties, key, parts.length === 1 ? parts[0] : foldObjects(parts) ?? { allOf: parts });
+		}
+		for (const key of object.required ?? []) required.add(key);
+	}
+	const folded = {
+		type: "object",
+		properties
+	};
+	if (required.size) folded.required = [...required];
+	if (objects.every((object) => object.additionalProperties === false)) folded.additionalProperties = false;
+	else {
+		const constraints = [];
+		for (const object of objects) {
+			const constraint = undeclaredConstraint(object);
+			if (constraint && !constraints.some((seen) => JSON.stringify(seen) === JSON.stringify(constraint))) constraints.push(constraint);
+		}
+		if (constraints.length === 1) folded.additionalProperties = constraints[0];
+		else if (constraints.length > 1) folded.additionalProperties = { allOf: constraints };
+	}
+	return folded;
+}
+/** `additionalProperties` in an `allOf` member sees only that member's own `properties`, so two
+* closed object members reject each other's keys and the schema validates nothing. Zod's parser
+* pools the key sets instead — `handleIntersectionResults` reports a key as unrecognized only when
+* *every* side rejects it — so the emitted schema has to pool them too, and folding the members
+* into one object is the encoding that says so on every target.
+*
+* This runs from `finalize`, after `extractDefs`, which is what keeps it clear of the `$ref`
+* machinery: a member extracted into `$defs` is already a `$ref` by now and declines to fold, so it
+* keeps its reference and its own closedness rather than being inlined as a stale copy. */
+function foldIntersection(json) {
+	const allOf = json.allOf;
+	if (!Array.isArray(allOf) || allOf.length < 2) return;
+	for (const key of FOLDABLE_KEYS) if (key in json) return;
+	const unions = allOf.filter((m) => UNION_KEYS.some((k) => Array.isArray(m[k])));
+	let folded = null;
+	if (!unions.length) folded = foldObjects(allOf);
+	else {
+		const union = unions[0];
+		const keyword = UNION_KEYS.find((k) => Array.isArray(union[k]));
+		if (Object.keys(union).length !== 1) return;
+		const rest = allOf.filter((m) => m !== union);
+		const branches = union[keyword].map((branch) => foldObjects([...rest, branch]));
+		if (branches.some((b) => !b)) return;
+		folded = { [keyword]: branches };
+	}
+	if (!folded) return;
+	delete json.allOf;
+	assignProps(json, folded);
 }
 function finalize(ctx, schema) {
 	const root = ctx.seen.get(schema);
@@ -19538,8 +20528,8 @@ function finalize(ctx, schema) {
 			if (refSchema.$ref && (ctx.target === "draft-07" || ctx.target === "draft-04" || ctx.target === "openapi-3.0")) {
 				schema.allOf = schema.allOf ?? [];
 				schema.allOf.push(refSchema);
-			} else Object.assign(schema, refSchema);
-			Object.assign(schema, _cached);
+			} else assignProps(schema, refSchema);
+			assignProps(schema, _cached);
 			if (zodSchema._zod.parent === ref) for (const key in schema) {
 				if (key === "$ref" || key === "allOf") continue;
 				if (!(key in _cached)) delete schema[key];
@@ -19567,7 +20557,22 @@ function finalize(ctx, schema) {
 			path: seen.path ?? []
 		});
 	};
-	for (const entry of [...ctx.seen.entries()].reverse()) flattenRef(entry[0]);
+	if (!ctx.external || ctx.sharedEmitDoneFor !== ctx.external) {
+		for (const entry of [...ctx.seen.entries()].reverse()) flattenRef(entry[0]);
+		if (ctx.target !== "openapi-3.0") for (const entry of ctx.seen.entries()) compactTypeUnion(entry[1].def ?? entry[1].schema);
+		for (const rewrite of ctx.deferred) rewrite();
+		if (ctx.intersections.length) {
+			const carriers = /* @__PURE__ */ new Map();
+			for (const seen of ctx.seen.values()) for (const json of [seen.schema, seen.def]) {
+				const allOf = json?.allOf;
+				if (!Array.isArray(allOf)) continue;
+				const existing = carriers.get(allOf);
+				if (existing) existing.push(json);
+				else carriers.set(allOf, [json]);
+			}
+			for (const allOf of ctx.intersections) for (const json of carriers.get(allOf) ?? []) foldIntersection(json);
+		}
+	}
 	const result = {};
 	if (ctx.target === "draft-2020-12") result.$schema = "https://json-schema.org/draft/2020-12/schema";
 	else if (ctx.target === "draft-07") result.$schema = "http://json-schema.org/draft-07/schema#";
@@ -19578,17 +20583,18 @@ function finalize(ctx, schema) {
 		if (!id) throw new Error("Schema is missing an `id` property");
 		result.$id = ctx.external.uri(id);
 	}
-	Object.assign(result, root.def ?? root.schema);
+	assignProps(result, root.defId ? root.schema : root.def ?? root.schema);
 	const rootMetaId = ctx.metadataRegistry.get(schema)?.id;
 	if (rootMetaId !== void 0 && result.id === rootMetaId) delete result.id;
 	const defs = ctx.external?.defs ?? {};
-	for (const entry of ctx.seen.entries()) {
+	if (!ctx.external || ctx.sharedEmitDoneFor !== ctx.external) for (const entry of ctx.seen.entries()) {
 		const seen = entry[1];
 		if (seen.def && seen.defId) {
 			if (seen.def.id === seen.defId) delete seen.def.id;
-			defs[seen.defId] = seen.def;
+			assignProp(defs, seen.defId, seen.def);
 		}
 	}
+	if (ctx.external) ctx.sharedEmitDoneFor = ctx.external;
 	if (ctx.external) {} else if (Object.keys(defs).length > 0) {
 		if (ctx.target === "draft-2020-12") result.$defs = defs;
 		else result.definitions = defs;
@@ -19620,7 +20626,7 @@ function isTransforming(_schema, _ctx) {
 	if (def.type === "array") return isTransforming(def.element, ctx);
 	if (def.type === "set") return isTransforming(def.valueType, ctx);
 	if (def.type === "lazy") return isTransforming(def.getter(), ctx);
-	if (def.type === "promise" || def.type === "optional" || def.type === "nonoptional" || def.type === "nullable" || def.type === "readonly" || def.type === "default" || def.type === "prefault") return isTransforming(def.innerType, ctx);
+	if (def.type === "promise" || def.type === "optional" || def.type === "nonoptional" || def.type === "nullable" || def.type === "readonly" || def.type === "default" || def.type === "prefault" || def.type === "catch") return isTransforming(def.innerType, ctx);
 	if (def.type === "intersection") return isTransforming(def.left, ctx) || isTransforming(def.right, ctx);
 	if (def.type === "record" || def.type === "map") return isTransforming(def.keyType, ctx) || isTransforming(def.valueType, ctx);
 	if (def.type === "pipe") {
@@ -19651,7 +20657,7 @@ var createToJSONSchemaMethod = (schema, processors = {}) => (params) => {
 		...params,
 		processors
 	});
-	process$1(schema, ctx);
+	processSchema(schema, ctx);
 	extractDefs(ctx, schema);
 	return finalize(ctx, schema);
 };
@@ -19663,11 +20669,83 @@ var createStandardJSONSchemaMethod = (schema, io, processors = {}) => (params) =
 		io,
 		processors
 	});
-	process$1(schema, ctx);
+	processSchema(schema, ctx);
 	extractDefs(ctx, schema);
 	return finalize(ctx, schema);
 };
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/core/json-schema-processors.js
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/json-schema-processors.js
+var narrowMin = (agg, key, value) => {
+	if (agg[key] === void 0 || value > agg[key]) agg[key] = value;
+};
+var narrowMax = (agg, key, value) => {
+	if (agg[key] === void 0 || value < agg[key]) agg[key] = value;
+};
+var narrowBoth = (agg, value) => {
+	narrowMin(agg, "minimum", value);
+	narrowMax(agg, "maximum", value);
+};
+var addDivisor = (agg, value) => {
+	agg.multipleOf ?? (agg.multipleOf = []);
+	if (!agg.multipleOf.includes(value)) agg.multipleOf.push(value);
+};
+var addPattern = (agg, pattern) => {
+	agg.patterns ?? (agg.patterns = /* @__PURE__ */ new Set());
+	agg.patterns.add(pattern);
+};
+var intersectMime = (agg, mime) => {
+	agg.mime = agg.mime ? agg.mime.filter((m) => mime.includes(m)) : [...mime];
+};
+var setFormat = (agg, format) => {
+	agg.format = format;
+	if (format.includes("int")) agg.isInt = true;
+};
+var minContributor = (agg, def) => narrowMin(agg, "minimum", def.minimum);
+var maxContributor = (agg, def) => narrowMax(agg, "maximum", def.maximum);
+var formatContributor = (ranges) => (agg, def) => {
+	setFormat(agg, def.format);
+	const [minimum, maximum] = ranges[def.format];
+	narrowMin(agg, "minimum", minimum);
+	narrowMax(agg, "maximum", maximum);
+};
+var contributors = {
+	greater_than: (agg, def) => narrowMin(agg, def.inclusive ? "minimum" : "exclusiveMinimum", def.value),
+	less_than: (agg, def) => narrowMax(agg, def.inclusive ? "maximum" : "exclusiveMaximum", def.value),
+	multiple_of: (agg, def) => addDivisor(agg, def.value),
+	number_format: formatContributor(NUMBER_FORMAT_RANGES),
+	bigint_format: formatContributor(BIGINT_FORMAT_RANGES),
+	min_length: minContributor,
+	max_length: maxContributor,
+	length_equals: (agg, def) => narrowBoth(agg, def.length),
+	min_size: minContributor,
+	max_size: maxContributor,
+	size_equals: (agg, def) => narrowBoth(agg, def.size),
+	string_format: (agg, def) => {
+		setFormat(agg, def.format);
+		if (def.pattern) addPattern(agg, def.pattern);
+		if (def.format === "base64" || def.format === "base64url") agg.contentEncoding = def.format;
+		if (def.local || def.precision === -1) agg.laxFormat = true;
+	},
+	mime_type: (agg, def) => intersectMime(agg, def.mime)
+};
+function aggregateChecks(schema) {
+	const agg = {};
+	const def = schema._zod.def;
+	const list = schema._zod.traits.has("$ZodCheck") ? [schema, ...def.checks ?? []] : def.checks ?? [];
+	for (const ch of list) contributors[ch._zod.def.check]?.(agg, ch._zod.def);
+	const bag = schema._zod.bag;
+	if (bag.minimum !== void 0) narrowMin(agg, "minimum", bag.minimum);
+	if (bag.exclusiveMinimum !== void 0) narrowMin(agg, "exclusiveMinimum", bag.exclusiveMinimum);
+	if (bag.maximum !== void 0) narrowMax(agg, "maximum", bag.maximum);
+	if (bag.exclusiveMaximum !== void 0) narrowMax(agg, "exclusiveMaximum", bag.exclusiveMaximum);
+	if (bag.multipleOf !== void 0) addDivisor(agg, bag.multipleOf);
+	if (bag.format !== void 0) {
+		agg.format ?? (agg.format = bag.format);
+		if (bag.format.includes("int")) agg.isInt = true;
+	}
+	if (bag.mime) intersectMime(agg, bag.mime);
+	for (const pattern of bag.patterns ?? []) addPattern(agg, pattern);
+	return agg;
+}
 var formatMap = {
 	guid: "uuid",
 	url: "uri",
@@ -19675,32 +20753,33 @@ var formatMap = {
 	json_string: "json-string",
 	regex: ""
 };
+var exactPatterns = /* @__PURE__ */ new Map([[base64Charset, base64], [base64urlCharset, base64url]]);
+var exactPattern = (p) => exactPatterns.get(p) ?? p;
 var stringProcessor = (schema, ctx, _json, _params) => {
 	const json = _json;
 	json.type = "string";
-	const { minimum, maximum, format, patterns, contentEncoding } = schema._zod.bag;
+	const { minimum, maximum, format, patterns, contentEncoding, laxFormat } = aggregateChecks(schema);
 	if (typeof minimum === "number") json.minLength = minimum;
 	if (typeof maximum === "number") json.maxLength = maximum;
 	if (format) {
 		json.format = formatMap[format] ?? format;
 		if (json.format === "") delete json.format;
-		if (format === "time") delete json.format;
+		if (format === "time" || laxFormat) delete json.format;
 	}
 	if (contentEncoding) json.contentEncoding = contentEncoding;
 	if (patterns && patterns.size > 0) {
-		const regexes = [...patterns];
-		if (regexes.length === 1) json.pattern = regexes[0].source;
-		else if (regexes.length > 1) json.allOf = [...regexes.map((regex) => ({
+		const patternList = [...patterns].map(exactPattern);
+		if (patternList.length === 1) json.pattern = patternList[0].source;
+		else if (patternList.length > 1) json.allOf = [...patternList.map((regex) => ({
 			...ctx.target === "draft-07" || ctx.target === "draft-04" || ctx.target === "openapi-3.0" ? { type: "string" } : {},
 			pattern: regex.source
 		}))];
 	}
 };
-var numberProcessor = (schema, ctx, _json, _params) => {
+var numberProcessor = (schema, ctx, _json, params) => {
 	const json = _json;
-	const { minimum, maximum, format, multipleOf, exclusiveMaximum, exclusiveMinimum } = schema._zod.bag;
-	if (typeof format === "string" && format.includes("int")) json.type = "integer";
-	else json.type = "number";
+	const { minimum, maximum, multipleOf, exclusiveMaximum, exclusiveMinimum, isInt } = aggregateChecks(schema);
+	json.type = isInt ? "integer" : "number";
 	const exMin = typeof exclusiveMinimum === "number" && exclusiveMinimum >= (minimum ?? Number.NEGATIVE_INFINITY);
 	const exMax = typeof exclusiveMaximum === "number" && exclusiveMaximum <= (maximum ?? Number.POSITIVE_INFINITY);
 	const legacy = ctx.target === "draft-04" || ctx.target === "openapi-3.0";
@@ -19716,7 +20795,14 @@ var numberProcessor = (schema, ctx, _json, _params) => {
 			json.exclusiveMaximum = true;
 		} else json.exclusiveMaximum = exclusiveMaximum;
 	} else if (typeof maximum === "number") json.maximum = maximum;
-	if (typeof multipleOf === "number") json.multipleOf = multipleOf;
+	if (multipleOf) {
+		const divisors = /* @__PURE__ */ new Set();
+		for (const divisor of multipleOf) if (Number.isFinite(divisor) && divisor !== 0) divisors.add(Math.abs(divisor));
+		else handleUnrepresentable(schema, ctx, json, params, `A multipleOf divisor of ${divisor} cannot be represented in JSON Schema`);
+		const [first, ...rest] = divisors;
+		if (first !== void 0) json.multipleOf = first;
+		if (rest.length) json.allOf = [...json.allOf ?? [], ...rest.map((m) => ({ multipleOf: m }))];
+	}
 };
 var booleanProcessor = (_schema, _ctx, json, _params) => {
 	json.type = "boolean";
@@ -19727,18 +20813,26 @@ var neverProcessor = (_schema, _ctx, json, _params) => {
 var enumProcessor = (schema, _ctx, json, _params) => {
 	const def = schema._zod.def;
 	const values = getEnumValues(def.entries);
+	if (values.length === 0) {
+		json.not = {};
+		return;
+	}
 	if (values.every((v) => typeof v === "number")) json.type = "number";
 	if (values.every((v) => typeof v === "string")) json.type = "string";
 	json.enum = values;
 };
-var literalProcessor = (schema, ctx, json, _params) => {
+var literalProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
+	if (def.values.length === 0) {
+		json.not = {};
+		return;
+	}
 	const vals = [];
 	for (const val of def.values) if (val === void 0) {
-		if (ctx.unrepresentable === "throw") throw new Error("Literal `undefined` cannot be represented in JSON Schema");
+		if (handleUnrepresentable(schema, ctx, json, params, "Literal `undefined` cannot be represented in JSON Schema")) return;
 	} else if (typeof val === "bigint") {
-		if (ctx.unrepresentable === "throw") throw new Error("BigInt literals cannot be represented in JSON Schema");
-		else vals.push(Number(val));
+		if (handleUnrepresentable(schema, ctx, json, params, "BigInt literals cannot be represented in JSON Schema")) return;
+		vals.push(Number(val));
 	} else vals.push(val);
 	if (vals.length === 0) {} else if (vals.length === 1) {
 		const val = vals[0];
@@ -19753,49 +20847,55 @@ var literalProcessor = (schema, ctx, json, _params) => {
 		json.enum = vals;
 	}
 };
-var customProcessor = (_schema, ctx, _json, _params) => {
-	if (ctx.unrepresentable === "throw") throw new Error("Custom types cannot be represented in JSON Schema");
+var customProcessor = (schema, ctx, json, params) => {
+	handleUnrepresentable(schema, ctx, json, params, "Custom types cannot be represented in JSON Schema");
 };
-var transformProcessor = (_schema, ctx, _json, _params) => {
-	if (ctx.unrepresentable === "throw") throw new Error("Transforms cannot be represented in JSON Schema");
+var transformProcessor = (schema, ctx, json, params) => {
+	handleUnrepresentable(schema, ctx, json, params, "Transforms cannot be represented in JSON Schema");
 };
 var arrayProcessor = (schema, ctx, _json, params) => {
 	const json = _json;
 	const def = schema._zod.def;
-	const { minimum, maximum } = schema._zod.bag;
+	const { minimum, maximum } = aggregateChecks(schema);
 	if (typeof minimum === "number") json.minItems = minimum;
 	if (typeof maximum === "number") json.maxItems = maximum;
 	json.type = "array";
-	json.items = process$1(def.element, ctx, {
+	json.items = processSchema(def.element, ctx, {
 		...params,
 		path: [...params.path, "items"]
 	});
 };
+function inputOptin(schema) {
+	const def = schema._zod.def;
+	if (def.type === "pipe" && def.in._zod.traits.has("$ZodTransform")) return inputOptin(def.out);
+	if (def.type === "catch") return inputOptin(def.innerType);
+	return schema._zod.optin;
+}
 var objectProcessor = (schema, ctx, _json, params) => {
 	const json = _json;
 	const def = schema._zod.def;
+	const shape = def.shape;
+	if (Object.getOwnPropertySymbols(shape).length && handleUnrepresentable(schema, ctx, json, params, "Symbol keys cannot be represented in JSON Schema")) return;
 	json.type = "object";
 	json.properties = {};
-	const shape = def.shape;
-	for (const key in shape) json.properties[key] = process$1(shape[key], ctx, {
+	for (const key in shape) assignProp(json.properties, key, processSchema(shape[key], ctx, {
 		...params,
 		path: [
 			...params.path,
 			"properties",
 			key
 		]
-	});
-	const allKeys = new Set(Object.keys(shape));
-	const requiredKeys = new Set([...allKeys].filter((key) => {
-		const v = def.shape[key]._zod;
-		if (ctx.io === "input") return v.optin === void 0;
-		else return v.optout === void 0;
 	}));
-	if (requiredKeys.size > 0) json.required = Array.from(requiredKeys);
+	const requiredKeys = [];
+	for (const key of Object.keys(shape)) {
+		const field = def.shape[key];
+		if (ctx.io === "input" ? inputOptin(field) === void 0 : field._zod.optout === void 0) requiredKeys.push(key);
+	}
+	if (requiredKeys.length > 0) json.required = requiredKeys;
 	if (def.catchall?._zod.def.type === "never") json.additionalProperties = false;
 	else if (!def.catchall) {
 		if (ctx.io === "output") json.additionalProperties = false;
-	} else if (def.catchall) json.additionalProperties = process$1(def.catchall, ctx, {
+	} else if (def.catchall) json.additionalProperties = processSchema(def.catchall, ctx, {
 		...params,
 		path: [...params.path, "additionalProperties"]
 	});
@@ -19803,7 +20903,7 @@ var objectProcessor = (schema, ctx, _json, params) => {
 var unionProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
 	const isExclusive = def.inclusive === false;
-	const options = def.options.map((x, i) => process$1(x, ctx, {
+	const options = def.options.map((x, i) => processSchema(x, ctx, {
 		...params,
 		path: [
 			...params.path,
@@ -19816,7 +20916,7 @@ var unionProcessor = (schema, ctx, json, params) => {
 };
 var intersectionProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
-	const a = process$1(def.left, ctx, {
+	const a = processSchema(def.left, ctx, {
 		...params,
 		path: [
 			...params.path,
@@ -19824,7 +20924,7 @@ var intersectionProcessor = (schema, ctx, json, params) => {
 			0
 		]
 	});
-	const b = process$1(def.right, ctx, {
+	const b = processSchema(def.right, ctx, {
 		...params,
 		path: [
 			...params.path,
@@ -19833,11 +20933,13 @@ var intersectionProcessor = (schema, ctx, json, params) => {
 		]
 	});
 	const isSimpleIntersection = (val) => "allOf" in val && Object.keys(val).length === 1;
-	json.allOf = [...isSimpleIntersection(a) ? a.allOf : [a], ...isSimpleIntersection(b) ? b.allOf : [b]];
+	const allOf = [...isSimpleIntersection(a) ? a.allOf : [a], ...isSimpleIntersection(b) ? b.allOf : [b]];
+	json.allOf = allOf;
+	ctx.intersections.push(allOf);
 };
 var nullableProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
-	const inner = process$1(def.innerType, ctx, params);
+	const inner = processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	if (ctx.target === "openapi-3.0") {
 		seen.ref = def.innerType;
@@ -19846,34 +20948,53 @@ var nullableProcessor = (schema, ctx, json, params) => {
 };
 var nonoptionalProcessor = (schema, ctx, _json, params) => {
 	const def = schema._zod.def;
-	process$1(def.innerType, ctx, params);
+	processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = def.innerType;
 };
+/** Round-trips a default value through JSON so the emitted schema is guaranteed to be valid JSON.
+* A BigInt has no reliable encoding, so it goes through `unrepresentable` like any other
+* unrepresentable value. Returns a sentinel when the caller must not write a default of its own. */
+var UNREPRESENTABLE_DEFAULT = Symbol();
+function serializeDefaultValue(value, schema, ctx, json, params) {
+	let unrepresentable = false;
+	const serialized = JSON.stringify(value, (_, val) => {
+		if (typeof val !== "bigint") return val;
+		unrepresentable = true;
+		return null;
+	});
+	if (!unrepresentable) return JSON.parse(serialized);
+	handleUnrepresentable(schema, ctx, json, params, "BigInt defaults cannot be represented in JSON Schema");
+	return UNREPRESENTABLE_DEFAULT;
+}
 var defaultProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
-	process$1(def.innerType, ctx, params);
+	processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = def.innerType;
-	json.default = JSON.parse(JSON.stringify(def.defaultValue));
+	const value = serializeDefaultValue(def.defaultValue, schema, ctx, json, params);
+	if (value !== UNREPRESENTABLE_DEFAULT) json.default = value;
 };
 var prefaultProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
-	process$1(def.innerType, ctx, params);
+	processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = def.innerType;
-	if (ctx.io === "input") json._prefault = JSON.parse(JSON.stringify(def.defaultValue));
+	if (ctx.io !== "input") return;
+	const value = serializeDefaultValue(def.defaultValue, schema, ctx, json, params);
+	if (value !== UNREPRESENTABLE_DEFAULT) json._prefault = value;
 };
 var catchProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
-	process$1(def.innerType, ctx, params);
+	processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = def.innerType;
 	let catchValue;
 	try {
 		catchValue = def.catchValue(void 0);
 	} catch {
-		throw new Error("Dynamic catch values are not supported in JSON Schema");
+		handleUnrepresentable(schema, ctx, json, params, "Dynamic catch values are not supported in JSON Schema");
+		return;
 	}
 	json.default = catchValue;
 };
@@ -19881,74 +21002,73 @@ var pipeProcessor = (schema, ctx, _json, params) => {
 	const def = schema._zod.def;
 	const inIsTransform = def.in._zod.traits.has("$ZodTransform");
 	const innerType = ctx.io === "input" ? inIsTransform ? def.out : def.in : def.out;
-	process$1(innerType, ctx, params);
+	processSchema(innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = innerType;
 };
 var readonlyProcessor = (schema, ctx, json, params) => {
 	const def = schema._zod.def;
-	process$1(def.innerType, ctx, params);
+	processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = def.innerType;
 	json.readOnly = true;
 };
 var optionalProcessor = (schema, ctx, _json, params) => {
 	const def = schema._zod.def;
-	process$1(def.innerType, ctx, params);
+	processSchema(def.innerType, ctx, params);
 	const seen = ctx.seen.get(schema);
 	seen.ref = def.innerType;
 };
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/iso.js
-var ZodISODateTime = /*@__PURE__*/ $constructor("ZodISODateTime", (inst, def) => {
-	$ZodISODateTime.init(inst, def);
-	ZodStringFormat.init(inst, def);
-});
-function datetime(params) {
-	return /* @__PURE__ */ _isoDateTime(ZodISODateTime, params);
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/errors.js
+var _installedErrorProtos = /* @__PURE__ */ new WeakSet([Object.prototype, Error.prototype]);
+function _lazyMethod(proto, key, make) {
+	Object.defineProperty(proto, key, {
+		configurable: true,
+		enumerable: false,
+		get() {
+			const value = make(this);
+			Object.defineProperty(this, key, {
+				value,
+				configurable: true,
+				writable: true
+			});
+			return value;
+		},
+		set(value) {
+			Object.defineProperty(this, key, {
+				value,
+				configurable: true,
+				writable: true
+			});
+		}
+	});
 }
-var ZodISODate = /*@__PURE__*/ $constructor("ZodISODate", (inst, def) => {
-	$ZodISODate.init(inst, def);
-	ZodStringFormat.init(inst, def);
-});
-function date(params) {
-	return /* @__PURE__ */ _isoDate(ZodISODate, params);
-}
-var ZodISOTime = /*@__PURE__*/ $constructor("ZodISOTime", (inst, def) => {
-	$ZodISOTime.init(inst, def);
-	ZodStringFormat.init(inst, def);
-});
-function time(params) {
-	return /* @__PURE__ */ _isoTime(ZodISOTime, params);
-}
-var ZodISODuration = /*@__PURE__*/ $constructor("ZodISODuration", (inst, def) => {
-	$ZodISODuration.init(inst, def);
-	ZodStringFormat.init(inst, def);
-});
-function duration(params) {
-	return /* @__PURE__ */ _isoDuration(ZodISODuration, params);
-}
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/errors.js
 var initializer = (inst, issues) => {
 	$ZodError.init(inst, issues);
 	inst.name = "ZodError";
-	Object.defineProperties(inst, {
-		format: { value: (mapper) => formatError(inst, mapper) },
-		flatten: { value: (mapper) => flattenError(inst, mapper) },
-		addIssue: { value: (issue) => {
-			inst.issues.push(issue);
-			inst.message = JSON.stringify(inst.issues, jsonStringifyReplacer, 2);
-		} },
-		addIssues: { value: (issues) => {
-			inst.issues.push(...issues);
-			inst.message = JSON.stringify(inst.issues, jsonStringifyReplacer, 2);
-		} },
-		isEmpty: { get() {
-			return inst.issues.length === 0;
-		} }
+	const proto = Object.getPrototypeOf(inst);
+	if (_installedErrorProtos.has(proto)) return;
+	_installedErrorProtos.add(proto);
+	_lazyMethod(proto, "format", (self) => (mapper) => formatError(self, mapper));
+	_lazyMethod(proto, "flatten", (self) => (mapper) => flattenError(self, mapper));
+	_lazyMethod(proto, "addIssue", (self) => (issue) => {
+		self.issues.push(issue);
+		self.message = JSON.stringify(self.issues, jsonStringifyReplacer, 2);
+	});
+	_lazyMethod(proto, "addIssues", (self) => (issues) => {
+		self.issues.push(...issues);
+		self.message = JSON.stringify(self.issues, jsonStringifyReplacer, 2);
+	});
+	Object.defineProperty(proto, "isEmpty", {
+		configurable: true,
+		enumerable: false,
+		get() {
+			return this.issues.length === 0;
+		}
 	});
 };
-var ZodRealError = /*@__PURE__*/ $constructor("ZodError", initializer, { Parent: Error });
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/parse.js
+var ZodRealError = /*@__PURE__*/ $constructor("ZodError", initializer, void 0, { Parent: Error });
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/parse.js
 var parse = /* @__PURE__ */ _parse(ZodRealError);
 var parseAsync = /* @__PURE__ */ _parseAsync(ZodRealError);
 var safeParse = /* @__PURE__ */ _safeParse(ZodRealError);
@@ -19961,255 +21081,320 @@ var safeEncode = /* @__PURE__ */ _safeEncode(ZodRealError);
 var safeDecode = /* @__PURE__ */ _safeDecode(ZodRealError);
 var safeEncodeAsync = /* @__PURE__ */ _safeEncodeAsync(ZodRealError);
 var safeDecodeAsync = /* @__PURE__ */ _safeDecodeAsync(ZodRealError);
-// ../../node_modules/.pnpm/zod@4.4.3/node_modules/zod/v4/classic/schemas.js
-var _installedGroups = /* @__PURE__ */ new WeakMap();
-function _installLazyMethods(inst, group, methods) {
-	const proto = Object.getPrototypeOf(inst);
-	let installed = _installedGroups.get(proto);
-	if (!installed) {
-		installed = /* @__PURE__ */ new Set();
-		_installedGroups.set(proto, installed);
-	}
-	if (installed.has(group)) return;
-	installed.add(group);
-	for (const key in methods) {
-		const fn = methods[key];
-		Object.defineProperty(proto, key, {
-			configurable: true,
-			enumerable: false,
-			get() {
-				const bound = fn.bind(this);
-				Object.defineProperty(this, key, {
-					configurable: true,
-					writable: true,
-					enumerable: true,
-					value: bound
-				});
-				return bound;
-			},
-			set(v) {
-				Object.defineProperty(this, key, {
-					configurable: true,
-					writable: true,
-					enumerable: true,
-					value: v
-				});
-			}
-		});
-	}
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/schemas.js
+function _ensureDefaultLocale() {
+	if (!globalConfig.localeError) config(en_default());
+}
+function _ensureDefaultMemoizer() {
+	if (!globalConfig.memoizer) config({ memoizer: memoizer() });
 }
 var ZodType = /*@__PURE__*/ $constructor("ZodType", (inst, def) => {
+	_ensureDefaultLocale();
 	$ZodType.init(inst, def);
-	Object.assign(inst["~standard"], { jsonSchema: {
-		input: createStandardJSONSchemaMethod(inst, "input"),
-		output: createStandardJSONSchemaMethod(inst, "output")
-	} });
-	inst.toJSONSchema = createToJSONSchemaMethod(inst, {});
 	inst.def = def;
 	inst.type = def.type;
-	Object.defineProperty(inst, "_def", { value: def });
-	inst.parse = (data, params) => parse(inst, data, params, { callee: inst.parse });
-	inst.safeParse = (data, params) => safeParse(inst, data, params);
-	inst.parseAsync = async (data, params) => parseAsync(inst, data, params, { callee: inst.parseAsync });
-	inst.safeParseAsync = async (data, params) => safeParseAsync(inst, data, params);
-	inst.spa = inst.safeParseAsync;
-	inst.encode = (data, params) => encode(inst, data, params);
-	inst.decode = (data, params) => decode(inst, data, params);
-	inst.encodeAsync = async (data, params) => encodeAsync(inst, data, params);
-	inst.decodeAsync = async (data, params) => decodeAsync(inst, data, params);
-	inst.safeEncode = (data, params) => safeEncode(inst, data, params);
-	inst.safeDecode = (data, params) => safeDecode(inst, data, params);
-	inst.safeEncodeAsync = async (data, params) => safeEncodeAsync(inst, data, params);
-	inst.safeDecodeAsync = async (data, params) => safeDecodeAsync(inst, data, params);
-	_installLazyMethods(inst, "ZodType", {
-		check(...chks) {
-			const def = this.def;
-			return this.clone(mergeDefs(def, { checks: [...def.checks ?? [], ...chks.map((ch) => typeof ch === "function" ? { _zod: {
-				check: ch,
-				def: { check: "custom" },
-				onattach: []
-			} } : ch)] }), { parent: true });
-		},
-		with(...chks) {
-			return this.check(...chks);
-		},
-		clone(def, params) {
-			return clone(this, def, params);
-		},
-		brand() {
-			return this;
-		},
-		register(reg, meta) {
-			reg.add(this, meta);
-			return this;
-		},
-		refine(check, params) {
-			return this.check(refine(check, params));
-		},
-		superRefine(refinement, params) {
-			return this.check(superRefine(refinement, params));
-		},
-		overwrite(fn) {
-			return this.check(/* @__PURE__ */ _overwrite(fn));
-		},
-		optional() {
-			return optional(this);
-		},
-		exactOptional() {
-			return exactOptional(this);
-		},
-		nullable() {
-			return nullable(this);
-		},
-		nullish() {
-			return optional(nullable(this));
-		},
-		nonoptional(params) {
-			return nonoptional(this, params);
-		},
-		array() {
-			return array(this);
-		},
-		or(arg) {
-			return union([this, arg]);
-		},
-		and(arg) {
-			return intersection(this, arg);
-		},
-		transform(tx) {
-			return pipe(this, transform(tx));
-		},
-		default(d) {
-			return _default(this, d);
-		},
-		prefault(d) {
-			return prefault(this, d);
-		},
-		catch(params) {
-			return _catch(this, params);
-		},
-		pipe(target) {
-			return pipe(this, target);
-		},
-		readonly() {
-			return readonly(this);
-		},
-		describe(description) {
-			const cl = this.clone();
-			globalRegistry.add(cl, { description });
-			return cl;
-		},
-		meta(...args) {
-			if (args.length === 0) return globalRegistry.get(this);
-			const cl = this.clone();
-			globalRegistry.add(cl, args[0]);
-			return cl;
-		},
-		isOptional() {
-			return this.safeParse(void 0).success;
-		},
-		isNullable() {
-			return this.safeParse(null).success;
-		},
-		apply(fn) {
-			return fn(this);
-		}
-	});
-	Object.defineProperty(inst, "description", {
-		get() {
-			return globalRegistry.get(inst)?.description;
-		},
-		configurable: true
-	});
 	return inst;
+}, {
+	check(...chks) {
+		const def = this.def;
+		return this.clone(mergeDefs(def, { checks: [...def.checks ?? [], ...chks.map((ch) => typeof ch === "function" ? { _zod: {
+			check: ch,
+			def: { check: "custom" },
+			onattach: []
+		} } : ch)] }), { parent: true });
+	},
+	with(...chks) {
+		return this.check(...chks);
+	},
+	clone(def, params) {
+		return clone(this, def, params);
+	},
+	brand() {
+		return this;
+	},
+	register(reg, meta) {
+		reg.add(this, meta);
+		return this;
+	},
+	refine(check, params) {
+		return this.check(refine(check, params));
+	},
+	superRefine(refinement, params) {
+		return this.check(superRefine(refinement, params));
+	},
+	overwrite(fn) {
+		return this.check(/* @__PURE__ */ _overwrite(fn));
+	},
+	optional() {
+		return optional(this);
+	},
+	exactOptional() {
+		return exactOptional(this);
+	},
+	nullable() {
+		return nullable(this);
+	},
+	nullish() {
+		return optional(nullable(this));
+	},
+	nonoptional(params) {
+		return nonoptional(this, params);
+	},
+	array() {
+		return array(this);
+	},
+	or(arg) {
+		return union([this, arg]);
+	},
+	and(arg) {
+		return intersection(this, arg);
+	},
+	transform(tx) {
+		return pipe(this, transform(tx));
+	},
+	default(d) {
+		return _default(this, d);
+	},
+	prefault(d) {
+		return prefault(this, d);
+	},
+	catch(params) {
+		return _catch(this, params);
+	},
+	pipe(target) {
+		return pipe(this, target);
+	},
+	readonly() {
+		return readonly(this);
+	},
+	describe(description) {
+		const cl = this.clone();
+		globalRegistry.add(cl, { description });
+		return cl;
+	},
+	meta(...args) {
+		if (args.length === 0) return globalRegistry.get(this);
+		const cl = this.clone();
+		globalRegistry.add(cl, args[0]);
+		return cl;
+	},
+	isOptional() {
+		return this.safeParse(void 0).success;
+	},
+	isNullable() {
+		return this.safeParse(null).success;
+	},
+	apply(fn, ...args) {
+		return args.length === 0 ? fn(this) : fn(this, ...args);
+	},
+	get "~standard"() {
+		return hide(this, "~standard", {
+			...standardProps(this),
+			jsonSchema: {
+				input: createStandardJSONSchemaMethod(this, "input"),
+				output: createStandardJSONSchemaMethod(this, "output")
+			}
+		});
+	},
+	set "~standard"(value) {
+		own(this, "~standard", value);
+	},
+	parse: function _parse(data, params) {
+		return parse(this, data, params, { callee: _parse });
+	},
+	parseAsync: async function _parseAsync(data, params) {
+		return await parseAsync(this, data, params, { callee: _parseAsync });
+	},
+	safeParse(data, params) {
+		return safeParse(this, data, params);
+	},
+	async safeParseAsync(data, params) {
+		return safeParseAsync(this, data, params);
+	},
+	get spa() {
+		return this?.safeParseAsync;
+	},
+	set spa(value) {
+		own(this, "spa", value);
+	},
+	validate(data, params) {
+		return validate(this, data, params);
+	},
+	validateAsync(data, params) {
+		return validateAsync$1(this, data, params);
+	},
+	encode: function _encode(data, params) {
+		return encode(this, data, params, { callee: _encode });
+	},
+	decode: function _decode(data, params) {
+		return decode(this, data, params, { callee: _decode });
+	},
+	encodeAsync: async function _encodeAsync(data, params) {
+		return await encodeAsync(this, data, params, { callee: _encodeAsync });
+	},
+	decodeAsync: async function _decodeAsync(data, params) {
+		return await decodeAsync(this, data, params, { callee: _decodeAsync });
+	},
+	safeEncode(data, params) {
+		return safeEncode(this, data, params);
+	},
+	safeDecode(data, params) {
+		return safeDecode(this, data, params);
+	},
+	async safeEncodeAsync(data, params) {
+		return safeEncodeAsync(this, data, params);
+	},
+	async safeDecodeAsync(data, params) {
+		return safeDecodeAsync(this, data, params);
+	},
+	toJSONSchema(params) {
+		return createToJSONSchemaMethod(this, {})(params);
+	},
+	get description() {
+		return globalRegistry.get(this)?.description;
+	},
+	get _def() {
+		return this._zod.def;
+	}
 });
 /** @internal */
 var _ZodString = /*@__PURE__*/ $constructor("_ZodString", (inst, def) => {
 	$ZodString.init(inst, def);
 	ZodType.init(inst, def);
 	inst._zod.processJSONSchema = (ctx, json, params) => stringProcessor(inst, ctx, json, params);
-	const bag = inst._zod.bag;
-	inst.format = bag.format ?? null;
-	inst.minLength = bag.minimum ?? null;
-	inst.maxLength = bag.maximum ?? null;
-	_installLazyMethods(inst, "_ZodString", {
-		regex(...args) {
-			return this.check(/* @__PURE__ */ _regex(...args));
-		},
-		includes(...args) {
-			return this.check(/* @__PURE__ */ _includes(...args));
-		},
-		startsWith(...args) {
-			return this.check(/* @__PURE__ */ _startsWith(...args));
-		},
-		endsWith(...args) {
-			return this.check(/* @__PURE__ */ _endsWith(...args));
-		},
-		min(...args) {
-			return this.check(/* @__PURE__ */ _minLength(...args));
-		},
-		max(...args) {
-			return this.check(/* @__PURE__ */ _maxLength(...args));
-		},
-		length(...args) {
-			return this.check(/* @__PURE__ */ _length(...args));
-		},
-		nonempty(...args) {
-			return this.check(/* @__PURE__ */ _minLength(1, ...args));
-		},
-		lowercase(params) {
-			return this.check(/* @__PURE__ */ _lowercase(params));
-		},
-		uppercase(params) {
-			return this.check(/* @__PURE__ */ _uppercase(params));
-		},
-		trim() {
-			return this.check(/* @__PURE__ */ _trim());
-		},
-		normalize(...args) {
-			return this.check(/* @__PURE__ */ _normalize(...args));
-		},
-		toLowerCase() {
-			return this.check(/* @__PURE__ */ _toLowerCase());
-		},
-		toUpperCase() {
-			return this.check(/* @__PURE__ */ _toUpperCase());
-		},
-		slugify() {
-			return this.check(/* @__PURE__ */ _slugify());
-		}
-	});
-});
+}, /*@__PURE__*/ derived({
+	format: (inst) => aggregateChecks(inst).format ?? null,
+	minLength: (inst) => aggregateChecks(inst).minimum ?? null,
+	maxLength: (inst) => aggregateChecks(inst).maximum ?? null
+}, {
+	regex(...args) {
+		return this.check(/* @__PURE__ */ _regex(...args));
+	},
+	includes(...args) {
+		return this.check(/* @__PURE__ */ _includes(...args));
+	},
+	startsWith(...args) {
+		return this.check(/* @__PURE__ */ _startsWith(...args));
+	},
+	endsWith(...args) {
+		return this.check(/* @__PURE__ */ _endsWith(...args));
+	},
+	min(...args) {
+		return this.check(/* @__PURE__ */ _minLength(...args));
+	},
+	max(...args) {
+		return this.check(/* @__PURE__ */ _maxLength(...args));
+	},
+	length(...args) {
+		return this.check(/* @__PURE__ */ _length(...args));
+	},
+	nonempty(...args) {
+		return this.check(/* @__PURE__ */ _minLength(1, ...args));
+	},
+	lowercase(params) {
+		return this.check(/* @__PURE__ */ _lowercase(params));
+	},
+	uppercase(params) {
+		return this.check(/* @__PURE__ */ _uppercase(params));
+	},
+	trim() {
+		return this.check(/* @__PURE__ */ _trim());
+	},
+	normalize(...args) {
+		return this.check(/* @__PURE__ */ _normalize(...args));
+	},
+	toLowerCase() {
+		return this.check(/* @__PURE__ */ _toLowerCase());
+	},
+	toUpperCase() {
+		return this.check(/* @__PURE__ */ _toUpperCase());
+	},
+	slugify() {
+		return this.check(/* @__PURE__ */ _slugify());
+	}
+}));
 var ZodString = /*@__PURE__*/ $constructor("ZodString", (inst, def) => {
 	$ZodString.init(inst, def);
 	_ZodString.init(inst, def);
-	inst.email = (params) => inst.check(/* @__PURE__ */ _email(ZodEmail, params));
-	inst.url = (params) => inst.check(/* @__PURE__ */ _url(ZodURL, params));
-	inst.jwt = (params) => inst.check(/* @__PURE__ */ _jwt(ZodJWT, params));
-	inst.emoji = (params) => inst.check(/* @__PURE__ */ _emoji(ZodEmoji, params));
-	inst.guid = (params) => inst.check(/* @__PURE__ */ _guid(ZodGUID, params));
-	inst.uuid = (params) => inst.check(/* @__PURE__ */ _uuid(ZodUUID, params));
-	inst.uuidv4 = (params) => inst.check(/* @__PURE__ */ _uuidv4(ZodUUID, params));
-	inst.uuidv6 = (params) => inst.check(/* @__PURE__ */ _uuidv6(ZodUUID, params));
-	inst.uuidv7 = (params) => inst.check(/* @__PURE__ */ _uuidv7(ZodUUID, params));
-	inst.nanoid = (params) => inst.check(/* @__PURE__ */ _nanoid(ZodNanoID, params));
-	inst.guid = (params) => inst.check(/* @__PURE__ */ _guid(ZodGUID, params));
-	inst.cuid = (params) => inst.check(/* @__PURE__ */ _cuid(ZodCUID, params));
-	inst.cuid2 = (params) => inst.check(/* @__PURE__ */ _cuid2(ZodCUID2, params));
-	inst.ulid = (params) => inst.check(/* @__PURE__ */ _ulid(ZodULID, params));
-	inst.base64 = (params) => inst.check(/* @__PURE__ */ _base64(ZodBase64, params));
-	inst.base64url = (params) => inst.check(/* @__PURE__ */ _base64url(ZodBase64URL, params));
-	inst.xid = (params) => inst.check(/* @__PURE__ */ _xid(ZodXID, params));
-	inst.ksuid = (params) => inst.check(/* @__PURE__ */ _ksuid(ZodKSUID, params));
-	inst.ipv4 = (params) => inst.check(/* @__PURE__ */ _ipv4(ZodIPv4, params));
-	inst.ipv6 = (params) => inst.check(/* @__PURE__ */ _ipv6(ZodIPv6, params));
-	inst.cidrv4 = (params) => inst.check(/* @__PURE__ */ _cidrv4(ZodCIDRv4, params));
-	inst.cidrv6 = (params) => inst.check(/* @__PURE__ */ _cidrv6(ZodCIDRv6, params));
-	inst.e164 = (params) => inst.check(/* @__PURE__ */ _e164(ZodE164, params));
-	inst.datetime = (params) => inst.check(datetime(params));
-	inst.date = (params) => inst.check(date(params));
-	inst.time = (params) => inst.check(time(params));
-	inst.duration = (params) => inst.check(duration(params));
+}, {
+	email(params) {
+		return this.check(/* @__PURE__ */ _email(ZodEmail, params));
+	},
+	url(params) {
+		return this.check(/* @__PURE__ */ _url(ZodURL, params));
+	},
+	jwt(params) {
+		return this.check(/* @__PURE__ */ _jwt(ZodJWT, params));
+	},
+	emoji(params) {
+		return this.check(/* @__PURE__ */ _emoji(ZodEmoji, params));
+	},
+	guid(params) {
+		return this.check(/* @__PURE__ */ _guid(ZodGUID, params));
+	},
+	uuid(params) {
+		return this.check(/* @__PURE__ */ _uuid(ZodUUID, params));
+	},
+	uuidv4(params) {
+		return this.check(/* @__PURE__ */ _uuidv4(ZodUUID, params));
+	},
+	uuidv6(params) {
+		return this.check(/* @__PURE__ */ _uuidv6(ZodUUID, params));
+	},
+	uuidv7(params) {
+		return this.check(/* @__PURE__ */ _uuidv7(ZodUUID, params));
+	},
+	nanoid(params) {
+		return this.check(/* @__PURE__ */ _nanoid(ZodNanoID, params));
+	},
+	cuid(params) {
+		return this.check(/* @__PURE__ */ _cuid(ZodCUID, params));
+	},
+	cuid2(params) {
+		return this.check(/* @__PURE__ */ _cuid2(ZodCUID2, params));
+	},
+	ulid(params) {
+		return this.check(/* @__PURE__ */ _ulid(ZodULID, params));
+	},
+	base64(params) {
+		return this.check(/* @__PURE__ */ _base64(ZodBase64, params));
+	},
+	base64url(params) {
+		return this.check(/* @__PURE__ */ _base64url(ZodBase64URL, params));
+	},
+	xid(params) {
+		return this.check(/* @__PURE__ */ _xid(ZodXID, params));
+	},
+	ksuid(params) {
+		return this.check(/* @__PURE__ */ _ksuid(ZodKSUID, params));
+	},
+	ipv4(params) {
+		return this.check(/* @__PURE__ */ _ipv4(ZodIPv4, params));
+	},
+	ipv6(params) {
+		return this.check(/* @__PURE__ */ _ipv6(ZodIPv6, params));
+	},
+	cidrv4(params) {
+		return this.check(/* @__PURE__ */ _cidrv4(ZodCIDRv4, params));
+	},
+	cidrv6(params) {
+		return this.check(/* @__PURE__ */ _cidrv6(ZodCIDRv6, params));
+	},
+	e164(params) {
+		return this.check(/* @__PURE__ */ _e164(ZodE164, params));
+	},
+	datetime(params) {
+		return this.check(/* @__PURE__ */ _isoDateTime(ZodISODateTime, params));
+	},
+	date(params) {
+		return this.check(/* @__PURE__ */ _isoDate(ZodISODate, params));
+	},
+	time(params) {
+		return this.check(/* @__PURE__ */ _isoTime(ZodISOTime, params));
+	},
+	duration(params) {
+		return this.check(/* @__PURE__ */ _isoDuration(ZodISODuration, params));
+	}
 });
 function string(params) {
 	return /* @__PURE__ */ _string(ZodString, params);
@@ -20217,6 +21402,22 @@ function string(params) {
 var ZodStringFormat = /*@__PURE__*/ $constructor("ZodStringFormat", (inst, def) => {
 	$ZodStringFormat.init(inst, def);
 	_ZodString.init(inst, def);
+});
+var ZodISODateTime = /*@__PURE__*/ $constructor("ZodISODateTime", (inst, def) => {
+	$ZodISODateTime.init(inst, def);
+	ZodStringFormat.init(inst, def);
+});
+var ZodISODate = /*@__PURE__*/ $constructor("ZodISODate", (inst, def) => {
+	$ZodISODate.init(inst, def);
+	ZodStringFormat.init(inst, def);
+});
+var ZodISOTime = /*@__PURE__*/ $constructor("ZodISOTime", (inst, def) => {
+	$ZodISOTime.init(inst, def);
+	ZodStringFormat.init(inst, def);
+});
+var ZodISODuration = /*@__PURE__*/ $constructor("ZodISODuration", (inst, def) => {
+	$ZodISODuration.init(inst, def);
+	ZodStringFormat.init(inst, def);
 });
 var ZodEmail = /*@__PURE__*/ $constructor("ZodEmail", (inst, def) => {
 	$ZodEmail.init(inst, def);
@@ -20303,60 +21504,68 @@ var ZodNumber = /*@__PURE__*/ $constructor("ZodNumber", (inst, def) => {
 	$ZodNumber.init(inst, def);
 	ZodType.init(inst, def);
 	inst._zod.processJSONSchema = (ctx, json, params) => numberProcessor(inst, ctx, json, params);
-	_installLazyMethods(inst, "ZodNumber", {
-		gt(value, params) {
-			return this.check(/* @__PURE__ */ _gt(value, params));
-		},
-		gte(value, params) {
-			return this.check(/* @__PURE__ */ _gte(value, params));
-		},
-		min(value, params) {
-			return this.check(/* @__PURE__ */ _gte(value, params));
-		},
-		lt(value, params) {
-			return this.check(/* @__PURE__ */ _lt(value, params));
-		},
-		lte(value, params) {
-			return this.check(/* @__PURE__ */ _lte(value, params));
-		},
-		max(value, params) {
-			return this.check(/* @__PURE__ */ _lte(value, params));
-		},
-		int(params) {
-			return this.check(int(params));
-		},
-		safe(params) {
-			return this.check(int(params));
-		},
-		positive(params) {
-			return this.check(/* @__PURE__ */ _gt(0, params));
-		},
-		nonnegative(params) {
-			return this.check(/* @__PURE__ */ _gte(0, params));
-		},
-		negative(params) {
-			return this.check(/* @__PURE__ */ _lt(0, params));
-		},
-		nonpositive(params) {
-			return this.check(/* @__PURE__ */ _lte(0, params));
-		},
-		multipleOf(value, params) {
-			return this.check(/* @__PURE__ */ _multipleOf(value, params));
-		},
-		step(value, params) {
-			return this.check(/* @__PURE__ */ _multipleOf(value, params));
-		},
-		finite() {
-			return this;
-		}
-	});
-	const bag = inst._zod.bag;
-	inst.minValue = Math.max(bag.minimum ?? Number.NEGATIVE_INFINITY, bag.exclusiveMinimum ?? Number.NEGATIVE_INFINITY) ?? null;
-	inst.maxValue = Math.min(bag.maximum ?? Number.POSITIVE_INFINITY, bag.exclusiveMaximum ?? Number.POSITIVE_INFINITY) ?? null;
-	inst.isInt = (bag.format ?? "").includes("int") || Number.isSafeInteger(bag.multipleOf ?? .5);
 	inst.isFinite = true;
-	inst.format = bag.format ?? null;
-});
+}, /*@__PURE__*/ derived({
+	minValue: (inst) => {
+		const { minimum, exclusiveMinimum } = aggregateChecks(inst);
+		return Math.max(minimum ?? Number.NEGATIVE_INFINITY, exclusiveMinimum ?? Number.NEGATIVE_INFINITY);
+	},
+	maxValue: (inst) => {
+		const { maximum, exclusiveMaximum } = aggregateChecks(inst);
+		return Math.min(maximum ?? Number.POSITIVE_INFINITY, exclusiveMaximum ?? Number.POSITIVE_INFINITY);
+	},
+	isInt: (inst) => {
+		const { isInt, multipleOf } = aggregateChecks(inst);
+		return !!isInt || !!multipleOf?.some(Number.isSafeInteger);
+	},
+	format: (inst) => aggregateChecks(inst).format ?? null
+}, {
+	gt(value, params) {
+		return this.check(/* @__PURE__ */ _gt(value, params));
+	},
+	gte(value, params) {
+		return this.check(/* @__PURE__ */ _gte(value, params));
+	},
+	min(value, params) {
+		return this.check(/* @__PURE__ */ _gte(value, params));
+	},
+	lt(value, params) {
+		return this.check(/* @__PURE__ */ _lt(value, params));
+	},
+	lte(value, params) {
+		return this.check(/* @__PURE__ */ _lte(value, params));
+	},
+	max(value, params) {
+		return this.check(/* @__PURE__ */ _lte(value, params));
+	},
+	int(params) {
+		return this.check(int(params));
+	},
+	safe(params) {
+		return this.check(int(params));
+	},
+	positive(params) {
+		return this.check(/* @__PURE__ */ _gt(0, params));
+	},
+	nonnegative(params) {
+		return this.check(/* @__PURE__ */ _gte(0, params));
+	},
+	negative(params) {
+		return this.check(/* @__PURE__ */ _lt(0, params));
+	},
+	nonpositive(params) {
+		return this.check(/* @__PURE__ */ _lte(0, params));
+	},
+	multipleOf(value, params) {
+		return this.check(/* @__PURE__ */ _multipleOf(value, params));
+	},
+	step(value, params) {
+		return this.check(/* @__PURE__ */ _multipleOf(value, params));
+	},
+	finite() {
+		return this;
+	}
+}));
 function number(params) {
 	return /* @__PURE__ */ _number(ZodNumber, params);
 }
@@ -20392,94 +21601,80 @@ function never(params) {
 	return /* @__PURE__ */ _never(ZodNever, params);
 }
 var ZodArray = /*@__PURE__*/ $constructor("ZodArray", (inst, def) => {
+	_ensureDefaultMemoizer();
 	$ZodArray.init(inst, def);
 	ZodType.init(inst, def);
 	inst._zod.processJSONSchema = (ctx, json, params) => arrayProcessor(inst, ctx, json, params);
 	inst.element = def.element;
-	_installLazyMethods(inst, "ZodArray", {
-		min(n, params) {
-			return this.check(/* @__PURE__ */ _minLength(n, params));
-		},
-		nonempty(params) {
-			return this.check(/* @__PURE__ */ _minLength(1, params));
-		},
-		max(n, params) {
-			return this.check(/* @__PURE__ */ _maxLength(n, params));
-		},
-		length(n, params) {
-			return this.check(/* @__PURE__ */ _length(n, params));
-		},
-		unwrap() {
-			return this.element;
-		}
-	});
+}, {
+	min(n, params) {
+		return this.check(/* @__PURE__ */ _minLength(n, params));
+	},
+	nonempty(params) {
+		return this.check(/* @__PURE__ */ _minLength(1, params));
+	},
+	max(n, params) {
+		return this.check(/* @__PURE__ */ _maxLength(n, params));
+	},
+	length(n, params) {
+		return this.check(/* @__PURE__ */ _length(n, params));
+	},
+	unwrap() {
+		return this.element;
+	}
 });
 function array(element, params) {
 	return /* @__PURE__ */ _array(ZodArray, element, params);
 }
 var ZodObject = /*@__PURE__*/ $constructor("ZodObject", (inst, def) => {
+	_ensureDefaultMemoizer();
 	$ZodObjectJIT.init(inst, def);
 	ZodType.init(inst, def);
 	inst._zod.processJSONSchema = (ctx, json, params) => objectProcessor(inst, ctx, json, params);
-	defineLazy(inst, "shape", () => {
-		return def.shape;
-	});
-	_installLazyMethods(inst, "ZodObject", {
-		keyof() {
-			return _enum(Object.keys(this._zod.def.shape));
-		},
-		catchall(catchall) {
-			return this.clone({
-				...this._zod.def,
-				catchall
-			});
-		},
-		passthrough() {
-			return this.clone({
-				...this._zod.def,
-				catchall: unknown()
-			});
-		},
-		loose() {
-			return this.clone({
-				...this._zod.def,
-				catchall: unknown()
-			});
-		},
-		strict() {
-			return this.clone({
-				...this._zod.def,
-				catchall: never()
-			});
-		},
-		strip() {
-			return this.clone({
-				...this._zod.def,
-				catchall: void 0
-			});
-		},
-		extend(incoming) {
-			return extend(this, incoming);
-		},
-		safeExtend(incoming) {
-			return safeExtend(this, incoming);
-		},
-		merge(other) {
-			return merge(this, other);
-		},
-		pick(mask) {
-			return pick(this, mask);
-		},
-		omit(mask) {
-			return omit(this, mask);
-		},
-		partial(...args) {
-			return partial(ZodOptional, this, args[0]);
-		},
-		required(...args) {
-			return required(ZodNonOptional, this, args[0]);
-		}
-	});
+	installLazyProp(inst, "shape", (self) => self._zod.def.shape, false);
+}, {
+	keyof() {
+		return _enum(Object.keys(this._zod.def.shape));
+	},
+	catchall(catchall) {
+		return this.clone(mergeDefs(this._zod.def, { catchall }));
+	},
+	passthrough() {
+		return this.clone(mergeDefs(this._zod.def, { catchall: unknown() }));
+	},
+	loose() {
+		return this.clone(mergeDefs(this._zod.def, { catchall: unknown() }));
+	},
+	strict() {
+		return this.clone(mergeDefs(this._zod.def, { catchall: never() }));
+	},
+	strip() {
+		return this.clone(mergeDefs(this._zod.def, { catchall: void 0 }));
+	},
+	extend(incoming) {
+		return extend(this, incoming);
+	},
+	safeExtend(incoming) {
+		return safeExtend(this, incoming);
+	},
+	merge(other) {
+		return merge(this, other);
+	},
+	pick(mask) {
+		return pick(this, mask);
+	},
+	omit(mask) {
+		return omit(this, mask);
+	},
+	partial(...args) {
+		return partial(ZodOptional, this, args[0]);
+	},
+	exactPartial(...args) {
+		return partial(ZodExactOptional, this, args[0], "exactPartial");
+	},
+	required(...args) {
+		return required(ZodNonOptional, this, args[0]);
+	}
 });
 function object(shape, params) {
 	return new ZodObject({
@@ -20518,7 +21713,7 @@ var ZodEnum = /*@__PURE__*/ $constructor("ZodEnum", (inst, def) => {
 	ZodType.init(inst, def);
 	inst._zod.processJSONSchema = (ctx, json, params) => enumProcessor(inst, ctx, json, params);
 	inst.enum = def.entries;
-	inst.options = Object.values(def.entries);
+	inst.options = [...inst._zod.values];
 	const keys = new Set(Object.keys(def.entries));
 	inst.extract = (values, params) => {
 		const newEntries = {};
@@ -20568,6 +21763,7 @@ function literal(value, params) {
 	});
 }
 var ZodTransform = /*@__PURE__*/ $constructor("ZodTransform", (inst, def) => {
+	_ensureDefaultMemoizer();
 	$ZodTransform.init(inst, def);
 	ZodType.init(inst, def);
 	inst._zod.processJSONSchema = (ctx, json, params) => transformProcessor(inst, ctx, json, params);
@@ -20579,7 +21775,7 @@ var ZodTransform = /*@__PURE__*/ $constructor("ZodTransform", (inst, def) => {
 				const _issue = issue$1;
 				if (_issue.fatal) _issue.continue = false;
 				_issue.code ?? (_issue.code = "custom");
-				_issue.input ?? (_issue.input = payload.value);
+				if (!("input" in _issue)) _issue.input = payload.value;
 				_issue.inst ?? (_issue.inst = inst);
 				payload.issues.push(issue(_issue));
 			}
@@ -20587,11 +21783,9 @@ var ZodTransform = /*@__PURE__*/ $constructor("ZodTransform", (inst, def) => {
 		const output = def.transform(payload.value, payload);
 		if (output instanceof Promise) return output.then((output) => {
 			payload.value = output;
-			payload.fallback = true;
 			return payload;
 		});
 		payload.value = output;
-		payload.fallback = true;
 		return payload;
 	};
 });
@@ -20692,7 +21886,7 @@ function _catch(innerType, catchValue) {
 	return new ZodCatch({
 		type: "catch",
 		innerType,
-		catchValue: typeof catchValue === "function" ? catchValue : () => catchValue
+		catchValue: typeof catchValue === "function" ? catchValue : constantCatch(catchValue)
 	});
 }
 var ZodPipe = /*@__PURE__*/ $constructor("ZodPipe", (inst, def) => {
@@ -20732,14 +21926,14 @@ function refine(fn, _params = {}) {
 function superRefine(fn, params) {
 	return /* @__PURE__ */ _superRefine(fn, params);
 }
-// src/shared/constants/runtime.ts
+// node_modules/.cache/host-build/shared/constants/runtime.js
 var PackageId = "dsh-openai-codex-auth";
 var ServiceKey = "openai-codex-auth";
 var RemoteNamespace = "openaiCodex";
 var ProviderRoute = "openai-codex";
 var CredentialRef = "PI_OAUTH_OPENAI_CODEX";
 var ResetStorageKey = "dsh-openai-codex-auth.pending-reset";
-// src/host/provider.ts
+// node_modules/.cache/host-build/host/provider.js
 var SELECTABLE_REASONING_LEVELS = [
 	"low",
 	"medium",
@@ -20828,7 +22022,7 @@ function createCodexProvider(networkOptions, modelSettings = []) {
 		}
 	};
 }
-// src/host/system-proxy.ts
+// node_modules/.cache/host-build/host/system-proxy.js
 var registryKey = "HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Internet Settings";
 var SYSTEM_PROXY_ERROR = "Windows manual HTTP/HTTPS system proxy is unavailable. PAC is not supported; configure a manual proxy or follow DSH.";
 /** Читает только ручной прокси WinINET текущего пользователя, не раскрывая адреса в интерфейсе. */
@@ -20941,7 +22135,7 @@ function systemOAuth(policy, operation, credential, interaction = {}, workers = 
 		};
 		const worker = new Worker(new URL(
 			/* @vite-ignore */
-			"/assets/system-proxy-worker-BSMpnXiE.js",
+			"/assets/system-proxy-worker-CubgAcfl.js",
 			"" + import.meta.url
 		), { workerData: data });
 		workers.add(worker);
@@ -20975,7 +22169,7 @@ function systemOAuth(policy, operation, credential, interaction = {}, workers = 
 		});
 	});
 }
-// src/host/proxy-manager.ts
+// node_modules/.cache/host-build/host/proxy-manager.js
 /** Удерживает прежний транспорт, пока все начатые запросы и OAuth-операции не завершатся. */
 function createProxyManager(initialMode, hostOAuth, dependencies = {}) {
 	const read = dependencies.read ?? readSystemProxy;
@@ -21111,37 +22305,181 @@ function createProxyManager(initialMode, hostOAuth, dependencies = {}) {
 		}
 	};
 }
-// src/host/remote-service.ts
-/** Экспортирует только проверяемые снимки и команды управления, без OAuth-секретов. */
-var OpenAICodexRemoteService = class extends TypertRemoteService {
-	handlers;
-	constructor(ctx, handlers) {
-		super(ctx, ServiceKey, { namespace: RemoteNamespace });
-		this.handlers = handlers;
-	}
-	@Remote snapshot() {
-		return this.handlers.snapshot();
-	}
-	@Remote startLogin() {
-		return this.handlers.startLogin();
-	}
-	@Remote logout() {
-		return this.handlers.logout();
-	}
-	@Remote followHostProxy() {
-		return this.handlers.followHostProxy();
-	}
-	@Remote useSystemProxy() {
-		return this.handlers.useSystemProxy();
-	}
-	@Remote consumeReset(input) {
-		return this.handlers.consumeReset(input);
-	}
-	@Remote saveModels(models) {
-		return this.handlers.saveModels(models);
-	}
+// node_modules/.cache/host-build/host/remote-service.js
+var __runInitializers = function(thisArg, initializers, value) {
+	var useValue = arguments.length > 2;
+	for (var i = 0; i < initializers.length; i++) value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
+	return useValue ? value : void 0;
 };
-// src/host/usage.ts
+var __esDecorate = function(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+	function accept(f) {
+		if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
+		return f;
+	}
+	var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
+	var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
+	var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
+	var _, done = false;
+	for (var i = decorators.length - 1; i >= 0; i--) {
+		var context = {};
+		for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
+		for (var p in contextIn.access) context.access[p] = contextIn.access[p];
+		context.addInitializer = function(f) {
+			if (done) throw new TypeError("Cannot add initializers after decoration has completed");
+			extraInitializers.push(accept(f || null));
+		};
+		var result = (0, decorators[i])(kind === "accessor" ? {
+			get: descriptor.get,
+			set: descriptor.set
+		} : descriptor[key], context);
+		if (kind === "accessor") {
+			if (result === void 0) continue;
+			if (result === null || typeof result !== "object") throw new TypeError("Object expected");
+			if (_ = accept(result.get)) descriptor.get = _;
+			if (_ = accept(result.set)) descriptor.set = _;
+			if (_ = accept(result.init)) initializers.unshift(_);
+		} else if (_ = accept(result)) {
+			if (kind === "field") initializers.unshift(_);
+			else descriptor[key] = _;
+		}
+	}
+	if (target) Object.defineProperty(target, contextIn.name, descriptor);
+	done = true;
+};
+/** Экспортирует только проверяемые снимки и команды управления, без OAuth-секретов. */
+var OpenAICodexRemoteService = (() => {
+	let _classSuper = TypertRemoteService;
+	let _instanceExtraInitializers = [];
+	let _snapshot_decorators;
+	let _startLogin_decorators;
+	let _logout_decorators;
+	let _followHostProxy_decorators;
+	let _useSystemProxy_decorators;
+	let _consumeReset_decorators;
+	let _saveModels_decorators;
+	return class OpenAICodexRemoteService extends _classSuper {
+		static {
+			const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
+			_snapshot_decorators = [Remote];
+			_startLogin_decorators = [Remote];
+			_logout_decorators = [Remote];
+			_followHostProxy_decorators = [Remote];
+			_useSystemProxy_decorators = [Remote];
+			_consumeReset_decorators = [Remote];
+			_saveModels_decorators = [Remote];
+			__esDecorate(this, null, _snapshot_decorators, {
+				kind: "method",
+				name: "snapshot",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "snapshot" in obj,
+					get: (obj) => obj.snapshot
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _startLogin_decorators, {
+				kind: "method",
+				name: "startLogin",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "startLogin" in obj,
+					get: (obj) => obj.startLogin
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _logout_decorators, {
+				kind: "method",
+				name: "logout",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "logout" in obj,
+					get: (obj) => obj.logout
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _followHostProxy_decorators, {
+				kind: "method",
+				name: "followHostProxy",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "followHostProxy" in obj,
+					get: (obj) => obj.followHostProxy
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _useSystemProxy_decorators, {
+				kind: "method",
+				name: "useSystemProxy",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "useSystemProxy" in obj,
+					get: (obj) => obj.useSystemProxy
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _consumeReset_decorators, {
+				kind: "method",
+				name: "consumeReset",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "consumeReset" in obj,
+					get: (obj) => obj.consumeReset
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _saveModels_decorators, {
+				kind: "method",
+				name: "saveModels",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "saveModels" in obj,
+					get: (obj) => obj.saveModels
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			if (_metadata) Object.defineProperty(this, Symbol.metadata, {
+				enumerable: true,
+				configurable: true,
+				writable: true,
+				value: _metadata
+			});
+		}
+		handlers = __runInitializers(this, _instanceExtraInitializers);
+		constructor(ctx, handlers) {
+			super(ctx, ServiceKey, { namespace: RemoteNamespace });
+			this.handlers = handlers;
+		}
+		snapshot() {
+			return this.handlers.snapshot();
+		}
+		startLogin() {
+			return this.handlers.startLogin();
+		}
+		logout() {
+			return this.handlers.logout();
+		}
+		followHostProxy() {
+			return this.handlers.followHostProxy();
+		}
+		useSystemProxy() {
+			return this.handlers.useSystemProxy();
+		}
+		consumeReset(input) {
+			return this.handlers.consumeReset(input);
+		}
+		saveModels(models) {
+			return this.handlers.saveModels(models);
+		}
+	};
+})();
+// node_modules/.cache/host-build/host/usage.js
 var CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
 var REQUEST_TIMEOUT_MS = 1e4;
 var MAX_RESPONSE_BYTES = 1048576;
@@ -21237,7 +22575,7 @@ async function requestCodexUsage(credential, fetchImpl = globalThis.fetch, now =
 	}
 	return parseCodexUsage(await readUsageJson(response), now);
 }
-// src/host/reset-credits.ts
+// node_modules/.cache/host-build/host/reset-credits.js
 var RESET_CREDITS_URL = "https://chatgpt.com/backend-api/wham/rate-limit-reset-credits";
 var RESET_CODES = [
 	"reset",
@@ -21348,7 +22686,7 @@ function createResetRedeemer() {
 		return currentEntry.promise;
 	};
 }
-// src/host/index.ts
+// node_modules/.cache/host-build/host/index.js
 var Config = object({
 	proxyMode: _enum(["host", "system"]).default("host"),
 	disabledModels: array(string()).default([]),
@@ -22005,7 +23343,7 @@ var OpenAICodexAuthService = class {
 };
 var name = PackageId;
 var inject = OpenAICodexAuthService.inject;
-// src/shared/remote.ts
+// node_modules/.cache/host-build/shared/remote.js
 var ResetRequestSchema = object({
 	creditId: string().regex(/^[A-Za-z0-9_-]{1,200}$/),
 	idempotencyKey: string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),

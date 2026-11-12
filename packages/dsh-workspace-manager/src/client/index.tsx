@@ -27,10 +27,12 @@ export const inject = ['slots', 'locale', 'workspaces', 'uiWorkspace'];
 
 export function apply(context: DshClientContext & WorkspaceManagerClientContext): void {
     const editRequest = createSnapshotStore<WorkspaceEditTarget | undefined>(undefined);
-    const workspaceSnapshot = createSnapshotStore<WorkspaceSnapshot>({ items: [] });
-    const t = context.locale.bind('addir');
+    const workspaceSnapshot = createSnapshotStore<WorkspaceSnapshot>({
+        items: []
+    });
+    const t = context.locale.bind('dsh-workspace-manager');
 
-    context.effect(() => context.locale.register('addir', { en, ru }), 'workspace-manager: localized copy');
+    context.effect(() => context.locale.register('dsh-workspace-manager', { en, ru }), 'workspace-manager: localized copy');
     ensureWorkspaceManagerStyles();
 
     context.effect(

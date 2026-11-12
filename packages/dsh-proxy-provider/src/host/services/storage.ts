@@ -11,7 +11,7 @@ import { normalizeProxyConfig, serializeConfigForDisk } from './configNormalizer
 export function resolveStoragePath(customStoragePath?: string): string {
     if (customStoragePath) return customStoragePath;
     const dshHome = process.env.DSH_HOME || join(homedir(), '.dsh');
-    return join(dshHome, 'kalex-provider-proxy.json');
+    return join(dshHome, 'dsh-proxy-provider.json');
 }
 
 /**
