@@ -4,7 +4,8 @@
         "composite": true,
         "rootDir": "../../../packages/dsh-proxy-provider/src",
         "outDir": "../../../packages/dsh-proxy-provider/lib",
-        "tsBuildInfoFile": "../../../packages/dsh-proxy-provider/tsconfig.tsbuildinfo",
+        "declarationDir": "../../../node_modules/.cache/dsh-proxy-provider/types",
+        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-proxy-provider/tsconfig.tsbuildinfo",
         "types": ["node"]
     },
     "include": ["../../../packages/dsh-proxy-provider/src/**/*"],

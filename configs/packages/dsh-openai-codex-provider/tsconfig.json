@@ -1,0 +1,13 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../../packages/dsh-openai-codex-provider/src",
+        "outDir": "../../../packages/dsh-openai-codex-provider/lib",
+        "declarationDir": "../../../node_modules/.cache/dsh-openai-codex-provider/types",
+        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-openai-codex-provider/tsconfig.tsbuildinfo",
+        "types": ["node"]
+    },
+    "include": ["../../../packages/dsh-openai-codex-provider/src/**/*"],
+    "references": [{ "path": "../dsh-core/tsconfig.json" }]
+}

@@ -1,0 +1,144 @@
+.panel {
+    display: grid;
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    container-type: inline-size;
+    color: var(--dsh-ui-text, var(--dsw-alias-label-primary));
+}
+
+.header,
+.actions,
+.usageRow,
+.modelRow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.header,
+.actions,
+.usageRow {
+    flex-wrap: wrap;
+}
+
+.grow {
+    flex: 1 1 180px;
+    min-width: 0;
+}
+
+.panel h2,
+.panel h3,
+.panel p {
+    margin: 0;
+}
+
+.panel h2,
+.panel h3 {
+    font-size: 1rem;
+}
+
+.panel p {
+    color: var(--dsh-ui-muted, var(--dsw-alias-label-secondary));
+    overflow-wrap: anywhere;
+}
+
+.card {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--dsh-ui-border, var(--dsw-alias-border-l1));
+    border-radius: 12px;
+    background: var(--dsh-ui-surface, var(--dsw-alias-bg-layer-1));
+}
+
+.usageRow {
+    justify-content: space-between;
+    padding-block: 6px;
+    border-top: 1px solid var(--dsh-ui-border, var(--dsw-alias-border-l1));
+}
+
+.usageRow > * {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.error {
+    color: var(--dsh-ui-danger, var(--dsw-alias-state-error-primary)) !important;
+}
+
+.loading {
+    display: grid;
+    min-height: 64px;
+    place-items: center;
+}
+
+.modalBody {
+    display: grid;
+    gap: 12px;
+    max-width: min(680px, calc(100vw - 32px));
+    max-height: min(75vh, 720px);
+    overflow: auto;
+    padding: 16px;
+}
+
+.modelRow {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding-block: 8px;
+    border-top: 1px solid var(--dsh-ui-border, var(--dsw-alias-border-l1));
+}
+
+.modelRow label {
+    display: grid;
+    gap: 6px;
+}
+
+.modelActions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.modelRow input:not([type="checkbox"]) {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    border: 1px solid var(--dsh-ui-border-strong, var(--dsw-alias-border-l2));
+    border-radius: 8px;
+    padding: 8px;
+    color: var(--dsh-ui-text, var(--dsw-alias-label-primary));
+    background: var(--dsh-ui-bg-page, var(--dsw-alias-bg-base));
+}
+
+.checkLabel {
+    display: flex !important;
+    align-items: center;
+}
+
+.panel button:focus-visible,
+.panel a:focus-visible,
+.modalBody input:focus-visible {
+    outline: 2px solid var(--dsh-ui-accent, var(--dsw-alias-brand-primary));
+    outline-offset: 2px;
+}
+
+@container (max-width: 480px) {
+    .header,
+    .modelRow {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .usageRow {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .actions > * {
+        flex: 1 1 auto;
+    }
+}

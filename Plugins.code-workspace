@@ -17,6 +17,10 @@
       "path": "packages/dsh-workspace-manager",
     },
     {
+      "name": "OpenAI",
+      "path": "packages/dsh-openai-codex-provider",
+    },
+    {
       "name": "Root",
       "path": ".",
     },

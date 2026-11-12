@@ -53,22 +53,7 @@ for (const violation of violations) console.error(`[check] ${violation}`);
 let failed = violations.length > 0;
 const tools = [
     ['TypeScript', ['typecheck']],
-    [
-        'Oxlint',
-        [
-            'exec',
-            'oxlint',
-            '--ignore-pattern',
-            '**/lib/**',
-            '--ignore-pattern',
-            '**/dist/**',
-            '-c',
-            'configs/oxlint.json',
-            'packages',
-            'scripts'
-        ]
-    ],
-    ['Biome', ['exec', 'biome', 'check', '--config-path=configs/biome.json', 'packages', 'scripts', 'configs']]
+    ['Lint', ['lint']]
 ];
 
 for (const [name, args] of tools) {

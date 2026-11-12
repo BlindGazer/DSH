@@ -4,14 +4,10 @@
         "composite": true,
         "rootDir": "../../../packages/dsh-agents-router/src",
         "outDir": "../../../packages/dsh-agents-router/lib",
-        "tsBuildInfoFile": "../../../packages/dsh-agents-router/tsconfig.tsbuildinfo",
-        "types": ["node"],
-        "strict": true
+        "declarationDir": "../../../node_modules/.cache/dsh-agents-router/types",
+        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-agents-router/tsconfig.tsbuildinfo",
+        "types": ["node"]
     },
     "include": ["../../../packages/dsh-agents-router/src/**/*"],
-    "references": [
-        {
-            "path": "../dsh-core/tsconfig.json"
-        }
-    ]
+    "references": [{ "path": "../dsh-core/tsconfig.json" }]
 }

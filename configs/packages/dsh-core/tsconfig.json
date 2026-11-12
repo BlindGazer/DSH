@@ -4,7 +4,9 @@
         "composite": true,
         "rootDir": "../../../packages/dsh-core/src",
         "outDir": "../../../packages/dsh-core/lib",
-        "tsBuildInfoFile": "../../../packages/dsh-core/tsconfig.tsbuildinfo"
+        "declarationDir": "../../../node_modules/.cache/dsh-core/types",
+        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-core/tsconfig.tsbuildinfo",
+        "types": ["node"]
     },
     "include": ["../../../packages/dsh-core/src/**/*"]
 }

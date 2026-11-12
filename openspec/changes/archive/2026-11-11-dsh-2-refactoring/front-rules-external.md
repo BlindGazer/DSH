@@ -4,7 +4,7 @@ description: Требования к написанию фронтового к�
 
 # Frontend agent rules (TS/React)
 
-Compiled from the files listed in `doc/Front/readme.md`: `doc/Front/style-guides.md` (sections 1-11), `doc/Front/back-sync-rules.md` (section 12), `doc/Front/table-rules.md` (section 13). Rules are final; do not re-read the sources.
+Compiled from the files listed in `docs/Front/readme.md`: `docs/Front/style-guides.md` (sections 1-11), `docs/Front/back-sync-rules.md` (section 12), `docs/Front/table-rules.md` (section 13). Rules are final; do not re-read the sources.
 Read `.cursor/skills/react-best-practices/SKILL.md` (index only), then only the `rules/*.md` files relevant to the task; do not read the whole folder. If a rule is already loaded, do not read it again.
 Read `.cursor/rules/ponytail.mdc`.
 On conflict this file wins over `.cursor/skills/react-best-practices` or `.cursor/rules/ponytail.mdc`

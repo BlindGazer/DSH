@@ -14,14 +14,11 @@
   },
   "type": "module",
   "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
-      "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
     "./client": {
-      "types": "./lib/client.d.ts",
       "default": "./lib/client.js"
     },
     "./cordis.patch.yml": "./cordis.patch.yml",
@@ -72,11 +69,11 @@
     "dsh": ">=0.2.2-rc.1"
   },
   "scripts": {
-    "build": "node scripts/build.ts && tsc --build --force --emitDeclarationOnly ../../configs/packages/dsh-workspace-manager/tsconfig.json",
+    "build": "node scripts/build.ts",
     "build:client": "vite build --config ../../configs/packages/dsh-workspace-manager/vite.config.ts",
     "build:host": "vite build --config ../../configs/packages/dsh-workspace-manager/vite.config.host.ts",
     "test": "vitest run --config ../../configs/packages/dsh-workspace-manager/vitest.config.ts",
-    "typecheck": "tsc --build --force --pretty false ../../configs/packages/dsh-workspace-manager/tsconfig.json",
+    "typecheck": "tsc --build --force --emitDeclarationOnly --pretty false ../../configs/packages/dsh-workspace-manager/tsconfig.json",
     "verify": "node scripts/check-client-bundle.ts",
     "check": "pnpm run build && pnpm run test && pnpm run verify"
   },

@@ -6,7 +6,7 @@ Shared design system, UI components, and utilities for **DeepSeek Harness (DSH)*
 
 Provides shared interface components, themes, and utilities so DSH plugins can maintain a consistent appearance and avoid duplicating common logic.
 
-- [Commands and usage](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/doc/Setup_EN.md) | [Команды и использование](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/doc/Setup.md)
+- [Commands and usage](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/Setup_EN.md) | [Команды и использование](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/Setup.md)
 
 ---
 

@@ -271,64 +271,83 @@ function _(t) {
 }
 // src/components/Modal/Modal.tsx
 function v(e) {
-	let n = (0, l.c)(24), { open: r, onClose: i, title: s, headerExtra: c, closeLabel: f, theme: p, backdropClassName: m, cardClassName: h, children: g } = e, _ = f === void 0 ? "Close" : f, v = p === void 0 ? "dark" : p, y, b;
-	if (n[0] !== i || n[1] !== r ? (y = () => {
-		if (!r || typeof document > "u") return;
-		let e = (e) => {
-			e.key === "Escape" && i();
+	let r = (0, l.c)(27), { open: i, onClose: s, title: c, headerExtra: f, closeLabel: p, theme: m, backdropClassName: h, cardClassName: g, children: _ } = e, v = p === void 0 ? "Close" : p, b = n(void 0), x = n(s), S, C;
+	r[0] === s ? (S = r[1], C = r[2]) : (S = () => {
+		x.current = s;
+	}, C = [s], r[0] = s, r[1] = S, r[2] = C), t(S, C);
+	let w, T;
+	if (r[3] === i ? (w = r[4], T = r[5]) : (w = () => {
+		if (!i || typeof document > "u") return;
+		let e = document.activeElement, t = b.current, n = () => Array.from(t?.querySelectorAll("a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex=\"-1\"])") ?? []).filter(y), r = (e) => {
+			if (e.key === "Escape") {
+				x.current();
+				return;
+			}
+			if (e.key !== "Tab" || !t) return;
+			let r = n(), i = r[0], a = r.at(-1);
+			!i || !a ? (e.preventDefault(), t.focus()) : e.shiftKey && (document.activeElement === i || !t.contains(document.activeElement)) ? (e.preventDefault(), a.focus()) : e.shiftKey || document.activeElement !== a && t.contains(document.activeElement) || (e.preventDefault(), i.focus());
 		};
-		return document.addEventListener("keydown", e), () => {
-			document.removeEventListener("keydown", e);
+		return n()[0]?.focus(), document.addEventListener("keydown", r), () => {
+			document.removeEventListener("keydown", r), e instanceof HTMLElement && e.isConnected && e.focus();
 		};
-	}, b = [r, i], n[0] = i, n[1] = r, n[2] = y, n[3] = b) : (y = n[2], b = n[3]), t(y, b), !r) return;
-	let x;
-	n[4] === m ? x = n[5] : (x = d("dsh-modal-backdrop", "ar-modal", "kpp-modal-backdrop", m), n[4] = m, n[5] = x);
-	let S;
-	n[6] === i ? S = n[7] : (S = /* @__PURE__ */ a("button", {
+	}, T = [i], r[3] = i, r[4] = w, r[5] = T), t(w, T), !i) return;
+	let E;
+	r[6] === h ? E = r[7] : (E = d("dsh-modal-backdrop", "ar-modal", "kpp-modal-backdrop", h), r[6] = h, r[7] = E);
+	let D;
+	r[8] === s ? D = r[9] : (D = /* @__PURE__ */ a("button", {
 		type: "button",
 		className: "dsh-modal-backdrop-control",
 		"aria-hidden": "true",
 		tabIndex: -1,
-		onClick: i
-	}), n[6] = i, n[7] = S);
-	let C;
-	n[8] === h ? C = n[9] : (C = d("dsh-modal-card", "ar-modal-card", "kpp-modal", h), n[8] = h, n[9] = C);
-	let w;
-	n[10] !== _ || n[11] !== c || n[12] !== i || n[13] !== s ? (w = s !== void 0 || c !== void 0 ? /* @__PURE__ */ o("div", {
+		onClick: s
+	}), r[8] = s, r[9] = D);
+	let O;
+	r[10] === Symbol.for("react.memo_cache_sentinel") ? (O = (e) => {
+		b.current = e ?? void 0;
+	}, r[10] = O) : O = r[10];
+	let k;
+	r[11] === g ? k = r[12] : (k = d("dsh-modal-card", "ar-modal-card", "kpp-modal", g), r[11] = g, r[12] = k);
+	let A;
+	r[13] !== v || r[14] !== f || r[15] !== s || r[16] !== c ? (A = c !== void 0 || f !== void 0 ? /* @__PURE__ */ o("div", {
 		className: "dsh-modal-header kpp-modal-header",
 		children: [/* @__PURE__ */ a("div", {
 			className: "dsh-modal-title kpp-modal-title",
-			children: s
+			children: c
 		}), /* @__PURE__ */ o("div", {
 			className: "dsh-modal-actions ar-settings-header-right",
-			children: [c, /* @__PURE__ */ a("button", {
+			children: [f, /* @__PURE__ */ a("button", {
 				type: "button",
 				"data-testid": u.Common.ModalClose,
 				className: "dsh-btn dsh-btn-sm kpp-btn kpp-btn-ghost",
-				"aria-label": _,
-				onClick: i,
-				children: _
+				"aria-label": v,
+				onClick: s,
+				children: v
 			})]
 		})]
-	}) : void 0, n[10] = _, n[11] = c, n[12] = i, n[13] = s, n[14] = w) : w = n[14];
-	let T;
-	n[15] !== g || n[16] !== C || n[17] !== w ? (T = /* @__PURE__ */ o("div", {
+	}) : void 0, r[13] = v, r[14] = f, r[15] = s, r[16] = c, r[17] = A) : A = r[17];
+	let j;
+	r[18] !== _ || r[19] !== A || r[20] !== k ? (j = /* @__PURE__ */ o("div", {
+		ref: O,
 		role: "dialog",
 		"aria-modal": "true",
+		tabIndex: -1,
 		"data-testid": u.Common.ModalCard,
-		className: C,
-		children: [w, g]
-	}), n[15] = g, n[16] = C, n[17] = w, n[18] = T) : T = n[18];
-	let E;
-	return n[19] !== x || n[20] !== S || n[21] !== T || n[22] !== v ? (E = /* @__PURE__ */ o("div", {
-		"data-theme": v,
+		className: k,
+		children: [A, _]
+	}), r[18] = _, r[19] = A, r[20] = k, r[21] = j) : j = r[21];
+	let M;
+	return r[22] !== j || r[23] !== E || r[24] !== D || r[25] !== m ? (M = /* @__PURE__ */ o("div", {
+		"data-theme": m,
 		"data-testid": u.Common.ModalBackdrop,
-		className: x,
-		children: [S, T]
-	}), n[19] = x, n[20] = S, n[21] = T, n[22] = v, n[23] = E) : E = n[23], E;
+		className: E,
+		children: [D, j]
+	}), r[22] = j, r[23] = E, r[24] = D, r[25] = m, r[26] = M) : M = r[26], M;
+}
+function y(e) {
+	return !e.hasAttribute("hidden") && e.getAttribute("aria-hidden") !== "true";
 }
 // src/components/SwitchControl/SwitchControl.tsx
-function y(e) {
+function b(e) {
 	let t = (0, l.c)(14), { checked: n, onChange: r, disabled: i, labelledBy: o, ariaLabel: s, className: c } = e, f = i !== void 0 && i, p;
 	t[0] === c ? p = t[1] : (p = d("dsh-switch", "ar-settings-switch", c), t[0] = c, t[1] = p);
 	let m;
@@ -352,7 +371,7 @@ function y(e) {
 	}), t[7] = s, t[8] = n, t[9] = f, t[10] = o, t[11] = p, t[12] = m, t[13] = g) : g = t[13], g;
 }
 // src/components/Tabs/Tabs.tsx
-function b(e) {
+function x(e) {
 	let t = (0, l.c)(15), { items: n, activeValue: r, onChange: i, ariaLabel: o, className: s, tabClassName: c } = e, f;
 	t[0] === s ? f = t[1] : (f = d("dsh-tabs", "ar-tabs", s), t[0] = s, t[1] = f);
 	let p;
@@ -383,11 +402,11 @@ function b(e) {
 		children: p
 	}), t[11] = o, t[12] = f, t[13] = p, t[14] = m) : m = t[14], m;
 }
-var x = {
+var S = {
 	scope: "_scope_8lw8c_1",
 	"dsh-pulse": "_dsh-pulse_8lw8c_1",
 	"dsh-spin": "_dsh-spin_8lw8c_290"
-}, S = "._scope_8lw8c_1{--dsh-style-scope:1}.dsh-select,.ar-themed-select,.kpp-dropdown{flex:0 220px;width:220px;min-width:0;max-width:100%;position:relative}.dsh-select-full,.kpp-dropdown-full{flex:auto;width:100%}.dsh-select-trigger,.ar-themed-select-trigger,.kpp-dropdown-trigger{border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-elevated);width:100%;height:32px;min-height:32px;color:var(--dsh-ui-text);font:inherit;text-align:left;cursor:pointer;border-radius:6px;justify-content:space-between;align-items:center;gap:8px;padding:0 10px;font-size:12px;transition:background-color .15s,border-color .15s,box-shadow .15s;display:flex}.dsh-select-trigger:hover:not(:disabled),.ar-themed-select-trigger:hover:not(:disabled),.kpp-dropdown-trigger:hover:not(:disabled){background:var(--dsh-ui-hover)}.dsh-select-trigger:focus-visible,.ar-themed-select-trigger:focus-visible,.kpp-dropdown-trigger:focus-visible{box-shadow:0 0 0 2px var(--dsh-ui-focus-ring);outline:none}.dsh-select-trigger:disabled,.ar-themed-select-trigger:disabled,.kpp-dropdown-trigger:disabled{opacity:.55;cursor:not-allowed}.dsh-select-label,.ar-themed-select-trigger span:first-child{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.dsh-select-menu,.ar-themed-select-menu,.kpp-dropdown-menu{z-index:30;border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-surface);max-height:220px;box-shadow:var(--dsh-ui-shadow-elevated);border-radius:8px;padding:4px;position:absolute;top:calc(100% + 4px);left:0;right:0;overflow:auto}.dsh-select-option,.ar-themed-select-menu button,.kpp-dropdown-item{width:100%;min-height:30px;font:inherit;text-align:left;cursor:pointer;background:0 0;border:0;border-radius:5px;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px;font-size:12px;transition:background-color .12s;display:flex;color:var(--dsh-ui-text)!important}.dsh-select-option:hover,.dsh-select-option.active,.ar-themed-select-menu button:hover,.ar-themed-select-menu button.active,.kpp-dropdown-item:hover,.kpp-dropdown-item-active{background:var(--dsh-ui-hover);color:var(--dsh-ui-text)!important}.dsh-switch,.ar-settings-switch{background:var(--dsh-ui-switch-off);cursor:pointer;border:0;border-radius:999px;align-items:center;width:36px;height:20px;padding:2px;transition:background-color .16s;display:inline-flex;position:relative}.dsh-switch[aria-checked=true],.ar-settings-switch[aria-checked=true]{background:var(--dsh-ui-switch-on)}.dsh-switch:disabled,.ar-settings-switch:disabled{opacity:.5;cursor:not-allowed}.dsh-switch span,.ar-settings-switch span{background:var(--dsh-ui-switch-thumb-off);border-radius:50%;width:16px;height:16px;transition:transform .16s,background-color .16s;display:block}.dsh-switch[aria-checked=true] span,.ar-settings-switch[aria-checked=true] span{background:var(--dsh-ui-switch-thumb-on);transform:translate(16px)}.dsh-btn{border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-elevated);height:32px;min-height:32px;color:var(--dsh-ui-text);font:inherit;white-space:nowrap;cursor:pointer;border-radius:6px;justify-content:center;align-items:center;gap:6px;padding:0 12px;font-size:12px;font-weight:500;transition:background-color .15s,border-color .15s;display:inline-flex}.dsh-btn:hover:not(:disabled){background:var(--dsh-ui-hover)}.dsh-btn:disabled{opacity:.55;cursor:not-allowed}.dsh-btn-primary{background:var(--dsh-ui-primary-bg);color:var(--dsh-ui-primary-fg);border-color:#0000}.dsh-btn-danger{color:var(--dsh-ui-danger);border-color:var(--dsh-ui-danger-soft);background:var(--dsh-ui-danger-soft)}.dsh-btn-sm{height:28px;min-height:28px;padding:0 10px;font-size:11px}.dsh-icon-btn{border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-elevated);width:32px;min-width:32px;height:32px;min-height:32px;color:var(--dsh-ui-text);cursor:pointer;border-radius:6px;flex-shrink:0;justify-content:center;align-items:center;padding:0;transition:background-color .15s;display:inline-flex}.dsh-icon-btn:hover:not(:disabled){background:var(--dsh-ui-hover)}.dsh-tabs{border:1px solid var(--dsh-ui-border);background:var(--dsh-ui-elevated);border-radius:8px;align-items:center;gap:4px;width:fit-content;max-width:100%;padding:3px;display:inline-flex}.dsh-tab{height:28px;color:var(--dsh-ui-muted);font:inherit;cursor:pointer;white-space:nowrap;background:0 0;border:1px solid #0000;border-radius:6px;align-items:center;gap:6px;padding:0 12px;font-size:12px;font-weight:500;transition:background-color .15s,color .15s;display:inline-flex}.dsh-tab.active{background:var(--dsh-ui-surface);color:var(--dsh-ui-text);border-color:var(--dsh-ui-border-strong)}.dsh-modal-backdrop{z-index:1000;background:var(--dsh-ui-backdrop);place-items:center;padding:16px;display:grid;position:fixed;inset:0;overflow:auto}.dsh-modal-backdrop-control{background:0 0;border:0;width:100%;height:100%;padding:0;position:absolute;inset:0}.dsh-modal-card{z-index:1;background:var(--dsh-ui-bg-modal);width:min(760px,100%);max-height:calc(100dvh - 32px);color:var(--dsh-ui-text);border:1px solid var(--dsh-ui-border-strong);box-shadow:var(--dsh-ui-shadow-elevated);border-radius:10px;position:relative;overflow:auto}@keyframes _dsh-pulse_8lw8c_1{0%,to{opacity:.55}50%{opacity:.9}}@keyframes _dsh-spin_8lw8c_290{to{transform:rotate(360deg)}}.dsh-skeleton{background:var(--dsh-ui-elevated);border-radius:6px;animation:1.4s ease-in-out infinite dsh-pulse;display:block}.dsh-spinner{border:2px solid var(--dsh-ui-border-strong);border-top-color:var(--dsh-ui-accent);border-radius:50%;width:14px;height:14px;animation:.75s linear infinite dsh-spin;display:inline-block}.dsh-progress-bar{background:var(--dsh-ui-elevated);border-radius:999px;width:100%;height:3px;position:relative;overflow:hidden}.dsh-progress-bar:after{content:\"\";background:var(--dsh-ui-accent);animation:1.1s ease-in-out infinite dsh-pulse;position:absolute;inset:0}", C = {
+}, C = "._scope_8lw8c_1{--dsh-style-scope:1}.dsh-select,.ar-themed-select,.kpp-dropdown{flex:0 220px;width:220px;min-width:0;max-width:100%;position:relative}.dsh-select-full,.kpp-dropdown-full{flex:auto;width:100%}.dsh-select-trigger,.ar-themed-select-trigger,.kpp-dropdown-trigger{border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-elevated);width:100%;height:32px;min-height:32px;color:var(--dsh-ui-text);font:inherit;text-align:left;cursor:pointer;border-radius:6px;justify-content:space-between;align-items:center;gap:8px;padding:0 10px;font-size:12px;transition:background-color .15s,border-color .15s,box-shadow .15s;display:flex}.dsh-select-trigger:hover:not(:disabled),.ar-themed-select-trigger:hover:not(:disabled),.kpp-dropdown-trigger:hover:not(:disabled){background:var(--dsh-ui-hover)}.dsh-select-trigger:focus-visible,.ar-themed-select-trigger:focus-visible,.kpp-dropdown-trigger:focus-visible{box-shadow:0 0 0 2px var(--dsh-ui-focus-ring);outline:none}.dsh-select-trigger:disabled,.ar-themed-select-trigger:disabled,.kpp-dropdown-trigger:disabled{opacity:.55;cursor:not-allowed}.dsh-select-label,.ar-themed-select-trigger span:first-child{text-overflow:ellipsis;white-space:nowrap;overflow:hidden}.dsh-select-menu,.ar-themed-select-menu,.kpp-dropdown-menu{z-index:30;border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-surface);max-height:220px;box-shadow:var(--dsh-ui-shadow-elevated);border-radius:8px;padding:4px;position:absolute;top:calc(100% + 4px);left:0;right:0;overflow:auto}.dsh-select-option,.ar-themed-select-menu button,.kpp-dropdown-item{width:100%;min-height:30px;font:inherit;text-align:left;cursor:pointer;background:0 0;border:0;border-radius:5px;justify-content:space-between;align-items:center;gap:8px;padding:6px 8px;font-size:12px;transition:background-color .12s;display:flex;color:var(--dsh-ui-text)!important}.dsh-select-option:hover,.dsh-select-option.active,.ar-themed-select-menu button:hover,.ar-themed-select-menu button.active,.kpp-dropdown-item:hover,.kpp-dropdown-item-active{background:var(--dsh-ui-hover);color:var(--dsh-ui-text)!important}.dsh-switch,.ar-settings-switch{background:var(--dsh-ui-switch-off);cursor:pointer;border:0;border-radius:999px;align-items:center;width:36px;height:20px;padding:2px;transition:background-color .16s;display:inline-flex;position:relative}.dsh-switch[aria-checked=true],.ar-settings-switch[aria-checked=true]{background:var(--dsh-ui-switch-on)}.dsh-switch:disabled,.ar-settings-switch:disabled{opacity:.5;cursor:not-allowed}.dsh-switch span,.ar-settings-switch span{background:var(--dsh-ui-switch-thumb-off);border-radius:50%;width:16px;height:16px;transition:transform .16s,background-color .16s;display:block}.dsh-switch[aria-checked=true] span,.ar-settings-switch[aria-checked=true] span{background:var(--dsh-ui-switch-thumb-on);transform:translate(16px)}.dsh-btn{border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-elevated);height:32px;min-height:32px;color:var(--dsh-ui-text);font:inherit;white-space:nowrap;cursor:pointer;border-radius:6px;justify-content:center;align-items:center;gap:6px;padding:0 12px;font-size:12px;font-weight:500;transition:background-color .15s,border-color .15s;display:inline-flex}.dsh-btn:hover:not(:disabled){background:var(--dsh-ui-hover)}.dsh-btn:disabled{opacity:.55;cursor:not-allowed}.dsh-btn-primary{background:var(--dsh-ui-primary-bg);color:var(--dsh-ui-primary-fg);border-color:#0000}.dsh-btn-danger{color:var(--dsh-ui-danger);border-color:var(--dsh-ui-danger-soft);background:var(--dsh-ui-danger-soft)}.dsh-btn-sm{height:28px;min-height:28px;padding:0 10px;font-size:11px}.dsh-icon-btn{border:1px solid var(--dsh-ui-border-strong);background:var(--dsh-ui-elevated);width:32px;min-width:32px;height:32px;min-height:32px;color:var(--dsh-ui-text);cursor:pointer;border-radius:6px;flex-shrink:0;justify-content:center;align-items:center;padding:0;transition:background-color .15s;display:inline-flex}.dsh-icon-btn:hover:not(:disabled){background:var(--dsh-ui-hover)}.dsh-tabs{border:1px solid var(--dsh-ui-border);background:var(--dsh-ui-elevated);border-radius:8px;align-items:center;gap:4px;width:fit-content;max-width:100%;padding:3px;display:inline-flex}.dsh-tab{height:28px;color:var(--dsh-ui-muted);font:inherit;cursor:pointer;white-space:nowrap;background:0 0;border:1px solid #0000;border-radius:6px;align-items:center;gap:6px;padding:0 12px;font-size:12px;font-weight:500;transition:background-color .15s,color .15s;display:inline-flex}.dsh-tab.active{background:var(--dsh-ui-surface);color:var(--dsh-ui-text);border-color:var(--dsh-ui-border-strong)}.dsh-modal-backdrop{z-index:1000;background:var(--dsh-ui-backdrop);place-items:center;padding:16px;display:grid;position:fixed;inset:0;overflow:auto}.dsh-modal-backdrop-control{background:0 0;border:0;width:100%;height:100%;padding:0;position:absolute;inset:0}.dsh-modal-card{z-index:1;background:var(--dsh-ui-bg-modal);width:min(760px,100%);max-height:calc(100dvh - 32px);color:var(--dsh-ui-text);border:1px solid var(--dsh-ui-border-strong);box-shadow:var(--dsh-ui-shadow-elevated);border-radius:10px;position:relative;overflow:auto}@keyframes _dsh-pulse_8lw8c_1{0%,to{opacity:.55}50%{opacity:.9}}@keyframes _dsh-spin_8lw8c_290{to{transform:rotate(360deg)}}.dsh-skeleton{background:var(--dsh-ui-elevated);border-radius:6px;animation:1.4s ease-in-out infinite dsh-pulse;display:block}.dsh-spinner{border:2px solid var(--dsh-ui-border-strong);border-top-color:var(--dsh-ui-accent);border-radius:50%;width:14px;height:14px;animation:.75s linear infinite dsh-spin;display:inline-block}.dsh-progress-bar{background:var(--dsh-ui-elevated);border-radius:999px;width:100%;height:3px;position:relative;overflow:hidden}.dsh-progress-bar:after{content:\"\";background:var(--dsh-ui-accent);animation:1.1s ease-in-out infinite dsh-pulse;position:absolute;inset:0}", w = {
 	bgPage: "transparent",
 	bgModal: "#1b1b1e",
 	surface: "#1c1c1f",
@@ -419,7 +438,7 @@ var x = {
 	dangerSoft: "rgba(239, 68, 68, 0.12)",
 	backdrop: "rgba(0, 0, 0, 0.6)",
 	shadowElevated: "0 10px 28px rgba(0, 0, 0, 0.28)"
-}, w = {
+}, T = {
 	bgPage: "transparent",
 	bgModal: "#ffffff",
 	surface: "#ffffff",
@@ -451,39 +470,39 @@ var x = {
 	dangerSoft: "rgba(220, 38, 38, 0.1)",
 	backdrop: "rgba(0, 0, 0, 0.48)",
 	shadowElevated: "0 10px 28px rgba(15, 17, 21, 0.14)"
-}, T = /* @__PURE__ */ new Map([["dark", {
+}, E = /* @__PURE__ */ new Map([["dark", {
 	id: "dark",
 	baseMode: "dark",
-	tokens: C
+	tokens: w
 }], ["light", {
 	id: "light",
 	baseMode: "light",
-	tokens: w
-}]]), E = /* @__PURE__ */ new Set(), D = 0;
-function O() {
-	return D;
-}
-function k(e) {
-	return E.add(e), () => {
-		E.delete(e);
-	};
+	tokens: T
+}]]), D = /* @__PURE__ */ new Set(), O = 0;
+function k() {
+	return O;
 }
 function A(e) {
-	T.set(e.id, e), D += 1, E.forEach((e) => {
+	return D.add(e), () => {
+		D.delete(e);
+	};
+}
+function j(e) {
+	E.set(e.id, e), O += 1, D.forEach((e) => {
 		e();
 	});
 }
-function j(e) {
-	return T.get(e) ?? {
+function M(e) {
+	return E.get(e) ?? {
 		id: "dark",
 		baseMode: "dark",
-		tokens: C
+		tokens: w
 	};
 }
-function M() {
-	return [...T.values()];
+function N() {
+	return [...E.values()];
 }
-var N = [
+var P = [
 	["bgPage", "--dsh-ui-bg-page"],
 	["bgModal", "--dsh-ui-bg-modal"],
 	["surface", "--dsh-ui-surface"],
@@ -516,16 +535,16 @@ var N = [
 	["backdrop", "--dsh-ui-backdrop"],
 	["shadowElevated", "--dsh-ui-shadow-elevated"]
 ];
-function P(e, t) {
+function F(e, t) {
 	let n = t ? {
 		...e,
 		...t
 	} : e;
-	return N.map(([e, t]) => `${t}:${n[e]}`).join(";");
+	return P.map(([e, t]) => `${t}:${n[e]}`).join(";");
 }
 // src/theme/styles.ts
-var F = "kalex-dsh-core-theme-styles", I = x.scope;
-function L(e = [
+var I = "kalex-dsh-core-theme-styles", L = S.scope;
+function R(e = [
 	".dsh-core-root",
 	".ar-root",
 	".ar-settings-root",
@@ -535,23 +554,23 @@ function L(e = [
 	".kpp-modal-backdrop",
 	".kpp-locale-settings"
 ]) {
-	return `${e.join(",")}{${P(j("dark").tokens)}}\n${e.map((e) => `${e}[data-theme="light"]`).join(",")}{${P(j("light").tokens)}}\n${M().filter((e) => e.id !== "dark" && e.id !== "light").map((t) => `${e.map((e) => `${e}[data-theme="${t.id}"]`).join(",")}{${P(t.tokens)}}`).join("\n")}\n${S}`;
+	return `${e.join(",")}{${F(M("dark").tokens)}}\n${e.map((e) => `${e}[data-theme="light"]`).join(",")}{${F(M("light").tokens)}}\n${N().filter((e) => e.id !== "dark" && e.id !== "light").map((t) => `${e.map((e) => `${e}[data-theme="${t.id}"]`).join(",")}{${F(t.tokens)}}`).join("\n")}\n${C}`;
 }
-var R = L(), z = /* @__PURE__ */ new Map(), B = !1;
-function V() {
-	if (typeof document < "u") for (let [e, t] of z) {
+var z = R(), B = /* @__PURE__ */ new Map(), V = !1;
+function H() {
+	if (typeof document < "u") for (let [e, t] of B) {
 		let n = document.getElementById(e);
-		n && (n.textContent = t ? `${L()}\n${t}` : L());
+		n && (n.textContent = t ? `${R()}\n${t}` : R());
 	}
 }
-function H(e = F, t) {
+function U(e = I, t) {
 	if (typeof document > "u" || !document.head) return;
-	z.set(e, t);
+	B.set(e, t);
 	let n = document.getElementById(e);
-	n || (n = document.createElement("style"), n.id = e, document.head.appendChild(n)), n.textContent = t ? `${L()}\n${t}` : L(), B ||= (k(V), !0);
+	n || (n = document.createElement("style"), n.id = e, document.head.appendChild(n)), n.textContent = t ? `${R()}\n${t}` : R(), V ||= (A(H), !0);
 }
 // src/components/ThemedSelect/ThemedSelect.tsx
-function U(e) {
+function W(e) {
 	let i = (0, l.c)(54), { value: s, options: c, onChange: f, ariaLabel: p, disabled: m, fullWidth: h, showCheckmark: g, className: _, triggerClassName: v, menuClassName: y, optionClassName: b } = e, x = m !== void 0 && m, S = h !== void 0 && h, C = g !== void 0 && g, w = n(void 0), [T, E] = r(!1), D;
 	if (i[0] !== c || i[1] !== s) {
 		let e;
@@ -572,8 +591,8 @@ function U(e) {
 	i[8] === c.length ? P = i[9] : (P = (e) => {
 		c.length !== 0 && A((t) => (t + e + c.length) % c.length);
 	}, i[8] = c.length, i[9] = P);
-	let F = P, L;
-	i[10] !== k || i[11] !== x || i[12] !== F || i[13] !== f || i[14] !== T || i[15] !== c || i[16] !== O ? (L = (e) => {
+	let F = P, I;
+	i[10] !== k || i[11] !== x || i[12] !== F || i[13] !== f || i[14] !== T || i[15] !== c || i[16] !== O ? (I = (e) => {
 		if (!(x || c.length === 0)) {
 			if (e.key === "Escape") E(!1);
 			else if (e.key === "ArrowDown" || e.key === "ArrowUp") e.preventDefault(), T ? F(e.key === "ArrowDown" ? 1 : -1) : (A(O), E(!0));
@@ -585,24 +604,24 @@ function U(e) {
 				}
 			}
 		}
-	}, i[10] = k, i[11] = x, i[12] = F, i[13] = f, i[14] = T, i[15] = c, i[16] = O, i[17] = L) : L = i[17];
-	let R = L, z;
+	}, i[10] = k, i[11] = x, i[12] = F, i[13] = f, i[14] = T, i[15] = c, i[16] = O, i[17] = I) : I = i[17];
+	let R = I, z;
 	i[18] === Symbol.for("react.memo_cache_sentinel") ? (z = (e) => {
 		w.current = e ?? void 0;
 	}, i[18] = z) : z = i[18];
 	let B = S && "dsh-select-full kpp-dropdown-full", V;
-	i[19] !== _ || i[20] !== B ? (V = d(I, "dsh-select", "ar-themed-select", "kpp-dropdown", B, _), i[19] = _, i[20] = B, i[21] = V) : V = i[21];
+	i[19] !== _ || i[20] !== B ? (V = d(L, "dsh-select", "ar-themed-select", "kpp-dropdown", B, _), i[19] = _, i[20] = B, i[21] = V) : V = i[21];
 	let H;
 	i[22] === v ? H = i[23] : (H = d("dsh-select-trigger", "ar-themed-select-trigger", "kpp-dropdown-trigger", v), i[22] = v, i[23] = H);
 	let U;
 	i[24] !== x || i[25] !== O ? (U = () => {
-		x || (A(O), E(W));
+		x || (A(O), E(G));
 	}, i[24] = x, i[25] = O, i[26] = U) : U = i[26];
-	let G = j?.label ?? "", K;
-	i[27] === G ? K = i[28] : (K = /* @__PURE__ */ a("span", {
+	let W = j?.label ?? "", K;
+	i[27] === W ? K = i[28] : (K = /* @__PURE__ */ a("span", {
 		className: "dsh-select-label",
-		children: G
-	}), i[27] = G, i[28] = K);
+		children: W
+	}), i[27] = W, i[28] = K);
 	let q = T ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6", J;
 	i[29] === q ? J = i[30] : (J = /* @__PURE__ */ a("svg", {
 		width: 14,
@@ -662,16 +681,16 @@ function U(e) {
 		children: [Y, X]
 	}), i[50] = V, i[51] = Y, i[52] = X, i[53] = Z) : Z = i[53], Z;
 }
-function W(e) {
+function G(e) {
 	return !e;
 }
 // src/constants/delay.ts
-var G = {
+var K = {
 	AnimationShort: 180,
 	Animation: 300,
 	AutocompleteSearch: 300,
 	PollingDefault: 3e3
-}, K = {
+}, q = {
 	en: {
 		Close: "Close",
 		Save: "Save",
@@ -702,8 +721,8 @@ var G = {
 	}
 };
 // src/hooks/useDebouncedValue.ts
-function q(e, n) {
-	let i = (0, l.c)(4), a = n === void 0 ? G.AutocompleteSearch : n, [o, s] = r(e), c, u;
+function J(e, n) {
+	let i = (0, l.c)(4), a = n === void 0 ? K.AutocompleteSearch : n, [o, s] = r(e), c, u;
 	return i[0] !== a || i[1] !== e ? (c = () => {
 		let t = setTimeout(() => {
 			s(e);
@@ -714,12 +733,12 @@ function q(e, n) {
 	}, u = [e, a], i[0] = a, i[1] = e, i[2] = c, i[3] = u) : (c = i[2], u = i[3]), t(c, u), o;
 }
 // src/hooks/useDshThemeRevision.ts
-function J() {
-	return i(k, O, O);
+function Y() {
+	return i(A, k, k);
 }
 // src/hooks/useEffectiveTheme.ts
-var Y = ".dsh-core-root, .ar-root, .ar-settings-root, .kpp-root, .kpp-card-bar, .kpp-footer-row, .kpp-modal-backdrop, .kpp-locale-settings";
-function X(e) {
+var X = ".dsh-core-root, .ar-root, .ar-settings-root, .kpp-root, .kpp-card-bar, .kpp-footer-row, .kpp-modal-backdrop, .kpp-locale-settings";
+function Z(e) {
 	let t = /rgba?\((\d+)\D+(\d+)\D+(\d+)(?:\D+([\d.]+))?\)/i.exec(e);
 	if (t?.[1] && t[2] && t[3]) return {
 		r: Number(t[1]),
@@ -728,10 +747,10 @@ function X(e) {
 		a: t[4] === void 0 ? 1 : Number(t[4])
 	};
 }
-function Z({ r: e, g: t, b: n }) {
+function Q({ r: e, g: t, b: n }) {
 	return .2126 * e + .7152 * t + .0722 * n;
 }
-function Q(e, t = Y) {
+function $(e, t = X) {
 	if (typeof document > "u") return "dark";
 	let n = [];
 	for (let r = e?.parentElement; r; r = r.parentElement) !r.matches(t) && r.matches("[data-theme], [data-color-scheme], .dark, .light") && n.push(r);
@@ -747,26 +766,26 @@ function Q(e, t = Y) {
 	let r = e?.parentElement || document.body;
 	if (r && typeof getComputedStyle == "function") {
 		for (let e = r; e; e = e.parentElement) {
-			let t = X(getComputedStyle(e).backgroundColor);
-			if (t && t.a > .2) return Z(t) > 140 ? "light" : "dark";
+			let t = Z(getComputedStyle(e).backgroundColor);
+			if (t && t.a > .2) return Q(t) > 140 ? "light" : "dark";
 		}
 		if (document.body) {
-			let e = X(getComputedStyle(document.body).color);
-			if (e) return Z(e) < 100 ? "light" : "dark";
+			let e = Z(getComputedStyle(document.body).color);
+			if (e) return Q(e) < 100 ? "light" : "dark";
 		}
 	}
 	return typeof window < "u" && window.matchMedia?.("(prefers-color-scheme: light)")?.matches ? "light" : "dark";
 }
-function $(e, n) {
+function ee(e, n) {
 	let i = (0, l.c)(8), a = e === void 0 ? "auto" : e, o;
-	i[0] === a ? o = i[1] : (o = a !== "auto" && a.trim() !== "" ? j(a).id : void 0, i[0] = a, i[1] = o);
+	i[0] === a ? o = i[1] : (o = a !== "auto" && a.trim() !== "" ? M(a).id : void 0, i[0] = a, i[1] = o);
 	let s = o, c;
-	i[2] === s ? c = i[3] : (c = () => s ?? Q(), i[2] = s, i[3] = c);
+	i[2] === s ? c = i[3] : (c = () => s ?? $(), i[2] = s, i[3] = c);
 	let [u, d] = r(c), f, p;
 	return i[4] !== s || i[5] !== n ? (f = () => {
 		if (s) return;
 		let e = () => {
-			d(Q(n?.current ?? void 0));
+			d($(n?.current ?? void 0));
 		}, t = typeof MutationObserver > "u" ? void 0 : new MutationObserver(e);
 		if (typeof document < "u") for (let e of [document.documentElement, document.body].filter(Boolean)) t?.observe(e, {
 			attributes: !0,
@@ -785,10 +804,10 @@ function $(e, n) {
 	}, p = [s, n], i[4] = s, i[5] = n, i[6] = f, i[7] = p) : (f = i[6], p = i[7]), t(f, p), s ?? u;
 }
 // src/hooks/useLocalePreference.ts
-function ee(e, t) {
+function te(e, t) {
 	return e === "ru" || e === "en" ? e : String(t || (typeof document < "u" ? document.documentElement?.lang : "") || "").toLowerCase().startsWith("ru") ? "ru" : "en";
 }
-function te(e, t) {
+function ne(e, t) {
 	try {
 		let n = (t ?? (typeof localStorage < "u" ? localStorage : void 0))?.getItem(e);
 		return n === "ru" || n === "en" ? n : void 0;
@@ -796,20 +815,20 @@ function te(e, t) {
 		return;
 	}
 }
-function ne(e, t, n) {
+function re(e, t, n) {
 	if (t === "ru" || t === "en") try {
 		(n ?? (typeof localStorage < "u" ? localStorage : void 0))?.setItem(e, t);
 	} catch {}
 }
 // src/utils/formatMessage.ts
-function re(e, ...t) {
+function ie(e, ...t) {
 	return e.replace(/\{(\d+)\}/g, (e, n) => {
 		let r = t[Number.parseInt(n, 10)];
 		return r === void 0 ? e : String(r);
 	});
 }
 // src/utils/hostSanitizer.ts
-function ie(e) {
+function ae(e) {
 	if (typeof e != "string") return "";
 	let t = e.trim();
 	if (t === "") return "";
@@ -828,7 +847,7 @@ function ie(e) {
 	let n = t.indexOf(":");
 	return n > 0 && !t.startsWith("[") ? t.slice(0, n).toLowerCase() : t.toLowerCase();
 }
-function ae(e) {
+function oe(e) {
 	if (typeof e != "string") return null;
 	let t = e.trim();
 	if (!t) return null;
@@ -839,4 +858,4 @@ function ae(e) {
 		return null;
 	}
 }
-export { f as Button, _ as ChildrenLazy, K as CoreLocalization, G as Delay, p as IconButton, v as Modal, m as ProgressBar, h as Skeleton, g as Spinner, y as SwitchControl, b as Tabs, u as TestId, U as ThemedSelect, L as buildCoreThemeStyles, P as buildThemeCssVariables, I as coreStyleScopeClass, R as coreThemeStyles, d as cx, C as darkThemeTokens, Q as detectHostTheme, H as ensureCoreStyles, ae as extractHost, re as formatMessage, j as getDshTheme, O as getDshThemeRevision, w as lightThemeTokens, M as listDshThemes, ne as persistLocale, te as readSavedLocale, A as registerDshTheme, ee as resolveDshLocale, ie as sanitizeHostInput, k as subscribeDshThemeChanges, q as useDebouncedValue, J as useDshThemeRevision, $ as useEffectiveTheme };
+export { f as Button, _ as ChildrenLazy, q as CoreLocalization, K as Delay, p as IconButton, v as Modal, m as ProgressBar, h as Skeleton, g as Spinner, b as SwitchControl, x as Tabs, u as TestId, W as ThemedSelect, R as buildCoreThemeStyles, F as buildThemeCssVariables, L as coreStyleScopeClass, z as coreThemeStyles, d as cx, w as darkThemeTokens, $ as detectHostTheme, U as ensureCoreStyles, oe as extractHost, ie as formatMessage, M as getDshTheme, k as getDshThemeRevision, T as lightThemeTokens, N as listDshThemes, re as persistLocale, ne as readSavedLocale, j as registerDshTheme, te as resolveDshLocale, ae as sanitizeHostInput, A as subscribeDshThemeChanges, J as useDebouncedValue, Y as useDshThemeRevision, ee as useEffectiveTheme };

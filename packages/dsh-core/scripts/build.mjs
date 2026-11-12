@@ -12,4 +12,4 @@ await build({
     configFile: resolve(root, '../../configs/packages/dsh-core/vite.config.ts')
 });
 
-console.log('Built @kalex/dsh-core via Vite 8 + Oxc');
+console.log('Built @kalex/dsh-core');

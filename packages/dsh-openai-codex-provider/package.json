@@ -1,0 +1,106 @@
+{
+  "name": "@kalex/dsh-openai-codex-provider",
+  "version": "2.0.0",
+  "description": "OpenAI Codex provider for DeepSeek Harness with ChatGPT subscription sign-in",
+  "type": "module",
+  "main": "./lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./remote": "./lib/remote.js",
+    "./typert": "./lib/remote.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "cordis.patch.yml",
+    "README.md",
+    "doc",
+    "LICENSE",
+    "package.json"
+  ],
+  "dsh": {
+    "plugin": {
+      "schemaVersion": 1,
+      "displayName": {
+        "en": "OpenAI Codex Sign-in",
+        "ru": "Вход OpenAI Codex"
+      },
+      "summary": {
+        "en": "Sign in with ChatGPT and use OpenAI Codex in DSH.",
+        "ru": "Вход через ChatGPT для использования OpenAI Codex в DSH."
+      },
+      "category": "authentication"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-chat",
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-api-gateway"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "build:client": "vite build --config ../../configs/packages/dsh-openai-codex-provider/vite.config.ts",
+    "build:host": "vite build --config ../../configs/packages/dsh-openai-codex-provider/vite.config.host.ts",
+    "build:remote": "vite build --config ../../configs/packages/dsh-openai-codex-provider/vite.config.remote.ts",
+    "test": "vitest run --config ../../configs/packages/dsh-openai-codex-provider/vitest.config.ts",
+    "verify": "node scripts/verify-release.mjs",
+    "check": "pnpm run build && pnpm run test && pnpm run verify"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh-plugin",
+    "openai",
+    "codex",
+    "chatgpt",
+    "oauth"
+  ],
+  "engines": {
+    "node": ">=22.19.0",
+    "dsh": ">=0.2.2-rc.1"
+  },
+  "author": "gooosie",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlindGazer/DSH.git",
+    "directory": "packages/dsh-openai-codex-provider"
+  },
+  "homepage": "https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider",
+  "bugs": {
+    "url": "https://github.com/BlindGazer/DSH/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-compiler-runtime": "^1.0.0",
+    "undici": "8.12.3",
+    "zod": "^4.4.3"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "~4.0.4",
+    "@deepseek-ai/dsh-credentials": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-http-proxy": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-llm": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-llm-pi-ai": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-tools": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-typert-protocol": "^0.2.2-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.4",
+    "@earendil-works/pi-ai": "0.87.1 || 1.1.0 || 1.3.0 || 1.4.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "16.3.2",
+    "jsdom": "29.1.1"
+  }
+}

@@ -5,18 +5,14 @@
   "icon": "assets/icon.svg",
   "type": "module",
   "main": "./lib/index.js",
-  "types": "./lib/index.d.ts",
   "exports": {
     ".": {
-      "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
     "./node": {
-      "types": "./lib/index.d.ts",
       "default": "./lib/index.js"
     },
     "./client": {
-      "types": "./lib/client.d.ts",
       "default": "./lib/client.js"
     },
     "./cordis.patch.yml": "./cordis.patch.yml",
@@ -29,7 +25,7 @@
     "cordis.patch.yml",
     "locale",
     "README.md",
-    "doc",
+    "docs",
     "assets",
     "package.json"
   ],
@@ -64,7 +60,7 @@
     "dsh": ">=0.2.2-rc.1"
   },
   "scripts": {
-    "build": "node scripts/build.mjs && tsc --build --force --emitDeclarationOnly ../../configs/packages/dsh-agents-router/tsconfig.json",
+    "build": "node scripts/build.mjs",
     "build:client": "vite build --config ../../configs/packages/dsh-agents-router/vite.config.ts",
     "build:host": "vite build --config ../../configs/packages/dsh-agents-router/vite.config.host.ts",
     "test": "vitest run --config ../../configs/packages/dsh-agents-router/vitest.config.ts",

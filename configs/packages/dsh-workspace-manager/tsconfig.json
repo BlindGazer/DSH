@@ -4,7 +4,8 @@
         "composite": true,
         "rootDir": "../../../packages/dsh-workspace-manager/src",
         "outDir": "../../../packages/dsh-workspace-manager/lib",
-        "tsBuildInfoFile": "../../../packages/dsh-workspace-manager/tsconfig.tsbuildinfo",
+        "declarationDir": "../../../node_modules/.cache/dsh-workspace-manager/types",
+        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-workspace-manager/tsconfig.tsbuildinfo",
         "types": ["node"],
         "strict": true
     },

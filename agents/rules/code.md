@@ -26,6 +26,6 @@ Take the first option that fully works:
 
 ## Package directory layout
 
-- Store package documentation in `doc/`; keep the primary `README.md` in the package root.
+- Store package documentation in `docs/`; keep the primary `README.md` in the package root.
 - Store static images and icons in `assets/` and reference package icons through the `icon` field in `package.json`.
 - Keep package roots minimal: only essential manifests, the primary README, license, runtime patches, and required build or type configuration belong there. Do not place secondary documentation or static assets in the root.

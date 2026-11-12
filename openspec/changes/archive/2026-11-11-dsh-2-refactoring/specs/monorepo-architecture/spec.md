@@ -1,4 +1,4 @@
-# monorepo-architecture Specification
+# module-architecture Specification
 
 ## Purpose
 

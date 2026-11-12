@@ -4,10 +4,8 @@
     "description": "Shared UI components, DSH + Google Material 3 design system, hooks, localization, and core contracts for DeepSeek Harness plugins",
     "type": "module",
     "main": "./lib/index.js",
-    "types": "./lib/index.d.ts",
     "exports": {
         ".": {
-            "types": "./lib/index.d.ts",
             "default": "./lib/index.js"
         },
         "./package.json": "./package.json"
@@ -19,7 +17,7 @@
         "package.json"
     ],
     "scripts": {
-        "build": "vite build --config ../../configs/packages/dsh-core/vite.config.ts && tsc --build --force --emitDeclarationOnly ../../configs/packages/dsh-core/tsconfig.json",
+        "build": "vite build --config ../../configs/packages/dsh-core/vite.config.ts",
         "test": "vitest run --config ../../configs/packages/dsh-core/vitest.config.ts",
         "test:watch": "vitest --config ../../configs/packages/dsh-core/vitest.config.ts",
         "verify": "node scripts/verify-release.mjs",

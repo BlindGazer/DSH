@@ -5,6 +5,10 @@ import { fileURLToPath } from 'node:url';
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const packageManager = process.platform === 'win32' ? (process.env.npm_execpath ?? 'pnpm.exe') : 'pnpm';
 const commands = [
+    [
+        'dsh-core declaration references',
+        ['exec', 'tsc', '--build', '--force', '--emitDeclarationOnly', 'configs/packages/dsh-core/tsconfig.json']
+    ],
     ['dsh-core source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-core/tsconfig.json']],
     ['agents-router source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-agents-router/tsconfig.json']],
     ['proxy-provider source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-proxy-provider/tsconfig.json']],
