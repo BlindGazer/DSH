@@ -96,7 +96,7 @@ export function compileRoutingTable(
         const distinctSettings = new Set(entries.map(e => e.settingsSignature));
         const firstActive = entries.find(e => e.profileId !== null);
 
-        if (firstActive && firstActive.profileId) {
+        if (firstActive?.profileId) {
             const profile = profilesById.get(firstActive.profileId);
             if (profile) {
                 hostToProfile.set(host, profile);
@@ -104,7 +104,7 @@ export function compileRoutingTable(
             }
         }
 
-        if (entries.length > 1 && distinctSettings.size > 1 && firstActive && firstActive.profileId) {
+        if (entries.length > 1 && distinctSettings.size > 1 && firstActive?.profileId) {
             conflicts.push({
                 host,
                 providers: entries.map(({ providerId, providerName, profileId, profileName }) => ({

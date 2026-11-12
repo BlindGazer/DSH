@@ -15,23 +15,12 @@ interface PathToolOutput {
 interface PathToolDefinition {
     readonly name: string;
     readonly description: string;
-    readonly parameters: Record<string, object>;
+    readonly parameters: Record<string, unknown>;
     readonly output: {
         readonly schema: object;
         readonly render: (args: PathToolArguments, value: PathToolOutput) => { readonly type: 'text'; readonly text: string }[];
     };
     readonly execute: (args: PathToolArguments, exec: { readonly agent?: RouterAgent }) => Promise<PathToolOutput>;
-}
-
-type ToolFactory = (spec: PathToolDefinition) => PathToolDefinition;
-
-let defineTool: ToolFactory = spec => spec;
-try {
-    const toolsModuleName: string = '@deepseek-ai/dsh-tools';
-    const toolsMod = (await import(toolsModuleName)) as { defineTool?: ToolFactory };
-    if (typeof toolsMod.defineTool === 'function') defineTool = toolsMod.defineTool;
-} catch {
-    // Outside live DSH host environment
 }
 
 import { recordAudit } from './auditLogger.js';
@@ -49,17 +38,22 @@ export function createPathTool(
         readonly currentDirectory: (ctx: RouterHostContext, state: RouterState, agent: RouterAgent) => string;
     }
 ): PathToolDefinition {
-    return defineTool({
+    // tools.register accepts raw JSON Schema. Do not pass these schemas through
+    // defineTool: that helper expects its authoring DSL, including for output.
+    return {
         name: 'agents_router_paths',
         description:
             'Declare or release project files in the router workset. Use before opaque terminal or script access; native file tools are tracked automatically.',
         parameters: {
-            action: { type: 'string', required: true, enum: ['add', 'release'] },
-            paths: {
-                type: 'array',
-                required: true,
-                items: { type: 'string' },
-                description: 'File or directory paths relative to the current Session directory, or absolute paths.'
+            type: 'object',
+            required: ['action', 'paths'],
+            properties: {
+                action: { type: 'string', enum: ['add', 'release'] },
+                paths: {
+                    type: 'array',
+                    items: { type: 'string' },
+                    description: 'File or directory paths relative to the current Session directory, or absolute paths.'
+                }
             }
         },
         output: {
@@ -78,6 +72,13 @@ export function createPathTool(
         async execute(args, exec) {
             const agent = exec.agent;
             if (!agent || agent.id !== state.agent.id) throw new Error('agents_router_paths is only available in its owning DSH session');
+            if (
+                !args ||
+                !['add', 'release'].includes(args.action) ||
+                !Array.isArray(args.paths) ||
+                args.paths.some(value => typeof value !== 'string')
+            )
+                throw new Error('agents_router_paths requires action add/release and an array of string paths');
             const cwd = currentDirectory(ctx, state, agent);
             const previousPaths = state.activePaths;
             const paths = new Set<string>();
@@ -116,5 +117,5 @@ export function createPathTool(
             const message = `${action} ${paths.size} project path(s)${ignored ? `; ignored ${ignored} path(s) outside this project` : ''}`;
             return { action: args.action, message, paths: [...paths] };
         }
-    });
+    };
 }

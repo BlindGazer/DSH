@@ -78,7 +78,7 @@ async function ensureGuiSessionToken(): Promise<string | null> {
                 body: JSON.stringify({ action: 'claim' })
             });
             const data = (await res.json()) as { ok?: boolean; token?: string };
-            if (data && data.ok && typeof data.token === 'string') {
+            if (data?.ok && typeof data.token === 'string') {
                 guiSessionToken = data.token;
                 startHeartbeat();
             }
@@ -149,7 +149,7 @@ export const proxyStore = {
             const data = (await res.json()) as Partial<ProxyClientSnapshot> & {
                 ok?: boolean;
             };
-            if (data && data.ok) {
+            if (data?.ok) {
                 proxyStore.publish({
                     loading: false,
                     config: data.config || proxyStore.snapshot.config,

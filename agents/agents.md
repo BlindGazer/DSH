@@ -1,7 +1,7 @@
 # AGENTS
 
 Инструкции для ИИ-агентов монорепозитория плагинов DeepSeek Harness (DSH).
-Пакеты расположены в `packages/dsh-core`, `packages/dsh-agents-router` и `packages/dsh-proxy-provider`.
+Пакеты расположены в `packages/dsh-core`, `packages/dsh-agents-router`, `packages/dsh-proxy-provider` и `packages/dsh-workspace-manager`.
 
 ## Правила и навыки по областям
 

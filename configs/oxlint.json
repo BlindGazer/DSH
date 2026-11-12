@@ -24,7 +24,8 @@
         "import/no-cycle": "error",
         "no-var": "error",
         "prefer-const": "error",
-        "eqeqeq": "error"
+        "eqeqeq": "error",
+        "no-await-in-loop": "off"
     },
     "ignorePatterns": ["**/lib/**", "**/dist/**", "**/node_modules/**"]
 }

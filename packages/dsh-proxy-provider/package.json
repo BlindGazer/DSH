@@ -2,6 +2,7 @@
   "name": "@kalex/dsh-proxy-provider",
   "version": "2.0.0",
   "description": "Selective HTTP/HTTPS/SOCKS5 proxy routing per model provider for DeepSeek Harness",
+  "icon": "assets/icon.svg",
   "type": "module",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -19,22 +20,25 @@
       "default": "./lib/client.js"
     },
     "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
     "./package.json": "./package.json"
   },
   "files": [
     "lib",
     "src",
     "cordis.patch.yml",
+    "locale",
     "README.md",
-    "README_EN.md",
+    "doc",
+    "assets",
     "package.json"
   ],
   "dsh": {
     "plugin": {
       "schemaVersion": 1,
       "displayName": {
-        "en": "Provider Proxy",
-        "ru": "Прокси провайдеров моделей",
+        "en": "Model Provider Proxy",
+        "ru": "Прокси для провайдеров моделей",
         "zh-CN": "模型提供商代理"
       },
       "summary": {

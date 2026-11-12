@@ -62,7 +62,7 @@ export async function dispatchWithUndiciFetch(
             | Record<string, string>
             | undefined;
         if (extra) {
-            if (typeof (extra as { forEach?: Function }).forEach === 'function') {
+            if (typeof (extra as { forEach?: (...args: never[]) => unknown }).forEach === 'function') {
                 (extra as { forEach: (cb: (v: string, k: string) => void) => void }).forEach((value, key) => {
                     headers[key] = value;
                 });
@@ -101,7 +101,7 @@ export async function testProxyConnection(
     testUrl: string = DEFAULT_TEST_URL,
     fetchImpl: ((url: string, init: Record<string, object | string | undefined>) => Promise<{ status: number }>) | null = null
 ): Promise<TestConnectionResult> {
-    if (!profile || !profile.host || !profile.port) {
+    if (!profile?.host || !profile.port) {
         return {
             ok: false,
             tcpOk: false,

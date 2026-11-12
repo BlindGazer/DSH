@@ -10,6 +10,9 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-p
 
 # Install the dsh-agents-router plugin from GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+
+# Install the dsh-workspace-manager plugin from GitHub
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ---
@@ -18,9 +21,10 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 
 | Package                                                        | Description and Purpose                                                                                                                                                                                                                                                                                         | Link                                                                                            |
 | -------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
-| **[@kalex/dsh-core](./packages/dsh-core)**                     | **Shared design system and utilities library.** Prevents duplicated code across plugins and provides responsive UI components (ThemedSelect, SwitchControl, Modal, Tabs, Button, Loader), DSH themes (dark, light, and custom), host sanitization, message formatting, and locale persistence.                  | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/README_EN.md)           |
-| **[@kalex/dsh-proxy-provider](./packages/dsh-proxy-provider)** | **Selective proxy routing for LLM providers.** Helps work around network restrictions and API blocks for providers such as OpenAI, Anthropic, DeepSeek, OpenRouter, and others. Configure individual HTTP/HTTPS/SOCKS5 proxies per provider, encrypt credentials with AES-256-GCM, and test connection latency. | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/README_EN.md) |
-| **[@kalex/dsh-agents-router](./packages/dsh-agents-router)**   | **Intelligent router for agent rules and skills.** Reduces context window bloat and prevents LLMs from receiving irrelevant instructions. Dynamically loads only rules that match the session's active working set, provides a soft token budget, and isolates instructions.                                    | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/README_EN.md)  |
+| **[@kalex/dsh-core](../packages/dsh-core)**                     | **Shared design system and utilities library.** Prevents duplicated code across plugins and provides responsive UI components (ThemedSelect, SwitchControl, Modal, Tabs, Button, Loader), DSH themes (dark, light, and custom), host sanitization, message formatting, and locale persistence.                  | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/README_EN.md)           |
+| **[@kalex/dsh-proxy-provider](../packages/dsh-proxy-provider)** | **Selective proxy routing for LLM providers.** Helps work around network restrictions and API blocks for providers such as OpenAI, Anthropic, DeepSeek, OpenRouter, and others. Configure individual HTTP/HTTPS/SOCKS5 proxies per provider, encrypt credentials with AES-256-GCM, and test connection latency. | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/doc/README_EN.md) |
+| **[@kalex/dsh-agents-router](../packages/dsh-agents-router)**   | **Intelligent router for agent rules and skills.** Reduces context window bloat and prevents LLMs from receiving irrelevant instructions. Dynamically loads only rules that match the session's active working set, provides a soft token budget, and isolates instructions.                                    | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/doc/README_EN.md)  |
+| **[@kalex/dsh-workspace-manager](../packages/dsh-workspace-manager)** | **Workspace directory manager.** Links multiple folders from different locations, supports aliases and descriptions, and can restrict access to read-only. | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/doc/Readme_EN.md) |
 
 ---
 
@@ -42,7 +46,7 @@ Run all commands from the repository root using `pnpm`:
 # Install monorepo dependencies
 pnpm install
 
-# Build all packages (dsh-core, dsh-proxy-provider, dsh-agents-router) with Vite 8
+# Build all packages (dsh-core, dsh-proxy-provider, dsh-agents-router, dsh-workspace-manager) with Vite 8
 pnpm run build
 
 # Run tests in all packages with Vitest
@@ -92,6 +96,9 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-p
 
 # Install the dsh-agents-router plugin from GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+
+# Install the dsh-workspace-manager plugin from GitHub
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ### Option 2: Install from GitHub using pnpm
@@ -99,6 +106,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 ```powershell
 pnpm install github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
+pnpm install github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ### Option 3: Install from a local repository folder (recommended for development)
@@ -108,6 +116,7 @@ Open **PowerShell** and run:
 ```powershell
 dsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
 dsh plugin --profile desktop add C:\git\DSH\packages\dsh-agents-router
+dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
 ```
 
 ## Architecture Principles

@@ -1,17 +1,20 @@
 # DeepSeek Harness (DSH) Monorepo: Плагины и Общая Библиотека
 
-> [English](./doc//README_EN.md)
+> [English](./doc/README_EN.md)
 
 Набор плагинов для **DeepSeek Harness (DSH)** на основе автономных пакетов с единой архитектурой, строгой системой типов и общим UI-фреймворком.
 
 ## Установка
 
 ```powershell
-# Установка плагина dsh-proxy-provider из локальной папки
+# Установка плагина dsh-proxy-provider из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 
-# Установка плагина dsh-agents-router из локальной папки
+# Установка плагина dsh-agents-router из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+
+# Установка плагина dsh-workspace-manager из GitHub
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ---
@@ -23,6 +26,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 | **[@kalex/dsh-core](./packages/dsh-core)**                     | **Общая библиотека дизайн-системы и утилит.** Решает проблему дублирования кода между плагинами, предоставляет адаптивные UI-компоненты (ThemedSelect, SwitchControl, Modal, Tabs, Button, Loader), палитры тем DSH (тёмная/светлая/кастомные), утилиты санитизации хостов, форматирования сообщений и сохранения локали.                    | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/README.md)           |
 | **[@kalex/dsh-proxy-provider](./packages/dsh-proxy-provider)** | **Плагин выборочного проксирования провайдеров LLM.** Решает проблему сетевых ограничений и блокировок API провайдеров (OpenAI, Anthropic, DeepSeek, OpenRouter и др.). Позволяет настраивать индивидуальные HTTP/HTTPS/SOCKS5 прокси для каждого провайдера, шифровать учетные данные (AES-256-GCM) и тестировать задержку соединения.      | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/README.md) |
 | **[@kalex/dsh-agents-router](./packages/dsh-agents-router)**   | **Интеллектуальный маршрутизатор правил и навыков агентов.** Решает проблему раздувания контекста (context window bloat) и перегрузки LLM лишними инструкциями. Динамически подгружает в контекст только те правила, которые соответствуют текущему рабочему набору файлов сессии, обеспечивает мягкий бюджет токенов и изоляцию инструкций. | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/README.md)  |
+| **[@kalex/dsh-workspace-manager](./packages/dsh-workspace-manager)** | **Управление каталогами рабочего пространства.** Подключает несколько каталогов из разных расположений, позволяет задавать псевдонимы и описания, а также ограничивать доступ режимом только для чтения. | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/README.md) |
 
 ---
 
@@ -44,7 +48,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 # Установка зависимостей монорепозитория
 pnpm install
 
-# Сборка всех пакетов (dsh-core, dsh-proxy-provider, dsh-agents-router) через Vite 8
+# Сборка всех пакетов (dsh-core, dsh-proxy-provider, dsh-agents-router, dsh-workspace-manager) через Vite 8
 pnpm run build
 
 # Запуск тестов во всех пакетах через Vitest
@@ -89,11 +93,14 @@ Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
 ### Вариант 1: Установка из GitHub через DSH CLI
 
 ```powershell
-# Установка плагина dsh-proxy-provider из локальной папки
+# Установка плагина dsh-proxy-provider из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 
-# Установка плагина dsh-agents-router из локальной папки
+# Установка плагина dsh-agents-router из GitHub
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+
+# Установка плагина dsh-workspace-manager из GitHub
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ### Вариант 2: Установка из GitHub через pnpm
@@ -101,6 +108,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 ```powershell
 pnpm install github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
+pnpm install github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ### Вариант 3: Установка из локальной папки репозитория (рекомендуется для разработки)
@@ -110,6 +118,7 @@ pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
 ```powershell
 dsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
 dsh plugin --profile desktop add C:\git\DSH\packages\dsh-agents-router
+dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
 ```
 
 ## 🏛 Архитектурные принципы

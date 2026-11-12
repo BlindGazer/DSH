@@ -1222,7 +1222,7 @@ async function dispatchWithUndiciFetch(input, init, dispatcher) {
 * Выполняет двухэтапную проверку прокси-соединения (TCP + сквозной HTTP-запрос).
 */
 async function testProxyConnection(profile, testUrl = DEFAULT_TEST_URL, fetchImpl = null) {
-	if (!profile || !profile.host || !profile.port) return {
+	if (!profile?.host || !profile.port) return {
 		ok: false,
 		tcpOk: false,
 		httpOk: false,
@@ -1364,9 +1364,9 @@ function parseProvidersFromPatchYaml(yamlText) {
 				const entry = result[currentProvider];
 				if (!entry) continue;
 				const baseMatch = /^(?:baseURL|baseUrl):\s*(.+)$/.exec(trimmed);
-				if (baseMatch && baseMatch[1]) entry.baseURL = baseMatch[1].trim().replace(/^['"]|['"]$/g, "");
+				if (baseMatch?.[1]) entry.baseURL = baseMatch[1].trim().replace(/^['"]|['"]$/g, "");
 				const nameMatch = /^displayName:\s*(.+)$/.exec(trimmed);
-				if (nameMatch && nameMatch[1]) entry.displayName = nameMatch[1].trim().replace(/^['"]|['"]$/g, "");
+				if (nameMatch?.[1]) entry.displayName = nameMatch[1].trim().replace(/^['"]|['"]$/g, "");
 			}
 		}
 	}
@@ -1557,14 +1557,14 @@ function compileRoutingTable(providers, config) {
 	for (const [host, entries] of hostEntries.entries()) {
 		const distinctSettings = new Set(entries.map((e) => e.settingsSignature));
 		const firstActive = entries.find((e) => e.profileId !== null);
-		if (firstActive && firstActive.profileId) {
+		if (firstActive?.profileId) {
 			const profile = profilesById.get(firstActive.profileId);
 			if (profile) {
 				hostToProfile.set(host, profile);
 				routes[host] = profile.id;
 			}
 		}
-		if (entries.length > 1 && distinctSettings.size > 1 && firstActive && firstActive.profileId) conflicts.push({
+		if (entries.length > 1 && distinctSettings.size > 1 && firstActive?.profileId) conflicts.push({
 			host,
 			providers: entries.map(({ providerId, providerName, profileId, profileName }) => ({
 				providerId,
@@ -2004,7 +2004,7 @@ function translateProxyText(value, locale = "en") {
 	const unknownEndpoint = /^Unknown endpoint "(.+)"$/.exec(value);
 	if (unknownEndpoint) return `Неизвестный адрес запроса: "${unknownEndpoint[1]}"`;
 	const wrappedFailure = /^✕ (.+)$/.exec(value);
-	if (wrappedFailure && wrappedFailure[1]) return `✕ ${translateProxyText(wrappedFailure[1], "ru")}`;
+	if (wrappedFailure?.[1]) return `✕ ${translateProxyText(wrappedFailure[1], "ru")}`;
 	return value;
 }
 // src/shared/constants/testId.ts

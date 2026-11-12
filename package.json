@@ -10,7 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "node scripts/typecheck.mjs",
-    "lint": "oxlint -c configs/oxlint.json packages scripts && biome check --config-path=configs/biome.json packages scripts",
+    "lint": "oxlint -c configs/oxlint.json --ignore-pattern \"**/lib/**\" --ignore-pattern \"**/dist/**\" --ignore-pattern \"**/node_modules/**\" packages scripts && biome check --config-path=configs/biome.json packages scripts",
     "format": "biome format --write --config-path=configs/biome.json packages scripts configs",
     "fix": "node scripts/fix.mjs",
     "check": "node scripts/check.mjs",

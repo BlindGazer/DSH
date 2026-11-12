@@ -6975,26 +6975,23 @@ function relativeInside(root, target) {
 	return rel.split(path.sep).join("/");
 }
 // src/host/services/pathTool.ts
-var defineTool = (spec) => spec;
-try {
-	const toolsMod = await import("@deepseek-ai/dsh-tools");
-	if (typeof toolsMod.defineTool === "function") defineTool = toolsMod.defineTool;
-} catch {}
 function createPathTool(ctx, store, state, { refreshState, currentDirectory }) {
-	return defineTool({
+	return {
 		name: "agents_router_paths",
 		description: "Declare or release project files in the router workset. Use before opaque terminal or script access; native file tools are tracked automatically.",
 		parameters: {
-			action: {
-				type: "string",
-				required: true,
-				enum: ["add", "release"]
-			},
-			paths: {
-				type: "array",
-				required: true,
-				items: { type: "string" },
-				description: "File or directory paths relative to the current Session directory, or absolute paths."
+			type: "object",
+			required: ["action", "paths"],
+			properties: {
+				action: {
+					type: "string",
+					enum: ["add", "release"]
+				},
+				paths: {
+					type: "array",
+					items: { type: "string" },
+					description: "File or directory paths relative to the current Session directory, or absolute paths."
+				}
 			}
 		},
 		output: {
@@ -7023,6 +7020,7 @@ function createPathTool(ctx, store, state, { refreshState, currentDirectory }) {
 		async execute(args, exec) {
 			const agent = exec.agent;
 			if (!agent || agent.id !== state.agent.id) throw new Error("agents_router_paths is only available in its owning DSH session");
+			if (!args || !["add", "release"].includes(args.action) || !Array.isArray(args.paths) || args.paths.some((value) => typeof value !== "string")) throw new Error("agents_router_paths requires action add/release and an array of string paths");
 			const cwd = currentDirectory(ctx, state, agent);
 			const previousPaths = state.activePaths;
 			const paths = /* @__PURE__ */ new Set();
@@ -7061,7 +7059,7 @@ function createPathTool(ctx, store, state, { refreshState, currentDirectory }) {
 				paths: [...paths]
 			};
 		}
-	});
+	};
 }
 // src/host/services/pathMatch.ts
 var GLOB_META = /[?*[{]/;

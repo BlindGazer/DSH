@@ -1,0 +1,10 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "composite": false,
+        "noEmit": true,
+        "rootDir": "../../../packages",
+        "types": ["node", "vite/client", "vitest/globals"]
+    },
+    "include": ["../../../packages/dsh-workspace-manager/tests/**/*"]
+}

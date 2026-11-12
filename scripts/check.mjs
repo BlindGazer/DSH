@@ -33,7 +33,7 @@ function findEncodingViolations(dirPath) {
 }
 
 function runRequiredCommand(name, args) {
-    const command = process.platform === 'win32' ? 'pnpm.exe' : 'pnpm';
+    const command = process.platform === 'win32' ? (process.env.npm_execpath ?? 'pnpm.exe') : 'pnpm';
     const result = spawnSync(command, args, { cwd: rootDir, stdio: 'inherit' });
 
     if (result.error) {
@@ -53,7 +53,21 @@ for (const violation of violations) console.error(`[check] ${violation}`);
 let failed = violations.length > 0;
 const tools = [
     ['TypeScript', ['typecheck']],
-    ['Oxlint', ['exec', 'oxlint', '-c', 'configs/oxlint.json', 'packages', 'scripts']],
+    [
+        'Oxlint',
+        [
+            'exec',
+            'oxlint',
+            '--ignore-pattern',
+            '**/lib/**',
+            '--ignore-pattern',
+            '**/dist/**',
+            '-c',
+            'configs/oxlint.json',
+            'packages',
+            'scripts'
+        ]
+    ],
     ['Biome', ['exec', 'biome', 'check', '--config-path=configs/biome.json', 'packages', 'scripts', 'configs']]
 ];
 

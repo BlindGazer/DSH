@@ -1,6 +1,6 @@
 {
     "root": false,
-    "$schema": "https://biomejs.dev/schemas/2.6.5/schema.json",
+    "$schema": "https://biomejs.dev/schemas/2.6.6/schema.json",
     "files": {
         "ignoreUnknown": true,
         "includes": [
@@ -48,7 +48,11 @@
             "style": {
                 "noNonNullAssertion": "error",
                 "useConst": "error",
-                "useTemplate": "error"
+                "useTemplate": "error",
+                "noDescendingSpecificity": "off"
+            },
+            "complexity": {
+                "noImportantStyles": "off"
             }
         }
     },

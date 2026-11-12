@@ -33,7 +33,7 @@ function normalizeEncodingAndLineEndings(dirPath) {
 }
 
 function runRequiredTool(name, args) {
-    const command = process.platform === 'win32' ? 'pnpm.exe' : 'pnpm';
+    const command = process.platform === 'win32' ? (process.env.npm_execpath ?? 'pnpm.exe') : 'pnpm';
     const result = spawnSync(command, ['exec', name, ...args], {
         cwd: rootDir,
         stdio: 'inherit'
@@ -51,7 +51,7 @@ function runRequiredTool(name, args) {
 }
 
 function runCheck() {
-    const command = process.platform === 'win32' ? 'pnpm.exe' : 'pnpm';
+    const command = process.platform === 'win32' ? (process.env.npm_execpath ?? 'pnpm.exe') : 'pnpm';
     const result = spawnSync(command, ['check'], {
         cwd: rootDir,
         stdio: 'inherit'
@@ -74,7 +74,10 @@ console.log(`[fix] Normalized UTF-8 (no BOM) and LF in ${fixedCount} file(s).`);
 let failed = false;
 const tools = [
     ['biome', ['check', '--write', '--config-path=configs/biome.json', 'packages', 'scripts', 'configs']],
-    ['oxlint', ['--fix', '-c', 'configs/oxlint.json', 'packages', 'scripts']]
+    [
+        'oxlint',
+        ['--fix', '--ignore-pattern', '**/lib/**', '--ignore-pattern', '**/dist/**', '-c', 'configs/oxlint.json', 'packages', 'scripts']
+    ]
 ];
 for (const [name, args] of tools) {
     if (!runRequiredTool(name, args)) failed = true;

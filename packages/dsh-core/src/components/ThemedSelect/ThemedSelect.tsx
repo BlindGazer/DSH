@@ -42,7 +42,7 @@ export function ThemedSelect<TValue extends string = string>({
     const rootRef = useRef<HTMLDivElement | undefined>(undefined);
     const [open, setOpen] = useState(false);
     const foundIndex = options.findIndex(option => option.value === value);
-    const selectedIndex = foundIndex >= 0 ? foundIndex : 0;
+    const selectedIndex = Math.max(foundIndex, 0);
     const [activeIndex, setActiveIndex] = useState(selectedIndex);
     const selectedOption = options[selectedIndex];
 

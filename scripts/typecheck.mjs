@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)));
-const packageManager = process.platform === 'win32' ? 'pnpm.exe' : 'pnpm';
+const packageManager = process.platform === 'win32' ? (process.env.npm_execpath ?? 'pnpm.exe') : 'pnpm';
 const commands = [
     ['dsh-core source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-core/tsconfig.json']],
     ['agents-router source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-agents-router/tsconfig.json']],

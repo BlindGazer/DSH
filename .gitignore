@@ -10,3 +10,4 @@ Thumbs.db
 .env.*
 !.env.example
 **/appsettings.Development.json
+**/*.tsbuildinfo

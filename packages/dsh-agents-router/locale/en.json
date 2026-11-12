@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Agent Instructions Router",
+    "description": "Routes relevant project rules, skills, and instructions into the agent context."
+  }
+}

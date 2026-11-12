@@ -552,10 +552,13 @@ function H(e = F, t) {
 }
 // src/components/ThemedSelect/ThemedSelect.tsx
 function U(e) {
-	let i = (0, l.c)(51), { value: s, options: c, onChange: f, ariaLabel: p, disabled: m, fullWidth: h, showCheckmark: g, className: _, triggerClassName: v, menuClassName: y, optionClassName: b } = e, x = m !== void 0 && m, S = h !== void 0 && h, C = g !== void 0 && g, w = n(void 0), [T, E] = r(!1), D;
-	i[0] === s ? D = i[1] : (D = (e) => e.value === s, i[0] = s, i[1] = D);
-	let O = c.findIndex(D), k = O >= 0 ? O : 0, [A, j] = r(k), M = c[k], N, P;
-	i[2] === T ? (N = i[3], P = i[4]) : (N = () => {
+	let i = (0, l.c)(54), { value: s, options: c, onChange: f, ariaLabel: p, disabled: m, fullWidth: h, showCheckmark: g, className: _, triggerClassName: v, menuClassName: y, optionClassName: b } = e, x = m !== void 0 && m, S = h !== void 0 && h, C = g !== void 0 && g, w = n(void 0), [T, E] = r(!1), D;
+	if (i[0] !== c || i[1] !== s) {
+		let e;
+		i[3] === s ? e = i[4] : (e = (e) => e.value === s, i[3] = s, i[4] = e), D = c.findIndex(e), i[0] = c, i[1] = s, i[2] = D;
+	} else D = i[2];
+	let O = Math.max(D, 0), [k, A] = r(O), j = c[O], M, N;
+	i[5] === T ? (M = i[6], N = i[7]) : (M = () => {
 		if (!T || typeof document > "u") return;
 		let e = (e) => {
 			let t = e.target;
@@ -564,44 +567,44 @@ function U(e) {
 		return document.addEventListener("mousedown", e, !0), () => {
 			document.removeEventListener("mousedown", e, !0);
 		};
-	}, P = [T], i[2] = T, i[3] = N, i[4] = P), t(N, P);
-	let F;
-	i[5] === c.length ? F = i[6] : (F = (e) => {
-		c.length !== 0 && j((t) => (t + e + c.length) % c.length);
-	}, i[5] = c.length, i[6] = F);
-	let L = F, R;
-	i[7] !== A || i[8] !== x || i[9] !== L || i[10] !== f || i[11] !== T || i[12] !== c || i[13] !== k ? (R = (e) => {
+	}, N = [T], i[5] = T, i[6] = M, i[7] = N), t(M, N);
+	let P;
+	i[8] === c.length ? P = i[9] : (P = (e) => {
+		c.length !== 0 && A((t) => (t + e + c.length) % c.length);
+	}, i[8] = c.length, i[9] = P);
+	let F = P, L;
+	i[10] !== k || i[11] !== x || i[12] !== F || i[13] !== f || i[14] !== T || i[15] !== c || i[16] !== O ? (L = (e) => {
 		if (!(x || c.length === 0)) {
 			if (e.key === "Escape") E(!1);
-			else if (e.key === "ArrowDown" || e.key === "ArrowUp") e.preventDefault(), T ? L(e.key === "ArrowDown" ? 1 : -1) : (j(k), E(!0));
+			else if (e.key === "ArrowDown" || e.key === "ArrowUp") e.preventDefault(), T ? F(e.key === "ArrowDown" ? 1 : -1) : (A(O), E(!0));
 			else if (e.key === "Enter") {
-				if (e.preventDefault(), !T) j(k), E(!0);
+				if (e.preventDefault(), !T) A(O), E(!0);
 				else {
-					let e = c[A];
+					let e = c[k];
 					e && !e.disabled && (f(e.value), E(!1));
 				}
 			}
 		}
-	}, i[7] = A, i[8] = x, i[9] = L, i[10] = f, i[11] = T, i[12] = c, i[13] = k, i[14] = R) : R = i[14];
-	let z = R, B;
-	i[15] === Symbol.for("react.memo_cache_sentinel") ? (B = (e) => {
+	}, i[10] = k, i[11] = x, i[12] = F, i[13] = f, i[14] = T, i[15] = c, i[16] = O, i[17] = L) : L = i[17];
+	let R = L, z;
+	i[18] === Symbol.for("react.memo_cache_sentinel") ? (z = (e) => {
 		w.current = e ?? void 0;
-	}, i[15] = B) : B = i[15];
-	let V = S && "dsh-select-full kpp-dropdown-full", H;
-	i[16] !== _ || i[17] !== V ? (H = d(I, "dsh-select", "ar-themed-select", "kpp-dropdown", V, _), i[16] = _, i[17] = V, i[18] = H) : H = i[18];
+	}, i[18] = z) : z = i[18];
+	let B = S && "dsh-select-full kpp-dropdown-full", V;
+	i[19] !== _ || i[20] !== B ? (V = d(I, "dsh-select", "ar-themed-select", "kpp-dropdown", B, _), i[19] = _, i[20] = B, i[21] = V) : V = i[21];
+	let H;
+	i[22] === v ? H = i[23] : (H = d("dsh-select-trigger", "ar-themed-select-trigger", "kpp-dropdown-trigger", v), i[22] = v, i[23] = H);
 	let U;
-	i[19] === v ? U = i[20] : (U = d("dsh-select-trigger", "ar-themed-select-trigger", "kpp-dropdown-trigger", v), i[19] = v, i[20] = U);
-	let G;
-	i[21] !== x || i[22] !== k ? (G = () => {
-		x || (j(k), E(W));
-	}, i[21] = x, i[22] = k, i[23] = G) : G = i[23];
-	let K = M?.label ?? "", q;
-	i[24] === K ? q = i[25] : (q = /* @__PURE__ */ a("span", {
+	i[24] !== x || i[25] !== O ? (U = () => {
+		x || (A(O), E(W));
+	}, i[24] = x, i[25] = O, i[26] = U) : U = i[26];
+	let G = j?.label ?? "", K;
+	i[27] === G ? K = i[28] : (K = /* @__PURE__ */ a("span", {
 		className: "dsh-select-label",
-		children: K
-	}), i[24] = K, i[25] = q);
-	let J = T ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6", Y;
-	i[26] === J ? Y = i[27] : (Y = /* @__PURE__ */ a("svg", {
+		children: G
+	}), i[27] = G, i[28] = K);
+	let q = T ? "m6 15 6-6 6 6" : "m6 9 6 6 6-6", J;
+	i[29] === q ? J = i[30] : (J = /* @__PURE__ */ a("svg", {
 		width: 14,
 		height: 14,
 		viewBox: "0 0 24 24",
@@ -611,29 +614,29 @@ function U(e) {
 		strokeLinecap: "round",
 		strokeLinejoin: "round",
 		"aria-hidden": "true",
-		children: /* @__PURE__ */ a("path", { d: J })
-	}), i[26] = J, i[27] = Y);
-	let X;
-	i[28] !== p || i[29] !== x || i[30] !== z || i[31] !== T || i[32] !== U || i[33] !== G || i[34] !== q || i[35] !== Y ? (X = /* @__PURE__ */ o("button", {
+		children: /* @__PURE__ */ a("path", { d: q })
+	}), i[29] = q, i[30] = J);
+	let Y;
+	i[31] !== p || i[32] !== x || i[33] !== R || i[34] !== T || i[35] !== H || i[36] !== U || i[37] !== K || i[38] !== J ? (Y = /* @__PURE__ */ o("button", {
 		type: "button",
 		"data-testid": u.Common.SelectTrigger,
-		className: U,
+		className: H,
 		"aria-label": p,
 		"aria-haspopup": "listbox",
 		"aria-expanded": T,
 		disabled: x,
-		onKeyDown: z,
-		onClick: G,
-		children: [q, Y]
-	}), i[28] = p, i[29] = x, i[30] = z, i[31] = T, i[32] = U, i[33] = G, i[34] = q, i[35] = Y, i[36] = X) : X = i[36];
-	let Z;
-	i[37] !== A || i[38] !== p || i[39] !== y || i[40] !== f || i[41] !== T || i[42] !== b || i[43] !== c || i[44] !== k || i[45] !== C ? (Z = T ? /* @__PURE__ */ a("div", {
+		onKeyDown: R,
+		onClick: U,
+		children: [K, J]
+	}), i[31] = p, i[32] = x, i[33] = R, i[34] = T, i[35] = H, i[36] = U, i[37] = K, i[38] = J, i[39] = Y) : Y = i[39];
+	let X;
+	i[40] !== k || i[41] !== p || i[42] !== y || i[43] !== f || i[44] !== T || i[45] !== b || i[46] !== c || i[47] !== O || i[48] !== C ? (X = T ? /* @__PURE__ */ a("div", {
 		role: "listbox",
 		"aria-label": p,
 		"data-testid": u.Common.SelectMenu,
 		className: d("dsh-select-menu", "ar-themed-select-menu", "kpp-dropdown-menu", y),
 		children: c.map((e, t) => {
-			let n = t === k, r = t === A;
+			let n = t === O, r = t === k;
 			return /* @__PURE__ */ o("button", {
 				type: "button",
 				role: "option",
@@ -641,7 +644,7 @@ function U(e) {
 				"aria-selected": n,
 				disabled: e.disabled,
 				className: d("dsh-select-option", "kpp-dropdown-item", (r || n) && "active kpp-dropdown-item-active", b),
-				onMouseEnter: () => j(t),
+				onMouseEnter: () => A(t),
 				onClick: () => {
 					e.disabled || (f(e.value), E(!1));
 				},
@@ -651,13 +654,13 @@ function U(e) {
 				}) : void 0]
 			}, e.value);
 		})
-	}) : void 0, i[37] = A, i[38] = p, i[39] = y, i[40] = f, i[41] = T, i[42] = b, i[43] = c, i[44] = k, i[45] = C, i[46] = Z) : Z = i[46];
-	let Q;
-	return i[47] !== H || i[48] !== X || i[49] !== Z ? (Q = /* @__PURE__ */ o("div", {
-		ref: B,
-		className: H,
-		children: [X, Z]
-	}), i[47] = H, i[48] = X, i[49] = Z, i[50] = Q) : Q = i[50], Q;
+	}) : void 0, i[40] = k, i[41] = p, i[42] = y, i[43] = f, i[44] = T, i[45] = b, i[46] = c, i[47] = O, i[48] = C, i[49] = X) : X = i[49];
+	let Z;
+	return i[50] !== V || i[51] !== Y || i[52] !== X ? (Z = /* @__PURE__ */ o("div", {
+		ref: z,
+		className: V,
+		children: [Y, X]
+	}), i[50] = V, i[51] = Y, i[52] = X, i[53] = Z) : Z = i[53], Z;
 }
 function W(e) {
 	return !e;

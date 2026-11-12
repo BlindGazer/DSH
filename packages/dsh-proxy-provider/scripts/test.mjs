@@ -134,7 +134,7 @@ test('2. Profile reuse, deletion fallback to Direct, and host conflict detection
 
 test('3. End-to-end HTTP Proxy (Basic Auth + 407) and Test Connection', async () => {
     // Target HTTP server returning 404 (like generativelanguage.googleapis.com root)
-    const targetServer = http.createServer((req, res) => {
+    const targetServer = http.createServer((_req, res) => {
         res.writeHead(404, { 'Content-Type': 'text/plain' });
         res.end('target reached');
     });
@@ -512,7 +512,7 @@ test('5. Client bundle registers settings and locale controls for both DSH slots
     const fakeCtx = {
         locale: { preference: 'en' },
         slots: {
-            inject(slotName, fn) {
+            inject(_slotName, fn) {
                 fn();
             },
             register(spec, component) {

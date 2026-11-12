@@ -207,6 +207,6 @@ export function translateProxyText(value: string, locale: DshLocaleCode = 'en'):
     const unknownEndpoint = /^Unknown endpoint "(.+)"$/.exec(value);
     if (unknownEndpoint) return `Неизвестный адрес запроса: "${unknownEndpoint[1]}"`;
     const wrappedFailure = /^✕ (.+)$/.exec(value);
-    if (wrappedFailure && wrappedFailure[1]) return `✕ ${translateProxyText(wrappedFailure[1], 'ru')}`;
+    if (wrappedFailure?.[1]) return `✕ ${translateProxyText(wrappedFailure[1], 'ru')}`;
     return value;
 }

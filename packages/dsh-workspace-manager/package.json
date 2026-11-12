@@ -1,0 +1,121 @@
+{
+  "name": "@kalex/dsh-workspace-manager",
+  "version": "2.0.0",
+  "description": "Multi-directory workspaces for DeepSeek Harness",
+  "icon": "assets/icon.svg",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlindGazer/DSH.git",
+    "directory": "packages/dsh-workspace-manager"
+  },
+  "homepage": "https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager",
+  "bugs": {
+    "url": "https://github.com/BlindGazer/DSH/issues"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/client.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "cordis.patch.yml",
+    "locale",
+    "README.md",
+    "doc",
+    "LICENSE",
+    "icon.svg",
+    "assets"
+  ],
+  "dsh": {
+    "plugin": {
+      "schemaVersion": 1,
+      "displayName": {
+        "en": "Workspace Manager",
+        "ru": "Управление рабочими каталогами"
+      },
+      "summary": {
+        "en": "Manage linked workspace directories",
+        "ru": "Управление подключенными каталогами рабочего пространства"
+      },
+      "category": "workspace"
+    },
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-api-workspace-controller",
+        "@deepseek-ai/dsh-client-ui-workspace",
+        "@deepseek-ai/dsh-client-ui-settings",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-renderer",
+        "@deepseek-ai/dsh-client-ui-slots"
+      ]
+    }
+  },
+  "engines": {
+    "dsh": ">=0.2.2-rc.1"
+  },
+  "scripts": {
+    "build": "node scripts/build.ts && tsc --build --force --emitDeclarationOnly ../../configs/packages/dsh-workspace-manager/tsconfig.json",
+    "build:client": "vite build --config ../../configs/packages/dsh-workspace-manager/vite.config.ts",
+    "build:host": "vite build --config ../../configs/packages/dsh-workspace-manager/vite.config.host.ts",
+    "test": "vitest run --config ../../configs/packages/dsh-workspace-manager/vitest.config.ts",
+    "typecheck": "tsc --build --force --pretty false ../../configs/packages/dsh-workspace-manager/tsconfig.json",
+    "verify": "node scripts/check-client-bundle.ts",
+    "check": "pnpm run build && pnpm run test && pnpm run verify"
+  },
+  "keywords": [
+    "dsh",
+    "workspace",
+    "directories",
+    "agent"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-compiler-runtime": "^1.0.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-agent": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-llm": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-tools": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-host-webserver": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-config-editor": "^0.2.2-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.4",
+    "@deepseek-ai/dsh-agent": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-llm": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-tools": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-host-webserver": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-config-editor": "^0.2.2-rc.1",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "react-compiler-runtime": "1.0.0",
+    "vitest": "^3.2.0",
+    "jsdom": "^29.1.1",
+    "@testing-library/react": "^16.3.2"
+  }
+}

@@ -52,11 +52,11 @@ export function parseProvidersFromPatchYaml(yamlText: string): Record<string, Pa
                 const entry = result[currentProvider];
                 if (!entry) continue;
                 const baseMatch = /^(?:baseURL|baseUrl):\s*(.+)$/.exec(trimmed);
-                if (baseMatch && baseMatch[1]) {
+                if (baseMatch?.[1]) {
                     entry.baseURL = baseMatch[1].trim().replace(/^['"]|['"]$/g, '');
                 }
                 const nameMatch = /^displayName:\s*(.+)$/.exec(trimmed);
-                if (nameMatch && nameMatch[1]) {
+                if (nameMatch?.[1]) {
                     entry.displayName = nameMatch[1].trim().replace(/^['"]|['"]$/g, '');
                 }
             }

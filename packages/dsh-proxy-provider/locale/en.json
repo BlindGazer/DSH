@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Model Provider Proxy",
+    "description": "Routes selected model provider requests through configured HTTP, HTTPS, and SOCKS5 proxies."
+  }
+}
