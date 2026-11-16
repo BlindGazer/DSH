@@ -43,7 +43,7 @@ export const styles = `
 .addir-primary { flex: 0 0 auto; color: var(--dsh-ui-muted); font-size: 12px; }
 .addir-folder-actions { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; }
 .addir-check { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
-.addir-check input { accent-color: var(--dsh-ui-accent); }
+.addir-check input { accent-color: var(--dsw-alias-brand-primary); }
 .addir-check input:focus-visible { outline: 2px solid var(--dsh-ui-focus-ring); outline-offset: 2px; }
 .addir-folder-list > .dsh-btn { margin: 10px; }
 .addir-footer-spacer { flex: 1 1 auto; }

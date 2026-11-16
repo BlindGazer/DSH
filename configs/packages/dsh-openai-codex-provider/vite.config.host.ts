@@ -7,7 +7,8 @@ const packageRoot = resolve(import.meta.dirname, '../../../packages/dsh-openai-c
 export default defineConfig({
     ...createDshHostViteConfig({
         packageRoot,
-        entry: process.env.DSH_OPENAI_CODEX_HOST_ENTRY ?? 'src/index.ts'
+        entry: process.env.DSH_OPENAI_CODEX_HOST_ENTRY ?? 'src/index.ts',
+        external: ['@deepseek-ai/dsh-config-editor', /^@earendil-works\/pi-ai(?:\/|$)/]
     }),
     worker: {
         format: 'es',

@@ -1,3 +1,19 @@
 - insert:
-    - id: openai-codex-auth
-      name: ./lib/index.js
+    - id: dsh-openai-codex-provider
+      name: "@kalex/dsh-openai-codex-provider"
+      config: {}
+      models:
+        - id: gpt-5.6-luna
+          name: GPT-5.6 Luna
+        - id: gpt-5.6-sol
+          name: GPT-5.6 Sol
+        - id: gpt-5.6-terra
+          name: GPT-5.6 Terra
+        - id: gpt-6-astra
+          name: GPT-6 Astra
+        - id: gpt-6-luna
+          name: GPT-6 Luna
+        - id: gpt-6-sol
+          name: GPT-6 Sol
+        - id: gpt-6.1-sol
+          name: GPT-6.1 Sol

@@ -10,6 +10,15 @@ export {
     type SpinnerProps
 } from './Loader/index.js';
 export { Modal, type ModalProps } from './Modal/index.js';
+export {
+    CircularProgress,
+    type CircularProgressProps,
+    type DshProgressColor,
+    type DshProgressSize,
+    LinearProgress,
+    type LinearProgressProps
+} from './Progress/index.js';
 export { SwitchControl, type SwitchControlProps } from './SwitchControl/index.js';
 export { Tabs, type TabsProps } from './Tabs/index.js';
 export { ThemedSelect, type ThemedSelectProps } from './ThemedSelect/index.js';
+export { Tooltip, type TooltipProps } from './Tooltip/index.js';

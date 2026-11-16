@@ -1,6 +1,7 @@
-import { type ReactNode, useEffect, useRef } from 'react';
+import { createElement, Fragment, type ReactNode, useEffect, useRef } from 'react';
 
 import { TestId } from '../../constants/testId.js';
+import { useEffectiveTheme } from '../../hooks/useEffectiveTheme.js';
 import type { DshThemeId } from '../../models/DshContext.js';
 import { cx } from '../../utils/classNames.js';
 
@@ -33,6 +34,7 @@ export function Modal({
     cardClassName,
     children
 }: ModalProps) {
+    const effectiveTheme = useEffectiveTheme(theme ?? 'auto');
     const dialogRef = useRef<HTMLDivElement | undefined>(undefined);
     const onCloseRef = useRef(onClose);
 
@@ -78,11 +80,12 @@ export function Modal({
         };
     }, [open]);
 
-    if (!open) return undefined;
+    // Пустой фрагмент совместим с React 18, где компонент не может возвращать undefined.
+    if (!open) return createElement(Fragment);
 
     return (
         <div
-            data-theme={theme}
+            data-theme={effectiveTheme}
             data-testid={TestId.Common.ModalBackdrop}
             className={cx('dsh-modal-backdrop', 'ar-modal', 'kpp-modal-backdrop', backdropClassName)}>
             <button type="button" className="dsh-modal-backdrop-control" aria-hidden="true" tabIndex={-1} onClick={onClose} />

@@ -13,11 +13,18 @@ description: Enforces unified DSH + Google Material 3 design system tokens, them
 - Seamless DSH + Google Material 3 parity: plugin surfaces must blend seamlessly with the host DSH shell while providing clear interactive states (`default`, `hover`, `active`, `focus-visible`, `disabled`) and legible contrast in both `light`, `dark`, and custom registered themes.
 - Allow local style overrides in plugins and components via `className`, `variant`, and scoped CSS variables without modifying shared component internals.
 
-## 2. Loading States and Animations
+## 2. Core Theme Integration (Required)
+
+- Every React UI root that consumes `--dsh-ui-*` tokens must resolve its active theme with `useEffectiveTheme()` from `@kalex/dsh-core` and apply the result as `data-theme={theme}`. Do not infer or hardcode `light`/`dark` in components.
+- The element carrying `data-theme` must also be a Core-recognized theme root: use an existing root selector listed by `buildCoreThemeStyles()` (for example `.ar-root`, `.ar-settings-root`, `.kpp-footer-row`, or `.dsh-core-root`). Core tokens are scoped to those roots; loading Core CSS alone does not make tokens available in arbitrary plugin markup. Prefer an existing suitable root instead of adding a plugin-specific selector to Core.
+- If UI is rendered inside a Core component that owns its theme root (for example `<Modal theme={theme}>`), pass the effective theme to that component and let it provide the root; avoid redundant nested theme roots unless content is rendered outside it (such as through a portal).
+- Load/inject Core theme CSS with `ensureCoreStyles()` or `buildCoreThemeStyles()` using the package's established style setup. This makes token rules available; `useEffectiveTheme()` plus a recognized `data-theme` root makes them apply to the component. These are separate required steps when the component does not inherit a Core-owned theme root.
+
+## 3. Loading States and Animations
 
 - Never show an empty unstyled container while data loads: display `Skeleton`, `Spinner`, or `ProgressBar` from `@kalex/dsh-core` marked with `TestId.Common.Loading`.
 - Use standard animation timing constants from `Delay` (`Delay.AnimationShort = 300`, `Delay.DebounceSearch = 300`) to prevent visual flicker.
 
-## 3. Design Principles
+## 4. Design Principles
 
 Read this skill [design-principles](/agents/front/skills/design-principles/SKILL.md) when you need to change the visual appearance of UI components.

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { CredentialRef, PackageId, ProviderRoute, RemoteNamespace, ResetStorageKey, ServiceKey } from '../src/shared/constants/runtime.js';
-import { ModelSettingsSchema, ResetRequestSchema, SnapshotSchema, TYPERT_REMOTE } from '../src/shared/remote.js';
+import { ModelSettingsSchema, ResetRequestSchema, SnapshotSchema, sanitizeUiRenderError, TYPERT_REMOTE } from '../src/shared/remote.js';
 
 const snapshot = {
     models: [],
@@ -22,7 +22,12 @@ const snapshot = {
 describe('shared remote contract', () => {
     it('accepts a sanitized snapshot and rejects credential fields', () => {
         expect(SnapshotSchema.safeParse(snapshot).success).toBe(true);
-        expect(SnapshotSchema.safeParse({ ...snapshot, credentialPayload: 'not a credential' }).success).toBe(false);
+        expect(
+            SnapshotSchema.safeParse({
+                ...snapshot,
+                credentialPayload: 'not a credential'
+            }).success
+        ).toBe(false);
     });
 
     it('accepts valid model settings and rejects an empty model id', () => {
@@ -50,14 +55,39 @@ describe('shared remote contract', () => {
             'followHostProxy',
             'useSystemProxy',
             'consumeReset',
-            'saveModels'
+            'saveModels',
+            'reportUiError',
+            'reportUiReady'
         ]);
     });
 
-    it('preserves legacy runtime identifiers used by installed profiles', () => {
-        expect({ PackageId, ServiceKey, RemoteNamespace, ProviderRoute, CredentialRef, ResetStorageKey }).toEqual({
+    it('redacts credential-like values from UI diagnostics', () => {
+        expect(
+            sanitizeUiRenderError({
+                name: 'Error',
+                message: 'authorization: secret-value; Bearer access-value',
+                stack: 'token=stack-value',
+                componentStack: 'at Panel'
+            })
+        ).toEqual({
+            name: 'Error',
+            message: 'authorization: [redacted]; Bearer [redacted]',
+            stack: 'token=[redacted]',
+            componentStack: 'at Panel'
+        });
+    });
+
+    it('keeps the provider identifiers and a distinct OAuth remote service key', () => {
+        expect({
+            PackageId,
+            ServiceKey,
+            RemoteNamespace,
+            ProviderRoute,
+            CredentialRef,
+            ResetStorageKey
+        }).toEqual({
             PackageId: 'dsh-openai-codex-auth',
-            ServiceKey: 'openai-codex-auth',
+            ServiceKey: 'openai-codex-provider',
             RemoteNamespace: 'openaiCodex',
             ProviderRoute: 'openai-codex',
             CredentialRef: 'PI_OAUTH_OPENAI_CODEX',

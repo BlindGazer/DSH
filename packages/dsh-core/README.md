@@ -14,7 +14,7 @@
 
 ## 📦 Компоненты
 
-`Button`, `IconButton`, `ThemedSelect`, `SwitchControl`, `Tabs`, `Modal`, `Skeleton`, `Spinner`, `ProgressBar`, `ChildrenLazy`. Подробнее в [Features](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/Features.md).
+`Button`, `IconButton`, `ThemedSelect`, `SwitchControl`, `Tabs`, `Modal`, `Tooltip`, `CircularProgress`, `LinearProgress`, `Skeleton`, `Spinner`, `ProgressBar`, `ChildrenLazy`. Подробнее в [Features](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/Features.md).
 
 ## 🛠 Технологический стек
 
@@ -32,4 +32,4 @@ pnpm add @kalex/dsh-core
 ```
 
 - [Команды и использование](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/Setup.md) | [Commands and usage](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/Setup_EN.md)
-- [English README](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/README_EN.md)
+- [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/docs/README_EN.md)

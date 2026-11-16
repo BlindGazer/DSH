@@ -25,7 +25,8 @@ export function buildCoreThemeStyles(
     const darkVars = buildThemeCssVariables(getDshTheme('dark').tokens);
     const lightSelectors = rootSelectors.map(sel => `${sel}[data-theme="light"]`).join(',');
     const lightVars = buildThemeCssVariables(getDshTheme('light').tokens);
-    const customThemeRules = listDshThemes()
+    const themes = listDshThemes();
+    const customThemeRules = (Array.isArray(themes) ? themes : [])
         .filter(theme => theme.id !== 'dark' && theme.id !== 'light')
         .map(theme => {
             const selectors = rootSelectors.map(selector => `${selector}[data-theme="${theme.id}"]`).join(',');

@@ -1,7 +1,8 @@
-import { Button, Modal, Spinner, ThemedSelect } from '@kalex/dsh-core';
+import { Button, Modal, Spinner, ThemedSelect, useEffectiveTheme } from '@kalex/dsh-core';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
 import { TestId } from '../../../shared/constants/testId.js';
-import { resetResultText, usageRemainingPercentage } from './codexPresentation.js';
+import { LinearUsageChart } from './CodexUsageCharts.js';
+import { resetResultText } from './codexPresentation.js';
 import styles from './codexStyles.module.scss';
 import type { OpenAICodexController } from './openAICodexRuntime.js';
 import { useCodexSettingsPanel } from './useCodexSettingsPanel.js';
@@ -10,38 +11,79 @@ export interface CodexSettingsPanelProps {
     readonly controller: OpenAICodexController;
     readonly locale: 'en' | 'ru';
     readonly text: (key: OpenAICodexText) => string;
+    readonly hideHeading?: boolean;
 }
 
-export function CodexSettingsPanel({ controller, locale, text }: CodexSettingsPanelProps) {
+export function CodexSettingsPanel({ controller, locale, text, hideHeading = false }: CodexSettingsPanelProps) {
+    const theme = useEffectiveTheme();
     const panel = useCodexSettingsPanel(controller, text);
     const { codex, snapshot } = panel;
 
-    if (codex.loading && !snapshot) {
+    if (!snapshot) {
         return (
-            <div className={styles.loading} data-testid={TestId.OpenAICodex.Loading}>
-                <Spinner label={text('loading')} />
-            </div>
+            <section className={`dsh-core-root ${styles.panel}`} data-theme={theme} data-testid={TestId.OpenAICodex.Settings}>
+                {hideHeading ? undefined : (
+                    <header className={styles.header}>
+                        <div className={styles.grow}>
+                            <h2>{text('title')}</h2>
+                            <p>{text('intro')}</p>
+                        </div>
+                    </header>
+                )}
+                {codex.loading ? (
+                    <div className={styles.loading} data-testid={TestId.OpenAICodex.Loading}>
+                        <Spinner label={text('loading')} />
+                    </div>
+                ) : (
+                    <>
+                        <p role="alert">{text('usageError')}</p>
+                        <Button onClick={() => void codex.refresh()}>{text('retry')}</Button>
+                    </>
+                )}
+                <div className={styles.actions}>
+                    <div data-testid={TestId.OpenAICodex.Login}>
+                        <Button variant="primary" disabled={codex.busy} onClick={() => void panel.runAction(panel.startLogin)}>
+                            {text('login')}
+                        </Button>
+                    </div>
+                </div>
+                {panel.actionError ? (
+                    <p role="alert" className={styles.error}>
+                        {panel.actionError}
+                    </p>
+                ) : undefined}
+            </section>
         );
     }
 
-    if (!snapshot) {
+    if (!snapshot.loggedIn && snapshot.status !== 'waiting' && snapshot.status !== 'starting') {
         return (
-            <section className={styles.panel} data-testid={TestId.OpenAICodex.Settings}>
-                <p role="alert">{text('usageError')}</p>
-                <Button onClick={() => void codex.refresh()}>{text('retry')}</Button>
+            <section className={`dsh-core-root ${styles.panel}`} data-theme={theme} data-testid={TestId.OpenAICodex.Settings}>
+                <div className={styles.signInRequired} role="status">
+                    <p>{text('signInRequired')}</p>
+                    <div className={styles.actions}>
+                        <div data-testid={TestId.OpenAICodex.Login}>
+                            <Button variant="primary" disabled={codex.busy} onClick={() => void panel.runAction(panel.startLogin)}>
+                                {text('login')}
+                            </Button>
+                        </div>
+                    </div>
+                </div>
             </section>
         );
     }
 
     return (
-        <section className={styles.panel} data-testid={TestId.OpenAICodex.Settings}>
-            <header className={styles.header}>
-                <div className={styles.grow}>
-                    <h2>{text('title')}</h2>
-                    <p>{text('intro')}</p>
-                </div>
-                <strong>{snapshot.loggedIn ? text('connected') : text('notLoggedIn')}</strong>
-            </header>
+        <section className={`dsh-core-root ${styles.panel}`} data-theme={theme} data-testid={TestId.OpenAICodex.Settings}>
+            {hideHeading ? undefined : (
+                <header className={styles.header}>
+                    <div className={styles.grow}>
+                        <h2>{text('title')}</h2>
+                        <p>{text('intro')}</p>
+                    </div>
+                    <strong>{snapshot.loggedIn ? text('connected') : text('notLoggedIn')}</strong>
+                </header>
+            )}
 
             {snapshot.status === 'starting' ? <p role="status">{text('working')}</p> : undefined}
             {snapshot.status === 'error' && snapshot.error ? (
@@ -73,17 +115,19 @@ export function CodexSettingsPanel({ controller, locale, text }: CodexSettingsPa
                         <Button
                             variant="primary"
                             disabled={codex.busy || snapshot.status === 'starting' || snapshot.status === 'waiting'}
-                            onClick={() => void panel.runAction(codex.startLogin)}>
+                            onClick={() => void panel.runAction(panel.startLogin)}>
                             {text('login')}
                         </Button>
                     </div>
                 )}
-                <Button disabled={codex.busy} onClick={panel.beginEdit}>
-                    {text('editModels')}
-                </Button>
+                {(Array.isArray(snapshot.models) ? snapshot.models.length : 0) > 0 ? (
+                    <Button disabled={codex.busy} onClick={panel.beginEdit}>
+                        {text('editModels')}
+                    </Button>
+                ) : undefined}
             </div>
 
-            {panel.actionError ? (
+            {panel.actionError && !panel.editOpen && panel.resetCard === undefined ? (
                 <p role="alert" className={styles.error}>
                     {panel.actionError}
                 </p>
@@ -102,15 +146,7 @@ export function CodexSettingsPanel({ controller, locale, text }: CodexSettingsPa
                 {snapshot.usageStatus === 'ready' ? (
                     <>
                         {snapshot.usageLimits.map(limit => (
-                            <div className={styles.usageRow} key={`${limit.name}-${limit.resetAt}`}>
-                                <span>{limit.name}</span>
-                                <span>
-                                    {text('remaining')}: {usageRemainingPercentage(limit.usedPercent)}
-                                </span>
-                                <span>
-                                    {text('resetsIn')}: {new Date(limit.resetAt * 1000).toLocaleString(locale)}
-                                </span>
-                            </div>
+                            <LinearUsageChart key={`${limit.name}-${limit.resetAt}`} limit={limit} label={limit.name} text={text} />
                         ))}
                         <p>
                             {text('credits')}:{' '}
@@ -160,53 +196,83 @@ export function CodexSettingsPanel({ controller, locale, text }: CodexSettingsPa
                 {snapshot.proxyRestartRequired ? <p role="status">{text('proxySaving')}</p> : undefined}
             </section>
 
-            <Modal open={panel.editOpen} onClose={panel.closeEdit} title={text('models')} closeLabel={text('close')}>
-                <div className={styles.modalBody}>
-                    <p>{text('modelHint')}</p>
-                    {panel.draft.map((model, index) => (
-                        <div className={styles.modelRow} key={model.id}>
-                            <label className={styles.grow}>
+            <Modal
+                open={panel.editOpen}
+                onClose={panel.closeEdit}
+                title={text('models')}
+                closeLabel={text('close')}
+                {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
+                <div className={styles.modalLayout}>
+                    <div data-testid={TestId.OpenAICodex.ModalScrollBody} className={styles.modalBody}>
+                        <p>{text('modelHint')}</p>
+                        <div className={styles.modelTable}>
+                            <div className={styles.modelHeader}>
                                 <span>{text('modelName')}</span>
-                                <input
-                                    value={model.name}
-                                    aria-label={`${text('modelName')}: ${model.id}`}
-                                    onChange={event => panel.updateModel(model.id, { name: event.currentTarget.value })}
-                                />
-                            </label>
-                            <label className={styles.checkLabel}>
-                                <input
-                                    type="checkbox"
-                                    checked={model.enabled}
-                                    aria-label={`${text('enabled')}: ${model.name}`}
-                                    onChange={event => panel.updateModel(model.id, { enabled: event.currentTarget.checked })}
-                                />
-                                {text('enabled')}
-                            </label>
-                            <div className={styles.modelActions}>
-                                <Button
-                                    disabled={codex.busy || index === 0}
-                                    ariaLabel={`${text('moveUp')}: ${model.name}`}
-                                    onClick={() => panel.reorderModel(model.id, 'up')}>
-                                    {text('moveUp')}
-                                </Button>
-                                <Button
-                                    disabled={codex.busy || index === panel.draft.length - 1}
-                                    ariaLabel={`${text('moveDown')}: ${model.name}`}
-                                    onClick={() => panel.reorderModel(model.id, 'down')}>
-                                    {text('moveDown')}
+                                <span>{text('enabled')}</span>
+                                <span>{text('moveUp')}</span>
+                            </div>
+                            {panel.draft.map((model, index) => (
+                                <div className={styles.modelRow} key={model.id}>
+                                    <label className={styles.grow}>
+                                        <span>{text('modelName')}</span>
+                                        <input
+                                            value={model.name}
+                                            aria-label={`${text('modelName')}: ${model.id}`}
+                                            onChange={event =>
+                                                panel.updateModel(model.id, {
+                                                    name: event.currentTarget.value
+                                                })
+                                            }
+                                        />
+                                    </label>
+                                    <label className={styles.checkLabel}>
+                                        <input
+                                            type="checkbox"
+                                            className={styles.checkbox}
+                                            checked={model.enabled}
+                                            aria-label={`${text('enabled')}: ${model.name}`}
+                                            onChange={event =>
+                                                panel.updateModel(model.id, {
+                                                    enabled: event.currentTarget.checked
+                                                })
+                                            }
+                                        />
+                                        {text('enabled')}
+                                    </label>
+                                    <div className={styles.modelActions}>
+                                        <Button
+                                            disabled={codex.busy || index === 0}
+                                            ariaLabel={`${text('moveUp')}: ${model.name}`}
+                                            onClick={() => panel.reorderModel(model.id, 'up')}>
+                                            {text('moveUp')}
+                                        </Button>
+                                        <Button
+                                            disabled={codex.busy || index === panel.draft.length - 1}
+                                            ariaLabel={`${text('moveDown')}: ${model.name}`}
+                                            onClick={() => panel.reorderModel(model.id, 'down')}>
+                                            {text('moveDown')}
+                                        </Button>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div data-testid={TestId.OpenAICodex.ModalFooter} className={styles.modalFooter}>
+                        {panel.actionError ? (
+                            <p role="alert" className={styles.error}>
+                                {panel.actionError}
+                            </p>
+                        ) : undefined}
+                        <div className={styles.actions}>
+                            <div data-testid={TestId.OpenAICodex.SaveModels}>
+                                <Button variant="primary" disabled={codex.busy} onClick={() => void panel.saveModels()}>
+                                    {text('save')}
                                 </Button>
                             </div>
-                        </div>
-                    ))}
-                    <div className={styles.actions}>
-                        <div data-testid={TestId.OpenAICodex.SaveModels}>
-                            <Button disabled={codex.busy} onClick={() => void panel.saveModels()}>
-                                {text('save')}
+                            <Button disabled={codex.busy} onClick={panel.closeEdit}>
+                                {text('cancel')}
                             </Button>
                         </div>
-                        <Button disabled={codex.busy} onClick={panel.closeEdit}>
-                            {text('cancel')}
-                        </Button>
                     </div>
                 </div>
             </Modal>
@@ -215,18 +281,28 @@ export function CodexSettingsPanel({ controller, locale, text }: CodexSettingsPa
                 open={panel.resetCard !== undefined}
                 onClose={panel.closeReset}
                 title={text('resetConfirmTitle')}
-                closeLabel={text('close')}>
-                <div className={styles.modalBody}>
-                    <p>{text('resetConfirm')}</p>
-                    <div className={styles.actions}>
-                        <div data-testid={TestId.OpenAICodex.ConfirmReset}>
-                            <Button variant="danger" disabled={codex.busy} onClick={() => void panel.confirmReset()}>
-                                {text('confirm')}
+                closeLabel={text('close')}
+                {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
+                <div className={styles.modalLayout}>
+                    <div data-testid={TestId.OpenAICodex.ModalScrollBody} className={styles.modalBody}>
+                        <p>{text('resetConfirm')}</p>
+                    </div>
+                    <div data-testid={TestId.OpenAICodex.ModalFooter} className={styles.modalFooter}>
+                        {panel.actionError ? (
+                            <p role="alert" className={styles.error}>
+                                {panel.actionError}
+                            </p>
+                        ) : undefined}
+                        <div className={styles.actions}>
+                            <div data-testid={TestId.OpenAICodex.ConfirmReset}>
+                                <Button variant="danger" disabled={codex.busy} onClick={() => void panel.confirmReset()}>
+                                    {text('confirm')}
+                                </Button>
+                            </div>
+                            <Button disabled={codex.busy} onClick={panel.closeReset}>
+                                {text('cancel')}
                             </Button>
                         </div>
-                        <Button disabled={codex.busy} onClick={panel.closeReset}>
-                            {text('cancel')}
-                        </Button>
                     </div>
                 </div>
             </Modal>

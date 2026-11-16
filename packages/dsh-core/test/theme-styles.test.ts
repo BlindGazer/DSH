@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { darkThemeTokens, ensureCoreStyles, registerDshTheme } from '../src/index.js';
 
@@ -19,6 +20,16 @@ afterEach(() => {
 });
 
 describe('@kalex/dsh-core injected theme styles', () => {
+    it('matches native DSH surfaces and progress colors without a tooltip arrow', () => {
+        const styles = readFileSync(new URL('../src/theme/coreStyles.module.scss', import.meta.url), 'utf8');
+        expect(styles).toContain('var(--dsw-specific-menu)');
+        expect(styles).toContain('var(--dsw-radius-lg)');
+        expect(styles).toContain('var(--dsw-alias-label-tertiary)');
+        expect(styles).toContain('var(--dsw-alias-border-l3)');
+        expect(styles).toContain('position-try-fallbacks');
+        expect(styles).not.toContain('.dsh-tooltip-content::after');
+    });
+
     it('refreshes already injected CSS when a registered theme changes', () => {
         const elements = new Map<string, FakeStyleElement>();
         const fakeDocument: FakeDocument = {

@@ -110,7 +110,13 @@ export function registerDshTheme(definition: DshThemeDefinition): void {
  * Возвращает определение темы по идентификатору (по умолчанию 'dark').
  */
 export function getDshTheme(themeId: string): DshThemeDefinition {
-    return themeRegistry.get(themeId) ?? { id: 'dark', baseMode: 'dark', tokens: darkThemeTokens };
+    return (
+        themeRegistry.get(themeId) ?? {
+            id: 'dark',
+            baseMode: 'dark',
+            tokens: darkThemeTokens
+        }
+    );
 }
 
 /**

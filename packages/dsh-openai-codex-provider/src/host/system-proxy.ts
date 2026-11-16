@@ -24,7 +24,7 @@ interface OAuthInteraction {
     signal?: AbortSignal;
     notify?: (value: string) => void;
 }
-type WorkerMessage = { type: 'notify'; value: string } | { type: 'result'; value: object } | { type: 'error' };
+type WorkerMessage = { type: 'notify'; value: string } | { type: 'result'; value: object } | { type: 'error'; message: string };
 interface WorkerData {
     policy: SystemProxyPolicy;
     operation: 'login' | 'refresh';
@@ -142,7 +142,7 @@ export function systemOAuth(
             policy,
             operation,
             credential,
-            providerUrl: import.meta.resolve('@earendil-works/pi-ai/providers/openai-codex')
+            providerUrl: 'https://chatgpt.com/backend-api'
         };
         const worker = new Worker(new URL('./system-proxy-worker.js', import.meta.url), { workerData: data });
         workers.add(worker);
@@ -172,7 +172,7 @@ export function systemOAuth(
                     finish(new Error('Codex proxy login notification failed.'), undefined);
                 }
             } else if (message.type === 'result') finish(undefined, message.value);
-            else if (message.type === 'error') finish(new Error('Codex system-proxy OAuth request failed.'), undefined);
+            else if (message.type === 'error') finish(new Error(message.message), undefined);
         });
         worker.on('error', () => finish(new Error('Codex system-proxy worker failed.'), undefined));
         worker.on('exit', () => {

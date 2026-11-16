@@ -1,11 +1,12 @@
 .panel {
+    box-sizing: border-box;
     display: grid;
     gap: 12px;
     width: 100%;
     max-width: 100%;
     min-width: 0;
     container-type: inline-size;
-    color: var(--dsh-ui-text, var(--dsw-alias-label-primary));
+    color: var(--dsh-ui-text);
 }
 
 .header,
@@ -15,6 +16,16 @@
     display: flex;
     align-items: center;
     gap: 10px;
+    min-width: 0;
+}
+
+.actions {
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.actions > * {
+    flex: 0 1 auto;
     min-width: 0;
 }
 
@@ -37,28 +48,30 @@
 
 .panel h2,
 .panel h3 {
-    font-size: 1rem;
+    font-size: 0.875rem;
+    line-height: 1.3;
 }
 
 .panel p {
-    color: var(--dsh-ui-muted, var(--dsw-alias-label-secondary));
+    color: var(--dsh-ui-muted);
     overflow-wrap: anywhere;
 }
 
 .card {
+    box-sizing: border-box;
     display: grid;
     gap: 10px;
     min-width: 0;
     padding: 12px;
-    border: 1px solid var(--dsh-ui-border, var(--dsw-alias-border-l1));
+    border: 1px solid var(--dsh-ui-border);
     border-radius: 12px;
-    background: var(--dsh-ui-surface, var(--dsw-alias-bg-layer-1));
+    background: var(--dsh-ui-surface);
 }
 
 .usageRow {
     justify-content: space-between;
     padding-block: 6px;
-    border-top: 1px solid var(--dsh-ui-border, var(--dsw-alias-border-l1));
+    border-top: 1px solid var(--dsh-ui-border);
 }
 
 .usageRow > * {
@@ -66,8 +79,126 @@
     overflow-wrap: anywhere;
 }
 
+.quotaItem {
+    display: grid;
+    gap: 4px;
+}
+
+.quotaLabel {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    color: var(--dsh-ui-text);
+}
+
+.usageInfo {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.linearUsage {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+    color: var(--dsw-alias-label-secondary);
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.linearUsageLabel {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+}
+
+.linearUsageValue {
+    flex: none;
+    color: var(--dsw-alias-label-primary);
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+}
+
+.quotaUsed {
+    color: var(--dsw-alias-label-tertiary);
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.circularChart {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 6px;
+    color: var(--dsw-alias-label-tertiary);
+    font-variant-numeric: tabular-nums;
+    line-height: 20px;
+}
+
+.circularChartValue {
+    color: var(--dsw-alias-label-tertiary);
+    font-size: 14px;
+    line-height: 20px;
+    white-space: nowrap;
+}
+
+.circularChart[data-size="small"] .circularChartValue {
+    font-size: 13px;
+}
+
+.chatQuota {
+    display: inline-flex;
+    flex: none;
+}
+
+.chatQuotaTrigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex: none;
+    padding: 1px 8px;
+    border: none;
+    border-radius: var(--dsw-radius-sm);
+    background: transparent;
+    color: var(--dsw-alias-label-tertiary);
+    font-family: inherit;
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: pointer;
+}
+
+.chatQuotaTrigger:hover,
+.chatQuotaTrigger:focus-visible {
+    background: var(--dsw-alias-interactive-bg-hover);
+    color: var(--dsw-alias-label-secondary);
+}
+
+.chatQuotaTrigger:focus-visible {
+    outline: 2px solid var(--dsw-alias-button-info-fill);
+    outline-offset: 2px;
+}
+
+.quotaTooltipContents {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+}
+
 .error {
-    color: var(--dsh-ui-danger, var(--dsw-alias-state-error-primary)) !important;
+    color: var(--dsw-alias-state-error-primary) !important;
+}
+
+.signInRequired {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--dsh-ui-border);
+    border-radius: 12px;
+    background: var(--dsh-ui-surface);
 }
 
 .loading {
@@ -76,20 +207,138 @@
     place-items: center;
 }
 
+.modalCard {
+    display: flex;
+    flex-direction: column;
+    width: min(760px, calc(100vw - 32px));
+    max-width: 100%;
+    max-height: 88dvh;
+    overflow: hidden;
+}
+
+.modalCard :global(.dsh-modal-header) {
+    flex: 0 0 auto;
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--dsh-ui-muted);
+    font-size: 0;
+    line-height: 0;
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn:hover:not(:disabled)) {
+    background: var(--dsh-ui-hover);
+    color: var(--dsh-ui-text);
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn:focus-visible) {
+    outline: 2px solid var(--dsh-ui-accent);
+    outline-offset: 2px;
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn)::before,
+.modalCard :global(.dsh-modal-header .dsh-btn)::after {
+    position: absolute;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    content: "";
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn)::before {
+    transform: rotate(45deg);
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn)::after {
+    transform: rotate(-45deg);
+}
+
+.modalLayout {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 0;
+    max-height: calc(88dvh - 72px);
+    overflow: hidden;
+}
+
 .modalBody {
     display: grid;
+    flex: 1 1 auto;
     gap: 12px;
-    max-width: min(680px, calc(100vw - 32px));
-    max-height: min(75vh, 720px);
-    overflow: auto;
-    padding: 16px;
+    width: 100%;
+    min-height: 0;
+    max-width: none;
+    overflow-y: auto;
+    padding: 20px 24px;
+    box-sizing: border-box;
+    font-size: 0.875rem;
+    line-height: 1.4;
+}
+
+.modalFooter {
+    display: grid;
+    flex: 0 0 auto;
+    gap: 8px;
+    padding: 12px 24px max(16px, env(safe-area-inset-bottom));
+    border-top: 1px solid var(--dsh-ui-border);
+    background: var(--dsh-ui-bg-modal);
+}
+
+.modalFooter > p {
+    margin: 0;
+}
+
+.modalBody p,
+.modalBody label,
+.modalBody input,
+.modalBody button {
+    font-size: inherit;
+}
+
+.modelTable {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--dsh-ui-border);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
 .modelRow {
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding-block: 8px;
-    border-top: 1px solid var(--dsh-ui-border, var(--dsw-alias-border-l1));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 12px;
+    border-top: 1px solid var(--dsh-ui-border);
+}
+
+.modelTable > .modelRow:first-child {
+    border-top: 0;
+}
+
+.modelHeader {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    gap: 12px;
+    padding: 8px 12px;
+    color: var(--dsh-ui-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: var(--dsh-ui-surface);
 }
 
 .modelRow label {
@@ -107,11 +356,10 @@
     box-sizing: border-box;
     width: 100%;
     min-width: 0;
-    border: 1px solid var(--dsh-ui-border-strong, var(--dsw-alias-border-l2));
+    border: 1px solid var(--dsh-ui-border-strong);
     border-radius: 8px;
     padding: 8px;
-    color: var(--dsh-ui-text, var(--dsw-alias-label-primary));
-    background: var(--dsh-ui-bg-page, var(--dsw-alias-bg-base));
+    color: var(--dsh-ui-text);
 }
 
 .checkLabel {
@@ -119,18 +367,44 @@
     align-items: center;
 }
 
+.checkbox {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--dsh-ui-accent);
+    cursor: pointer;
+}
+
+.checkbox:focus-visible {
+    outline: 2px solid var(--dsh-ui-accent);
+    outline-offset: 2px;
+}
+
+.checkbox:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+}
+
 .panel button:focus-visible,
 .panel a:focus-visible,
 .modalBody input:focus-visible {
-    outline: 2px solid var(--dsh-ui-accent, var(--dsw-alias-brand-primary));
+    outline: 2px solid var(--dsh-ui-accent);
     outline-offset: 2px;
 }
 
 @container (max-width: 480px) {
-    .header,
-    .modelRow {
+    .header {
         align-items: stretch;
         flex-direction: column;
+    }
+
+    .modelHeader {
+        display: none;
+    }
+
+    .modelRow {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: stretch;
     }
 
     .usageRow {

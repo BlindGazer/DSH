@@ -1,14 +1,25 @@
+# build/packages
 **/node_modules/
-.pnpm-store/
 coverage/
+.DS_Store
+.pnpm-store/
+Thumbs.db
+
+# logs
 *.log
 !openspec/**/*.log
-.DS_Store
-Thumbs.db
+
+# environment data
 .devtools_codepilot/
 .env
 .env.*
 !.env.example
 **/appsettings.Development.json
 **/*.tsbuildinfo
+
+# git workflow
 .worktrees
+
+# private data
+agents/rules/subagents.md
+agents/rules/vision.md

@@ -2,6 +2,8 @@ import { spawnSync } from 'node:child_process';
 import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+console.log('typescheck started');
+
 const rootDir = resolve(fileURLToPath(new URL('..', import.meta.url)));
 const packageManager = process.platform === 'win32' ? (process.env.npm_execpath ?? 'pnpm.exe') : 'pnpm';
 const commands = [
@@ -12,6 +14,10 @@ const commands = [
     ['dsh-core source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-core/tsconfig.json']],
     ['agents-router source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-agents-router/tsconfig.json']],
     ['proxy-provider source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-proxy-provider/tsconfig.json']],
+    [
+        'openai-codex-provider source',
+        ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-openai-codex-provider/tsconfig.json']
+    ],
     ['dsh-core tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-core/tsconfig.test.json']],
     ['agents-router tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-agents-router/tsconfig.test.json']],
     ['proxy-provider tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-proxy-provider/tsconfig.test.json']]

@@ -14,7 +14,7 @@ assert.equal(packageJson.publishConfig?.access, 'public');
 
 const publishFiles = packageJson.files;
 assert.ok(Array.isArray(publishFiles));
-for (const requiredPath of ['lib', 'src', 'cordis.patch.yml', 'README.md', 'doc', 'LICENSE', 'package.json']) {
+for (const requiredPath of ['lib', 'src', 'cordis.patch.yml', 'README.md', 'docs', 'LICENSE', 'package.json']) {
     assert.ok(publishFiles.includes(requiredPath), `Published files must include ${requiredPath}`);
 }
 assert.ok(
@@ -23,7 +23,7 @@ assert.ok(
     ),
     'Published files must exclude repository metadata, dependencies, tests, and local secrets'
 );
-for (const requiredFile of ['README.md', 'LICENSE', 'cordis.patch.yml', 'docs/security.md']) {
+for (const requiredFile of ['README.md', 'LICENSE', 'cordis.patch.yml', 'docs/Security.md']) {
     await access(resolve(packageRoot, requiredFile));
 }
 

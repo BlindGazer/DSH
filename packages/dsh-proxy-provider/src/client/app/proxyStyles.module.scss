@@ -4,6 +4,8 @@
 :global {
     .kpp-locale-settings {
         display: flex;
+        flex-wrap: wrap;
+        min-width: 0;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
@@ -13,6 +15,7 @@
     }
     .kpp-footer-row {
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 12px;
@@ -97,6 +100,8 @@
     }
     .kpp-card-right {
         display: flex;
+        flex-wrap: wrap;
+        min-width: 0;
         align-items: center;
         gap: 8px;
     }
@@ -149,7 +154,7 @@
         background: transparent;
     }
     .kpp-modal-backdrop[data-theme] .kpp-modal {
-        background: var(--dsh-ui-bg-modal);
+        background: var(--dsw-alias-bg-layer-2);
         color: var(--dsh-ui-text);
         border-color: var(--dsh-ui-border-strong);
     }
@@ -164,12 +169,13 @@
         padding: 20px;
     }
     .kpp-modal {
+        box-sizing: border-box;
         width: min(760px, 100%);
         max-height: 88vh;
         display: flex;
         flex-direction: column;
         border-radius: 12px;
-        background: var(--dsh-ui-bg-modal);
+        background: var(--dsw-alias-bg-layer-2);
         color: var(--dsh-ui-text);
         border: 1px solid var(--dsh-ui-border-strong);
         box-shadow: var(--dsh-ui-shadow-elevated);
@@ -183,11 +189,15 @@
         border-bottom: 1px solid var(--dsh-ui-border);
     }
     .kpp-modal-title {
+        min-width: 0;
+        overflow-wrap: anywhere;
         margin: 0;
         font-size: 17px;
         font-weight: 600;
     }
     .kpp-modal-body {
+        box-sizing: border-box;
+        min-width: 0;
         padding: 18px 20px;
         overflow-y: auto;
         display: flex;
@@ -200,12 +210,14 @@
         gap: 10px;
     }
     .kpp-section-head {
+        min-width: 0;
         display: flex;
         align-items: center;
         justify-content: space-between;
         gap: 8px;
     }
     .kpp-section-title {
+        min-width: 0;
         margin: 0;
         font-size: 14px;
         font-weight: 600;
@@ -216,7 +228,9 @@
         gap: 8px;
     }
     .kpp-row {
+        min-width: 0;
         display: flex;
+        flex-wrap: wrap;
         align-items: center;
         justify-content: space-between;
         gap: 10px;
@@ -236,16 +250,17 @@
     }
     .kpp-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) 100px 125px;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 100px) minmax(0, 125px);
         gap: 10px;
         align-items: end;
     }
     .kpp-grid-2 {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         gap: 10px;
     }
     .kpp-field {
+        min-width: 0;
         display: flex;
         flex-direction: column;
         gap: 4px;
@@ -261,6 +276,21 @@
         gap: 8px;
         font-size: 13px;
         cursor: pointer;
+    }
+    .kpp-checkbox-row input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--dsh-ui-switch-on);
+        cursor: pointer;
+    }
+    .kpp-checkbox-row input[type="checkbox"]:focus-visible {
+        outline: 2px solid var(--dsh-ui-accent);
+        outline-offset: 2px;
+    }
+    .kpp-checkbox-row input[type="checkbox"]:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
     }
     .kpp-alert {
         padding: 10px 12px;

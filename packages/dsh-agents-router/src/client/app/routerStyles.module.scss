@@ -98,15 +98,22 @@
     }
     .ar-root input:not([type="checkbox"]),
     .ar-root select {
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
         background: var(--ar-elevated);
         border: 1px solid var(--ar-strong);
         border-radius: 6px;
-        padding: 0 12px;
+        padding: 0 32px 0 12px;
         min-height: 32px;
         font-size: 12px;
     }
     .ar-root textarea {
         width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        box-sizing: border-box;
         background: var(--ar-elevated);
         border: 1px solid var(--ar-strong);
         border-radius: 6px;
@@ -145,7 +152,8 @@
         flex-wrap: wrap;
     }
     .ar-header-title {
-        min-width: 180px;
+        min-width: 0;
+        flex: 1 1 180px;
     }
     .ar-header-title .ar-muted {
         font-size: 11px;
@@ -288,17 +296,23 @@
         grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     }
     .ar-audit-grid {
-        grid-template-columns: minmax(0, 1.25fr) minmax(300px, 0.75fr);
+        grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.75fr);
     }
     .ar-card-heading {
         align-items: flex-start;
     }
+    .ar-card-heading > * {
+        min-width: 0;
+        max-width: 100%;
+    }
     .ar-card-heading h2 {
         margin-bottom: 4px;
+        overflow-wrap: anywhere;
     }
     .ar-catalog-heading {
         align-items: center;
         gap: 12px;
+        flex-wrap: wrap;
     }
     .ar-catalog-controls {
         display: flex;
@@ -313,10 +327,11 @@
         display: flex;
         align-items: center;
         flex: 1 1 240px;
-        min-width: 220px;
+        min-width: 0;
         max-width: 340px;
     }
     .ar-rule-search > svg {
+        flex: 0 0 auto;
         position: absolute;
         left: 11px;
         width: 16px;
@@ -735,10 +750,15 @@
     }
     .ar-form {
         display: grid;
+        min-width: 0;
+        max-width: 100%;
         gap: 10px;
     }
+    .ar-form-field,
     .ar-form label {
         display: grid;
+        min-width: 0;
+        max-width: 100%;
         gap: 5px;
         color: var(--ar-muted);
         font-size: 11px;
@@ -756,7 +776,19 @@
         gap: 7px;
     }
     .ar-root input[type="checkbox"] {
-        accent-color: var(--ar-accent);
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        accent-color: var(--dsh-ui-switch-on, var(--ar-accent));
+        cursor: pointer;
+    }
+    .ar-root input[type="checkbox"]:focus-visible {
+        outline: 2px solid var(--dsh-ui-accent, var(--ar-accent));
+        outline-offset: 2px;
+    }
+    .ar-root input[type="checkbox"]:disabled {
+        cursor: not-allowed;
+        opacity: 0.55;
     }
     .ar-categories {
         display: flex;

@@ -26,6 +26,7 @@ export function DirectoryRow({ directory, index, busy, setDirectories, t }: Dire
                 <label className="addir-check">
                     <input
                         type="checkbox"
+                        className="dsh-checkbox"
                         checked={directory.readOnly}
                         disabled={busy}
                         onChange={event =>

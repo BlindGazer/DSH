@@ -3,10 +3,19 @@ import type { DshLocaleCode } from '@kalex/dsh-core';
 const en = {
     title: 'OpenAI Codex',
     intro: 'Sign in with ChatGPT to use OpenAI Codex in DSH.',
+    footerLoading: 'Loading Codex status...',
+    modelsEnabledSummary: 'Models: {enabled}/{total} enabled',
+    usageSummaryLoading: 'usage limits loading',
+    usageSummaryUnavailable: 'usage limits unavailable',
+    days: 'days',
+    hours: 'hours',
+    minutes: 'minutes',
+    usageWindow: 'usage window',
     loading: 'Loading account status...',
     retry: 'Retry',
     connected: 'Connected to ChatGPT',
     notLoggedIn: 'Not signed in.',
+    signInRequired: 'Authorization required.',
     login: 'Sign in with ChatGPT',
     logout: 'Sign out',
     working: 'Working...',
@@ -20,6 +29,9 @@ const en = {
     usageUnavailable: 'Usage details are unavailable.',
     usageError: 'Could not load usage details.',
     usageLimited: 'Usage details are currently limited by the service.',
+    usageLimitLabel: 'limit',
+    fiveHourLimit: '5-hour limit',
+    weeklyLimit: 'Weekly limit',
     remaining: 'Remaining',
     resetsIn: 'Resets in',
     credits: 'Credits',
@@ -61,16 +73,26 @@ const en = {
     expiresUnknown: 'Expiry not provided',
     close: 'Close',
     copyFailed: 'Could not copy the device code.',
-    modelsSaveError: 'Could not save model settings.'
+    modelsSaveError: 'Could not save model settings.',
+    renderFailure: 'OpenAI Codex panel failed to render. See application logs for details.'
 } as const;
 
 const ru: Record<keyof typeof en, string> = {
     title: 'OpenAI Codex',
     intro: 'Войдите через ChatGPT, чтобы использовать OpenAI Codex в DSH.',
+    footerLoading: 'Загрузка состояния Codex...',
+    modelsEnabledSummary: 'Модели: включено {enabled}/{total}',
+    usageSummaryLoading: 'загрузка лимитов',
+    usageSummaryUnavailable: 'лимиты недоступны',
+    days: 'дн.',
+    hours: 'ч.',
+    minutes: 'мин.',
+    usageWindow: 'период использования',
     loading: 'Загрузка состояния учетной записи...',
     retry: 'Повторить',
     connected: 'Подключено к ChatGPT',
     notLoggedIn: 'Вход не выполнен.',
+    signInRequired: 'Требуется авторизация',
     login: 'Войти через ChatGPT',
     logout: 'Выйти',
     working: 'Выполняется...',
@@ -84,6 +106,9 @@ const ru: Record<keyof typeof en, string> = {
     usageUnavailable: 'Сведения об использовании недоступны.',
     usageError: 'Не удалось загрузить сведения об использовании.',
     usageLimited: 'Служба ограничила доступ к сведениям об использовании.',
+    usageLimitLabel: 'лимит',
+    fiveHourLimit: 'Лимит на 5 часов',
+    weeklyLimit: 'Недельный лимит',
     remaining: 'Осталось',
     resetsIn: 'Сброс через',
     credits: 'Кредиты',
@@ -125,7 +150,8 @@ const ru: Record<keyof typeof en, string> = {
     expiresUnknown: 'Срок действия не указан',
     close: 'Закрыть',
     copyFailed: 'Не удалось скопировать код устройства.',
-    modelsSaveError: 'Не удалось сохранить настройки моделей.'
+    modelsSaveError: 'Не удалось сохранить настройки моделей.',
+    renderFailure: 'Не удалось отобразить панель OpenAI Codex. Подробности записаны в журнал приложения.'
 };
 
 export function translateOpenAICodex(locale: DshLocaleCode, key: keyof typeof en): string {

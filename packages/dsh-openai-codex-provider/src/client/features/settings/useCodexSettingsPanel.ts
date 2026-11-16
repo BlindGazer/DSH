@@ -7,8 +7,8 @@ import type { OpenAICodexController } from './openAICodexRuntime.js';
 import type { CodexSettingsHook } from './useCodexSettings.js';
 import { useCodexSettings } from './useCodexSettings.js';
 
-const RESET_CREDIT_KEY = 'dsh-openai-codex-auth.pending-reset-credit';
-const RESET_REQUEST_KEY = 'dsh-openai-codex-auth.pending-reset-request';
+const RESET_CREDIT_KEY = '@kalex/dsh-openai-codex-provider.pending-reset-credit';
+const RESET_REQUEST_KEY = '@kalex/dsh-openai-codex-provider.pending-reset-request';
 
 export interface CodexSettingsPanelState {
     readonly codex: CodexSettingsHook;
@@ -21,6 +21,7 @@ export interface CodexSettingsPanelState {
     readonly copyStatus?: string | undefined;
     readonly proxyOptions: readonly SelectOption<'host' | 'system'>[];
     beginEdit(): void;
+    startLogin(): Promise<void>;
     closeEdit(): void;
     updateModel(id: string, patch: Partial<ModelChoice>): void;
     reorderModel(id: string, direction: 'up' | 'down'): void;
@@ -79,8 +80,28 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
     const snapshot = codex.snapshot;
 
     const beginEdit = (): void => {
-        setDraft(snapshot?.models.map(model => ({ ...model })) ?? []);
+        setActionError(undefined);
+        setDraft(Array.isArray(snapshot?.models) ? snapshot.models.map(model => ({ ...model })) : []);
         setEditOpen(true);
+    };
+
+    const startLogin = async (): Promise<void> => {
+        // OAuth ждёт завершения входа, поэтому окно нужно открыть до await.
+        // После запуска поток состояния покажет код и актуальную ссылку в панели.
+        try {
+            window.open('https://auth.openai.com/codex/device', '_blank', 'noopener,noreferrer');
+        } catch {
+            // Блокировка внешней вкладки не должна отменять OAuth.
+        }
+        // Не блокируем UI на завершении OAuth: host remote может ждать callback
+        // браузера. Периодически читаем snapshot, чтобы показать device code сразу.
+        void codex.startLogin().catch(error => console.error('[dsh-openai-codex] login failed', error));
+        for (let attempt = 0; attempt < 20; attempt += 1) {
+            await new Promise(resolve => setTimeout(resolve, 250));
+            await codex.refresh();
+            const currentSnapshot = controller.getSnapshot().snapshot;
+            if (currentSnapshot?.deviceCode || currentSnapshot?.status === 'done' || currentSnapshot?.status === 'error') break;
+        }
     };
 
     const updateModel = (id: string, patch: Partial<ModelChoice>): void => {
@@ -105,6 +126,7 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
     };
 
     const saveModels = async (): Promise<void> => {
+        setActionError(undefined);
         if (draft.every(model => !model.enabled)) {
             setActionError(text('modelHint'));
             return;
@@ -129,6 +151,7 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
 
     const selectResetCard = (creditId: string): void => {
         if (pendingReset && pendingReset.creditId !== creditId) return;
+        setActionError(undefined);
         setResetCard(creditId);
     };
 
@@ -138,6 +161,7 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
 
     const confirmReset = async (): Promise<void> => {
         if (!resetCard || (pendingReset && pendingReset.creditId !== resetCard)) return;
+        setActionError(undefined);
         const request: ResetRequest = pendingReset ?? {
             creditId: resetCard,
             idempotencyKey: crypto.randomUUID(),
@@ -173,7 +197,11 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
         copyStatus,
         proxyOptions,
         beginEdit,
-        closeEdit: () => setEditOpen(false),
+        startLogin,
+        closeEdit: () => {
+            setActionError(undefined);
+            setEditOpen(false);
+        },
         updateModel,
         reorderModel,
         saveModels,
@@ -181,7 +209,10 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
         runAction,
         selectResetCard,
         retryPendingReset,
-        closeReset: () => setResetCard(undefined),
+        closeReset: () => {
+            setActionError(undefined);
+            setResetCard(undefined);
+        },
         confirmReset
     };
 }

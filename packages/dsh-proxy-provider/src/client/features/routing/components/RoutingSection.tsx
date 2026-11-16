@@ -1,6 +1,11 @@
 import { ThemedSelect } from '@kalex/dsh-core';
 
-import type { DiscoveredProvider, HostConflict, SanitizedProxyProfile } from '../../../../shared/models/ProxyModels.js';
+import type {
+    DiscoveredProvider,
+    HostConflict,
+    HostConflictProviderEntry,
+    SanitizedProxyProfile
+} from '../../../../shared/models/ProxyModels.js';
 import { proxyStore, tProxy } from '../../../app/proxyStore.js';
 
 export interface RoutingSectionProps {
@@ -16,9 +21,13 @@ export interface RoutingSectionProps {
  * Секция назначения профилей прокси провайдерам с поиском и предупреждениями о конфликтах доменов.
  */
 export function RoutingSection({ providers, profiles, bindings, conflicts, providerSearch, setProviderSearch }: RoutingSectionProps) {
+    // При обновлении снимок API может быть неполным, поэтому рендерим только массивы.
+    const providerList: readonly DiscoveredProvider[] = Array.isArray(providers) ? providers : [];
+    const profileList: readonly SanitizedProxyProfile[] = Array.isArray(profiles) ? profiles : [];
+    const conflictList: readonly HostConflict[] = Array.isArray(conflicts) ? conflicts : [];
     const routingOptions = [
         { value: '', label: tProxy('Direct (No proxy)') },
-        ...profiles.map(profile => ({
+        ...profileList.map(profile => ({
             value: profile.id,
             label: `${profile.name} (${profile.protocol.toUpperCase()} ${profile.host}:${profile.port})`
         }))
@@ -26,18 +35,18 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
 
     const searchNeedle = providerSearch.trim().toLowerCase();
     const filteredProviders = searchNeedle
-        ? providers.filter(provider => {
+        ? providerList.filter(provider => {
               const nameMatch = (provider.name || '').toLowerCase().includes(searchNeedle);
               const idMatch = (provider.id || '').toLowerCase().includes(searchNeedle);
-              const hostMatch = (provider.hosts || []).some(host => host.toLowerCase().includes(searchNeedle));
+              const hostMatch = (provider.hosts || []).some((host: string) => host.toLowerCase().includes(searchNeedle));
               return nameMatch || idMatch || hostMatch;
           })
-        : providers;
+        : providerList;
 
     return (
         <div className="kpp-section">
             <div className="kpp-section-head">
-                <h3 className="kpp-section-title">{tProxy(`2. Provider Routing (${filteredProviders.length}/${providers.length})`)}</h3>
+                <h3 className="kpp-section-title">{tProxy(`2. Provider Routing (${filteredProviders.length}/${providerList.length})`)}</h3>
                 <div
                     style={{
                         display: 'flex',
@@ -66,14 +75,14 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                 </div>
             </div>
 
-            {conflicts.length > 0 ? (
+            {conflictList.length > 0 ? (
                 <div className="kpp-alert kpp-alert-warn">
                     <div style={{ fontWeight: 600, marginBottom: '4px' }}>⚠ {tProxy('Domain / Host Routing Conflict Detected')}</div>
-                    {conflicts.map(c => (
+                    {conflictList.map(c => (
                         <div key={c.host}>
                             {tProxy(
                                 `Host "${c.host}" is shared by [${c.providers
-                                    .map(p => `${p.providerName}: ${p.profileName}`)
+                                    .map((p: HostConflictProviderEntry) => `${p.providerName}: ${p.profileName}`)
                                     .join(', ')}]. Active proxy "${c.appliedProfileName}" is applied to all requests to ${c.host}.`
                             )}
                         </div>

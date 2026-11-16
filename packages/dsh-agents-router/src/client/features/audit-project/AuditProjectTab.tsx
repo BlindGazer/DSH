@@ -1,3 +1,4 @@
+import { ThemedSelect } from '@kalex/dsh-core';
 import type React from 'react';
 import type { ProjectSettings, RouterStateResponse } from '../../../shared/models/RouterModels.js';
 import { parseNameList } from '../../utils/name-list.js';
@@ -76,20 +77,21 @@ export function AuditProjectTab({
                     {t('discoveredRules')}: {data.rules.length}; {t('activeRules')}: {data.rules.filter(rule => rule.selected).length}
                 </p>
                 <form className="ar-form" onSubmit={saveProject}>
-                    <label>
-                        {t('discoveryMode')}
+                    <div className="ar-form-field">
+                        <span>{t('discoveryMode')}</span>
                         <small>{t('discoveryModeHint')}</small>
-                        <select
+                        <ThemedSelect
+                            fullWidth
+                            ariaLabel={t('discoveryMode')}
                             value={settings.discoveryMode ?? 'merge'}
-                            onChange={event => {
-                                const value = event.target.value;
-                                if (value === 'strict' || value === 'fallback' || value === 'merge') updateProject('discoveryMode', value);
-                            }}>
-                            <option value="strict">{t('discoveryStrict')}</option>
-                            <option value="fallback">{t('discoveryFallback')}</option>
-                            <option value="merge">{t('discoveryMerge')}</option>
-                        </select>
-                    </label>
+                            onChange={value => updateProject('discoveryMode', value)}
+                            options={[
+                                { value: 'strict', label: t('discoveryStrict') },
+                                { value: 'fallback', label: t('discoveryFallback') },
+                                { value: 'merge', label: t('discoveryMerge') }
+                            ]}
+                        />
+                    </div>
                     <label>
                         {t('instructionsRoot')}
                         <input

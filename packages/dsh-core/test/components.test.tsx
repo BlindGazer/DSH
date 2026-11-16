@@ -3,7 +3,9 @@ import { describe, expect, it } from 'vitest';
 import {
     Button,
     ChildrenLazy,
+    CircularProgress,
     IconButton,
+    LinearProgress,
     Modal,
     ProgressBar,
     Skeleton,
@@ -11,7 +13,8 @@ import {
     SwitchControl,
     Tabs,
     TestId,
-    ThemedSelect
+    ThemedSelect,
+    Tooltip
 } from '../src/index.js';
 
 describe('@kalex/dsh-core UI Components', () => {
@@ -82,6 +85,32 @@ describe('@kalex/dsh-core UI Components', () => {
         expect(openHtml).toContain('class="dsh-modal-backdrop-control"');
         expect(openHtml).toContain('Settings');
         expect(openHtml).toContain('Body');
+    });
+
+    it('renders determinate DSH progress indicators with bounded accessible values', () => {
+        const ringHtml = renderToString(<CircularProgress value={120} label="Quota remaining" size="small" color="accent" />);
+        expect(ringHtml).toContain('role="progressbar"');
+        expect(ringHtml).toContain('aria-label="Quota remaining"');
+        expect(ringHtml).toContain('aria-valuenow="100"');
+        expect(ringHtml).toContain('data-size="small"');
+        expect(ringHtml).toContain('--dsh-progress-color:var(--dsw-alias-button-info-fill)');
+
+        const lineHtml = renderToString(<LinearProgress value={-5} label="Context usage" color="#ff0088" />);
+        expect(lineHtml).toContain('aria-valuenow="0"');
+        expect(lineHtml).toContain('--dsh-progress-color:#ff0088');
+    });
+
+    it('renders a DSH tooltip trigger with an accessible description link', () => {
+        const html = renderToString(
+            <Tooltip triggerLabel="Usage" content={<div>Usage details</div>} data-testid="usage-tooltip">
+                Usage
+            </Tooltip>
+        );
+        expect(html).toContain('class="dsh-tooltip"');
+        expect(html).toContain('data-testid="usage-tooltip"');
+        expect(html).toContain('aria-label="Usage"');
+        expect(html).toContain('type="button"');
+        expect(html).not.toContain('role="tooltip"');
     });
 
     it('renders loading indicators with TestId.Common.Loading', () => {

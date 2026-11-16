@@ -535,7 +535,7 @@ test('5. Client bundle registers settings and locale controls for both DSH slots
     assert.match(clientCode, /\.kpp-dropdown-item:hover\s*\{[^}]*color:\s*var\(--dsh-ui-text\) !important;/);
     assert.match(clientCode, /\.kpp-dropdown-item-active\s*\{[^}]*color:\s*var\(--dsh-ui-text\) !important;/);
     assert.match(clientCode, /\.kpp-card-bar\[data-theme\],\.kpp-footer-row\[data-theme\][^{]*\{[^}]*background:transparent/);
-    assert.match(clientCode, /\.kpp-modal-backdrop\[data-theme\] \.kpp-modal\s*\{[^}]*background:var\(--dsh-ui-bg-modal\)/);
+    assert.match(clientCode, /\.kpp-modal-backdrop\[data-theme\] \.kpp-modal\s*\{[^}]*background:var\(--dsw-alias-bg-layer-2\)/);
 
     const localeSettings = registeredSlots.find(s => s.spec.name === 'plugins.bundle.config').component;
     let panel = localeSettings();

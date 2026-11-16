@@ -2,7 +2,7 @@
 
 [![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH) [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/) [![Vite](https://img.shields.io/badge/Vite-8-4B32C3)](https://vite.dev/) [![License](https://img.shields.io/badge/license-ISC-green)](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/package.json)
 
-> [Russian README](https://github.com/BlindGazer/DSH)
+> [Russian](https://github.com/BlindGazer/DSH)
 
 A collection of plugins for **DeepSeek Harness (DSH)**, built as independent packages with a unified architecture, strict typing, and a shared UI framework.
 

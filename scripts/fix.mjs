@@ -9,6 +9,8 @@ const ignoredDirs = new Set(['.git', 'node_modules', 'lib', 'dist']);
 const ignoredFiles = new Set(['appsettings.Development.json']);
 const fixDirs = ['packages', 'scripts', 'configs'];
 
+console.log('fix started');
+
 function normalizeEncodingAndLineEndings(dirPath) {
     let fixedCount = 0;
     for (const entry of readdirSync(dirPath)) {

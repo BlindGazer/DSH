@@ -1,9 +1,16 @@
 import { z } from "zod";
 // src/shared/constants/runtime.ts
-var PackageId = "dsh-openai-codex-auth";
-var ServiceKey = "openai-codex-auth";
+var PackageId = "@kalex/dsh-openai-codex-provider";
+var ServiceKey = "openai-codex-provider";
 var RemoteNamespace = "openaiCodex";
 // src/shared/remote.ts
+var UiComponentIdSchema = z.string().min(1).max(200);
+var UiRenderErrorSchema = z.object({
+	name: z.string().min(1).max(200),
+	message: z.string().max(2e3),
+	stack: z.string().max(1e4),
+	componentStack: z.string().max(1e4)
+}).strict().readonly();
 var ResetRequestSchema = z.object({
 	creditId: z.string().regex(/^[A-Za-z0-9_-]{1,200}$/),
 	idempotencyKey: z.string().regex(/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i),
@@ -72,6 +79,21 @@ var SnapshotSchema = z.object({
 	usageUpdatedAt: z.number().finite(),
 	usageError: z.string()
 }).strict().readonly();
+var uiComponentIdCodec = () => ({
+	mode: "strict",
+	typeSymbol: `${PackageId}/remote#UiComponentId`,
+	create: () => UiComponentIdSchema
+});
+var uiRenderErrorCodec = () => ({
+	mode: "strict",
+	typeSymbol: `${PackageId}/remote#UiRenderError`,
+	create: () => UiRenderErrorSchema
+});
+var acceptedCodec = () => ({
+	mode: "strict",
+	typeSymbol: `${PackageId}/remote#UiRenderErrorAccepted`,
+	create: () => z.literal(true)
+});
 var snapshotCodec = () => ({
 	mode: "strict",
 	typeSymbol: `${PackageId}/remote#OpenAICodexSnapshot`,
@@ -83,7 +105,17 @@ var descriptor = (method) => ({
 	namespace: RemoteNamespace,
 	method,
 	invocation: { kind: "direct" },
-	parameters: method === "consumeReset" ? [{
+	parameters: method === "reportUiReady" ? [{
+		name: "componentId",
+		wire: "input",
+		source: "json",
+		codec: uiComponentIdCodec()
+	}] : method === "reportUiError" ? [{
+		name: "error",
+		wire: "input",
+		source: "json",
+		codec: uiRenderErrorCodec()
+	}] : method === "consumeReset" ? [{
 		name: "input",
 		wire: "input",
 		source: "json",
@@ -102,7 +134,7 @@ var descriptor = (method) => ({
 			create: () => ModelSettingsSchema
 		}
 	}] : [],
-	result: snapshotCodec()
+	result: method === "reportUiError" || method === "reportUiReady" ? acceptedCodec() : snapshotCodec()
 });
 var descriptors = Object.freeze([
 	"snapshot",
@@ -111,7 +143,9 @@ var descriptors = Object.freeze([
 	"followHostProxy",
 	"useSystemProxy",
 	"consumeReset",
-	"saveModels"
+	"saveModels",
+	"reportUiError",
+	"reportUiReady"
 ].map(descriptor));
 var TYPERT_REMOTE = Object.freeze({
 	package: PackageId,

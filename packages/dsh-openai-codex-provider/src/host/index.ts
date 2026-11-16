@@ -1,4 +1,5 @@
 import type { Context } from '@deepseek-ai/cordis';
+import type { ConfigEditor } from '@deepseek-ai/dsh-config-editor';
 import { credentialRef, isCredentialRefName } from '@deepseek-ai/dsh-credentials';
 import { INVALID_CREDENTIAL_CODE, LlmError, resolveRetryPolicy } from '@deepseek-ai/dsh-llm';
 import type { ResolvedPiAiProviderProfile } from '@deepseek-ai/dsh-llm-pi-ai';
@@ -8,6 +9,7 @@ import type { AuthContext, CredentialInfo as PiCredentialInfo, CredentialStore a
 import { z } from 'zod';
 import { CredentialRef, PackageId, ProviderRoute } from '../shared/constants/runtime.js';
 import type { ModelChoice, ModelSettings, OpenAICodexSnapshot } from '../shared/remote.js';
+import { sanitizeUiRenderError } from '../shared/remote.js';
 import { createCodexProvider } from './provider.js';
 import { createProxyManager } from './proxy-manager.js';
 import type { OpenAICodexRemoteHandlers } from './remote-service.js';
@@ -17,11 +19,13 @@ import { createResetRedeemer, requestResetCredits } from './reset-credits.js';
 import { SYSTEM_PROXY_ERROR } from './system-proxy.js';
 import { requestCodexUsage } from './usage.js';
 
-const Config = z.object({
-    proxyMode: z.enum(['host', 'system']).default('host'),
-    disabledModels: z.array(z.string()).default([]),
-    modelSettings: z.array(z.object({ id: z.string(), name: z.string(), enabled: z.boolean() })).default([])
-});
+const Config = z
+    .object({
+        proxyMode: z.enum(['host', 'system']).default('host'),
+        disabledModels: z.array(z.string()).default([]),
+        modelSettings: z.array(z.object({ id: z.string(), name: z.string(), enabled: z.boolean() })).default([])
+    })
+    .prefault({});
 
 const PROVIDER = ProviderRoute;
 const OAUTH_REF = credentialRef(CredentialRef);
@@ -80,10 +84,6 @@ function createDeferred<T>(): Deferred<T> {
         }
     };
 }
-interface SettingsForm {
-    ns: string;
-    revision: number;
-}
 interface RuntimeState {
     status: OpenAICodexSnapshot['status'];
     loggedIn: boolean;
@@ -135,15 +135,18 @@ function normalizeModels(models: ModelSettings): ModelChoice[] {
 
 function safeError(value: Error | string | undefined, fallback: string): string {
     const message = value instanceof Error ? value.message : (value ?? '');
-    return [
-        SYSTEM_PROXY_ERROR,
-        'OpenAI Codex is not signed in',
-        'OpenAI device-code response did not include a verification URL',
-        'OpenAI device-code response included an invalid verification URL',
-        'OpenAI device-code response included an untrusted verification URL'
-    ].includes(message)
-        ? message
-        : fallback;
+    if (
+        [
+            SYSTEM_PROXY_ERROR,
+            'OpenAI Codex is not signed in',
+            'OpenAI device-code response did not include a verification URL',
+            'OpenAI device-code response included an invalid verification URL',
+            'OpenAI device-code response included an untrusted verification URL'
+        ].includes(message)
+    )
+        return message;
+    if (message) return `${fallback}: ${message.slice(0, 500)}`;
+    return fallback;
 }
 
 function verificationUri(value: string): string {
@@ -239,7 +242,7 @@ function createPiAuth(ctx: Context): {
 
 /** Запускает Cordis-плагин и хранит OAuth только в локальном Credential Store. */
 export class OpenAICodexAuthService {
-    static inject = ['llm', 'credentials', 'settings', 'tools'];
+    static inject = ['llm', 'credentials', 'configEditor', 'tools'];
     static Config = Config;
     static name = PackageId;
 
@@ -500,7 +503,7 @@ export class OpenAICodexAuthService {
             },
             resolveAttachments: () => ctx.get('attachments')
         });
-        const registration = ctx.llm.registerAdapter([PROVIDER], adapter);
+        ctx.llm.registerAdapter([PROVIDER], adapter);
         const startFlow = (): Promise<DeviceChallenge> => {
             flow?.controller.abort('new login requested');
             const generation = ++flowGeneration;
@@ -518,9 +521,26 @@ export class OpenAICodexAuthService {
                 try {
                     const credential = await oauth.login({
                         signal: controller.signal,
-                        notify(info: { type?: string; userCode?: string; verificationUri?: string }) {
-                            if (info.type !== 'device_code' || !info.userCode || !info.verificationUri) return;
-                            const challenge = { deviceCode: info.userCode, verificationUri: verificationUri(info.verificationUri) };
+                        notify(info: {
+                            type?: string;
+                            userCode?: string;
+                            verificationUri?: string;
+                            user_code?: string;
+                            verification_uri?: string;
+                        }) {
+                            ctx.logger.info(
+                                '[@kalex/dsh-openai-codex-provider] OAuth notify received: ' +
+                                    JSON.stringify({
+                                        type: info.type,
+                                        hasUserCode: Boolean(info.userCode ?? info.user_code),
+                                        hasUri: Boolean(info.verificationUri ?? info.verification_uri)
+                                    })
+                            );
+                            if (info.type !== 'device_code' && info.type !== 'auth_url') return;
+                            const userCode = info.userCode ?? info.user_code ?? '';
+                            const uri = info.verificationUri ?? info.verification_uri;
+                            if (!uri) return;
+                            const challenge = { deviceCode: userCode, verificationUri: verificationUri(uri) };
                             deferredDevice.resolve(challenge);
                             state.status = 'waiting';
                             state.deviceCode = challenge.deviceCode;
@@ -546,7 +566,7 @@ export class OpenAICodexAuthService {
                     state.expiresAt = credential.expires;
                     void refreshUsage(true).catch(() => undefined);
                 } catch (error) {
-                    const message = safeError(error instanceof Error ? error : undefined, 'Unable to complete OpenAI Codex sign-in.');
+                    const message = safeError(error instanceof Error ? error : String(error), 'Unable to complete OpenAI Codex sign-in.');
                     deferredDevice.reject(new Error(message));
                     if (generation === flowGeneration) {
                         state.deviceCode = '';
@@ -574,21 +594,18 @@ export class OpenAICodexAuthService {
                 .catch(() => undefined)
                 .then(async () => {
                     const next = normalizeModels(models);
-                    const settingsService = ctx.get('settings');
-                    const forms = settingsService?.describe().filter((entry: SettingsForm) => /(?:^|:)openai-codex-auth$/.test(entry.ns));
-                    if (!settingsService?.writable || forms?.length !== 1 || !forms[0]) throw new Error('Unavailable settings');
-                    await settingsService.update(
-                        forms[0].ns,
-                        {
-                            proxyMode: network.mode,
-                            disabledModels: next.filter(item => !item.enabled).map(item => item.id),
-                            modelSettings: next
-                        },
-                        forms[0].revision
-                    );
+                    const editor: ConfigEditor | undefined = ctx.get('configEditor');
+                    const entry = editor?.entries().find(row => row.options.name === PackageId);
+                    if (!editor || !entry) throw new Error('Configuration cannot be saved in this profile');
+                    await getSnapshot(false);
+                    await editor.edit(entry, current => ({
+                        ...current,
+                        proxyMode: network.mode,
+                        disabledModels: next.filter(item => !item.enabled).map(item => item.id),
+                        modelSettings: next
+                    }));
                     settings = next;
                     currentProfiles = profiles();
-                    registration.replace([PROVIDER]);
                 });
             settingsMutation = change;
             return change;
@@ -599,21 +616,16 @@ export class OpenAICodexAuthService {
                 .then(async () => {
                     let candidate: Awaited<ReturnType<typeof network.prepare>> | undefined;
                     try {
-                        const settingsService = ctx.get('settings');
-                        const forms = settingsService
-                            ?.describe()
-                            .filter((entry: SettingsForm) => /(?:^|:)openai-codex-auth$/.test(entry.ns));
-                        if (!settingsService?.writable || forms?.length !== 1 || !forms[0]) throw new Error('Unavailable settings');
+                        const editor: ConfigEditor | undefined = ctx.get('configEditor');
+                        const entry = editor?.entries().find(row => row.options.name === PackageId);
+                        if (!editor || !entry) throw new Error('Configuration cannot be saved in this profile');
                         candidate = await network.prepare(mode);
-                        await settingsService.update(
-                            forms[0].ns,
-                            {
-                                proxyMode: mode,
-                                disabledModels: settings.filter(item => !item.enabled).map(item => item.id),
-                                modelSettings: settings
-                            },
-                            forms[0].revision
-                        );
+                        await editor.edit(entry, current => ({
+                            ...current,
+                            proxyMode: mode,
+                            disabledModels: settings.filter(item => !item.enabled).map(item => item.id),
+                            modelSettings: settings
+                        }));
                         network.commit(candidate);
                         clearUsage();
                         if (state.loggedIn) void refreshUsage(true).catch(() => undefined);
@@ -638,8 +650,14 @@ export class OpenAICodexAuthService {
         const handlers: OpenAICodexRemoteHandlers = {
             snapshot: () => getSnapshot(),
             async startLogin() {
-                void startFlow().catch(() => undefined);
-                return getSnapshot(false);
+                // Возвращаем snapshot сразу после получения device code, не дожидаясь
+                // завершения OAuth в браузере. Иначе UI не получает состояние waiting.
+                try {
+                    await startFlow();
+                } catch (error) {
+                    ctx.logger.error(`[${PackageId}] OAuth login failed: ${error instanceof Error ? error.message : 'unknown error'}`);
+                }
+                return snapshot();
             },
             async logout() {
                 await logout();
@@ -656,6 +674,15 @@ export class OpenAICodexAuthService {
             async saveModels(models) {
                 await saveModels(models);
                 return snapshot();
+            },
+            async reportUiError(error) {
+                const diagnostic = sanitizeUiRenderError(error);
+                ctx.logger.error(`[${PackageId}] Client UI render failure: ${JSON.stringify(diagnostic)}`);
+                return true;
+            },
+            async reportUiReady(componentId) {
+                ctx.logger.info(`[${PackageId}] Client UI component mounted: ${componentId}`);
+                return true;
             },
             async consumeReset(input) {
                 const revision = credentialRevision;
@@ -678,6 +705,7 @@ export class OpenAICodexAuthService {
         // Конструктор Cordis регистрирует Remote-сервис в контексте.
         void new OpenAICodexRemoteService(ctx, handlers);
         this.registerTools(ctx, startFlow, getSnapshot, logout);
+        ctx.logger.info(`[${PackageId}] Host plugin initialized`);
     }
 
     private registerTools(

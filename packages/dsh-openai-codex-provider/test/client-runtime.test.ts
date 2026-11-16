@@ -28,7 +28,9 @@ function createRemote(snapshot: OpenAICodexSnapshot): OpenAICodexRemote {
         followHostProxy: vi.fn(async () => snapshot),
         useSystemProxy: vi.fn(async () => snapshot),
         consumeReset: vi.fn(async (_request: ResetRequest) => snapshot),
-        saveModels: vi.fn(async (_models: ModelSettings) => snapshot)
+        saveModels: vi.fn(async (_models: ModelSettings) => snapshot),
+        reportUiError: vi.fn(async () => true),
+        reportUiReady: vi.fn(async () => true)
     };
 }
 
@@ -56,6 +58,22 @@ describe('OpenAICodexController', () => {
 
         remote.logout = vi.fn(async () => Promise.reject(new Error('transport error')));
         await expect(controller.logout()).rejects.toThrow('transport error');
+    });
+
+    it('saves models with one remote call and publishes once', async () => {
+        const nextSnapshot: OpenAICodexSnapshot = { ...initialSnapshot, loggedIn: true };
+        const remote = createRemote(nextSnapshot);
+        const controller = new OpenAICodexController(remote);
+        const listener = vi.fn();
+        controller.subscribe(listener);
+        const models: ModelSettings = [{ id: 'codex-test', name: 'Codex Test', enabled: true }];
+
+        await controller.saveModels(models);
+
+        expect(remote.saveModels).toHaveBeenCalledExactlyOnceWith(models);
+        expect(remote.snapshot).not.toHaveBeenCalled();
+        expect(listener).toHaveBeenCalledOnce();
+        expect(controller.getSnapshot()).toEqual({ status: 'ready', snapshot: nextSnapshot });
     });
 });
 

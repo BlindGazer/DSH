@@ -1,8 +1,16 @@
 import type { DshClientContext, DshLocaleCode, DshLocaleService, DshSlotRegistrationOptions } from '@kalex/dsh-core';
 import type { ReactElement } from 'react';
-import { useSyncExternalStore } from 'react';
+import { createElement, useSyncExternalStore } from 'react';
 import { openAICodexLocaleDictionaries, translateOpenAICodex } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import type { ModelSettings, OpenAICodexSnapshot, ResetRequest, TYPERT_REMOTE } from '../../../shared/remote.js';
+import type {
+    ModelSettings,
+    OpenAICodexSnapshot,
+    ResetRequest,
+    TYPERT_REMOTE,
+    UiComponentId,
+    UiRenderError
+} from '../../../shared/remote.js';
+import { CodexRenderErrorBoundary } from './CodexRenderErrorBoundary.js';
 
 export interface OpenAICodexRemote {
     snapshot(): Promise<OpenAICodexSnapshot>;
@@ -12,6 +20,8 @@ export interface OpenAICodexRemote {
     useSystemProxy(): Promise<OpenAICodexSnapshot>;
     consumeReset(input: ResetRequest): Promise<OpenAICodexSnapshot>;
     saveModels(models: ModelSettings): Promise<OpenAICodexSnapshot>;
+    reportUiError(error: UiRenderError): Promise<true>;
+    reportUiReady(componentId: UiComponentId): Promise<true>;
 }
 
 interface RemoteMountService {
@@ -36,6 +46,21 @@ export interface CodexClientState {
     readonly error?: string;
 }
 
+function unwrapRemoteSnapshot(value: unknown): OpenAICodexSnapshot {
+    let current: unknown = value;
+    for (let depth = 0; depth < 3; depth += 1) {
+        if (current && typeof current === 'object' && 'ok' in current && 'value' in current) {
+            current = (current as { value: unknown }).value;
+            continue;
+        }
+        break;
+    }
+    if (!current || typeof current !== 'object' || !('status' in current)) {
+        throw new Error(`Invalid OpenAI Codex snapshot response: ${JSON.stringify(value)}`);
+    }
+    return current as OpenAICodexSnapshot;
+}
+
 export class OpenAICodexController {
     private state: CodexClientState = { status: 'loading' };
     private readonly listeners = new Set<() => void>();
@@ -57,9 +82,10 @@ export class OpenAICodexController {
 
     async load(background = false): Promise<void> {
         const generation = ++this.generation;
-        if (!background) this.publish({ status: 'loading' });
+        if (!background && !this.state.snapshot) this.publish({ status: 'loading' });
         try {
-            const snapshot = await this.remote.snapshot();
+            const rawSnapshot = await this.remote.snapshot();
+            const snapshot = unwrapRemoteSnapshot(rawSnapshot);
             if (generation === this.generation) this.publish({ status: 'ready', snapshot });
         } catch {
             if (generation === this.generation) this.publish({ status: 'error', error: 'OpenAI Codex request failed' });
@@ -68,7 +94,7 @@ export class OpenAICodexController {
 
     private async act(action: () => Promise<OpenAICodexSnapshot>): Promise<OpenAICodexSnapshot> {
         const generation = ++this.generation;
-        const snapshot = await action();
+        const snapshot = unwrapRemoteSnapshot(await action());
         if (generation === this.generation) this.publish({ status: 'ready', snapshot });
         return snapshot;
     }
@@ -107,14 +133,26 @@ export function translateFor(locale: DshLocaleCode, key: string): string {
     return translateOpenAICodex(locale, key as keyof typeof openAICodexLocaleDictionaries.en);
 }
 
-export function registerCodexSlot<TProps>(
+export function registerCodexSlot<TProps extends object>(
     context: OpenAICodexClientContext,
     options: DshSlotRegistrationOptions,
     component: (props: TProps) => ReactElement | undefined,
-    props: TProps
+    props: TProps,
+    fallbackText: string,
+    onError: (error: UiRenderError) => Promise<true>,
+    onReady: (componentId: UiComponentId) => Promise<true>
 ): void {
-    const render = (slotProps: Record<string, string | undefined>) => component({ ...slotProps, ...props });
+    const componentId = options.id ?? options.name;
+    const render = (slotProps: Record<string, string | undefined>) =>
+        createElement(
+            CodexRenderErrorBoundary,
+            { fallbackText, componentId, onError, onReady },
+            createElement<TProps>(component, { ...slotProps, ...props })
+        );
     context.slots.inject(options.name, () => context.slots.register(options, render));
 }
 
-export { RemoteNamespace, ServiceKey } from '../../../shared/constants/runtime.js';
+export {
+    RemoteNamespace,
+    ServiceKey
+} from '../../../shared/constants/runtime.js';

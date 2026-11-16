@@ -1,4 +1,4 @@
-export const reactExternals = Object.freeze(['react', 'react/jsx-runtime']);
+export const reactExternals = Object.freeze(['react', 'react-dom', 'react/jsx-runtime']);
 
 const dshClientExternals = Object.freeze([
     ...reactExternals,

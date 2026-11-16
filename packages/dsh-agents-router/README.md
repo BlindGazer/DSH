@@ -30,4 +30,4 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 Как плагин выглядит и работает внутри DSH, смотрите в [Examples](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/Examples.md).
 
 - [Команды и установка](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/Setup.md) | [Commands and installation](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/Setup_EN.md)
-- [English README](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/README_EN.md)
+- [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/README_EN.md)

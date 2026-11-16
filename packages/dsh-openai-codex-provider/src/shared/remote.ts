@@ -1,6 +1,18 @@
 import { z } from 'zod';
 import { PackageId, RemoteNamespace, ServiceKey } from './constants/runtime.js';
 
+const UiComponentIdSchema = z.string().min(1).max(200);
+
+const UiRenderErrorSchema = z
+    .object({
+        name: z.string().min(1).max(200),
+        message: z.string().max(2000),
+        stack: z.string().max(10000),
+        componentStack: z.string().max(10000)
+    })
+    .strict()
+    .readonly();
+
 const ResetRequestSchema = z
     .object({
         creditId: z.string().regex(/^[A-Za-z0-9_-]{1,200}$/),
@@ -69,11 +81,58 @@ const SnapshotSchema = z
     .strict()
     .readonly();
 
+export type UiComponentId = z.infer<typeof UiComponentIdSchema>;
+export type UiRenderError = z.infer<typeof UiRenderErrorSchema>;
 export type ResetRequest = z.infer<typeof ResetRequestSchema>;
+
+const sanitizeDiagnosticText = (value: string, maxLength: number) =>
+    value
+        .replace(
+            /(authorization|token|secret|cookie|api[-_]?key|access[-_]?token|refresh[-_]?token)(\s*[=:]\s*)[^\s,;]+/gi,
+            '$1$2[redacted]'
+        )
+        .replace(/\bBearer\s+[^\s,;]+/gi, 'Bearer [redacted]')
+        .slice(0, maxLength);
+
+export function sanitizeUiRenderError(error: UiRenderError): UiRenderError {
+    return {
+        name: sanitizeDiagnosticText(error.name, 200) || 'Error',
+        message: sanitizeDiagnosticText(error.message, 2000),
+        stack: sanitizeDiagnosticText(error.stack, 10000),
+        componentStack: sanitizeDiagnosticText(error.componentStack, 10000)
+    };
+}
 export type ModelChoice = z.infer<typeof ModelChoiceSchema>;
 export type ModelSettings = z.infer<typeof ModelSettingsSchema>;
 export type OpenAICodexSnapshot = z.infer<typeof SnapshotSchema>;
-export type RemoteMethod = 'snapshot' | 'startLogin' | 'logout' | 'followHostProxy' | 'useSystemProxy' | 'consumeReset' | 'saveModels';
+export type RemoteMethod =
+    | 'snapshot'
+    | 'startLogin'
+    | 'logout'
+    | 'followHostProxy'
+    | 'useSystemProxy'
+    | 'consumeReset'
+    | 'saveModels'
+    | 'reportUiError'
+    | 'reportUiReady';
+
+const uiComponentIdCodec = () => ({
+    mode: 'strict',
+    typeSymbol: `${PackageId}/remote#UiComponentId`,
+    create: () => UiComponentIdSchema
+});
+
+const uiRenderErrorCodec = () => ({
+    mode: 'strict',
+    typeSymbol: `${PackageId}/remote#UiRenderError`,
+    create: () => UiRenderErrorSchema
+});
+
+const acceptedCodec = () => ({
+    mode: 'strict',
+    typeSymbol: `${PackageId}/remote#UiRenderErrorAccepted`,
+    create: () => z.literal(true)
+});
 
 const snapshotCodec = () => ({
     mode: 'strict',
@@ -88,26 +147,44 @@ const descriptor = (method: RemoteMethod) => ({
     method,
     invocation: { kind: 'direct' },
     parameters:
-        method === 'consumeReset'
+        method === 'reportUiReady'
             ? [
                   {
-                      name: 'input',
+                      name: 'componentId',
                       wire: 'input',
                       source: 'json',
-                      codec: { mode: 'strict', typeSymbol: `${PackageId}/remote#ResetRequest`, create: () => ResetRequestSchema }
+                      codec: uiComponentIdCodec()
                   }
               ]
-            : method === 'saveModels'
+            : method === 'reportUiError'
               ? [
                     {
-                        name: 'models',
+                        name: 'error',
                         wire: 'input',
                         source: 'json',
-                        codec: { mode: 'strict', typeSymbol: `${PackageId}/remote#ModelSettings`, create: () => ModelSettingsSchema }
+                        codec: uiRenderErrorCodec()
                     }
                 ]
-              : [],
-    result: snapshotCodec()
+              : method === 'consumeReset'
+                ? [
+                      {
+                          name: 'input',
+                          wire: 'input',
+                          source: 'json',
+                          codec: { mode: 'strict', typeSymbol: `${PackageId}/remote#ResetRequest`, create: () => ResetRequestSchema }
+                      }
+                  ]
+                : method === 'saveModels'
+                  ? [
+                        {
+                            name: 'models',
+                            wire: 'input',
+                            source: 'json',
+                            codec: { mode: 'strict', typeSymbol: `${PackageId}/remote#ModelSettings`, create: () => ModelSettingsSchema }
+                        }
+                    ]
+                  : [],
+    result: method === 'reportUiError' || method === 'reportUiReady' ? acceptedCodec() : snapshotCodec()
 });
 
 const methods = [
@@ -117,7 +194,9 @@ const methods = [
     'followHostProxy',
     'useSystemProxy',
     'consumeReset',
-    'saveModels'
+    'saveModels',
+    'reportUiError',
+    'reportUiReady'
 ] as const satisfies readonly RemoteMethod[];
 const descriptors = Object.freeze(methods.map(descriptor));
 

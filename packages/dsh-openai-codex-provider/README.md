@@ -39,4 +39,4 @@ dsh plugin --profile web add @kalex/dsh-openai-codex-provider
 Как плагин выглядит и работает внутри DSH, смотрите в [Examples](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Examples.md).
 
 - [Команды и установка](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Setup.md) | [Commands and installation](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/Setup_EN.md)
-- [English README](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/README_EN.md)
+- [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/README_EN.md)

@@ -57,10 +57,11 @@ export function useProfileActions(snap: ProxyClientSnapshot): ProfileActionsStat
     const [deleteConfirmProfile, setDeleteConfirmProfile] = useState<DeleteConfirmState | null>(null);
     const [saving, setSaving] = useState(false);
 
-    const profiles = snap.config?.profiles || [];
-    const bindings = snap.config?.providerBindings || {};
-    const providers = snap.providers || [];
-    const conflicts = snap.conflicts || [];
+    const profiles: readonly SanitizedProxyProfile[] = Array.isArray(snap.config?.profiles) ? snap.config.profiles : [];
+    const bindings: Record<string, string | null> =
+        snap.config?.providerBindings && typeof snap.config.providerBindings === 'object' ? snap.config.providerBindings : {};
+    const providers: readonly DiscoveredProvider[] = Array.isArray(snap.providers) ? snap.providers : [];
+    const conflicts: readonly HostConflict[] = Array.isArray(snap.conflicts) ? snap.conflicts : [];
 
     const resetForOpen = useCallback((): void => {
         setFormError(null);
