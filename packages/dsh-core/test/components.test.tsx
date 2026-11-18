@@ -31,6 +31,7 @@ describe('@kalex/dsh-core UI Components', () => {
             />
         );
         expect(html).toContain('dsh-select');
+        expect(html).not.toContain('kpp-');
     });
 
     it('renders SwitchControl', () => {
@@ -85,6 +86,7 @@ describe('@kalex/dsh-core UI Components', () => {
         expect(openHtml).toContain('class="dsh-modal-backdrop-control"');
         expect(openHtml).toContain('Settings');
         expect(openHtml).toContain('Body');
+        expect(openHtml).not.toContain('kpp-');
     });
 
     it('renders determinate DSH progress indicators with bounded accessible values', () => {

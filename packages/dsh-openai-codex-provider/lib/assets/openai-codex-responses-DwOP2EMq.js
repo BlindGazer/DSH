@@ -1,11 +1,11 @@
-import { a as createAssistantMessageDiagnostic, c as AssistantMessageEventStream, i as appendAssistantMessageDiagnostic, n as clampThinkingLevel, o as formatThrownValue, t as calculateCost } from "./models-sDLtPI5i.js";
+import { a as createAssistantMessageDiagnostic, c as AssistantMessageEventStream, i as appendAssistantMessageDiagnostic, n as clampThinkingLevel, o as formatThrownValue, t as calculateCost } from "./models-W2vgk9gV.js";
 // \0rolldown/runtime.js
 var __commonJSMin = (cb, mod) => () => (mod || (cb((mod = { exports: {} }).exports, mod, mod.exports), cb = null), mod.exports);
 var __require = /* @__PURE__ */ ((x) => typeof require !== "undefined" ? require : typeof Proxy !== "undefined" ? new Proxy(x, { get: (a, b) => (typeof require !== "undefined" ? require : a)[b] }) : x)(function(x) {
 	if (typeof require !== "undefined") return require.apply(this, arguments);
 	throw Error("Calling `require` for \"" + x + "\" in an environment that doesn't expose the `require` function. See https://rolldown.rs/in-depth/bundling-cjs#require-external-modules for more details.");
 });
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/identity.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/identity.js
 const NVIDIA_NIM_HOST = "integrate.api.nvidia.com";
 const OPENCODE_HOST = "opencode.ai";
 /** The version in the detailed `User-Agent`. */
@@ -67,7 +67,7 @@ function getIdentityHeaders(target, identity) {
 		...getAttributionHeaders(target, identity)
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/text.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/text.js
 /** Extract and join text from message content. */
 function contentText(content, separator = "\n") {
 	if (typeof content === "string") return content;
@@ -91,7 +91,7 @@ function renderSystemMessageUpdate(message) {
 	for (const [name, value] of Object.entries(message.sections ?? {})) parts.push(value === null ? `Removed system prompt section "${name}".` : `Updated system prompt section "${name}":\n\n${value}`);
 	return parts.join("\n\n");
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/transcript.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/transcript.js
 /**
 * Build the leading system message for a prompt and tool set. Returns undefined when
 * both are empty, so an empty transcript stays empty.
@@ -223,7 +223,7 @@ function resolveTranscriptTools(messages, support) {
 		foldedSystemMessages: folded
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/session-resources.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/session-resources.js
 const sessionResourceCleanups = /* @__PURE__ */ new Set();
 function registerSessionResourceCleanup(cleanup) {
 	sessionResourceCleanups.add(cleanup);
@@ -231,7 +231,7 @@ function registerSessionResourceCleanup(cleanup) {
 		sessionResourceCleanups.delete(cleanup);
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/abort-signals.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/abort-signals.js
 function combineAbortSignals(signals) {
 	const activeSignals = signals.filter((signal) => signal !== void 0);
 	if (activeSignals.length === 0) return { cleanup: () => {} };
@@ -263,7 +263,7 @@ function combineAbortSignals(signals) {
 		}
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/error-body.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/error-body.js
 const MAX_PROVIDER_ERROR_BODY_CHARS = 4e3;
 function normalizeProviderError(error) {
 	if (!(error instanceof Error)) return {
@@ -362,13 +362,13 @@ function safeJsonStringify$1(value) {
 		return String(value);
 	}
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/headers.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/headers.js
 function headersToRecord(headers) {
 	const result = {};
 	for (const [key, value] of headers.entries()) result[key] = value;
 	return result;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/provider-env.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/provider-env.js
 let procEnvCache = null;
 /**
 * Fallback for https://github.com/oven-sh/bun/issues/27802.
@@ -402,7 +402,7 @@ function getBunSandboxEnvValue(name) {
 function getProviderEnvValue(name, env) {
 	return env?.[name] || (typeof process !== "undefined" ? process.env[name] : void 0) || getBunSandboxEnvValue(name) || void 0;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/node-http-proxy.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/node-http-proxy.js
 const DEFAULT_PROXY_PORTS = {
 	ftp: 21,
 	gopher: 70,
@@ -506,7 +506,7 @@ function resolveHttpProxyUrlForTarget(targetUrl, env) {
 	if (proxyUrl.protocol !== "http:" && proxyUrl.protocol !== "https:") throw new Error(`${UNSUPPORTED_PROXY_PROTOCOL_MESSAGE} Got ${proxyUrl.protocol}`);
 	return proxyUrl;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/uuid.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/uuid.js
 const MAX_UUID_V7_TIMESTAMP = 0xffffffffffff;
 const MAX_SEQUENCE = (1n << 41n) - 1n;
 let lastOrdinaryTimestamp = -1;
@@ -535,7 +535,7 @@ function uuidv7(timestampMs) {
 	const hex = Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0"));
 	return `${hex.slice(0, 4).join("")}-${hex.slice(4, 6).join("")}-${hex.slice(6, 8).join("")}-${hex.slice(8, 10).join("")}-${hex.slice(10).join("")}`;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/constrained-sampling.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/constrained-sampling.js
 var UnsupportedStrictJsonSchemaError = class extends Error {};
 const UNSUPPORTED_STRICT_SCHEMA_KEYS = [
 	"$ref",
@@ -700,7 +700,7 @@ function clampOpenAIPromptCacheKey(key) {
 	if (chars.length <= 64) return key;
 	return chars.slice(0, 64).join("");
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/hash.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/hash.js
 /** Fast deterministic hash to shorten long strings */
 function shortHash(str) {
 	let h1 = 3735928559;
@@ -803,7 +803,7 @@ var require_options = /* @__PURE__ */ __commonJSMin(((exports) => {
 	};
 	exports.default = exports.Allow;
 }));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/json-parse.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/json-parse.js
 var import_dist = (/* @__PURE__ */ __commonJSMin(((exports, module, this$1) => {
 	var __createBinding = this$1 && this$1.__createBinding || (Object.create ? (function(o, m, k, k2) {
 		if (k2 === void 0) k2 = k;
@@ -1111,7 +1111,7 @@ function parseStreamingJson(partialJson) {
 		}
 	}
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/sanitize-unicode.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/sanitize-unicode.js
 /**
 * Removes unpaired Unicode surrogate characters from a string.
 *
@@ -1135,7 +1135,7 @@ function parseStreamingJson(partialJson) {
 function sanitizeSurrogates(text) {
 	return text.replace(/[\uD800-\uDBFF](?![\uDC00-\uDFFF])|(?<![\uD800-\uDBFF])[\uDC00-\uDFFF]/g, "");
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/transform-messages.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/transform-messages.js
 const NON_VISION_USER_IMAGE_PLACEHOLDER = "(image omitted: model does not support images)";
 const NON_VISION_TOOL_IMAGE_PLACEHOLDER = "(tool image omitted: model does not support images)";
 function replaceImagesWithPlaceholder(content, placeholder) {
@@ -1283,7 +1283,7 @@ function transformMessages(messages, model, normalizeToolCallId) {
 	closePendingToolCalls();
 	return result;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-responses-shared.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/openai-responses-shared.js
 function encodeTextSignatureV1(id, phase) {
 	const payload = {
 		v: 1,
@@ -1928,7 +1928,7 @@ function mapStopReason(status, incompleteReason) {
 		default: throw new Error(`Unhandled stop reason: ${status}`);
 	}
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/estimate.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/estimate.js
 const CHARS_PER_TOKEN = 3.5;
 const ESTIMATED_IMAGE_CHARS = 4800;
 function calculateContextTokens(usage) {
@@ -2006,7 +2006,7 @@ function estimateToolsTokens(tools) {
 	if (!tools || tools.length === 0) return 0;
 	return estimateTextTokens(safeJsonStringify(tools));
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/simple-options.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/simple-options.js
 const CONTEXT_SAFETY_TOKENS = 4096;
 const MIN_MAX_TOKENS = 1;
 function clampMaxTokensToContext(model, context, maxTokens) {
@@ -2049,7 +2049,7 @@ function buildBaseOptions(model, context, options, apiKey) {
 		env: options?.env
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-codex-responses.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/openai-codex-responses.js
 const DEFAULT_CODEX_BASE_URL = "https://chatgpt.com/backend-api";
 const JWT_CLAIM_PATH = "https://api.openai.com/auth";
 const DEFAULT_MAX_RETRIES = 0;

@@ -20,7 +20,7 @@ var DEFAULT_PROJECT_SETTINGS = Object.freeze({
 	rulesFolder: "rules",
 	skillsFolder: "skills",
 	mainFile: "agents.md",
-	tokenBudget: 16e3,
+	tokenBudget: 32e3,
 	projectLogging: false,
 	redirectRootInstructionFiles: false,
 	rootInstructionFileNames: Object.freeze(["AGENTS.md"]),

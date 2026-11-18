@@ -87,7 +87,7 @@ export function Modal({
         <div
             data-theme={effectiveTheme}
             data-testid={TestId.Common.ModalBackdrop}
-            className={cx('dsh-modal-backdrop', 'ar-modal', 'kpp-modal-backdrop', backdropClassName)}>
+            className={cx('dsh-modal-backdrop', 'ar-modal', backdropClassName)}>
             <button type="button" className="dsh-modal-backdrop-control" aria-hidden="true" tabIndex={-1} onClick={onClose} />
             <div
                 ref={element => {
@@ -97,16 +97,16 @@ export function Modal({
                 aria-modal="true"
                 tabIndex={-1}
                 data-testid={TestId.Common.ModalCard}
-                className={cx('dsh-modal-card', 'ar-modal-card', 'kpp-modal', cardClassName)}>
+                className={cx('dsh-modal-card', 'ar-modal-card', cardClassName)}>
                 {title !== undefined || headerExtra !== undefined ? (
-                    <div className="dsh-modal-header kpp-modal-header">
-                        <div className="dsh-modal-title kpp-modal-title">{title}</div>
+                    <div className="dsh-modal-header">
+                        <div className="dsh-modal-title">{title}</div>
                         <div className="dsh-modal-actions ar-settings-header-right">
                             {headerExtra}
                             <button
                                 type="button"
                                 data-testid={TestId.Common.ModalClose}
-                                className="dsh-btn dsh-btn-sm kpp-btn kpp-btn-ghost"
+                                className="dsh-btn dsh-btn-sm"
                                 aria-label={closeLabel}
                                 onClick={onClose}>
                                 {closeLabel}

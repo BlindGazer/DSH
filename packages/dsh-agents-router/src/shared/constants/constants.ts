@@ -18,7 +18,7 @@ export const DEFAULT_PROJECT_SETTINGS: Readonly<ProjectSettings> = Object.freeze
     rulesFolder: 'rules',
     skillsFolder: 'skills',
     mainFile: 'agents.md',
-    tokenBudget: 16_000,
+    tokenBudget: 32_000,
     projectLogging: false,
     redirectRootInstructionFiles: false,
     rootInstructionFileNames: Object.freeze(['AGENTS.md']),

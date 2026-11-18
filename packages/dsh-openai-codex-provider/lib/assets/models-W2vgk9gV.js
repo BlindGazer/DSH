@@ -1,4 +1,4 @@
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/event-stream.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/event-stream.js
 var FifoQueue = class {
 	incoming = [];
 	outgoing = [];
@@ -92,7 +92,7 @@ var AssistantMessageEventStream = class extends EventStream {
 		message.durationMs = Math.max(0, Math.round(performance.now() - this.#startedAtMonotonic));
 	}
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/lazy.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/lazy.js
 function createSetupErrorMessage(model, error, timestamp) {
 	return {
 		role: "assistant",
@@ -179,7 +179,7 @@ function lazyApi(load, capabilities) {
 	};
 	return api;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/diagnostics.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/diagnostics.js
 function formatThrownValue(value) {
 	if (value instanceof Error) return value.message || value.name;
 	if (typeof value === "string") return value;
@@ -209,7 +209,7 @@ function createAssistantMessageDiagnostic(type, error, details) {
 function appendAssistantMessageDiagnostic(message, diagnostic) {
 	message.diagnostics = [...message.diagnostics ?? [], diagnostic];
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/models-error.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/models-error.js
 var ModelsError = class extends Error {
 	code;
 	constructor(code, message, options) {
@@ -225,7 +225,7 @@ function withCauseDetail(message, cause) {
 	if (!detail || message.includes(detail)) return message;
 	return `${message}: ${detail}`;
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/utils/model-operations.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/utils/model-operations.js
 /** The type of a model. Models without `type` are chat models. */
 function getModelType(model) {
 	return model.type ?? "chat";
@@ -256,7 +256,7 @@ function classifierErrorResult(model, error, aborted = false) {
 		timestamp: Date.now()
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/models.js
 const KNOWN_MODEL_TYPES = {
 	chat: true,
 	image: true,

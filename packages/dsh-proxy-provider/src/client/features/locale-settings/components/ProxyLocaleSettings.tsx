@@ -1,6 +1,6 @@
 import { ThemedSelect, useEffectiveTheme } from '@kalex/dsh-core';
 import { saveProxyLocale, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { proxyScopeClass } from '../../../app/proxyStyles.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 
 /**
  * Панель выбора языка интерфейса плагина прокси в глобальных настройках бандла DSH.
@@ -11,8 +11,8 @@ export function ProxyLocaleSettings() {
     const currentLocale = snap.locale || 'en';
 
     return (
-        <div className={`kpp-locale-settings ${proxyScopeClass}`} data-theme={effectiveTheme}>
-            <span className="kpp-label">{tProxy('Interface language')}</span>
+        <div className={`dsh-core-root ${proxyClasses('localeSettings')}`} data-theme={effectiveTheme}>
+            <span className={proxyClasses('label')}>{tProxy('Interface language')}</span>
             <ThemedSelect
                 ariaLabel={tProxy('Interface language')}
                 value={currentLocale}

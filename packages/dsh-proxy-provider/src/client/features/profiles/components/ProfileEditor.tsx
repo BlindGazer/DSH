@@ -4,6 +4,7 @@ import { DEFAULT_TEST_URL } from '../../../../shared/constants/endpoints.js';
 import type { ProfileDraft, ProxyProtocol, TestConnectionResult } from '../../../../shared/models/ProxyModels.js';
 import { sanitizeHostInput } from '../../../../shared/utils/hostUtils.js';
 import { tProxy } from '../../../app/proxyStore.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 import { ProfileCredentialsFields } from './ProfileCredentialsFields.js';
 
 export interface ProfileEditorProps {
@@ -43,24 +44,24 @@ export function ProfileEditor({
     saving
 }: ProfileEditorProps) {
     return (
-        <div className="kpp-form">
+        <div className={proxyClasses('form')}>
             <div style={{ fontWeight: 600, fontSize: '13px' }}>
                 {isNewDraft ? tProxy('Create Proxy Profile') : tProxy(`Edit Profile: ${editingDraft.name}`)}
             </div>
-            {formError ? <div className="kpp-alert kpp-alert-err">{tProxy(formError)}</div> : undefined}
-            <div className="kpp-grid">
-                <label className="kpp-field">
-                    <span className="kpp-label">{tProxy('Profile Name')}</span>
+            {formError ? <div className={proxyClasses('alert', 'alertError')}>{tProxy(formError)}</div> : undefined}
+            <div className={proxyClasses('grid')}>
+                <label className={proxyClasses('field')}>
+                    <span className={proxyClasses('label')}>{tProxy('Profile Name')}</span>
                     <input
                         type="text"
-                        className="kpp-input"
+                        className={proxyClasses('input')}
                         placeholder={tProxy('e.g. Corporate Proxy')}
                         value={editingDraft.name}
                         onChange={e => setEditingDraft({ ...editingDraft, name: e.target.value })}
                     />
                 </label>
-                <div className="kpp-field">
-                    <span className="kpp-label">{tProxy('Protocol')}</span>
+                <div className={proxyClasses('field')}>
+                    <span className={proxyClasses('label')}>{tProxy('Protocol')}</span>
                     <ThemedSelect<ProxyProtocol>
                         ariaLabel={tProxy('Protocol')}
                         fullWidth={true}
@@ -74,24 +75,24 @@ export function ProfileEditor({
                         showCheckmark={true}
                     />
                 </div>
-                <label className="kpp-field">
-                    <span className="kpp-label">{tProxy('Port (1–65535)')}</span>
+                <label className={proxyClasses('field')}>
+                    <span className={proxyClasses('label')}>{tProxy('Port (1–65535)')}</span>
                     <input
                         type="number"
                         min={1}
                         max={65535}
-                        className="kpp-input"
+                        className={proxyClasses('input')}
                         placeholder="8080"
                         value={editingDraft.port}
                         onChange={e => setEditingDraft({ ...editingDraft, port: e.target.value })}
                     />
                 </label>
             </div>
-            <label className="kpp-field">
-                <span className="kpp-label">{tProxy('Host (IP or domain, scheme stripped automatically)')}</span>
+            <label className={proxyClasses('field')}>
+                <span className={proxyClasses('label')}>{tProxy('Host (IP or domain, scheme stripped automatically)')}</span>
                 <input
                     type="text"
-                    className="kpp-input"
+                    className={proxyClasses('input')}
                     placeholder={tProxy('proxy.corp.local or 127.0.0.1')}
                     value={editingDraft.host}
                     onChange={e =>
@@ -102,7 +103,7 @@ export function ProfileEditor({
                     }
                 />
             </label>
-            <label className="kpp-checkbox-row">
+            <label className={proxyClasses('checkboxRow')}>
                 <input
                     type="checkbox"
                     checked={editingDraft.authEnabled}
@@ -123,7 +124,7 @@ export function ProfileEditor({
                     setShowPassword={setShowPassword}
                 />
             ) : undefined}
-            <label className="kpp-checkbox-row">
+            <label className={proxyClasses('checkboxRow')}>
                 <input
                     type="checkbox"
                     checked={editingDraft.ignoreSslErrors}
@@ -144,18 +145,18 @@ export function ProfileEditor({
                     flexDirection: 'column',
                     gap: '8px'
                 }}>
-                <span className="kpp-label">{tProxy('Test Connection (5000ms TCP + HTTP check)')}</span>
+                <span className={proxyClasses('label')}>{tProxy('Test Connection (5000ms TCP + HTTP check)')}</span>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <input
                         type="text"
-                        className="kpp-input"
+                        className={proxyClasses('input')}
                         placeholder={DEFAULT_TEST_URL}
                         value={testUrl}
                         onChange={e => setTestUrl(e.target.value)}
                     />
                     <button
                         type="button"
-                        className="kpp-btn"
+                        className={proxyClasses('button')}
                         disabled={testing}
                         onClick={() => {
                             handleRunTest().catch(() => {});
@@ -164,7 +165,7 @@ export function ProfileEditor({
                     </button>
                 </div>
                 {testResult ? (
-                    <div className={testResult.ok ? 'kpp-alert kpp-alert-ok' : 'kpp-alert kpp-alert-err'}>
+                    <div className={testResult.ok ? proxyClasses('alert', 'alertOk') : proxyClasses('alert', 'alertError')}>
                         {tProxy(
                             testResult.ok
                                 ? `✓ Proxy reachable! TCP OK (${testResult.tcpLatencyMs ?? 0}ms) • Target HTTP ${
@@ -184,12 +185,12 @@ export function ProfileEditor({
                     gap: '8px',
                     marginTop: '4px'
                 }}>
-                <button type="button" className="kpp-btn" onClick={cancelEditProfile}>
+                <button type="button" className={proxyClasses('button')} onClick={cancelEditProfile}>
                     {tProxy('Cancel')}
                 </button>
                 <button
                     type="button"
-                    className="kpp-btn kpp-btn-primary"
+                    className={proxyClasses('button', 'buttonPrimary')}
                     disabled={saving}
                     onClick={() => {
                         handleSaveDraft().catch(() => {});

@@ -1,4 +1,5 @@
 import { type ProxyClientSnapshot, tProxy } from '../../../app/proxyStore.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 
 import type { ImportExportHandlersState } from '../hooks/useImportExportHandlers.js';
 
@@ -53,7 +54,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         flexWrap: 'wrap'
                     }}>
                     <label
-                        className="kpp-checkbox-row"
+                        className={proxyClasses('checkboxRow')}
                         style={{ fontSize: '12px', marginRight: '2px' }}
                         title={tProxy(
                             'When checked, Export will ask for a password and include encrypted login & password for portable transfer to another computer'
@@ -70,7 +71,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                     </label>
                     <button
                         type="button"
-                        className="kpp-btn kpp-btn-sm"
+                        className={proxyClasses('button', 'buttonSmall')}
                         onClick={() => {
                             handleExportClick().catch(() => {});
                         }}
@@ -83,7 +84,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                     </button>
                     <button
                         type="button"
-                        className="kpp-btn kpp-btn-sm"
+                        className={proxyClasses('button', 'buttonSmall')}
                         onClick={() => fileInputRef.current?.click?.()}
                         title={tProxy('Import proxy profiles and routing from JSON file')}>
                         {tProxy('Import')}
@@ -95,27 +96,29 @@ export function ImportExportSection(props: ImportExportSectionProps) {
 
     return (
         <>
-            {snap?.error ? <div className="kpp-alert kpp-alert-err">{tProxy(snap.error)}</div> : undefined}
+            {snap?.error ? <div className={proxyClasses('alert', 'alertError')}>{tProxy(snap.error)}</div> : undefined}
             {ioNotice ? (
-                <div className={ioNotice.ok ? 'kpp-alert kpp-alert-ok' : 'kpp-alert kpp-alert-err'}>{tProxy(ioNotice.text)}</div>
+                <div className={ioNotice.ok ? proxyClasses('alert', 'alertOk') : proxyClasses('alert', 'alertError')}>
+                    {tProxy(ioNotice.text)}
+                </div>
             ) : undefined}
             {exportPasswordPromptOpen ? (
-                <div className="kpp-form">
+                <div className={proxyClasses('form')}>
                     <div style={{ fontWeight: 600, fontSize: '13px' }}>{tProxy('Encrypt Credentials for Portable Export')}</div>
-                    <div className="kpp-host-sub">
+                    <div className={proxyClasses('hostSub')}>
                         {tProxy('Enter a password to encrypt login & password (AES-256-GCM) so they can be imported on another computer:')}
                     </div>
                     <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                         <input
                             type="password"
-                            className="kpp-input"
+                            className={proxyClasses('input')}
                             placeholder={tProxy('Enter encryption password...')}
                             value={exportPassword}
                             onChange={event => setExportPassword(event.target.value)}
                         />
                         <button
                             type="button"
-                            className="kpp-btn kpp-btn-primary"
+                            className={proxyClasses('button', 'buttonPrimary')}
                             onClick={() => {
                                 handleConfirmEncryptedExport().catch(() => {});
                             }}>
@@ -123,7 +126,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         </button>
                         <button
                             type="button"
-                            className="kpp-btn"
+                            className={proxyClasses('button')}
                             onClick={() => {
                                 setExportPasswordPromptOpen(false);
                                 setExportPassword('');
@@ -134,9 +137,9 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                 </div>
             ) : undefined}
             {pendingImportPayload ? (
-                <div className="kpp-form">
+                <div className={proxyClasses('form')}>
                     <div style={{ fontWeight: 600, fontSize: '13px' }}>{tProxy('Encrypted Credentials Detected in Import File')}</div>
-                    <div className="kpp-host-sub">
+                    <div className={proxyClasses('hostSub')}>
                         {tProxy('Enter the password used when exporting this file to decrypt and restore login & password:')}
                     </div>
                     <div
@@ -148,7 +151,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         }}>
                         <input
                             type="password"
-                            className="kpp-input"
+                            className={proxyClasses('input')}
                             style={{ flex: '1 1 200px' }}
                             placeholder={tProxy('Enter decryption password...')}
                             value={importPassword}
@@ -156,7 +159,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         />
                         <button
                             type="button"
-                            className="kpp-btn kpp-btn-primary"
+                            className={proxyClasses('button', 'buttonPrimary')}
                             onClick={() => {
                                 handleConfirmEncryptedImport(false).catch(() => {});
                             }}>
@@ -164,7 +167,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         </button>
                         <button
                             type="button"
-                            className="kpp-btn"
+                            className={proxyClasses('button')}
                             onClick={() => {
                                 handleConfirmEncryptedImport(true).catch(() => {});
                             }}>
@@ -172,7 +175,7 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         </button>
                         <button
                             type="button"
-                            className="kpp-btn"
+                            className={proxyClasses('button')}
                             onClick={() => {
                                 setPendingImportPayload(null);
                                 setImportPassword('');

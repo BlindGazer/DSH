@@ -144,6 +144,7 @@ var descriptors = Object.freeze([
 	"useSystemProxy",
 	"consumeReset",
 	"saveModels",
+	"deleteAllData",
 	"reportUiError",
 	"reportUiReady"
 ].map(descriptor));

@@ -27,8 +27,19 @@ const Config = z
     })
     .prefault({});
 
-const PROVIDER = ProviderRoute;
 const OAUTH_REF = credentialRef(CredentialRef);
+// Хранилище креденциала привязано к фиксированному OAUTH_REF, а не к маршруту:
+// маршрут вычисляется из accountId и меняется при смене аккаунта.
+const PROVIDER_ROUTE_SUFFIX_LENGTH = 8;
+const PROVIDER_ROUTE_SUFFIX_PATTERN = /^[a-z0-9]+$/i;
+
+/** Строит маршрут провайдера с суффиксом аккаунта, чтобы разные аккаунты не конфликтовали. */
+function buildProviderRoute(accountId: string | undefined): string {
+    if (!accountId) return ProviderRoute;
+    const suffix = accountId.slice(-PROVIDER_ROUTE_SUFFIX_LENGTH);
+    // Неочищенный суффикс сломал бы маршрутизацию DSH, поэтому нестандартные символы откатывают к базовому маршруту.
+    return PROVIDER_ROUTE_SUFFIX_PATTERN.test(suffix) ? `${ProviderRoute}-${suffix.toLowerCase()}` : ProviderRoute;
+}
 const OAuthCredentialSchema = z
     .object({
         type: z.literal('oauth'),
@@ -40,9 +51,13 @@ const OAuthCredentialSchema = z
     .passthrough();
 const DEVICE_CODE_TIMEOUT_MS = 30000;
 const REFRESH_LEEWAY_MS = 60000;
-const USAGE_CACHE_MS = 60000;
+// Кэш usage: не чаще раза в 5 секунд, чтобы опрос при открытом окне настроек получал свежие данные.
+const USAGE_CACHE_MS = 5000;
 const PI_PROVIDER = createCodexProvider();
-const MODEL_CATALOG = PI_PROVIDER.getModels().map(({ id, name }) => ({ id, name }));
+const MODEL_CATALOG = PI_PROVIDER.getModels().map(({ id, name }) => ({
+    id,
+    name
+}));
 const MODEL_IDS = new Set(MODEL_CATALOG.map(({ id }) => id));
 const CODEX_OAUTH = PI_PROVIDER.auth.oauth;
 
@@ -165,7 +180,10 @@ function text(value: string) {
     return [{ type: 'text' as const, text: value }];
 }
 
-function createPiAuth(ctx: Context): {
+function createPiAuth(
+    ctx: Context,
+    getRoute: () => string
+): {
     credentials: PiCredentialStore;
     authContext: AuthContext;
     readCredential(): Promise<OAuthCredential | undefined>;
@@ -193,13 +211,13 @@ function createPiAuth(ctx: Context): {
     };
     const credentials: PiCredentialStore = {
         async read(providerId) {
-            return providerId === PROVIDER ? read() : undefined;
+            return providerId === getRoute() ? read() : undefined;
         },
         async list(): Promise<readonly PiCredentialInfo[]> {
-            return (await read()) ? [{ providerId: PROVIDER, type: 'oauth' }] : [];
+            return (await read()) ? [{ providerId: getRoute(), type: 'oauth' }] : [];
         },
         async modify(providerId, mutate) {
-            if (providerId !== PROVIDER) return undefined;
+            if (providerId !== getRoute()) return undefined;
             return serialize(async () => {
                 const current = await read();
                 const next = await mutate(current);
@@ -211,7 +229,7 @@ function createPiAuth(ctx: Context): {
             });
         },
         async delete(providerId) {
-            if (providerId === PROVIDER) await serialize(async () => ctx.credentials.unset(OAUTH_REF));
+            if (providerId === getRoute()) await serialize(async () => ctx.credentials.unset(OAUTH_REF));
         }
     };
     const authContext: AuthContext = {
@@ -282,12 +300,14 @@ export class OpenAICodexAuthService {
                 }
             }
         };
+        // Маршрут зависит от аккаунта, поэтому мутирует при входе/смене учетной записи.
+        let currentRoute = ProviderRoute;
         const profiles = (): Map<string, ResolvedPiAiProviderProfile> =>
             new Map([
                 [
-                    PROVIDER,
+                    currentRoute,
                     {
-                        provider: PROVIDER,
+                        provider: currentRoute,
                         displayName: 'OpenAI Codex',
                         reasoning: 'medium',
                         streamIdleTimeoutMs: 300000,
@@ -336,7 +356,7 @@ export class OpenAICodexAuthService {
         let usageFlight: UsageFlight | undefined;
         let usageGeneration = 0;
         let settingsMutation = Promise.resolve();
-        const authInjection = createPiAuth(ctx);
+        const authInjection = createPiAuth(ctx, () => currentRoute);
         const clearUsage = () => {
             usageGeneration++;
             Object.assign(state, {
@@ -379,7 +399,9 @@ export class OpenAICodexAuthService {
         const clearCredential = authInjection.clearCredential;
         const validCredential = async (): Promise<OAuthCredential | undefined> => {
             const credential = await readCredential();
+            console.log('validCredential', credential);
             if (!credential) return undefined;
+            applyRoute(credential.accountId);
             if (Date.now() + REFRESH_LEEWAY_MS < credential.expires) return credential;
             if (!refreshFlight) {
                 const revision = credentialRevision;
@@ -503,7 +525,16 @@ export class OpenAICodexAuthService {
             },
             resolveAttachments: () => ctx.get('attachments')
         });
-        ctx.llm.registerAdapter([PROVIDER], adapter);
+        // Handle нужен, чтобы при смене аккаунта перерегистрировать адаптер под новый маршрут.
+        const adapterRegistration = ctx.llm.registerAdapter([currentRoute], adapter);
+        const applyRoute = (accountId: string | undefined): void => {
+            const nextRoute = buildProviderRoute(accountId);
+            console.log('applyRoute', nextRoute);
+            if (nextRoute === currentRoute) return;
+            currentRoute = nextRoute;
+            currentProfiles = profiles();
+            adapterRegistration.replace([currentRoute]);
+        };
         const startFlow = (): Promise<DeviceChallenge> => {
             flow?.controller.abort('new login requested');
             const generation = ++flowGeneration;
@@ -540,7 +571,10 @@ export class OpenAICodexAuthService {
                             const userCode = info.userCode ?? info.user_code ?? '';
                             const uri = info.verificationUri ?? info.verification_uri;
                             if (!uri) return;
-                            const challenge = { deviceCode: userCode, verificationUri: verificationUri(uri) };
+                            const challenge = {
+                                deviceCode: userCode,
+                                verificationUri: verificationUri(uri)
+                            };
                             deferredDevice.resolve(challenge);
                             state.status = 'waiting';
                             state.deviceCode = challenge.deviceCode;
@@ -564,6 +598,8 @@ export class OpenAICodexAuthService {
                     state.status = 'done';
                     state.loggedIn = true;
                     state.expiresAt = credential.expires;
+                    console.log('startFlow', credential);
+                    applyRoute(credential.accountId);
                     void refreshUsage(true).catch(() => undefined);
                 } catch (error) {
                     const message = safeError(error instanceof Error ? error : String(error), 'Unable to complete OpenAI Codex sign-in.');
@@ -587,7 +623,54 @@ export class OpenAICodexAuthService {
             flow = undefined;
             await clearCredential();
             clearUsage();
-            Object.assign(state, { status: 'idle', loggedIn: false, deviceCode: '', verificationUri: '', expiresAt: 0, error: '' });
+            applyRoute(undefined);
+            Object.assign(state, {
+                status: 'idle',
+                loggedIn: false,
+                deviceCode: '',
+                verificationUri: '',
+                expiresAt: 0,
+                error: ''
+            });
+        };
+        // Полное удаление данных: креденциал (старая и новая схема - одна ссылка) и конфиг секции плагина.
+        // Каждый шаг изолирован, чтобы частичный сбой не оставил приложение в сломанном состоянии.
+        const deleteAllData = async (): Promise<void> => {
+            const failures: string[] = [];
+            flowGeneration++;
+            credentialRevision++;
+            flow?.controller.abort('delete all data requested');
+            flow = undefined;
+            try {
+                await clearCredential();
+            } catch (error) {
+                failures.push(safeError(error instanceof Error ? error : undefined, 'Failed to delete the stored account.'));
+            }
+            try {
+                const editor: ConfigEditor | undefined = ctx.get('configEditor');
+                const entry = editor?.entries().find(row => row.options.name === PackageId);
+                if (editor && entry)
+                    await editor.edit(entry, () => ({
+                        proxyMode: 'host',
+                        disabledModels: [],
+                        modelSettings: []
+                    }));
+            } catch (error) {
+                failures.push(safeError(error instanceof Error ? error : undefined, 'Failed to reset the plugin settings.'));
+            }
+            settings = initialModelSettings([], []);
+            currentProfiles = profiles();
+            clearUsage();
+            applyRoute(undefined);
+            Object.assign(state, {
+                status: 'idle',
+                loggedIn: false,
+                deviceCode: '',
+                verificationUri: '',
+                expiresAt: 0,
+                error: ''
+            });
+            if (failures.length > 0) throw new Error(failures.join(' '));
         };
         const saveModels = (models: ModelSettings): Promise<void> => {
             const change = settingsMutation
@@ -663,6 +746,10 @@ export class OpenAICodexAuthService {
                 await logout();
                 return getSnapshot(false);
             },
+            async deleteAllData() {
+                await deleteAllData();
+                return snapshot();
+            },
             async followHostProxy() {
                 await selectProxy('host');
                 return snapshot();
@@ -719,7 +806,10 @@ export class OpenAICodexAuthService {
                 name: 'codex_login',
                 description: 'Start OpenAI Codex device-code sign-in. Give the code and URL to the user.',
                 parameters: {},
-                output: { schema: { type: 'string' }, render: (_args, value: string) => text(value) },
+                output: {
+                    schema: { type: 'string' },
+                    render: (_args, value: string) => text(value)
+                },
                 async execute() {
                     let timer: ReturnType<typeof setTimeout> | undefined;
                     try {
@@ -741,7 +831,10 @@ export class OpenAICodexAuthService {
                 name: 'codex_status',
                 description: 'Report OpenAI Codex sign-in state and refresh expired credentials.',
                 parameters: {},
-                output: { schema: { type: 'string' }, render: (_args, value: string) => text(value) },
+                output: {
+                    schema: { type: 'string' },
+                    render: (_args, value: string) => text(value)
+                },
                 async execute() {
                     const current = await getSnapshot();
                     if (!current.loggedIn)
@@ -759,7 +852,10 @@ export class OpenAICodexAuthService {
                 name: 'codex_logout',
                 description: 'Sign out by deleting the local OpenAI Codex OAuth credential.',
                 parameters: {},
-                output: { schema: { type: 'string' }, render: (_args, value: string) => text(value) },
+                output: {
+                    schema: { type: 'string' },
+                    render: (_args, value: string) => text(value)
+                },
                 async execute() {
                     try {
                         await logout();

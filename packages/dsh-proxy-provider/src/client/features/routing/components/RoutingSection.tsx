@@ -7,6 +7,7 @@ import type {
     SanitizedProxyProfile
 } from '../../../../shared/models/ProxyModels.js';
 import { proxyStore, tProxy } from '../../../app/proxyStore.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 
 export interface RoutingSectionProps {
     readonly providers: readonly DiscoveredProvider[];
@@ -44,9 +45,11 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
         : providerList;
 
     return (
-        <div className="kpp-section">
-            <div className="kpp-section-head">
-                <h3 className="kpp-section-title">{tProxy(`2. Provider Routing (${filteredProviders.length}/${providerList.length})`)}</h3>
+        <div className={proxyClasses('section')}>
+            <div className={proxyClasses('sectionHead')}>
+                <h3 className={proxyClasses('sectionTitle')}>
+                    {tProxy(`2. Provider Routing (${filteredProviders.length}/${providerList.length})`)}
+                </h3>
                 <div
                     style={{
                         display: 'flex',
@@ -57,7 +60,7 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                     }}>
                     <input
                         type="text"
-                        className="kpp-input"
+                        className={proxyClasses('input')}
                         placeholder={tProxy('Search provider by name or host...')}
                         aria-label={tProxy('Search provider by name or host')}
                         value={providerSearch}
@@ -66,7 +69,7 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                     {providerSearch ? (
                         <button
                             type="button"
-                            className="kpp-btn kpp-btn-sm"
+                            className={proxyClasses('button', 'buttonSmall')}
                             title={tProxy('Clear search')}
                             onClick={() => setProviderSearch('')}>
                             ✕
@@ -76,7 +79,7 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
             </div>
 
             {conflictList.length > 0 ? (
-                <div className="kpp-alert kpp-alert-warn">
+                <div className={proxyClasses('alert', 'alertWarn')}>
                     <div style={{ fontWeight: 600, marginBottom: '4px' }}>⚠ {tProxy('Domain / Host Routing Conflict Detected')}</div>
                     {conflictList.map(c => (
                         <div key={c.host}>
@@ -91,13 +94,13 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
             ) : undefined}
 
             {filteredProviders.length === 0 ? (
-                <div className="kpp-host-sub">{tProxy(`No providers matching "${providerSearch.trim()}".`)}</div>
+                <div className={proxyClasses('hostSub')}>{tProxy(`No providers matching "${providerSearch.trim()}".`)}</div>
             ) : (
-                <div className="kpp-list">
+                <div className={proxyClasses('list')}>
                     {filteredProviders.map(prov => {
                         const boundId = bindings[prov.id] || '';
                         return (
-                            <div key={prov.id} className="kpp-row">
+                            <div key={prov.id} className={proxyClasses('row')}>
                                 <div>
                                     <div
                                         style={{
@@ -106,9 +109,11 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                                             gap: '6px'
                                         }}>
                                         <span style={{ fontWeight: 600, fontSize: '13px' }}>{prov.name}</span>
-                                        {prov.custom ? <span className="kpp-badge kpp-badge-direct">{tProxy('Custom')}</span> : undefined}
+                                        {prov.custom ? (
+                                            <span className={proxyClasses('badge', 'badgeDirect')}>{tProxy('Custom')}</span>
+                                        ) : undefined}
                                     </div>
-                                    <div className="kpp-host-sub">
+                                    <div className={proxyClasses('hostSub')}>
                                         {prov.hosts && prov.hosts.length > 0
                                             ? `Hosts: ${prov.hosts.join(', ')}`
                                             : `Provider ID: ${prov.id}`}

@@ -74,6 +74,12 @@ const en = {
     close: 'Close',
     copyFailed: 'Could not copy the device code.',
     modelsSaveError: 'Could not save model settings.',
+    deleteAllData: 'Delete all data',
+    deleteAllConfirmTitle: 'Delete all data',
+    deleteAllConfirm:
+        'This removes the signed-in account and resets all plugin settings. The plugin model list is unregistered until the plugin reloads. This cannot be undone.',
+    deleteAllError: 'Could not delete all data.',
+    deleteAllBusy: 'Deleting...',
     renderFailure: 'OpenAI Codex panel failed to render. See application logs for details.'
 } as const;
 
@@ -151,6 +157,12 @@ const ru: Record<keyof typeof en, string> = {
     close: 'Закрыть',
     copyFailed: 'Не удалось скопировать код устройства.',
     modelsSaveError: 'Не удалось сохранить настройки моделей.',
+    deleteAllData: 'Удалить все данные',
+    deleteAllConfirmTitle: 'Удалить все данные',
+    deleteAllConfirm:
+        'Будут удалены данные входа и сброшены все настройки плагина. Список моделей плагина не будет зарегистрирован до перезагрузки плагина. Действие нельзя отменить.',
+    deleteAllError: 'Не удалось удалить все данные.',
+    deleteAllBusy: 'Удаление...',
     renderFailure: 'Не удалось отобразить панель OpenAI Codex. Подробности записаны в журнал приложения.'
 };
 

@@ -1,7 +1,7 @@
 import { useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect } from 'react';
 import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { ensureProxyStyles, proxyScopeClass } from '../../../app/proxyStyles.js';
+import { ensureProxyStyles, proxyClasses } from '../../../app/proxyStyles.js';
 import { ProxySettingsModal } from './ProxySettingsModal.js';
 
 /**
@@ -22,7 +22,7 @@ export function ModelsFooterProxyEntry() {
 
     return (
         <>
-            <div className={`kpp-footer-row ${proxyScopeClass}`} data-theme={effectiveTheme}>
+            <div className={`dsh-core-root ${proxyClasses('footerRow')}`} data-theme={effectiveTheme}>
                 <div
                     style={{
                         display: 'flex',
@@ -30,12 +30,14 @@ export function ModelsFooterProxyEntry() {
                         gap: '8px',
                         flexWrap: 'wrap'
                     }}>
-                    <button type="button" className="kpp-btn" onClick={() => proxyStore.publish({ modalOpen: true })}>
+                    <button type="button" className={proxyClasses('button')} onClick={() => proxyStore.publish({ modalOpen: true })}>
                         {tProxy('Proxy settings')}
                     </button>
-                    <span className="kpp-host-sub">{tProxy(`${profilesCount} profile(s) • ${activeCount} proxied provider(s)`)}</span>
+                    <span className={proxyClasses('hostSub')}>
+                        {tProxy(`${profilesCount} profile(s) • ${activeCount} proxied provider(s)`)}
+                    </span>
                     {conflictsCount > 0 ? (
-                        <span className="kpp-badge kpp-badge-warn">{tProxy(`⚠ ${conflictsCount} host conflict(s)`)}</span>
+                        <span className={proxyClasses('badge', 'badgeWarn')}>{tProxy(`⚠ ${conflictsCount} host conflict(s)`)}</span>
                     ) : undefined}
                 </div>
             </div>

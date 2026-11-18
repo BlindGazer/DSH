@@ -6,6 +6,8 @@ export const TestId = {
         DeviceCode: 'openai-codex-device-code',
         Models: 'openai-codex-models',
         SaveModels: 'openai-codex-save-models',
+        DeleteAllData: 'openai-codex-delete-all-data',
+        ConfirmDeleteAll: 'openai-codex-confirm-delete-all',
         ModalScrollBody: 'openai-codex-modal-scroll-body',
         ModalFooter: 'openai-codex-modal-footer',
         Usage: 'openai-codex-usage',

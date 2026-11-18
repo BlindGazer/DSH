@@ -5,7 +5,7 @@ import { TestId } from '../../../shared/constants/testId.js';
 import { CodexSettingsPanel } from './CodexSettingsPanel.js';
 import { CircularUsageChart } from './CodexUsageCharts.js';
 import styles from './codexFooterStyles.module.scss';
-import { findUsageLimit } from './codexPresentation.js';
+import { displayUsageLimit, USAGE_POLL_BACKGROUND_MS } from './codexPresentation.js';
 import type { OpenAICodexController } from './openAICodexRuntime.js';
 import { useCodexState } from './openAICodexRuntime.js';
 
@@ -24,16 +24,16 @@ export function CodexModelsFooterEntry({ controller, locale, text }: CodexModels
     const loggedIn = Boolean(state.snapshot?.loggedIn);
     const models = Array.isArray(state.snapshot?.models) ? state.snapshot.models : [];
     const enabledModels = models.filter(model => model.enabled).length;
-    const fiveHour = loggedIn && state.snapshot ? findUsageLimit(state.snapshot.usageLimits, 18_000) : undefined;
-    const weekly = loggedIn && state.snapshot ? findUsageLimit(state.snapshot.usageLimits, 604_800) : undefined;
-    const pollInterval = status === 'starting' || status === 'waiting' || usageStatus === 'loading' ? 2_500 : 60_000;
+    const loginPending = status === 'starting' || status === 'waiting';
+    const usageLimits = state.snapshot?.usageLimits ?? [];
 
+    // Фоновый опрос (окно закрыто) - не чаще раза в 5 минут; при ожидании входа опрашиваем чаще.
     useEffect(() => {
         if (open) return undefined;
         void controller.load(true);
-        const timer = window.setInterval(() => void controller.load(true), pollInterval);
+        const timer = window.setInterval(() => void controller.load(true), loginPending ? 2_500 : USAGE_POLL_BACKGROUND_MS);
         return () => window.clearInterval(timer);
-    }, [controller, open, pollInterval]);
+    }, [controller, open, loginPending]);
 
     return (
         <>
@@ -60,10 +60,16 @@ export function CodexModelsFooterEntry({ controller, locale, text }: CodexModels
                                     ))}
                                 </span>
                                 <span className={styles.modelsUsageIndicators}>
-                                    {fiveHour ? (
-                                        <CircularUsageChart limit={fiveHour} label={text('fiveHourLimit')} size="standard" />
-                                    ) : undefined}
-                                    {weekly ? <CircularUsageChart limit={weekly} label={text('weeklyLimit')} size="standard" /> : undefined}
+                                    <CircularUsageChart
+                                        limit={displayUsageLimit(usageLimits, 18_000, usageStatus ?? 'idle', text('fiveHourLimit'))}
+                                        label={text('fiveHourLimit')}
+                                        size="standard"
+                                    />
+                                    <CircularUsageChart
+                                        limit={displayUsageLimit(usageLimits, 604_800, usageStatus ?? 'idle', text('weeklyLimit'))}
+                                        label={text('weeklyLimit')}
+                                        size="standard"
+                                    />
                                 </span>
                             </div>
                         ) : state.snapshot ? (

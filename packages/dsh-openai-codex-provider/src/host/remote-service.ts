@@ -11,6 +11,7 @@ export interface OpenAICodexRemoteHandlers {
     useSystemProxy(): Promise<OpenAICodexSnapshot>;
     consumeReset(input: ResetRequest): Promise<OpenAICodexSnapshot>;
     saveModels(models: ModelSettings): Promise<OpenAICodexSnapshot>;
+    deleteAllData(): Promise<OpenAICodexSnapshot>;
     reportUiError(error: UiRenderError): Promise<true>;
     reportUiReady(componentId: UiComponentId): Promise<true>;
 }
@@ -51,6 +52,10 @@ export class OpenAICodexRemoteService extends TypertRemoteService {
     @Remote
     saveModels(models: ModelSettings): Promise<OpenAICodexSnapshot> {
         return this.handlers.saveModels(models);
+    }
+    @Remote
+    deleteAllData(): Promise<OpenAICodexSnapshot> {
+        return this.handlers.deleteAllData();
     }
     @Remote
     reportUiError(error: UiRenderError): Promise<true> {

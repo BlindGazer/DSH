@@ -38,5 +38,6 @@ Tokens are stored in the local DSH Credential Store; the client receives only th
 
 See how the plugin looks and works inside DSH in [Examples](Examples_EN.md).
 
+- [Workflow](Workflow.md)
 - [Commands and installation](Setup_EN.md) | [Команды и установка](Setup.md)
 - [Русский README](../README.md)

@@ -29,7 +29,14 @@ export function KpiStrip({ data, t, lastPoint, percent }: KpiStripProps): React.
                 detail={`${skillsCharacters.toLocaleString()} ${t('chars')}`}
             />
             <Kpi
-                title={t('memoryBudget')}
+                title={
+                    <span className="ar-kpi-title">
+                        {t('memoryBudget')}
+                        <span className="ar-help" title={t('memoryBudgetHint')}>
+                            ?
+                        </span>
+                    </span>
+                }
                 value={`${lastPoint.toLocaleString()} / ${data.metrics.tokenBudget.toLocaleString()}`}
                 detail={`${percent.toFixed(1)}%`}
                 tone={percent > 100 ? 'danger' : percent >= 70 ? 'warn' : 'success'}
@@ -39,7 +46,7 @@ export function KpiStrip({ data, t, lastPoint, percent }: KpiStripProps): React.
 }
 
 export interface KpiProps {
-    title: string;
+    title: React.ReactNode;
     value: string;
     detail: string;
     tone?: 'danger' | 'warn' | 'success';

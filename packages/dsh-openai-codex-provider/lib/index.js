@@ -2,9 +2,11 @@ import { createRequire } from "node:module";
 import "node:buffer";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
 import { anthropicMessagesApi } from "@earendil-works/pi-ai/api/anthropic-messages.lazy";
+import { googleGenerativeAIApi } from "@earendil-works/pi-ai/api/google-generative-ai.lazy";
 import { openAICompletionsApi } from "@earendil-works/pi-ai/api/openai-completions.lazy";
 import { openAIResponsesApi } from "@earendil-works/pi-ai/api/openai-responses.lazy";
 import { isContextOverflow } from "@earendil-works/pi-ai/utils/overflow";
+import { createHash } from "node:crypto";
 import "node:os";
 import "node:fs/promises";
 import "node:path";
@@ -2189,7 +2191,7 @@ var Service = class Service {
 		return false;
 	}
 };
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-brand@0.2.2-rc.1_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-brand/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-brand@0.2.2-rc.3_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-brand/lib/index.js
 /**
 * Duplicate-install-safe nominal primitive helpers.
 *
@@ -2211,14 +2213,14 @@ var Service = class Service {
 function brandString(value) {
 	return value;
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-credential_cb4904d5f5ea0e5c919a0b498b20243c/node_modules/@deepseek-ai/dsh-credentials/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-credential_2a5d36d7e0cb54ff126d4cde9a53040c/node_modules/@deepseek-ai/dsh-credentials/lib/index.js
 /**
 * Service Definition for the credential-reference capability seam (`ctx.credentials`). Settings and composition files carry
 * *references* to secrets — environment-variable names — while providers own
 * the actual values and their storage. Consumers resolve a reference once per
 * operation, so a changed credential reaches the next operation without any
 * plugin restart, and configuration surfaces describe a reference without
-* ever seeing its value.
+* ever seeing its full value.
 * @module @deepseek-ai/dsh-credentials
 */
 var REF_PATTERN = /^[A-Za-z_][A-Za-z0-9_]*$/;
@@ -2243,7 +2245,7 @@ function credentialRef(value) {
 function isCredentialRefName(value) {
 	return REF_PATTERN.test(value);
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-typert-pro_333a1d9eab58194263665daac5bf4786/node_modules/@deepseek-ai/dsh-typert-protocol/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-typert-pro_2f8178087ff5b29d6de54290762a244a/node_modules/@deepseek-ai/dsh-typert-protocol/lib/index.js
 /** The one Remote failure class shared by owners, the Gateway, and consumers. */
 /**
 * One Remote call failure: a real Error carrying its stable code and typed
@@ -2424,7 +2426,7 @@ function sameInvocation(left, right) {
 function validateName(subject, value) {
 	if (!isTypertRemoteSegment(value)) throw new TypeError(`typert-protocol: ${subject} must contain only RPC endpoint segment characters`);
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-util-value_2ddf7295b3e4c4286e662d34785c8bcb/node_modules/@deepseek-ai/dsh-util-values/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-util-value_f181d1fcd8a8b46f1abb181be7cb1d74/node_modules/@deepseek-ai/dsh-util-values/lib/index.js
 /**
 * Lazily scanned view of one JSON object's top-level fields, built from text
 * that may still be streaming or from an already parsed object. Nothing is
@@ -3874,7 +3876,7 @@ defineMethod("transform", [
 	"callback",
 	"preserve"
 ], ({ inner }, isInner) => inner.toString(isInner));
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-timeout@0._832cb3017ef797f8856341868a95e86e/node_modules/@deepseek-ai/dsh-timeout/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-timeout@0._d38b80e6c6a655a1624de0bc0b77c3e2/node_modules/@deepseek-ai/dsh-timeout/lib/index.js
 /**
 * Shared timeout arithmetic, signal fusion, and classification. The library
 * only notifies through abort signals; each capability still owns the mechanism
@@ -3978,19 +3980,11 @@ function timeoutOf(x, code) {
 	if (!(reason instanceof TimeoutReason)) return void 0;
 	return code === void 0 || reason.code === code ? reason : void 0;
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm@0.2.2-rc.1_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-llm/lib/index.js
-/**
-* Detach and deep-freeze a message whose identity already exists.
-* @param message - complete message, including its stable identity.
-* @returns an immutable snapshot that preserves the identity.
-*/
-function freezeMessage(message) {
-	return deepFreeze(structuredClone(message));
-}
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-error@0.2.2-rc.3_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-error/lib/index.js
 /**
 * Harness error base with a stable machine-routable code and chained cause.
 * Package errors extend it so tool results and replay can retain failure class.
-* @module @deepseek-ai/dsh-llm/error
+* @module @deepseek-ai/dsh-error
 */
 /**
 * Base class for all harness errors. Carries a `code` (stable, programmatic —
@@ -4007,6 +4001,82 @@ var HarnessError = class extends Error {
 		this.name = new.target.name;
 	}
 };
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm@0.2.2-_efc9ea42ca028c4c882e8755f45a1f19/node_modules/@deepseek-ai/dsh-llm/lib/index.js
+/**
+* Detach and deep-freeze a message whose identity already exists.
+* @param message - complete message, including its stable identity.
+* @returns an immutable snapshot that preserves the identity.
+*/
+function freezeMessage(message) {
+	return deepFreeze(structuredClone(message));
+}
+/**
+* LLM failure codes and helpers over the shared Harness error base. The base
+* class lives in `@deepseek-ai/dsh-error` and is re-exported here, so both
+* import paths name the same class.
+* @module @deepseek-ai/dsh-llm/error
+*/
+/**
+* Every failure code the built-in providers and the LLM runtime raise. An entry
+* marked `retryChoice` is offered as a choice for a provider retry policy's
+* `retryableCodes`; being a choice does not make a code retried by default.
+*/
+var LLM_FAILURE_CODES = {
+	ABORTED: {},
+	ACCOUNT_QUOTA: {},
+	ACCOUNT_SIGN_IN_REQUIRED: {},
+	ACCOUNT_TOKEN_INVALID: {},
+	AUTH: {},
+	CLIENT_UPGRADE_REQUIRED: {},
+	CONTEXT_WINDOW_EXCEEDED: {},
+	DISCOVERY_FAILED: {},
+	DISCOVERY_UNSUPPORTED: {},
+	DUPLICATE_ADAPTER: {},
+	DUPLICATE_DIRECTORY: {},
+	DUPLICATE_DISCOVERY: {},
+	EMPTY_RESPONSE: { retryChoice: true },
+	FILES_API: {},
+	IMAGE_OFFLOAD_REQUIRED: {},
+	INVALID_ADAPTER: {},
+	INVALID_CATALOG: {},
+	INVALID_CONFIG: {},
+	INVALID_CREDENTIAL: {},
+	INVALID_DIRECTORY: {},
+	INVALID_DISCOVERY: {},
+	INVALID_MODEL_CONTEXT: {},
+	INVALID_MODEL_INFO: {},
+	INVALID_MODEL_MAX_TOKENS: {},
+	INVALID_MODEL_REASONING: {},
+	INVALID_PREPARED_CALL: {},
+	INVALID_REPLAY_STATE: {},
+	INVALID_REQUEST: {},
+	INVALID_RESPONSE: {},
+	MALFORMED_RESPONSE: { retryChoice: true },
+	MISSING_CREDENTIAL: {},
+	MODEL_SWITCH_COMPACTION_FAILED: {},
+	MODEL_UNSUPPORTED: {},
+	NO_ADAPTER: {},
+	NO_CREDENTIAL_STORE: {},
+	NO_DISCOVERY: {},
+	PI_AI_ERROR: {},
+	QUOTA: { retryChoice: true },
+	RATE_LIMIT: { retryChoice: true },
+	REGISTRATION_DISPOSED: {},
+	REQUEST_EXTENSION: {},
+	REQUEST_HEADERS: {},
+	SERVER: { retryChoice: true },
+	STREAM_CLOSED: { retryChoice: true },
+	TIMEOUT: { retryChoice: true },
+	TRANSPORT: { retryChoice: true },
+	UNKNOWN: {},
+	UNKNOWN_MODEL: {},
+	UNSTORABLE_PROVIDER_ID: {},
+	UNSUPPORTED_CONTENT: {},
+	UNSUPPORTED_OPTION: {},
+	UNSUPPORTED_REASONING_EFFORT: {}
+};
+/** The {@link LLM_FAILURE_CODES} entries marked as retry-policy choices, in definition order. */
+var RETRY_CODE_CHOICES = Object.freeze(Object.keys(LLM_FAILURE_CODES).filter((code) => "retryChoice" in LLM_FAILURE_CODES[code]));
 /** Canonical provider-neutral code for a model request rejected because its context window was exceeded. */
 var CONTEXT_WINDOW_EXCEEDED_CODE = "CONTEXT_WINDOW_EXCEEDED";
 /** Canonical provider-neutral code for an exhausted account quota or balance. */
@@ -4082,14 +4152,14 @@ var DEFAULT_RETRYABLE_CODES = Object.freeze([
 	"TRANSPORT"
 ]);
 var backoffSchema = Schema.object({
-	initialDelayMs: Schema.number().max(MAX_TIMER_DELAY_MS).default(DEFAULT_INITIAL_DELAY_MS),
-	maxDelayMs: Schema.number().max(MAX_TIMER_DELAY_MS).default(DEFAULT_MAX_DELAY_MS),
+	initialDelayMs: Schema.number().min(Number.MIN_VALUE).max(MAX_TIMER_DELAY_MS).default(DEFAULT_INITIAL_DELAY_MS),
+	maxDelayMs: Schema.number().min(Number.MIN_VALUE).max(MAX_TIMER_DELAY_MS).default(DEFAULT_MAX_DELAY_MS),
 	jitterRatio: Schema.number().min(0).max(1).default(DEFAULT_JITTER_RATIO)
 });
 var normalPolicySchema = Schema.object({
 	mode: Schema.const("normal").required(),
 	maxRetries: Schema.number().step(1).min(0).max(Number.MAX_SAFE_INTEGER).default(DEFAULT_MAX_RETRIES),
-	retryableCodes: Schema.array(Schema.string()).default([...DEFAULT_RETRYABLE_CODES]),
+	retryableCodes: Schema.array(Schema.union([...RETRY_CODE_CHOICES.map((code) => Schema.const(code)), Schema.string().min(1)])).min(1).default([...DEFAULT_RETRYABLE_CODES]),
 	backoff: backoffSchema
 });
 var alwaysPolicySchema = Schema.object({
@@ -4491,27 +4561,47 @@ function withoutDeveloperMessages(messages) {
 	const retained = messages.filter((message) => message.role !== "developer");
 	return retained.length === messages.length ? messages : retained;
 }
-function toolDeclarations(tools, mode, history) {
+function toolDeclarations(history) {
 	const declarations = new Map(history.tools.map((tool) => [tool.name, tool]));
 	for (const update of history.updates) for (const tool of update.additions) if (!declarations.has(tool.name)) declarations.set(tool.name, {
 		...tool,
 		deferLoading: true
 	});
-	switch (mode) {
-		case "in-history": return declarations;
-		case "addition-only": {
-			const activeNames = new Set(tools?.map((tool) => tool.name));
-			for (const name of declarations.keys()) if (!activeNames.has(name)) declarations.delete(name);
-			return declarations;
+	return declarations;
+}
+/** Rebuild declarations on removals or additions to an empty set, where the request prefix changes. */
+function rebaseAdditionOnlyHistory(history, messages) {
+	const available = new Map(history.tools.map((tool) => [tool.name, tool]));
+	let baseline = history.tools;
+	let retainedFrom = 0;
+	for (const [index, update] of history.updates.entries()) {
+		const additions = new Map(update.additions.map((tool) => [tool.name, tool]));
+		let reset = available.size === 0 && additions.size > 0;
+		for (const block of messages.get(update.messageId)) if (block.type === "tool-addition") {
+			const { deferLoading: _loading, ...tool } = additions.get(block.toolName);
+			available.set(tool.name, tool);
+		} else if (block.type === "tool-removal") {
+			reset = true;
+			available.delete(block.toolName);
 		}
-		/* v8 ignore next 2 -- closed-union exhaustiveness guard */
-		default: return assertNever(mode);
+		if (reset) {
+			baseline = [...available.values()];
+			retainedFrom = index + 1;
+		}
 	}
+	return retainedFrom === 0 ? history : {
+		tools: baseline,
+		updates: history.updates.slice(retainedFrom)
+	};
 }
 /**
 * Construct provider declarations from session-folded history without changing logged active tools.
 * Unsupported routes and incomplete history use current declarations without developer updates.
-* Explicitly deferred baseline tools become available only after their first retained addition.
+* Explicitly deferred declarations require an addition to activate them.
+* A rebuild makes previously activated declarations immediate; unactivated declarations stay deferred.
+* Addition-only routes rebuild when a tool is removed or tools are added to an empty set;
+* deferred declarations count as existing tools.
+* Later additions remain deferred and superseded tool blocks are omitted without dropping other content.
 * @param messages - complete request inputs, or the prefix selected for an auxiliary call.
 * @param tools - currently active tool schemas.
 * @param toolUpdate - the resolved route's update mode.
@@ -4531,14 +4621,16 @@ function projectToolUpdates(messages, tools, toolUpdate, history) {
 		messages: withoutDeveloperMessages(messages),
 		tools
 	};
-	const messageIds = new Set(messages.flatMap((message) => message.role === "developer" ? [message.id] : []));
-	if (history.updates.some((update) => !messageIds.has(update.messageId))) return {
+	const updates = new Map(messages.flatMap((message) => message.role === "developer" ? [[message.id, message.content]] : []));
+	if (history.updates.some((update) => !updates.has(update.messageId))) return {
 		messages: withoutDeveloperMessages(messages),
 		tools
 	};
-	const declarations = toolDeclarations(tools, toolUpdate, history);
+	const projectedHistory = toolUpdate === "addition-only" ? rebaseAdditionOnlyHistory(history, updates) : history;
+	const declarations = toolDeclarations(projectedHistory);
 	const updateIds = new Set(history.updates.map((update) => update.messageId));
-	const offered = new Set(history.tools.filter((tool) => !tool.deferLoading).map((tool) => tool.name));
+	const retainedUpdateIds = new Set(projectedHistory.updates.map((update) => update.messageId));
+	const offered = new Set(projectedHistory.tools.filter((tool) => !tool.deferLoading).map((tool) => tool.name));
 	const projectedMessages = [];
 	for (const message of messages) {
 		if (message.role !== "developer") {
@@ -4549,6 +4641,7 @@ function projectToolUpdates(messages, tools, toolUpdate, history) {
 		const content = message.content.filter((block) => {
 			switch (block.type) {
 				case "tool-addition":
+					if (!retainedUpdateIds.has(message.id)) return false;
 					if (!declarations.has(block.toolName) || offered.has(block.toolName)) return false;
 					offered.add(block.toolName);
 					return true;
@@ -4579,8 +4672,23 @@ function projectToolUpdates(messages, tools, toolUpdate, history) {
 * @module @deepseek-ai/dsh-llm/attribution
 */
 var { version: version$1 } = createRequire(import.meta.url)("../package.json");
+var PRODUCT = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+(?:\/[!#$%&'*+.^_`|~0-9A-Za-z-]+)?$/;
 /**
-* The harness's own identity: the default every adapter sends. Deployments
+* Read the launching application's `User-Agent` suffix on each use, so a launcher may set it after this module loads.
+* It is a process environment value rather than plugin `Config` because {@link attributionHeaders} runs without a
+* plugin context.
+* @returns the validated `DSH_USER_AGENT_SUFFIX`, or undefined when unset or empty.
+* @throws Error when the value is not an RFC 9110 product token.
+*/
+function launchSuffix() {
+	const value = process.env.DSH_USER_AGENT_SUFFIX;
+	if (value === void 0 || value === "") return void 0;
+	if (!PRODUCT.test(value)) throw new Error(`DSH_USER_AGENT_SUFFIX must be an RFC 9110 product token; got ${JSON.stringify(value)}`);
+	return value;
+}
+/**
+* The harness's own identity: the default every adapter sends. Its `suffix`
+* reads `DSH_USER_AGENT_SUFFIX`. Deployments
 * that need a white-label identity pass their own {@link AppIdentity} to
 * {@link attributionHeaders} — omission falls back to this default; nothing
 * can suppress attribution entirely.
@@ -4588,17 +4696,21 @@ var { version: version$1 } = createRequire(import.meta.url)("../package.json");
 var APP_IDENTITY = {
 	product: "deepseek-harness",
 	version: version$1,
-	url: "https://github.com/deepseek-ai/deepseek-harness"
+	url: "https://github.com/deepseek-ai/deepseek-harness",
+	get suffix() {
+		return launchSuffix();
+	}
 };
 /**
-* The standard `User-Agent` value: `product/version (+url)`. The
+* The standard `User-Agent` value: `product/version (+url)`, then ` suffix` when present. The
 * parenthesized `+url` comment is the conventional self-identification form
 * (RFC 9110 §10.1.5 product + comment syntax).
 * @param identity - the identity to render; defaults to {@link APP_IDENTITY}.
 * @returns the ready-to-send header value.
 */
 function userAgent(identity = APP_IDENTITY) {
-	return `${identity.product}/${identity.version} (+${identity.url})`;
+	const base = `${identity.product}/${identity.version} (+${identity.url})`;
+	return identity.suffix === void 0 ? base : `${base} ${identity.suffix}`;
 }
 /**
 * Build the attribution headers an adapter must send on every provider
@@ -4666,13 +4778,16 @@ var __esDecorate$1 = function(ctor, descriptorIn, decorators, contextIn, initial
 /**
 * Typed error for LLM-related failures. Extends {@link HarnessError}, so the
 * `code` string (e.g. `AUTH`, `RATE_LIMIT`, `NO_ADAPTER`) is shared taxonomy.
+* The constructor takes only a {@link BuiltinLlmFailureCode}; a failure from
+* another provider, whose code may be any string, is re-raised through
+* {@link LlmError.fromFailure}.
 */
-var LlmError = class extends HarnessError {
+var LlmError = class LlmError extends HarnessError {
 	/** Serializable facts retained beside this live Error. */
 	failure;
 	/**
 	* @param message - non-empty human-readable failure summary.
-	* @param code - non-empty stable provider-neutral machine code.
+	* @param code - built-in stable provider-neutral machine code.
 	* @param options - optional cause and validated serializable provider facts.
 	*/
 	constructor(message, code, options) {
@@ -4690,6 +4805,18 @@ var LlmError = class extends HarnessError {
 			...options?.providerRetryAfterMs === void 0 ? {} : { providerRetryAfterMs: options.providerRetryAfterMs },
 			...options?.requestId === void 0 ? {} : { requestId: options.requestId },
 			...options?.offloadImages === void 0 ? {} : { offloadImages: options.offloadImages }
+		});
+	}
+	/**
+	* Raise an observed failure again with its own code, which any provider may have chosen.
+	* @param failure - the serializable failure, typically from a stream's terminal chunk.
+	* @param options - optional cause.
+	* @returns an error carrying the failure's message, code, and provider facts.
+	*/
+	static fromFailure(failure, options) {
+		return new LlmError(failure.message, failure.code, {
+			...failure,
+			...options
 		});
 	}
 };
@@ -5458,7 +5585,7 @@ function detachDirectoryEntry(entry) {
 		} }
 	};
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-attachment_a16761552f03008cbfddc193e70995fe/node_modules/@deepseek-ai/dsh-attachment/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-attachment_469454f213c906f2dade56b9bfabee20/node_modules/@deepseek-ai/dsh-attachment/lib/index.js
 /** Attachment failure class. @module @deepseek-ai/dsh-attachment/error */
 var IMAGE_ADMISSION_ERROR_CODES = [
 	"TOO_MANY_IMAGES",
@@ -5524,7 +5651,7 @@ function requestImageDimensions(width, height, maxPixels) {
 		height: projectedHeight
 	};
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@_2694e9f0335493ff115c0ece4b665343/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@_f81370efe922f2e98e0083b062a5842d/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js
 /**
 * Durable pi-ai replay metadata and assistant-history reconstruction.
 *
@@ -5566,9 +5693,10 @@ function emptyPiUsage() {
 * removes one.
 * @param message - completed native pi-ai assistant response.
 * @param requestedModel - request identity stored in the assistant source; defaults to the native model.
+* @param prefixDigest - digest of the request context, recorded when the protocol binds thinking to it.
 * @returns the versioned lossless-JSON replay projection.
 */
-function toPiReplayState(message, requestedModel = message.model) {
+function toPiReplayState(message, requestedModel = message.model, prefixDigest) {
 	return {
 		response: {
 			kind: "pi-ai",
@@ -5579,7 +5707,8 @@ function toPiReplayState(message, requestedModel = message.model) {
 			...message.responseModel === void 0 ? {} : { responseModel: message.responseModel },
 			...message.responseId === void 0 ? {} : { responseId: message.responseId },
 			...message.providerThinkingLevel === void 0 ? {} : { providerThinkingLevel: message.providerThinkingLevel },
-			stopReason: message.stopReason
+			stopReason: message.stopReason,
+			...prefixDigest === void 0 ? {} : { prefixDigest }
 		},
 		blocks: message.content.map((block) => {
 			switch (block.type) {
@@ -5628,6 +5757,7 @@ function readReplayState(value) {
 	if (response["responseModel"] !== void 0 && typeof response["responseModel"] !== "string") return invalidReplay("responseModel must be a string");
 	if (response["responseId"] !== void 0 && typeof response["responseId"] !== "string") return invalidReplay("responseId must be a string");
 	if (response["providerThinkingLevel"] !== void 0 && typeof response["providerThinkingLevel"] !== "string") return invalidReplay("providerThinkingLevel must be a string");
+	if (response["prefixDigest"] !== void 0 && typeof response["prefixDigest"] !== "string") return invalidReplay("prefixDigest must be a string");
 	const blocks = envelope["blocks"];
 	if (!Array.isArray(blocks)) return invalidReplay("blocks must be an array");
 	for (const [index, value] of blocks.entries()) {
@@ -5690,12 +5820,12 @@ function foreignAssistant(message) {
 	};
 }
 /** Recombine durable Harness content with validated pi-ai replay metadata. */
-function replayedAssistant(message, source, rawState) {
+function replayedAssistant(message, source, rawState, prefixDigests) {
 	const state = readReplayState(rawState);
 	if (state.response.provider !== source.provider) return invalidReplay("provider does not match assistant source");
 	if (state.response.model !== source.model) return invalidReplay("model does not match assistant source");
 	if (state.blocks.length !== message.content.length) return invalidReplay("block count does not match assistant content");
-	return {
+	const assistant = {
 		role: "assistant",
 		content: message.content.map((block, index) => {
 			const replay = state.blocks[index];
@@ -5734,6 +5864,8 @@ function replayedAssistant(message, source, rawState) {
 		stopReason: state.response.stopReason,
 		timestamp: 0
 	};
+	if (state.response.prefixDigest !== void 0) prefixDigests?.set(assistant, state.response.prefixDigest);
+	return assistant;
 }
 /**
 * Convert one durable Harness assistant message into pi-ai history.
@@ -5746,13 +5878,14 @@ function replayedAssistant(message, source, rawState) {
 * @param message - model-produced assistant content with provider, model, and optional adapter-owned replay metadata.
 * @param onDegrade - called with the diagnostic reason when an unusable replay
 *   state falls back to provider-neutral conversion.
+* @param prefixDigests - receives the recorded request-prefix digest of the returned message, when replay state has one.
 * @returns a native pi-ai assistant message reconstructed from durable content.
 */
-function toPiAssistant(message, onDegrade) {
+function toPiAssistant(message, onDegrade, prefixDigests) {
 	const source = message.source;
 	if (source.replayState === void 0) return foreignAssistant(message);
 	try {
-		return replayedAssistant(message, source, source.replayState);
+		return replayedAssistant(message, source, source.replayState, prefixDigests);
 	} catch (error) {
 		/* v8 ignore next -- replayedAssistant throws only INVALID_REPLAY_STATE LlmErrors; the
 		guard keeps a future non-replay failure loud instead of silently degrading it */
@@ -5889,14 +6022,14 @@ function conversationUpdates(model) {
 var PROTOCOLS = {
 	"openai-completions": openAICompletionsApi,
 	"openai-responses": openAIResponsesApi,
-	"anthropic-messages": anthropicMessagesApi
+	"anthropic-messages": anthropicMessagesApi,
+	"google-generative-ai": googleGenerativeAIApi
 };
 /**
 * Every wire protocol a configured route may name, most-reached first. The
 * order is the table's and therefore stable; a configuration surface offering
 * a choice presents the first as its default, which is why the protocol a
-* hand-declared gateway most often speaks — and the one endpoint interrogation
-* can read — leads.
+* hand-declared gateway most often speaks leads.
 * @returns the supported protocol identifiers.
 */
 function supportedProtocols() {
@@ -6182,13 +6315,13 @@ function appendDeveloper(message, options, messages) {
 		...toolsRemoved.length === 0 ? {} : { toolsRemoved }
 	});
 }
-function appendAssistant(message, messages, toolNames, onReplayDegrade) {
-	const assistant = toPiAssistant(message, onReplayDegrade);
+function appendAssistant(message, messages, toolNames, onReplayDegrade, prefixDigests) {
+	const assistant = toPiAssistant(message, onReplayDegrade, prefixDigests);
 	for (const block of assistant.content) if (block.type === "toolCall") toolNames.set(brandString(block.id), block.name);
 	messages.push(assistant);
 }
 /** Append shared system, developer, and assistant roles; true when consumed. */
-function appendSharedHistory(message, options, messages, toolNames, supportsMidConvoSystemMessages, onReplayDegrade) {
+function appendSharedHistory(message, options, messages, toolNames, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests) {
 	if (message.role === "developer") {
 		appendDeveloper(message, options, messages);
 		return true;
@@ -6211,19 +6344,19 @@ function appendSharedHistory(message, options, messages, toolNames, supportsMidC
 		return true;
 	}
 	if (message.role === "assistant") {
-		appendAssistant(message, messages, toolNames, onReplayDegrade);
+		appendAssistant(message, messages, toolNames, onReplayDegrade, prefixDigests);
 		return true;
 	}
 	return false;
 }
-function textOnlyContext(options, supportsMidConvoSystemMessages, onReplayDegrade) {
+function textOnlyContext(options, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests) {
 	assertSupportedHistory(options.messages);
 	const split = splitSystemPrompt(options);
 	const toolNames = /* @__PURE__ */ new Map();
 	const messages = [];
 	for (const message of split.messages) {
 		if (contentHasImage(message.content)) throw new LlmError("pi-ai image conversion requires the durable attachment service", "UNSUPPORTED_CONTENT");
-		if (appendSharedHistory(message, options, messages, toolNames, supportsMidConvoSystemMessages, onReplayDegrade)) continue;
+		if (appendSharedHistory(message, options, messages, toolNames, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests)) continue;
 		if (message.role === "tool") {
 			messages.push(toolResultOf(message, toolNames, flattenText(message)));
 			continue;
@@ -6248,10 +6381,10 @@ function requestImageTarget(ref, budget) {
 		maxBytes: budget.maxBytes
 	};
 }
-function toPiContext(options, images, onReplayDegrade, supportsMidConvoSystemMessages = false) {
-	return images === void 0 ? textOnlyContext(options, supportsMidConvoSystemMessages, onReplayDegrade) : toPiContextWithImages(options, images, supportsMidConvoSystemMessages, onReplayDegrade);
+function toPiContext(options, images, onReplayDegrade, supportsMidConvoSystemMessages = false, prefixDigests) {
+	return images === void 0 ? textOnlyContext(options, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests) : toPiContextWithImages(options, images, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests);
 }
-async function toPiContextWithImages(options, images, supportsMidConvoSystemMessages, onReplayDegrade) {
+async function toPiContextWithImages(options, images, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests) {
 	const { attachments, resolveImageAccess, maxRequestImageBytes, maxRequestImages, imageOffloadCountQuantum } = images;
 	const requestImagePolicy = images.requestImagePolicy ?? {
 		maxPixels: 4194304,
@@ -6271,7 +6404,7 @@ async function toPiContextWithImages(options, images, supportsMidConvoSystemMess
 	const toolNames = /* @__PURE__ */ new Map();
 	const messages = [];
 	for (const message of exactMessages) {
-		if (appendSharedHistory(message, options, messages, toolNames, supportsMidConvoSystemMessages, onReplayDegrade)) continue;
+		if (appendSharedHistory(message, options, messages, toolNames, supportsMidConvoSystemMessages, onReplayDegrade, prefixDigests)) continue;
 		if (message.role === "tool") {
 			messages.push(toolResultOf(message, toolNames, userContent(message.content, requestImages, resolveImageAccess)));
 			continue;
@@ -6309,13 +6442,15 @@ function mapUsage(usage) {
 		...usage.cacheWrite > 0 ? { cacheWriteTokens: usage.cacheWrite } : {}
 	};
 }
+var LEADING_HTTP_STATUS = /^[45]\d\d\b/;
 function classifyPiAiError(message) {
-	if (/\b(?:401|403)\b/.test(message)) return "AUTH";
+	const statusSource = LEADING_HTTP_STATUS.exec(message)?.[0] ?? message;
+	if (/\b(?:401|403)\b/.test(statusSource)) return "AUTH";
 	if (isQuotaExceededError(message)) return QUOTA_EXCEEDED_CODE;
-	if (/\b429\b|rate.?limit/i.test(message)) return "RATE_LIMIT";
-	if (/\b413\b|failed to buffer the request body:\s*length limit exceeded|payload too large|request body too large/i.test(message)) return "INVALID_REQUEST";
-	if (/\b400\b|invalid.?request/i.test(message)) return "INVALID_REQUEST";
-	if (/\b5\d\d\b/.test(message)) return "SERVER";
+	if (/\b429\b/.test(statusSource) || /rate.?limit/i.test(message)) return "RATE_LIMIT";
+	if (/\b413\b/.test(statusSource) || /failed to buffer the request body:\s*length limit exceeded|payload too large|request body too large/i.test(message)) return "INVALID_REQUEST";
+	if (/\b400\b/.test(statusSource) || /invalid.?request/i.test(message)) return "INVALID_REQUEST";
+	if (/\b5\d\d\b/.test(statusSource)) return "SERVER";
 	if (/\btime(?:d)?\s*out\b|timeout/i.test(message)) return "TIMEOUT";
 	if (/stream ended (?:before|without)\b/i.test(message)) return "TRANSPORT";
 	if (/\b(?:network|connection|socket|fetch)\b|\bECONN[A-Z]+\b/i.test(message) || /\b(?:other side closed|HTTP2 request did not get a response|WebSocket closed unexpectedly)\b/i.test(message) || /\bterminated\b|premature close/i.test(message)) return "TRANSPORT";
@@ -6395,12 +6530,13 @@ function mapStopReason(message, contextWindow) {
 * @param callerSignal - caller cancellation state; an aborted caller makes any
 *   in-band terminal error an aborted finish.
 * @param requestedModel - request model identity recorded for durable replay.
+* @param prefixDigest - request-context digest recorded for durable replay.
 * @returns the harness chunks, ending with `usage` then `finish`; throws
 *   `LlmError` (`STREAM_CLOSED`) if the source ends without a terminal event, or
 *   `MALFORMED_RESPONSE` when completed tool arguments are invalid. Length-limited
 *   output retains its terminal reason so the assembler can discard incomplete calls.
 */
-async function* toStreamChunks(events, contextWindow, callerSignal, requestedModel) {
+async function* toStreamChunks(events, contextWindow, callerSignal, requestedModel, prefixDigest) {
 	const toolIds = /* @__PURE__ */ new Map();
 	let argumentsError;
 	for await (const event of events) switch (event.type) {
@@ -6504,7 +6640,7 @@ async function* toStreamChunks(events, contextWindow, callerSignal, requestedMod
 			yield {
 				type: "finish",
 				reason: mapStopReason(event.message, contextWindow),
-				replayState: toPiReplayState(event.message, requestedModel)
+				replayState: toPiReplayState(event.message, requestedModel, prefixDigest)
 			};
 			return;
 		case "error":
@@ -6522,6 +6658,101 @@ async function* toStreamChunks(events, contextWindow, callerSignal, requestedMod
 			return;
 	}
 	throw new LlmError("pi-ai event stream ended without done/error", "STREAM_CLOSED");
+}
+/**
+* Request-prefix binding for replayed Anthropic thinking.
+*
+* Anthropic can bind each signed thinking block to the request prefix it was
+* generated under: system prompt, tools, and every earlier message. Compaction
+* and tool-result pruning rewrite that prefix, so a retained signed block
+* becomes invalid and endpoints that enforce the check reject the whole
+* request. Each Anthropic Messages response records a digest of the context it
+* was generated from; a later request replays its signed thinking only while
+* the reconstructed prefix still has the same digest. Replay state without a
+* digest predates this check and is treated as stale.
+*
+* The digest covers the pi-ai context objects this package builds, including
+* fields Anthropic never receives. Any change to their construction
+* invalidates every recorded digest once; a pi-ai upgrade that changes how
+* Anthropic messages are serialized without changing those objects requires a
+* new {@link DIGEST_SEED}.
+*
+* @module dsh-llm-pi-ai/prefix-binding
+*/
+/** Wire protocol whose thinking signatures bind to the request prefix. */
+var PREFIX_BOUND_API = "anthropic-messages";
+/** Seed of every digest chain; changing the digest input or its serialization requires a new seed. */
+var DIGEST_SEED = "dsh-llm-pi-ai/prefix-binding/v1";
+function chain(previous, value) {
+	return createHash("sha256").update(previous).update("\0").update(JSON.stringify(value)).digest("hex");
+}
+/** Index of the assistant message whose tool round the request continues with tool results, or -1. */
+function openToolRoundAssistant(messages) {
+	let results = 0;
+	for (let index = messages.length - 1; index >= 0; index--) {
+		const message = messages[index];
+		if (message.role === "assistant") return results > 0 ? index : -1;
+		if (message.role !== "toolResult") return -1;
+		results++;
+	}
+	return -1;
+}
+/** Whether a thinking block carries a signature or redacted payload that binds it to its prefix. */
+function signed(block) {
+	return block.type === "thinking" && (block.redacted === true || (block.thinkingSignature ?? "").length > 0);
+}
+/** Copy of an assistant message without its signed thinking blocks. */
+function withoutSignedThinking(message) {
+	return {
+		...message,
+		content: message.content.filter((block) => !signed(block))
+	};
+}
+/**
+* Remove signed thinking from replayed Anthropic Messages assistant messages
+* whose request prefix changed since they were generated, or whose replay
+* state records no prefix digest. Manual thinking requires the final
+* assistant turn of a tool round to start with a thinking block, so with
+* `manualThinking` the assistant message whose tool round the request
+* continues keeps its thinking.
+* @param context - converted request context.
+* @param api - wire protocol of the requested model.
+* @param prefixDigests - recorded digests the context conversion collected.
+* @param manualThinking - whether the request enables budget-based rather than adaptive thinking.
+* @param onOmitted - called once with the number of messages whose thinking was removed, when there are any.
+* @returns the context to send and, for Anthropic Messages, its digest.
+*/
+function bindThinkingToPrefix(context, api, prefixDigests, manualThinking, onOmitted) {
+	if (api !== PREFIX_BOUND_API) return { context };
+	const kept = manualThinking ? openToolRoundAssistant(context.messages) : -1;
+	let digest = chain(DIGEST_SEED, {
+		systemPrompt: context.systemPrompt ?? null,
+		tools: context.tools ?? null
+	});
+	let messages;
+	let omitted = 0;
+	for (const [index, original] of context.messages.entries()) {
+		let message = original;
+		if (message.role === "assistant" && message.api === PREFIX_BOUND_API && index !== kept && prefixDigests.get(message) !== digest && message.content.some(signed)) {
+			message = withoutSignedThinking(message);
+			messages ??= context.messages.slice();
+			messages[index] = message;
+			omitted++;
+		}
+		digest = chain(digest, message);
+	}
+	if (messages === void 0) return {
+		context,
+		digest
+	};
+	onOmitted(omitted);
+	return {
+		context: {
+			...context,
+			messages
+		},
+		digest
+	};
 }
 /**
 * Generic pi-ai-backed implementation of the Harness LLM seam.
@@ -6853,7 +7084,8 @@ var PiAiAdapter = class extends LlmAdapter {
 						reason
 					});
 				};
-				const context = attachments === void 0 ? toPiContext(request, void 0, onReplayDegrade, updates.systemPromptUpdate === "in-history") : await toPiContext({
+				const prefixDigests = /* @__PURE__ */ new Map();
+				const converted = attachments === void 0 ? toPiContext(request, void 0, onReplayDegrade, updates.systemPromptUpdate === "in-history", prefixDigests) : await toPiContext({
 					...request,
 					signal: watchdog.signal
 				}, {
@@ -6866,7 +7098,15 @@ var PiAiAdapter = class extends LlmAdapter {
 						maxPixels: profile.requestImagePixelBudget,
 						maxBytes: profile.requestImageMaxBytes
 					}
-				}, onReplayDegrade, updates.systemPromptUpdate === "in-history");
+				}, onReplayDegrade, updates.systemPromptUpdate === "in-history", prefixDigests);
+				const manualThinking = model.reasoning && reasoning !== void 0 && reasoning !== "off" && model.compat?.forceAdaptiveThinking !== true;
+				const { context, digest } = bindThinkingToPrefix(converted, model.api, prefixDigests, manualThinking, (count) => {
+					this.config.onThinkingOmitted?.({
+						provider: options.provider,
+						model: options.model,
+						count
+					});
+				});
 				const iterator = toStreamChunks(snapshot.models.streamSimple(model, context, {
 					...profileOptions(profile, reasoning, apiKey),
 					...options.temperature === void 0 ? {} : { temperature: options.temperature },
@@ -6874,7 +7114,7 @@ var PiAiAdapter = class extends LlmAdapter {
 					...options.sessionId === void 0 ? {} : { sessionId: String(options.sessionId) },
 					signal: watchdog.signal,
 					headers: requestHeaders(profile.headers, options, model.baseUrl, this.config.prepareHeaders)
-				}), model.contextWindow, options.signal, model.id)[Symbol.asyncIterator]();
+				}), model.contextWindow, options.signal, model.id, digest)[Symbol.asyncIterator]();
 				let exhausted = false;
 				try {
 					while (true) {
@@ -6907,7 +7147,7 @@ var PiAiAdapter = class extends LlmAdapter {
 		}
 	}
 };
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-tools@0.2._c098da0f53c2b09814403419fbc9dd1d/node_modules/@deepseek-ai/dsh-tools/lib/shared-DTdn5dXO.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-tools@0.2._e7eb9e855e7069ea95142bcf0e0fb84f/node_modules/@deepseek-ai/dsh-tools/lib/shared-DGx6D7zk.js
 /** The selected provider is missing or unloaded; another provider must not take its calls. */
 var ToolExecutorUnavailableError = class extends HarnessError {
 	constructor() {
@@ -7443,7 +7683,7 @@ var ToolActivationError = class extends HarnessError {
 		this.name = "ToolActivationError";
 	}
 };
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-scope@0.2.2-rc.1_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-scope/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-scope@0.2.2-rc.3_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-scope/lib/index.js
 /**
 * Shared insertion-ordered storage and effect ownership for scope-aware registries.
 *
@@ -7695,7 +7935,7 @@ function scopeChainOf(key) {
 function scopeOf(ctx) {
 	return ctx[kScope];
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-tools@0.2._c098da0f53c2b09814403419fbc9dd1d/node_modules/@deepseek-ai/dsh-tools/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-tools@0.2._e7eb9e855e7069ea95142bcf0e0fb84f/node_modules/@deepseek-ai/dsh-tools/lib/index.js
 /** Unified JSON-value schema DSL, inference, compilation, and tool definition helpers. @module dsh-tools/schema */
 var ANNOTATION_KEYS = [
 	"description",
@@ -8330,12 +8570,12 @@ var ToolsService = class extends Service {
 	/**
 	* Check global and inherited guards after pre-execute policy and approval resolve.
 	* @param exec - invocation whose guards are checked before dispatch.
-	* @returns the first denial reason, or undefined when no guard denies.
+	* @returns the first denial with its optional structured identity, or undefined when no guard denies.
 	*/
 	checkGuards(exec) {
 		for (const layer of [this.guards.global, ...this.guards.chainLayers(exec.agent)]) for (const guard of layer.guards.values()) {
-			const reason = guard(exec);
-			if (reason !== void 0) return reason;
+			const denial = guard(exec);
+			if (denial !== void 0) return typeof denial === "string" ? { reason: denial } : denial;
 		}
 	}
 };
@@ -13569,8 +13809,8 @@ function superRefine(fn, params) {
 // node_modules/.cache/host-build/shared/constants/runtime.js
 var PackageId = "@kalex/dsh-openai-codex-provider";
 var ServiceKey = "openai-codex-provider";
-var RemoteNamespace = "openaiCodex";
 var ProviderRoute = "openai-codex";
+var RemoteNamespace = "openaiCodex";
 var CredentialRef = "PI_OAUTH_OPENAI_CODEX";
 var ResetStorageKey = "@kalex/dsh-openai-codex-provider.pending-reset";
 // node_modules/.cache/host-build/shared/remote.js
@@ -13723,6 +13963,7 @@ var descriptors = Object.freeze([
 	"useSystemProxy",
 	"consumeReset",
 	"saveModels",
+	"deleteAllData",
 	"reportUiError",
 	"reportUiReady"
 ].map(descriptor));
@@ -13943,7 +14184,7 @@ function systemOAuth(policy, operation, credential, interaction = {}, workers = 
 		};
 		const worker = new Worker(new URL(
 			/* @vite-ignore */
-			"/assets/system-proxy-worker-Dc6fsUhh.js",
+			"/assets/system-proxy-worker-s8v7MY6P.js",
 			"" + import.meta.url
 		), { workerData: data });
 		workers.add(worker);
@@ -14165,6 +14406,7 @@ var OpenAICodexRemoteService = (() => {
 	let _useSystemProxy_decorators;
 	let _consumeReset_decorators;
 	let _saveModels_decorators;
+	let _deleteAllData_decorators;
 	let _reportUiError_decorators;
 	let _reportUiReady_decorators;
 	return class OpenAICodexRemoteService extends _classSuper {
@@ -14177,6 +14419,7 @@ var OpenAICodexRemoteService = (() => {
 			_useSystemProxy_decorators = [Remote];
 			_consumeReset_decorators = [Remote];
 			_saveModels_decorators = [Remote];
+			_deleteAllData_decorators = [Remote];
 			_reportUiError_decorators = [Remote];
 			_reportUiReady_decorators = [Remote];
 			__esDecorate(this, null, _snapshot_decorators, {
@@ -14256,6 +14499,17 @@ var OpenAICodexRemoteService = (() => {
 				},
 				metadata: _metadata
 			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _deleteAllData_decorators, {
+				kind: "method",
+				name: "deleteAllData",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "deleteAllData" in obj,
+					get: (obj) => obj.deleteAllData
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
 			__esDecorate(this, null, _reportUiError_decorators, {
 				kind: "method",
 				name: "reportUiError",
@@ -14310,6 +14564,9 @@ var OpenAICodexRemoteService = (() => {
 		}
 		saveModels(models) {
 			return this.handlers.saveModels(models);
+		}
+		deleteAllData() {
+			return this.handlers.deleteAllData();
 		}
 		reportUiError(error) {
 			return this.handlers.reportUiError(error);
@@ -14536,8 +14793,14 @@ var Config = object({
 		enabled: boolean()
 	})).default([])
 }).prefault({});
-var PROVIDER = ProviderRoute;
 var OAUTH_REF = credentialRef(CredentialRef);
+var PROVIDER_ROUTE_SUFFIX_PATTERN = /^[a-z0-9]+$/i;
+/** Строит маршрут провайдера с суффиксом аккаунта, чтобы разные аккаунты не конфликтовали. */
+function buildProviderRoute(accountId) {
+	if (!accountId) return ProviderRoute;
+	const suffix = accountId.slice(-8);
+	return PROVIDER_ROUTE_SUFFIX_PATTERN.test(suffix) ? `${ProviderRoute}-${suffix.toLowerCase()}` : ProviderRoute;
+}
 var OAuthCredentialSchema = object({
 	type: literal("oauth"),
 	access: string().min(1),
@@ -14547,7 +14810,7 @@ var OAuthCredentialSchema = object({
 }).passthrough();
 var DEVICE_CODE_TIMEOUT_MS = 3e4;
 var REFRESH_LEEWAY_MS = 6e4;
-var USAGE_CACHE_MS = 6e4;
+var USAGE_CACHE_MS = 5e3;
 var PI_PROVIDER = createCodexProvider();
 var MODEL_CATALOG = PI_PROVIDER.getModels().map(({ id, name }) => ({
 	id,
@@ -14640,7 +14903,7 @@ function text(value) {
 		text: value
 	}];
 }
-function createPiAuth(ctx) {
+function createPiAuth(ctx, getRoute) {
 	let writes = Promise.resolve();
 	const serialize = (operation) => {
 		const result = writes.then(operation);
@@ -14660,16 +14923,16 @@ function createPiAuth(ctx) {
 	return {
 		credentials: {
 			async read(providerId) {
-				return providerId === PROVIDER ? read() : void 0;
+				return providerId === getRoute() ? read() : void 0;
 			},
 			async list() {
 				return await read() ? [{
-					providerId: PROVIDER,
+					providerId: getRoute(),
 					type: "oauth"
 				}] : [];
 			},
 			async modify(providerId, mutate) {
-				if (providerId !== PROVIDER) return void 0;
+				if (providerId !== getRoute()) return void 0;
 				return serialize(async () => {
 					const current = await read();
 					const next = await mutate(current);
@@ -14681,7 +14944,7 @@ function createPiAuth(ctx) {
 				});
 			},
 			async delete(providerId) {
-				if (providerId === PROVIDER) await serialize(async () => ctx.credentials.unset(OAUTH_REF));
+				if (providerId === getRoute()) await serialize(async () => ctx.credentials.unset(OAUTH_REF));
 			}
 		},
 		authContext: {
@@ -14750,8 +15013,9 @@ var OpenAICodexAuthService = class {
 				}
 			}
 		};
-		const profiles = () => /* @__PURE__ */ new Map([[PROVIDER, {
-			provider: PROVIDER,
+		let currentRoute = ProviderRoute;
+		const profiles = () => /* @__PURE__ */ new Map([[currentRoute, {
+			provider: currentRoute,
 			displayName: "OpenAI Codex",
 			reasoning: "medium",
 			streamIdleTimeoutMs: 3e5,
@@ -14801,7 +15065,7 @@ var OpenAICodexAuthService = class {
 		let usageFlight;
 		let usageGeneration = 0;
 		let settingsMutation = Promise.resolve();
-		const authInjection = createPiAuth(ctx);
+		const authInjection = createPiAuth(ctx, () => currentRoute);
 		const clearUsage = () => {
 			usageGeneration++;
 			Object.assign(state, {
@@ -14844,7 +15108,9 @@ var OpenAICodexAuthService = class {
 		const clearCredential = authInjection.clearCredential;
 		const validCredential = async () => {
 			const credential = await readCredential();
+			console.log("validCredential", credential);
 			if (!credential) return void 0;
+			applyRoute(credential.accountId);
 			if (Date.now() + REFRESH_LEEWAY_MS < credential.expires) return credential;
 			if (!refreshFlight) {
 				const revision = credentialRevision;
@@ -14954,7 +15220,15 @@ var OpenAICodexAuthService = class {
 			},
 			resolveAttachments: () => ctx.get("attachments")
 		});
-		ctx.llm.registerAdapter([PROVIDER], adapter);
+		const adapterRegistration = ctx.llm.registerAdapter([currentRoute], adapter);
+		const applyRoute = (accountId) => {
+			const nextRoute = buildProviderRoute(accountId);
+			console.log("applyRoute", nextRoute);
+			if (nextRoute === currentRoute) return;
+			currentRoute = nextRoute;
+			currentProfiles = profiles();
+			adapterRegistration.replace([currentRoute]);
+		};
 		const startFlow = () => {
 			flow?.controller.abort("new login requested");
 			const generation = ++flowGeneration;
@@ -15007,6 +15281,8 @@ var OpenAICodexAuthService = class {
 					state.status = "done";
 					state.loggedIn = true;
 					state.expiresAt = credential.expires;
+					console.log("startFlow", credential);
+					applyRoute(credential.accountId);
 					refreshUsage(true).catch(() => void 0);
 				} catch (error) {
 					const message = safeError(error instanceof Error ? error : String(error), "Unable to complete OpenAI Codex sign-in.");
@@ -15030,6 +15306,7 @@ var OpenAICodexAuthService = class {
 			flow = void 0;
 			await clearCredential();
 			clearUsage();
+			applyRoute(void 0);
 			Object.assign(state, {
 				status: "idle",
 				loggedIn: false,
@@ -15038,6 +15315,42 @@ var OpenAICodexAuthService = class {
 				expiresAt: 0,
 				error: ""
 			});
+		};
+		const deleteAllData = async () => {
+			const failures = [];
+			flowGeneration++;
+			credentialRevision++;
+			flow?.controller.abort("delete all data requested");
+			flow = void 0;
+			try {
+				await clearCredential();
+			} catch (error) {
+				failures.push(safeError(error instanceof Error ? error : void 0, "Failed to delete the stored account."));
+			}
+			try {
+				const editor = ctx.get("configEditor");
+				const entry = editor?.entries().find((row) => row.options.name === PackageId);
+				if (editor && entry) await editor.edit(entry, () => ({
+					proxyMode: "host",
+					disabledModels: [],
+					modelSettings: []
+				}));
+			} catch (error) {
+				failures.push(safeError(error instanceof Error ? error : void 0, "Failed to reset the plugin settings."));
+			}
+			settings = initialModelSettings([], []);
+			currentProfiles = profiles();
+			clearUsage();
+			applyRoute(void 0);
+			Object.assign(state, {
+				status: "idle",
+				loggedIn: false,
+				deviceCode: "",
+				verificationUri: "",
+				expiresAt: 0,
+				error: ""
+			});
+			if (failures.length > 0) throw new Error(failures.join(" "));
 		};
 		const saveModels = (models) => {
 			const change = settingsMutation.catch(() => void 0).then(async () => {
@@ -15101,6 +15414,10 @@ var OpenAICodexAuthService = class {
 			async logout() {
 				await logout();
 				return getSnapshot(false);
+			},
+			async deleteAllData() {
+				await deleteAllData();
+				return snapshot();
 			},
 			async followHostProxy() {
 				await selectProxy("host");

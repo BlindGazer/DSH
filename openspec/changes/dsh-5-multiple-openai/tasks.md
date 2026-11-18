@@ -1,66 +1,66 @@
 # Tasks
 
-## Границы выполнения
+## Execution rules
 
-Это полный пересмотр прежних семи незавершенных задач. Порядок соответствует зависимостям; каждый пункт включает реализацию или проверяемый технический результат и свою проверку. Код пока не реализован, все пункты остаются открытыми.
+- Complex work is owned by lead agent `mwscode/personal/336/gpt-6.1-sol`.
+- Simple isolated work may be delegated to `mwscode/personal/336/gpt-6-luna`, maximum one parallel child at high reasoning.
+- UI, modal styles, documentation, and focused tests may be delegated to `openai-codex/gpt-6-luna`, maximum three parallel children at medium or high reasoning.
+- Lead reviews every delegated change, integrates conflicts, and runs the final checks.
+- Use synthetic OAuth/network data only. Do not use real secrets.
+- Close each checked task only after implementation and verification; update memory and commit according to project rules.
 
-- Выполнять только dsh-5. Реализация dsh-6, ее будущий контракт и независимые профили прокси для общих доменов не входят в задачи и не блокируют завершение.
-- Не менять прокси-плагин и read-only установку DSH ради выполнения этих задач.
-- Для проверки использовать синтетические данные и подмену OAuth/сети, без реального входа пользователя и расходования кредитов.
-- После реализации и проверки каждого пункта сразу отметить его выполненным, обновить журнал изменения и выполнить коммит через навык commit по правилам проекта. Не отмечать пункт только по написанному коду.
-- Если проверка SDK выявляет реальное препятствие, сообщить конкретный отсутствующий контракт, не подменять поведение и не придумывать API dsh-6.
+## 1. Package rename first
 
-## 1. Проверка интеграционных контрактов
+- [ ] 1.1 Rename `packages/dsh-openai-codex-provider` to `packages/dsh-openai-hub`, update package name to `@kalex/dsh-openai-hub`, and update manifests, patch references, imports, Remote symbols, tests, docs, and generated build inputs. Verify no old package reference remains except an explicit release note.
+- [ ] 1.2 Build the renamed package and run its focused tests. Verify installation metadata and generated paths use the new package name.
 
-- [ ] 1.1 Проверить на установленных SDK два независимых маршрута одной реализации Codex, обновление их имен/каталога, разрешение учетных данных, подписку на выбранный провайдер текущей беседы и формат ключей Credential Store. Добавить минимальные проверки контрактов и записать найденные API и версии в документации пакета; завершение подтверждается проходящими проверками без OAuth и отсутствием неподтвержденных вызовов SDK. Проверка не требует реализации dsh-6.
+## 2. OpenAI Hub host foundation
 
-## 2. Реестр аккаунтов и миграция
+- [ ] 2.1 Replace `ServiceKey` and `ProviderRoute` with `openai-hub`, keep `RemoteNamespace = openaiHub`, and remove dynamic route replacement. Verify `llm.listProviders()` reports one route and no `openai-codex` route.
+- [ ] 2.2 Add account configuration schema with `accounts[]`, lowercase ASCII labels, `authMethod`, hashed credential key, per-account model settings, and persisted quota auto-refresh disabled by default. Verify config editor writes only account settings and no secrets.
+- [ ] 2.3 Add credential resolver boundary using `openai-hub-<authMethod>-<8-hex-hash(accountId)>`; keep current one-account operation while allowing a later second record without route changes. Verify credentials never appear in snapshots, errors, logs, or client responses.
 
-- [ ] 2.1 В shared и host ввести проверяемые записи с неизменяемым `providerId`, новым для каждого создания `instanceId`, отображаемым именем и настройками моделей; реализовать сохранение реестра через настройки DSH с общей очередью изменений и ревизиями. Проверить создание, недопустимые/занятые идентификаторы, одинаковые имена, конкурентное создание и сохранение двух записей, отказ записи и восстановление после перезапуска; описать схему хранения без секретов.
-- [ ] 2.2 Реализовать переименование и устойчивое к сбоям удаление записи с подтверждением, очисткой собственного Credential Store и возможностью повторить незавершенную очистку; предусмотреть освобождение маршрута только после успеха. Проверить неизменность идентификатора при переименовании, отказ очистки, повтор после перезапуска, отсутствие влияния на соседей и повторное создание с новым экземпляром и пустой авторизацией; описать семантику удаления.
-- [ ] 2.3 Удалить автоматическое создание старой записи и реализовать повторяемую миграцию старого ключа авторизации и настроек, не затрагивающую новые записи; подготовить очистку старого клиентского ключа незавершенного сброса. Проверить свежую установку, старую установку, частичный сбой, повторный запуск и сохранность новых аккаунтов; обновить инструкцию миграции и ограничения отката.
+## 3. Dynamic catalog and model routing
 
-## 3. Авторизация и действия аккаунта
+- [ ] 3.1 Implement authenticated API catalog loading after login and manual refresh. Reconcile per-account models while preserving valid names/order/enabled state, adding new models, and removing unavailable models. Verify with synthetic Sol/Astra 6.2 responses.
+- [ ] 3.2 Expose one combined model list under `openai-hub` with provider group `OpenAI Hub`, IDs `<accountLabel>/<upstreamModelId>`, and model names `<accountLabel>/<upstreamModelId>`. Verify adapter requests unwrap the public ID before upstream calls and DSH subagent presentation may add `openai-hub/` externally.
+- [ ] 3.3 Preserve the last successful catalog on API errors; before the first successful catalog use local `pi-ai.getModels()`. Verify error state is visible without losing usable prior models.
 
-- [ ] 3.1 Выделить из host/index.ts контроллер аккаунта и привязать чтение/запись credentials, вход, выход и обновление токена к экземпляру; сохранить проверки доверенной ссылки, отмену и защиту поколений. Проверить два одновременных входа, обновления токенов, выход во время обновления, ошибку одного аккаунта и запоздавший ответ после удаления/повторного создания; документировать границы состояния.
-- [ ] 3.2 Изолировать загрузку лимитов, кеш, карточки сброса, подтверждения и незавершенные операции по экземпляру и авторизации, включая клиентское сохранение идентификатора повторной проверки. Проверить запросы с правильными credentials, подтверждение расходования, неопределенный результат без автоматического повтора и смену/удаление аккаунта до завершения; актуализировать описание поведения ошибок и кредитов.
-- [ ] 3.3 Обновить инструменты codex_login/codex_logout с обязательным providerId и codex_status с необязательным providerId и списком при отсутствии аргумента. Проверить пустой список, список двух аккаунтов, единственный аккаунт без автоматического выбора, неизвестный идентификатор, обновление состояния выбранного аккаунта и отсутствие токенов в ответах; обновить описание и примеры инструментов.
+## 4. Account settings and quota UI
 
-## 4. Регистрация моделей и обычное подключение DSH
+- [ ] 4.1 Render one account information block and one model modal per account in Settings -> Models. Verify two synthetic accounts render sequentially and each modal operates only on its account.
+- [ ] 4.2 Add account label input before OAuth and label editing in the account block. Verify validation, duplicate handling, public ID rebuild, credential stability, and stale history behavior.
+- [ ] 4.3 Add persisted per-account auto-refresh switch, disabled by default. Verify normal five-minute polling, one-minute polling when the selected model's nearest-reset limit is below 25 percent, and priority of hourly then five-hour then daily limits.
+- [ ] 4.4 Pause quota network requests while the page is hidden using browser visibility APIs and refresh once on return. Verify hidden state makes no requests and visible transition refreshes only the relevant account.
+- [ ] 4.5 Connect chat status bar to the selected conversation provider/model. Verify it shows only the selected OpenAI Hub account's limits and hides for other providers or stale data.
 
-- [ ] 4.1 Зарегистрировать отдельный адаптер/профиль для каждой записи с ее учетными данными и отображаемым именем; подключить обновление при создании, переименовании и настройке моделей, снятие при удалении и выгрузке. Проверить два маршрута одной модели, параллельные запросы с разными credentials, отсутствие входа без подмены аккаунта, уровни рассуждения, вложения, порядок моделей и запрет отключения последней модели; не изменять отправляемый OpenAI идентификатор модели.
-- [ ] 4.2 Проверить совместно реестр и каталог: сохраненные беседы с удаленным/старым маршрутом не перенаправляются, повторное создание маршрута относится к новому экземпляру, список провайдеров отдает актуальные имена и идентификаторы для существующего обнаружения прокси-плагина. Добавить интеграционные проверки создания/переименования/удаления без перезапуска и обновить описание совместимости; не трактовать наличие строки как независимый сетевой маршрут.
-- [ ] 4.3 Удалить собственный режим системного прокси, его host/remote-переключатели и специализированный worker/transport после проверки ссылок, сохранив сетевое поведение прежнего режима DSH для OAuth, обновления токена, запросов моделей, лимитов и кредитов. Проверить все эти пути с подменой транспорта, отсутствие собственной настройки глобального прокси и обязательной зависимости от прокси-плагина; описать текущие ограничения общих доменов. Не создавать API или заглушки dsh-6.
+## 5. Account deletion and fresh-install state
 
-## 5. Контракт и интерфейс нескольких аккаунтов
+- [ ] 5.1 Delete all plugin-owned Credential Store/configuration/model data for one account without rewriting history; mark old model references stale. Verify neighboring accounts remain unchanged.
+- [ ] 5.2 Delete the last account and reset to fresh-install state with no account settings/models and the initial add-account UI. Verify no old credential or client cache remains.
 
-- [ ] 5.1 Согласованно обновить схемы shared/remote.ts, дескрипторы, remote-service.ts и клиентский контракт: список, создание, переименование, подтвержденное удаление и операции выбранной записи с проверкой экземпляра. Проверить валидацию на хосте, неизвестные/устаревшие записи, отказ сохранения и отсутствие секретов; описать входы, ответы и ошибки контракта в документации пакета.
-- [ ] 5.2 Заменить общее клиентское состояние состояниями записей и защитить его от запоздавших ответов; подключить список и карточки в settings.models.footer, кнопку добавления после списка и форму суффикса/имени с полным идентификатором. Проверить пустую секцию, отмену, ошибки, конкурентное создание, одинаковые имена и несколько карточек; добавить строки русского/английского языков и тесты доступности формы.
-- [ ] 5.3 Подключить отдельное модальное окно записи: существующую авторизацию, модели, лимиты, кредиты, переименование и подтвержденное удаление с предупреждением о повторном использовании идентификатора. Убрать системный прокси из UI, показать пояснение миграции, обеспечить управление фокусом и клавиатурой. Проверить независимость двух карточек, ошибку/отмену удаления, переименование, устаревшее окно после повторного создания, очистку старого ключа сброса и отсутствие нового селектора профиля прокси; обновить пользовательскую инструкцию.
-- [ ] 5.4 Подключить индикатор квоты к выбранному провайдеру текущей беседы через API, проверенный в 1.1, а не к открытой карточке. Проверить смену модели и беседы, скрытие для других/удаленных провайдеров, отсутствие входа, ошибку данных и запоздавший ответ предыдущего аккаунта; отразить поведение индикатора в инструкции.
+## 6. Independent bug fixes
 
-## 6. Итоговые проверки и передача
+- [ ] 6.1 Trace Core Modal portal/theme ownership and fix `dsh-modal-card` backgrounds in OpenAI Hub and workspace-manager using theme tokens. Verify all affected modals in light/dark themes, including workspace `addir-modal` usage.
+- [ ] 6.2 Remove credential-bearing debug logs and all OpenAI Hub-owned `ProxyMode`/system-proxy UI, handlers, workers, and transports. Verify no OAuth object is logged, OpenAI Hub contains no proxy mechanism, and other packages are unchanged.
 
-- [ ] 6.1 Выполнить автоматизированный интеграционный сценарий на синтетических свежей и обновляемой конфигурациях: два аккаунта, параллельный вход, запросы, настройки, переименование, выход, удаление, повторное создание и перезапуск. Проверить изоляцию, миграцию, отсутствие токенов в клиентских ответах/ошибках и отсутствие скрытого выбора аккаунта; сохранить результаты без реальных секретов. Ручной вход пользователя не требуется.
-- [ ] 6.2 Выполнить `pnpm fix`, `pnpm check`, `pnpm --filter @kalex/dsh-openai-codex-provider run check` и проверки затронутых общих пакетов, если они изменялись. Устранить проблемы, повторить затронутые проверки и записать фактические результаты тестов, сборки и verify; не считать недоступную или неуспешную проверку пройденной.
-- [ ] 6.3 Провести итоговое ревью реализации по всей спецификации, включая гонки удаления/повторного создания, безопасность учетных данных, регистрацию маршрутов, доступность UI, упаковку после удаления системного прокси и соблюдение границы dsh-6. Исправить замечания, повторить затронутые проверки и ревью до отсутствия незакрытых существенных замечаний; сохранить краткий отчет и оставшиеся ограничения.
-- [ ] 6.4 Подготовить финальную инструкцию установки/обновления собранного пакета и чек-лист ручной приемки в документации пакета; проверить полноту сопоставлением с приведенным ниже списком и корректность ссылок/команд по артефактам сборки. Передать пользователю результаты проверок и явно отметить, что реальная авторизация и ручная приемка еще не выполнялись. Не ждать ручной приемки для закрытия этого пункта.
+## 7. Tests and documentation per slice
 
-## Ручная приемка после завершения задач агента
+- [ ] 7.1 Add focused shared/host integration tests for route registration, account labels, credential resolution, catalog reconciliation, fallback, model ID unwrapping, deletion, and stale operations. Verify tests use synthetic data.
+- [ ] 7.2 Add focused Client tests for account blocks, modal isolation, refresh switch/timers, visibility pause, selected-model status limits, and modal backgrounds. Verify accessibility and localized states.
+- [ ] 7.3 Update package README/docs and `docs/Workflow.md` with the final names, flow diagrams, storage rules, reinstall requirement, API/fallback behavior, quota policy, and known limitations. Verify links and examples use `@kalex/dsh-openai-hub`.
 
-Это действия пользователя, не чекбоксы реализации и не условия закрытия задач 1.1-6.4. Агент готовит инструкцию, но не отмечает эти действия выполненными за пользователя.
+## 8. Integration review and handoff
 
-- Установить финальную сборку и обновить интерфейс по инструкции; проверить пустую секцию или уведомление о миграции и отсутствие автоматического аккаунта.
-- Создать work/home с разными именами, проверить неизменяемые идентификаторы и отображение в Models и выборе моделей беседы.
-- Авторизовать два нужных аккаунта через браузер, проверяя, какой аккаунт подтверждает каждый код; отправить сообщения через обе записи.
-- Проверить независимые настройки моделей, лимиты выбранной модели и переключение между беседами.
-- Проверить сохранение после перезапуска, переименование, выход из одного аккаунта без изменения второго.
-- Проверить отмену и подтверждение удаления, сохранение истории и повторное создание того же идентификатора без старой авторизации.
-- Проверить ручной выбор новой модели в старой беседе с удаленным автоматическим маршрутом.
-- Проверить отдельные актуальные записи в существующем окне прокси. Не проверять и не ожидать независимые профили прокси для общего домена: это следующая итерация.
-- Проверить отображение и подтверждение операций с кредитами; реальное расходование выполнять только по отдельному осознанному решению пользователя.
+- [ ] 8.1 Lead performs a full source/history audit against every requirement and reports missing or contradictory changes. Verify no old architecture remains in source or docs.
+- [ ] 8.2 Run package tests, `pnpm fix`, `pnpm check`, and `pnpm build`; repeat affected tests after fixes and record failures or limitations. Do not claim unavailable checks passed.
+- [ ] 8.3 Prepare manual uninstall-old/install-new instructions and acceptance checklist. Verify generated artifacts and links; manual real-account acceptance remains a user step.
+
+## Specification reference
+
+Capability requirements: `specs/openai-hub/spec.md`.
 
 ## Workflow follow-up
 
-- Полноценную маршрутизацию по провайдеру и ее Codex-интеграцию выполнять позднее в рамках согласованной документации dsh-6, не возвращая ее в текущие задачи.
-- Архивирование изменения выполнять отдельно по запросу пользователя после принятия результата.
+- Archive the change only after implementation, review, and user acceptance of the delivered plan.
+- Independent proxy routing remains deferred to dsh-6.

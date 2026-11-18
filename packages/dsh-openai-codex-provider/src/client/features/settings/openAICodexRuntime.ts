@@ -20,6 +20,7 @@ export interface OpenAICodexRemote {
     useSystemProxy(): Promise<OpenAICodexSnapshot>;
     consumeReset(input: ResetRequest): Promise<OpenAICodexSnapshot>;
     saveModels(models: ModelSettings): Promise<OpenAICodexSnapshot>;
+    deleteAllData(): Promise<OpenAICodexSnapshot>;
     reportUiError(error: UiRenderError): Promise<true>;
     reportUiReady(componentId: UiComponentId): Promise<true>;
 }
@@ -113,6 +114,9 @@ export class OpenAICodexController {
     }
     saveModels(models: ModelSettings): Promise<OpenAICodexSnapshot> {
         return this.act(() => this.remote.saveModels(models));
+    }
+    deleteAllData(): Promise<OpenAICodexSnapshot> {
+        return this.act(() => this.remote.deleteAllData());
     }
     consumeReset(input: ResetRequest): Promise<OpenAICodexSnapshot> {
         return this.act(() => this.remote.consumeReset(input));

@@ -3,7 +3,9 @@ import proxyStyles from './proxyStyles.module.scss';
 import proxyStyleText from './proxyStyles.module.scss?inline';
 
 export const PROXY_STYLE_ID = '@kalex/dsh-proxy-provider/styles';
-export const proxyScopeClass = proxyStyles.scope;
+export function proxyClasses(...classNames: string[]): string {
+    return classNames.map(className => proxyStyles[className]).join(' ');
+}
 
 let themeChangesSubscribed = false;
 

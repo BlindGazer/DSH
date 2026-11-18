@@ -127,6 +127,16 @@ export function CodexSettingsPanel({ controller, locale, text, hideHeading = fal
                 ) : undefined}
             </div>
 
+            <section className={styles.dangerZone} aria-labelledby="codex-delete-all-title">
+                <h3 id="codex-delete-all-title">{text('deleteAllData')}</h3>
+                <p>{text('deleteAllConfirm')}</p>
+                <div data-testid={TestId.OpenAICodex.DeleteAllData}>
+                    <Button variant="danger" disabled={codex.busy} onClick={panel.beginDeleteAll}>
+                        {text('deleteAllData')}
+                    </Button>
+                </div>
+            </section>
+
             {panel.actionError && !panel.editOpen && panel.resetCard === undefined ? (
                 <p role="alert" className={styles.error}>
                     {panel.actionError}
@@ -300,6 +310,36 @@ export function CodexSettingsPanel({ controller, locale, text, hideHeading = fal
                                 </Button>
                             </div>
                             <Button disabled={codex.busy} onClick={panel.closeReset}>
+                                {text('cancel')}
+                            </Button>
+                        </div>
+                    </div>
+                </div>
+            </Modal>
+
+            <Modal
+                open={panel.deleteAllOpen}
+                onClose={panel.closeDeleteAll}
+                title={text('deleteAllConfirmTitle')}
+                closeLabel={text('close')}
+                {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
+                <div className={styles.modalLayout}>
+                    <div data-testid={TestId.OpenAICodex.ModalScrollBody} className={styles.modalBody}>
+                        <p>{text('deleteAllConfirm')}</p>
+                        {panel.actionError ? (
+                            <p role="alert" className={styles.error}>
+                                {panel.actionError}
+                            </p>
+                        ) : undefined}
+                    </div>
+                    <div data-testid={TestId.OpenAICodex.ModalFooter} className={styles.modalFooter}>
+                        <div className={styles.actions}>
+                            <div data-testid={TestId.OpenAICodex.ConfirmDeleteAll}>
+                                <Button variant="danger" disabled={codex.busy} onClick={() => void panel.deleteAllData()}>
+                                    {codex.busy ? text('deleteAllBusy') : text('deleteAllData')}
+                                </Button>
+                            </div>
+                            <Button disabled={codex.busy} onClick={panel.closeDeleteAll}>
                                 {text('cancel')}
                             </Button>
                         </div>

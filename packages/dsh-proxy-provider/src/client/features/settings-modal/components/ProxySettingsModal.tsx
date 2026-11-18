@@ -1,7 +1,7 @@
 import { useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect, useState } from 'react';
 import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { proxyScopeClass } from '../../../app/proxyStyles.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 import { ImportExportSection } from '../../import-export/components/ImportExportSection.js';
 import { useImportExportHandlers } from '../../import-export/hooks/useImportExportHandlers.js';
 import { ProfilesSection } from '../../profiles/components/ProfilesSection.js';
@@ -35,16 +35,16 @@ export function ProxySettingsModal({ open, onClose }: ProxySettingsModalProps) {
     if (!open) return undefined;
 
     return (
-        <div className={`kpp-modal-backdrop ${proxyScopeClass}`} data-theme={effectiveTheme}>
-            <div className="kpp-modal" role="dialog" aria-modal="true" aria-label={tProxy('Proxy settings')}>
-                <div className="kpp-modal-header">
-                    <h2 className="kpp-modal-title">{tProxy('Proxy settings')}</h2>
+        <div className={`dsh-core-root ${proxyClasses('modalBackdrop')}`} data-theme={effectiveTheme}>
+            <div className={proxyClasses('modal')} role="dialog" aria-modal="true" aria-label={tProxy('Proxy settings')}>
+                <div className={proxyClasses('modalHeader')}>
+                    <h2 className={proxyClasses('modalTitle')}>{tProxy('Proxy settings')}</h2>
                     <ImportExportSection placement="header" {...importExport} />
-                    <button type="button" className="kpp-btn kpp-btn-sm" onClick={onClose}>
+                    <button type="button" className={proxyClasses('button', 'buttonSmall')} onClick={onClose}>
                         {tProxy('Close')}
                     </button>
                 </div>
-                <div className="kpp-modal-body">
+                <div className={proxyClasses('modalBody')}>
                     <ImportExportSection placement="body" snap={snap} {...importExport} />
                     <ProfilesSection {...profileActions} />
                     <RoutingSection

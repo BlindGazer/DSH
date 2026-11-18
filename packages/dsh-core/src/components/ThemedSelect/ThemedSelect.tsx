@@ -99,18 +99,11 @@ export function ThemedSelect<TValue extends string = string>({
             ref={el => {
                 rootRef.current = el ?? undefined;
             }}
-            className={cx(
-                coreStyleScopeClass,
-                'dsh-select',
-                'ar-themed-select',
-                'kpp-dropdown',
-                fullWidth && 'dsh-select-full kpp-dropdown-full',
-                className
-            )}>
+            className={cx(coreStyleScopeClass, 'dsh-select', 'ar-themed-select', fullWidth && 'dsh-select-full', className)}>
             <button
                 type="button"
                 data-testid={TestId.Common.SelectTrigger}
-                className={cx('dsh-select-trigger', 'ar-themed-select-trigger', 'kpp-dropdown-trigger', triggerClassName)}
+                className={cx('dsh-select-trigger', 'ar-themed-select-trigger', triggerClassName)}
                 aria-label={ariaLabel}
                 aria-haspopup="listbox"
                 aria-expanded={open}
@@ -141,7 +134,7 @@ export function ThemedSelect<TValue extends string = string>({
                     role="listbox"
                     aria-label={ariaLabel}
                     data-testid={TestId.Common.SelectMenu}
-                    className={cx('dsh-select-menu', 'ar-themed-select-menu', 'kpp-dropdown-menu', menuClassName)}>
+                    className={cx('dsh-select-menu', 'ar-themed-select-menu', menuClassName)}>
                     {options.map((option, index) => {
                         const isSelected = index === selectedIndex;
                         const isActive = index === activeIndex;
@@ -153,12 +146,7 @@ export function ThemedSelect<TValue extends string = string>({
                                 data-testid={TestId.Common.SelectOption}
                                 aria-selected={isSelected}
                                 disabled={option.disabled}
-                                className={cx(
-                                    'dsh-select-option',
-                                    'kpp-dropdown-item',
-                                    (isActive || isSelected) && 'active kpp-dropdown-item-active',
-                                    optionClassName
-                                )}
+                                className={cx('dsh-select-option', (isActive || isSelected) && 'active', optionClassName)}
                                 onMouseEnter={() => setActiveIndex(index)}
                                 onClick={() => {
                                     if (!option.disabled) {

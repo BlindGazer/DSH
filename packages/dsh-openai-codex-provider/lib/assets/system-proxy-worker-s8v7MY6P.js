@@ -1,11 +1,11 @@
-import { r as createProvider, s as lazyApi } from "./models-sDLtPI5i.js";
+import { r as createProvider, s as lazyApi } from "./models-W2vgk9gV.js";
 import { parentPort, workerData } from "node:worker_threads";
 import "node:child_process";
 import "node:util";
 import { Agent, ProxyAgent, fetch } from "undici";
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/api/openai-codex-responses.lazy.js
-const openAICodexResponsesApi = () => lazyApi(() => import("./openai-codex-responses-CZZ3SQUo.js"));
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/auth/helpers.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/api/openai-codex-responses.lazy.js
+const openAICodexResponsesApi = () => lazyApi(() => import("./openai-codex-responses-DwOP2EMq.js"));
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/auth/helpers.js
 /**
 * Wraps a dynamically imported `OAuthAuth` so provider definitions can
 * advertise OAuth without importing the implementation. The flow loads on
@@ -28,7 +28,7 @@ function lazyOAuth(input) {
 		toAuth: async (credential) => (await loaded()).toAuth(credential)
 	};
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/auth/oauth/load.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/auth/oauth/load.js
 var __rewriteRelativeImportExtension = function(path, preserveJsx) {
 	if (typeof path === "string" && /^\.\.?\//.test(path)) return path.replace(/\.(tsx)$|((?:\.d)?)((?:\.[^./]+?)?)\.([cm]?)ts$/i, function(m, tsx, d, ext, cm) {
 		return tsx ? preserveJsx ? ".jsx" : ".js" : d && (!ext || !cm) ? m : d + ext + "." + cm.toLowerCase() + "js";
@@ -47,7 +47,7 @@ const importOAuthModule = (specifier) => {
 const loadOpenAICodexOAuth = async () => {
 	return (await importOAuthModule("./openai-codex.ts")).openaiCodexOAuth;
 };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/data/openai-codex.json
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/providers/data/openai-codex.json
 var openai_codex_default = { "openai-codex-responses": {
 	"chat:gpt-5.6-luna": {
 		"id": "gpt-5.6-luna",
@@ -360,7 +360,7 @@ var openai_codex_default = { "openai-codex-responses": {
 		"type": "chat"
 	}
 } };
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/model-catalog.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/model-catalog.js
 function flattenModelCatalog(groups, type) {
 	return Object.fromEntries(Object.values(groups).flatMap((models) => Object.values(models)).filter((model) => model.type === type).map((model) => [model.id, model]));
 }
@@ -373,11 +373,11 @@ function flattenImageModelCatalog(_provider, groups) {
 function flattenClassifierModelCatalog(_provider, groups) {
 	return flattenModelCatalog(groups, "classifier");
 }
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.models.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.models.js
 const OPENAI_CODEX_MODELS = flattenChatModelCatalog("openai-codex", openai_codex_default);
 flattenImageModelCatalog("openai-codex", openai_codex_default);
 flattenClassifierModelCatalog("openai-codex", openai_codex_default);
-// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_439767bf782aba52419e2a290c6eda93/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.js
+// ../../node_modules/.pnpm/@earendil-works+pi-ai@1.4.0_7b6c1d8d2a0c3a430ab97bbc10eb5acb/node_modules/@earendil-works/pi-ai/dist/providers/openai-codex.js
 function openaiCodexProvider() {
 	return createProvider({
 		id: "openai-codex",

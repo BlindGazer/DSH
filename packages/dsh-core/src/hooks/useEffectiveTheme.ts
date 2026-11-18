@@ -13,8 +13,7 @@ interface RefLike {
     readonly current: Element | null;
 }
 
-const DEFAULT_IGNORED_ROOT_SELECTOR =
-    '.dsh-core-root, .ar-root, .ar-settings-root, .kpp-root, .kpp-card-bar, .kpp-footer-row, .kpp-modal-backdrop, .kpp-locale-settings';
+const DEFAULT_IGNORED_ROOT_SELECTOR = '.dsh-core-root, .ar-root, .ar-settings-root';
 
 function parseRgb(value: string): RgbColor | undefined {
     const match = /rgba?\((\d+)\D+(\d+)\D+(\d+)(?:\D+([\d.]+))?\)/i.exec(value);

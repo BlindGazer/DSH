@@ -1,6 +1,7 @@
 .scope {
     --dsh-style-scope: 1;
 }
+// Глобальные классы являются DOM-точками входа общих настроек, назначаемыми хостом.
 :global {
     .ar-settings-jump {
         display: inline-flex;

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import type { ModelChoice, OpenAICodexSnapshot, ResetRequest } from '../../../shared/remote.js';
+import { USAGE_POLL_ACTIVE_MS } from './codexPresentation.js';
 import type { OpenAICodexController } from './openAICodexRuntime.js';
 import { useCodexState } from './openAICodexRuntime.js';
 
@@ -13,10 +14,15 @@ export interface CodexSettingsHook {
     setProxy(mode: 'host' | 'system'): Promise<void>;
     saveModels(models: readonly ModelChoice[]): Promise<void>;
     consumeReset(request: ResetRequest): Promise<OpenAICodexSnapshot>;
+    deleteAllData(): Promise<void>;
     refresh(): Promise<void>;
 }
 
-export function useCodexSettings(controller: OpenAICodexController): CodexSettingsHook {
+/**
+ * Опрашивает состояние провайдера, пока открыт модальное окно настроек.
+ * @param paused приостанавливает фоновый опрос (например, пока открыт под-режим правки списка моделей).
+ */
+export function useCodexSettings(controller: OpenAICodexController, paused = false): CodexSettingsHook {
     const state = useCodexState(controller);
     const [busy, setBusy] = useState(false);
 
@@ -24,9 +30,11 @@ export function useCodexSettings(controller: OpenAICodexController): CodexSettin
 
     useEffect(() => {
         if (state.status === 'loading') void controller.load();
-        const timer = setInterval(() => void controller.load(true), loginPending ? 2_500 : 60_000);
+        // Пока открыт под-режим правки моделей, опрос лимитов останавливается до его закрытия.
+        if (paused) return undefined;
+        const timer = setInterval(() => void controller.load(true), loginPending ? 2_500 : USAGE_POLL_ACTIVE_MS);
         return () => clearInterval(timer);
-    }, [controller, state.status, loginPending]);
+    }, [controller, state.status, loginPending, paused]);
 
     const run = async (action: () => Promise<OpenAICodexSnapshot>): Promise<void> => {
         setBusy(true);
@@ -46,6 +54,7 @@ export function useCodexSettings(controller: OpenAICodexController): CodexSettin
         logout: () => run(() => controller.logout()),
         setProxy: mode => run(() => (mode === 'system' ? controller.setSystemProxy() : controller.setHostProxy())),
         saveModels: models => run(() => controller.saveModels(models)),
+        deleteAllData: () => run(() => controller.deleteAllData()),
         consumeReset: async request => {
             setBusy(true);
             try {

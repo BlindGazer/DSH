@@ -92,6 +92,7 @@
     overflow: hidden;
 }
 
+// :global нужен для стилизации кнопки закрытия общего Core Modal только внутри этой карточки.
 .modalCard :global(.dsh-modal-header .dsh-btn) {
     position: relative;
     display: inline-flex;

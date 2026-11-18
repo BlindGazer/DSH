@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { ProxyTestId } from '../../../../shared/constants/testId.js';
 import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { proxyScopeClass } from '../../../app/proxyStyles.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 
 export interface ProviderCardProxyEntryProps {
     readonly provider?: string | { readonly provider?: string; readonly id?: string };
@@ -30,7 +30,7 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
     if (snap.loading) {
         return (
             <div
-                className={`kpp-card-bar ${proxyScopeClass}`}
+                className={`dsh-core-root ${proxyClasses('cardBar')}`}
                 data-theme={effectiveTheme}
                 data-testid={ProxyTestId.providerCard(providerId)}>
                 <Spinner />
@@ -64,8 +64,11 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
     };
 
     return (
-        <div className={`kpp-card-bar ${proxyScopeClass}`} data-theme={effectiveTheme} data-testid={ProxyTestId.providerCard(providerId)}>
-            <div className="kpp-card-left">
+        <div
+            className={`dsh-core-root ${proxyClasses('cardBar')}`}
+            data-theme={effectiveTheme}
+            data-testid={ProxyTestId.providerCard(providerId)}>
+            <div className={proxyClasses('cardLeft')}>
                 <ThemedSelect
                     ariaLabel={tProxy(`Proxy profile for ${providerId}`)}
                     value={activeProfile ? activeProfile.id : ''}
@@ -77,7 +80,7 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
                 />
                 {conflict ? (
                     <span
-                        className="kpp-badge kpp-badge-warn"
+                        className={proxyClasses('badge', 'badgeWarn')}
                         title={tProxy(
                             `Host ${conflict.host} is shared by multiple providers with different proxy settings. Active proxy "${conflict.appliedProfileName}" is applied to the entire host.`
                         )}>
@@ -85,10 +88,10 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
                     </span>
                 ) : undefined}
             </div>
-            <div className="kpp-card-right">
+            <div className={proxyClasses('cardRight')}>
                 <button
                     type="button"
-                    className="kpp-btn kpp-btn-icon"
+                    className={proxyClasses('button', 'buttonIcon')}
                     aria-label={tProxy('Proxy settings')}
                     title={tProxy('Proxy settings')}
                     onClick={() => proxyStore.publish({ modalOpen: true })}>

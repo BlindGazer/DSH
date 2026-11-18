@@ -1,4 +1,5 @@
 import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
+import { proxyClasses } from '../../../app/proxyStyles.js';
 import { ProxySettingsModal } from '../../settings-modal/components/ProxySettingsModal.js';
 import { ProxyLocaleSettings } from './ProxyLocaleSettings.js';
 
@@ -22,7 +23,7 @@ function ProxyPluginSettingsActionContent() {
     return (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <ProxyLocaleSettings />
-            <button type="button" className="kpp-btn" onClick={() => proxyStore.publish({ modalOpen: true })}>
+            <button type="button" className={proxyClasses('button')} onClick={() => proxyStore.publish({ modalOpen: true })}>
                 {tProxy('Proxy settings')}
             </button>
             {snap.modalOpen ? <ProxySettingsModal open onClose={() => proxyStore.publish({ modalOpen: false })} /> : null}

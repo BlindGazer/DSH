@@ -68,6 +68,28 @@
     background: var(--dsh-ui-surface);
 }
 
+/* Зона удаления всех данных: красная рамка предупреждает об необратимом действии. */
+.dangerZone {
+    box-sizing: border-box;
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--dsh-ui-danger);
+    border-radius: 12px;
+    background: var(--dsh-ui-surface);
+}
+
+.dangerZone h3 {
+    margin: 0;
+    color: var(--dsh-ui-danger);
+}
+
+.dangerZone p {
+    margin: 0;
+    color: var(--dsh-ui-muted);
+}
+
 .usageRow {
     justify-content: space-between;
     padding-block: 6px;
@@ -188,6 +210,14 @@
     min-width: 0;
 }
 
+/* Строка загрузки лимитов: спиннер и текст в одну строку. */
+.quotaLoading {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--dsh-ui-muted);
+}
+
 .error {
     color: var(--dsw-alias-state-error-primary) !important;
 }
@@ -216,6 +246,7 @@
     overflow: hidden;
 }
 
+// :global нужен для управления DOM заголовка общего Core Modal внутри локальной карточки.
 .modalCard :global(.dsh-modal-header) {
     flex: 0 0 auto;
 }

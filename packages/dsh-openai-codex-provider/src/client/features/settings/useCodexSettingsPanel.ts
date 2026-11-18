@@ -26,6 +26,10 @@ export interface CodexSettingsPanelState {
     updateModel(id: string, patch: Partial<ModelChoice>): void;
     reorderModel(id: string, direction: 'up' | 'down'): void;
     saveModels(): Promise<void>;
+    deleteAllData(): Promise<void>;
+    deleteAllOpen: boolean;
+    beginDeleteAll(): void;
+    closeDeleteAll(): void;
     copyDeviceCode(code: string): Promise<void>;
     runAction(action: () => Promise<void>): Promise<void>;
     selectResetCard(creditId: string): void;
@@ -69,9 +73,29 @@ function savePendingReset(request: ResetRequest): void {
     }
 }
 
+// Полное удаление убирает следы заявки на сброс и новой, и старой схемы.
+function clearPendingResetStorage(): void {
+    const keys = [
+        RESET_CREDIT_KEY,
+        RESET_REQUEST_KEY,
+        'dsh-openai-codex-auth.pending-reset-credit',
+        'dsh-openai-codex-auth.pending-reset-request',
+        'dsh-openai-codex-auth.pending-reset'
+    ];
+    for (const key of keys) {
+        try {
+            sessionStorage.removeItem(key);
+        } catch {
+            // Отсутствие sessionStorage не должно ломать удаление данных.
+        }
+    }
+}
+
 export function useCodexSettingsPanel(controller: OpenAICodexController, text: (key: OpenAICodexText) => string): CodexSettingsPanelState {
-    const codex = useCodexSettings(controller);
     const [editOpen, setEditOpen] = useState(false);
+    const [deleteAllOpen, setDeleteAllOpen] = useState(false);
+    // Пока открыт под-режим правки списка моделей, фоновый опрос лимитов останавливается.
+    const codex = useCodexSettings(controller, editOpen);
     const [resetCard, setResetCard] = useState<string | undefined>(undefined);
     const [pendingReset, setPendingReset] = useState<ResetRequest | undefined>(readPendingReset);
     const [draft, setDraft] = useState<readonly ModelChoice[]>([]);
@@ -140,6 +164,24 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
         }
     };
 
+    // Убираем локальные следы заявки на сброс: новые ключи и ключ старой схемы.
+    const deleteAllData = async (): Promise<void> => {
+        setActionError(undefined);
+        try {
+            await codex.deleteAllData();
+            clearPendingResetStorage();
+            setPendingReset(undefined);
+            setResetCard(undefined);
+            setDraft([]);
+            setEditOpen(false);
+            setDeleteAllOpen(false);
+            setActionError(undefined);
+        } catch {
+            setDeleteAllOpen(false);
+            setActionError(text('deleteAllError'));
+        }
+    };
+
     const runAction = async (action: () => Promise<void>): Promise<void> => {
         setActionError(undefined);
         try {
@@ -205,6 +247,15 @@ export function useCodexSettingsPanel(controller: OpenAICodexController, text: (
         updateModel,
         reorderModel,
         saveModels,
+        deleteAllData,
+        deleteAllOpen,
+        beginDeleteAll: () => {
+            setActionError(undefined);
+            setDeleteAllOpen(true);
+        },
+        closeDeleteAll: () => {
+            setDeleteAllOpen(false);
+        },
         copyDeviceCode,
         runAction,
         selectResetCard,

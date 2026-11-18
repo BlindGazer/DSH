@@ -4,8 +4,42 @@ import type { CodexClientState } from './openAICodexRuntime.js';
 
 export type UsageLimit = OpenAICodexSnapshot['usageLimits'][number];
 
+// Фоновый опрос лимитов (статус-бар чата и блок под моделями) - не чаще раза в 5 минут.
+export const USAGE_POLL_BACKGROUND_MS = 300_000;
+// Опрос при открытом окне OpenAI Codex - раз в 5 секунд.
+export const USAGE_POLL_ACTIVE_MS = 5_000;
+
 export function usageRemaining(usedPercent: number): number {
     return Math.max(0, Math.min(100, 100 - usedPercent));
+}
+
+/** Заглушка лимита для состояний загрузки/ошибки: remaining = 0%, чтобы в цифре отображался 0%. */
+export function emptyUsageLimit(name: string): UsageLimit {
+    return { name, usedPercent: 100, windowSeconds: 0, resetAt: 0 };
+}
+
+/**
+ * Лимит для конкретного окна с учетом состояния загрузки.
+ * При ошибке всегда показываем заглушку 0%; при загрузке показываем предыдущее значение, если оно есть.
+ */
+export function displayUsageLimit(
+    limits: readonly UsageLimit[],
+    windowSeconds: number,
+    usageStatus: OpenAICodexSnapshot['usageStatus'],
+    fallbackName: string
+): UsageLimit {
+    if (usageStatus === 'error') return emptyUsageLimit(fallbackName);
+    return findUsageLimit(limits, windowSeconds) ?? emptyUsageLimit(fallbackName);
+}
+
+/** Приоритетный лимит (5ч или неделя) для статус-бара с учетом состояния загрузки. */
+export function displayPreferredUsageLimit(
+    limits: readonly UsageLimit[],
+    usageStatus: OpenAICodexSnapshot['usageStatus'],
+    fallbackName: string
+): UsageLimit {
+    if (usageStatus === 'error') return emptyUsageLimit(fallbackName);
+    return preferredUsageLimit(limits) ?? emptyUsageLimit(fallbackName);
 }
 
 export function usageRemainingPercentage(usedPercent: number): string {

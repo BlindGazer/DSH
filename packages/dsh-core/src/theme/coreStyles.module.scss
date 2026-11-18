@@ -8,24 +8,22 @@
 .scope {
     --dsh-style-scope: 1;
 }
+// Глобальные классы Core являются общей DOM-границей между компонентами и пакетами-потребителями.
 :global {
     .dsh-select,
-    .ar-themed-select,
-    .kpp-dropdown {
+    .ar-themed-select {
         position: relative;
         width: 220px;
         max-width: 100%;
         min-width: 0;
         flex: 0 1 220px;
     }
-    .dsh-select-full,
-    .kpp-dropdown-full {
+    .dsh-select-full {
         width: 100%;
         flex: 1 1 auto;
     }
     .dsh-select-trigger,
-    .ar-themed-select-trigger,
-    .kpp-dropdown-trigger {
+    .ar-themed-select-trigger {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -48,19 +46,16 @@
             box-shadow 150ms ease;
     }
     .dsh-select-trigger:hover:not(:disabled),
-    .ar-themed-select-trigger:hover:not(:disabled),
-    .kpp-dropdown-trigger:hover:not(:disabled) {
+    .ar-themed-select-trigger:hover:not(:disabled) {
         background: var(--dsh-ui-hover);
     }
     .dsh-select-trigger:focus-visible,
-    .ar-themed-select-trigger:focus-visible,
-    .kpp-dropdown-trigger:focus-visible {
+    .ar-themed-select-trigger:focus-visible {
         outline: none;
         box-shadow: 0 0 0 2px var(--dsh-ui-focus-ring);
     }
     .dsh-select-trigger,
-    .ar-themed-select-trigger,
-    .kpp-dropdown-trigger {
+    .ar-themed-select-trigger {
         @include disabled-control;
     }
     .dsh-select-label,
@@ -70,8 +65,7 @@
         white-space: nowrap;
     }
     .dsh-select-menu,
-    .ar-themed-select-menu,
-    .kpp-dropdown-menu {
+    .ar-themed-select-menu {
         position: absolute;
         z-index: 30;
         top: calc(100% + 4px);
@@ -86,8 +80,7 @@
         box-shadow: var(--dsh-ui-shadow-elevated);
     }
     .dsh-select-option,
-    .ar-themed-select-menu button,
-    .kpp-dropdown-item {
+    .ar-themed-select-menu button {
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -108,9 +101,7 @@
     .dsh-select-option:hover,
     .dsh-select-option.active,
     .ar-themed-select-menu button:hover,
-    .ar-themed-select-menu button.active,
-    .kpp-dropdown-item:hover,
-    .kpp-dropdown-item-active {
+    .ar-themed-select-menu button.active {
         background: var(--dsh-ui-hover);
         color: var(--dsh-ui-text) !important;
     }

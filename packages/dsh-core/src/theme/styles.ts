@@ -9,18 +9,7 @@ export const coreStyleScopeClass = coreStyles.scope;
 /**
  * Формирует таблицу базовых стилей и переменных зарегистрированных тем.
  */
-export function buildCoreThemeStyles(
-    rootSelectors: readonly string[] = [
-        '.dsh-core-root',
-        '.ar-root',
-        '.ar-settings-root',
-        '.kpp-root',
-        '.kpp-card-bar',
-        '.kpp-footer-row',
-        '.kpp-modal-backdrop',
-        '.kpp-locale-settings'
-    ]
-): string {
+export function buildCoreThemeStyles(rootSelectors: readonly string[] = ['.dsh-core-root', '.ar-root', '.ar-settings-root']): string {
     const baseSelector = rootSelectors.join(',');
     const darkVars = buildThemeCssVariables(getDshTheme('dark').tokens);
     const lightSelectors = rootSelectors.map(sel => `${sel}[data-theme="light"]`).join(',');

@@ -29,6 +29,8 @@ export const locales = Object.freeze({
         diagnostics: 'Diagnostics',
         auditProject: 'Log and Project',
         memoryBudget: 'Memory / soft budget',
+        memoryBudgetHint:
+            'Advisory threshold for estimated instruction tokens. It does not truncate context or block the agent; exceeding it only marks the context as over budget.',
         paths: 'paths',
         idleState: 'Idle',
         contextStructure: 'Plugin context structure',
@@ -168,6 +170,8 @@ export const locales = Object.freeze({
         diagnostics: 'Диагностика',
         auditProject: 'Лог и Проект',
         memoryBudget: 'Память / мягкий бюджет',
+        memoryBudgetHint:
+            'Рекомендательный порог оценки токенов инструкций. Контекст не обрезается и агент не блокируется: превышение только отмечается как выход за бюджет.',
         paths: 'путей',
         idleState: 'Ожидает',
         contextStructure: 'Структура контекста плагина',

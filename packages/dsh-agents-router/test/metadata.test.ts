@@ -167,7 +167,7 @@ test('global settings validate locale, theme, polling, and logging values', () =
 });
 
 test('project settings constrain roots and preserve defaults on invalid input', () => {
-    assert.equal(validateProjectSettings().settings.tokenBudget, 16_000);
+    assert.equal(validateProjectSettings().settings.tokenBudget, 32_000);
     assert.equal(validateProjectSettings().settings.discoveryMode, 'merge');
     for (const discoveryMode of ['strict', 'fallback', 'merge']) {
         assert.equal(validateProjectSettings({ discoveryMode }).valid, true);

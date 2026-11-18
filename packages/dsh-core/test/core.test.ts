@@ -48,6 +48,7 @@ describe('@kalex/dsh-core Design System and Utilities', () => {
         expect(fullCss).toContain('--dsh-ui-success:#34d399');
         expect(fullCss).toContain('--dsh-ui-focus-ring:');
         expect(fullCss).toContain('--dsh-ui-danger:');
+        expect(fullCss).not.toContain('kpp-');
     });
 
     it('detects host theme correctly', () => {

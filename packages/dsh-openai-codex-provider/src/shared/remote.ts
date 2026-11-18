@@ -113,6 +113,7 @@ export type RemoteMethod =
     | 'useSystemProxy'
     | 'consumeReset'
     | 'saveModels'
+    | 'deleteAllData'
     | 'reportUiError'
     | 'reportUiReady';
 
@@ -195,6 +196,7 @@ const methods = [
     'useSystemProxy',
     'consumeReset',
     'saveModels',
+    'deleteAllData',
     'reportUiError',
     'reportUiReady'
 ] as const satisfies readonly RemoteMethod[];
