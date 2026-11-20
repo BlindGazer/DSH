@@ -12,7 +12,7 @@ A collection of plugins for **DeepSeek Harness (DSH)**, built as independent pac
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
 ---
@@ -25,7 +25,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-
 | **[@kalex/dsh-proxy-provider](../packages/dsh-proxy-provider)**               | **Selective proxy routing for LLM providers.** Helps work around network restrictions and API blocks for providers such as OpenAI, Anthropic, DeepSeek, OpenRouter, and others. Configure individual HTTP/HTTPS/SOCKS5 proxies per provider, encrypt credentials with AES-256-GCM, and test connection latency. | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/README_EN.md)        |
 | **[@kalex/dsh-agents-router](../packages/dsh-agents-router)**                 | **Intelligent router for agent rules and skills.** Reduces context window bloat and prevents LLMs from receiving irrelevant instructions. Dynamically loads only rules that match the session's active working set, provides a soft token budget, and isolates instructions.                                    | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/README_EN.md)         |
 | **[@kalex/dsh-workspace-manager](../packages/dsh-workspace-manager)**         | **Workspace directory manager.** Links multiple folders from different locations, supports aliases and descriptions, and can restrict access to read-only.                                                                                                                                                      | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/README_EN.md)     |
-| **[@kalex/dsh-openai-codex-provider](../packages/dsh-openai-codex-provider)** | **ChatGPT sign-in and OpenAI Codex models.** Lets you use OpenAI Codex models in DSH without an OpenAI Platform API key: ChatGPT device-code sign-in, token storage in the local DSH Credential Store, network route and reset card settings.                                                                   | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/docs/README_EN.md) |
+| **[@kalex/dsh-openai-hub](../packages/dsh-openai-hub)** | **OpenAI Hub: multiple ChatGPT accounts.** One model route, authenticated catalog with local fallback, isolated account settings and selected-model limits. Tokens stay in DSH Credential Store.                                                                   | [Details](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-hub/docs/README_EN.md) |
 
 ---
 

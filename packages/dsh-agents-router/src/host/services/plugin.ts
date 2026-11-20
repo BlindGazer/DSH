@@ -1,5 +1,6 @@
+import { createHash, randomUUID } from 'node:crypto';
 import { realpath, stat } from 'node:fs/promises';
-import type { RouterAgent, RouterHostContext, RouterMessage, RouterState } from './sessionController.js';
+import type { PendingFeedback, RouterAgent, RouterHostContext, RouterMessage, RouterState } from './sessionController.js';
 import type { ScopedAgent } from './skillsProvider.js';
 
 interface UserMessageInput {
@@ -44,7 +45,7 @@ import {
     saveRouterSettings,
     updateRouterWorkset
 } from './sessionActions.js';
-import { currentDirectory, feedbackKey, readRouterState, refreshState, reportDiagnostics } from './sessionController.js';
+import { claimPendingFeedback, currentDirectory, readRouterState, refreshState, reportDiagnostics } from './sessionController.js';
 import { registerSkillsProvider } from './skillsProvider.js';
 import { RouterStore } from './store.js';
 
@@ -153,7 +154,7 @@ export const inject = ['agents', 'tools', 'skills', 'systemPrompt', 'workingDire
 export function apply(ctx: PluginContext): void {
     const store = new RouterStore();
     const states = new Map<string, RouterState>();
-    const pendingFeedback = new Map<string, string>();
+    const pendingFeedback = new Map<string, PendingFeedback>();
 
     const initializeAgent = async ({ agent, source, signal }: AgentCreatedEvent): Promise<void> => {
         try {
@@ -310,16 +311,25 @@ export function apply(ctx: PluginContext): void {
     ctx.on('tools/post-execute', async (exec, _result, next) => {
         const agentId = exec.agent?.id;
         const state = agentId === undefined ? undefined : states.get(agentId);
-        const key = state ? feedbackKey(state.agent.id, exec.callId) : undefined;
-        const notice = key === undefined ? undefined : pendingFeedback.get(key);
-        if (key === undefined || !notice) return next();
-        pendingFeedback.delete(key);
+        const claim = state ? claimPendingFeedback(pendingFeedback, state.agent.id, exec.callId) : undefined;
+        if (!state || !claim) return next();
+        if (!claim.shouldDeliver) return next();
         const decision = await next();
         const message = createUserMessage({
-            content: [{ type: 'text', text: notice }],
+            content: [{ type: 'text', text: claim.feedback.reason }],
             source: { kind: name, form: 'notice', summary: 'A project file operation was deferred until current rules were applied.' }
         });
-        return { ...decision, additionalContexts: [...(decision.additionalContexts ?? []), message] };
+        const notice: RouterMessage = { ...message, id: randomUUID() };
+        const suppressed = claim.feedback.group.callCount - 1;
+        const batch = createHash('sha256').update(claim.feedback.group.key).digest('hex').slice(0, 12);
+        ctx.logger.warn(
+            `agents-router: replan notice delivered for batch=${batch} calls=${claim.feedback.group.callCount}; suppressed ${suppressed} duplicate notice(s)`
+        );
+        await recordAudit(state, store, {
+            event: `preflight_replan_notice batch=${batch} calls=${claim.feedback.group.callCount} suppressed=${suppressed}`,
+            preflight: 'one uniquely identified context returned; file batch remains denied'
+        });
+        return { ...decision, additionalContexts: [...(decision.additionalContexts ?? []), notice] };
     });
 
     ctx.on('tools/result', exec => {

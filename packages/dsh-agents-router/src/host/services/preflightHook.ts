@@ -22,13 +22,14 @@ import { recordAudit, shouldSkipBatchAudit } from './auditLogger.js';
 import { matchInstructionRedirect, resolveInstructionDestination } from './instructionRedirection.js';
 import { fileBatch, isFileTool, projectPaths } from './preflight.js';
 import { renderRules, selectRules } from './ruleSelector.js';
-import { currentDirectory, denyCalls, feedbackKey, historyHasRule, preflightEvent, refreshState } from './sessionController.js';
+import type { PendingFeedback } from './sessionController.js';
+import { currentDirectory, denyCalls, historyHasRule, preflightEvent, refreshState } from './sessionController.js';
 
 export function createPreflightHook<TResult>(
     ctx: HookContext,
     store: HookStore,
     states: Map<string, HookState>,
-    pendingFeedback: Map<string, string>
+    pendingFeedback: Map<string, PendingFeedback>
 ): (exec: HookExec, next: HookNext<TResult>) => Promise<TResult | HookDenyResult> {
     return async (exec, next) => {
         if (!isFileTool(exec.name)) return next();
@@ -39,8 +40,7 @@ export function createPreflightHook<TResult>(
         const rootCallId = exec.rootCallId ?? exec.callId;
         if (exec.parent !== undefined && state.blockedRoots.has(rootCallId)) {
             const reason = state.blockedRoots.get(rootCallId) ?? '';
-            pendingFeedback.set(feedbackKey(state.agent.id, exec.callId), reason);
-            return { kind: 'deny', reason };
+            return denyCalls([{ callId: exec.callId, name: exec.name }], exec, pendingFeedback, state, reason);
         }
 
         const batch = fileBatch(exec.agent, exec);

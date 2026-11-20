@@ -18,7 +18,7 @@
     },
     {
       "name": "OpenAI",
-      "path": "packages/dsh-openai-codex-provider",
+      "path": "packages/dsh-openai-hub",
     },
     {
       "name": "Root",

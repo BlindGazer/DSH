@@ -112,6 +112,7 @@ test('client bundle registers under the package name expected by the host', asyn
                 jsxs: (tag: string, props: RuntimeObject) => ({ tag, props })
             };
         }
+        if (id === 'react-dom') return { createPortal: (children: RuntimeValue) => children };
         assert.equal(id, 'react');
         return {
             __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: reactInternals,
@@ -125,6 +126,7 @@ test('client bundle registers under the package name expected by the host', asyn
         };
     });
     assert.ok(moduleRequests.has('react'));
+    assert.ok(moduleRequests.has('react-dom'));
     assert.ok(moduleRequests.has('react/jsx-runtime'));
     const slots: string[] = [];
     const tabs: SlotRegistration[] = [];

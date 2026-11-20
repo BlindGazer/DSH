@@ -370,6 +370,7 @@ test('preserves skill metadata license, compatibility and allowed-tools', async 
             `---
 name: test-skill
 description: Test skill with metadata
+license: MIT
 compatibility: Requires Node.js 18+
 allowed-tools: ["filesystem/write", "filesystem/read"]
 ---\nBody`,

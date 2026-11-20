@@ -7,7 +7,14 @@ import { assert, test } from 'vitest';
 import { discoverProject } from '../src/host/services/discovery.js';
 import { filterRootInstructionMessages } from '../src/host/services/instructionRedirection.js';
 import { createPreflightHook } from '../src/host/services/preflightHook.js';
-import type { RouterAgent, RouterHostContext, RouterMessage, RouterState } from '../src/host/services/sessionController.js';
+import type {
+    PendingFeedback,
+    RouterAgent,
+    RouterHostContext,
+    RouterMessage,
+    RouterState
+} from '../src/host/services/sessionController.js';
+import { claimPendingFeedback, denyCalls } from '../src/host/services/sessionController.js';
 import { RouterStore } from '../src/host/services/store.js';
 import { RULE_CONTEXT } from '../src/shared/constants/index.js';
 import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.js';
@@ -128,7 +135,7 @@ async function createHarness(options: { settings?: Record<string, boolean | stri
         invalidateSkills() {}
     };
     const states = new Map([[agent.id, state]]);
-    const pendingFeedback = new Map<string, string>();
+    const pendingFeedback = new Map<string, PendingFeedback>();
     const hook = createPreflightHook<string>(ctx, store, states, pendingFeedback);
     const run = async (
         name: string,
@@ -149,6 +156,30 @@ async function createHarness(options: { settings?: Record<string, boolean | stri
     };
     return { projectRoot, state, ctx, store, hook, run, pendingFeedback, dispose: () => rm(projectRoot, { recursive: true, force: true }) };
 }
+
+test('claims one replan notice for concurrent calls in the same file batch', async () => {
+    const harness = await createHarness();
+    try {
+        const calls = [
+            { callId: 'read-1', name: 'read', paths: ['src/a.ts'] },
+            { callId: 'read-2', name: 'read', paths: ['src/b.ts'] }
+        ];
+        const pending = new Map<string, PendingFeedback>();
+        const result = denyCalls(calls, { callId: 'read-1' }, pending, harness.state, 'instructions refreshed');
+
+        assert.equal(result.kind, 'deny');
+        assert.equal(pending.size, 2);
+        const claims = ['read-1', 'read-2'].map(callId => claimPendingFeedback(pending, 'agent-test', callId));
+        assert.deepEqual(
+            claims.map(claim => claim?.shouldDeliver),
+            [true, false]
+        );
+        assert.equal(claims[0]?.feedback.reason, 'instructions refreshed');
+        assert.equal(pending.size, 0);
+    } finally {
+        await harness.dispose();
+    }
+});
 
 test('redirects matching root and nested directory reads before invoking the tool', async () => {
     const harness = await createHarness({

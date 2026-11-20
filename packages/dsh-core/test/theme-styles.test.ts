@@ -26,6 +26,8 @@ describe('@kalex/dsh-core injected theme styles', () => {
         expect(styles).toContain('var(--dsw-radius-lg)');
         expect(styles).toContain('var(--dsw-alias-label-tertiary)');
         expect(styles).toContain('var(--dsw-alias-border-l3)');
+        expect(styles).toContain('.dsh-core-root input[type="checkbox"]');
+        expect(styles).toContain('accent-color: var(--dsw-alias-brand-primary)');
         expect(styles).toContain('position-try-fallbacks');
         expect(styles).not.toContain('.dsh-tooltip-content::after');
     });

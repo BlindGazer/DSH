@@ -1,0 +1,15 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "composite": false,
+        "noEmit": true,
+        "rootDir": "../../../packages",
+        "types": ["node", "vitest/globals"]
+    },
+    "include": [
+        "../../../packages/dsh-openai-hub/src/client/styles.d.ts",
+        "../../../packages/dsh-core/src/scss.d.ts",
+        "../../../packages/dsh-openai-hub/test/**/*.ts",
+        "../../../packages/dsh-openai-hub/test/**/*.tsx"
+    ]
+}

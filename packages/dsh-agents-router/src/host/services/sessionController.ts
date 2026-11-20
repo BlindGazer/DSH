@@ -18,6 +18,7 @@ export interface RouterAgent {
 }
 
 export interface RouterMessage {
+    id?: string;
     role?: string;
     content?: { type: string; text?: string }[];
     source?: {
@@ -178,10 +179,40 @@ interface ToolExecution {
     readonly parent?: string;
 }
 
+export interface FeedbackGroup {
+    readonly key: string;
+    readonly callCount: number;
+    claimed: boolean;
+}
+
+export interface PendingFeedback {
+    readonly reason: string;
+    readonly group: FeedbackGroup;
+}
+
+interface FeedbackClaim {
+    readonly feedback: PendingFeedback;
+    readonly shouldDeliver: boolean;
+}
+
+export function claimPendingFeedback(
+    pendingFeedback: Map<string, PendingFeedback>,
+    agentId: string,
+    callId: string
+): FeedbackClaim | undefined {
+    const key = feedbackKey(agentId, callId);
+    const feedback = pendingFeedback.get(key);
+    if (!feedback) return undefined;
+    pendingFeedback.delete(key);
+    if (feedback.group.claimed) return { feedback, shouldDeliver: false };
+    feedback.group.claimed = true;
+    return { feedback, shouldDeliver: true };
+}
+
 export function denyCalls(
     calls: readonly PreflightCall[],
     exec: ToolExecution,
-    pendingFeedback: Map<string, string>,
+    pendingFeedback: Map<string, PendingFeedback>,
     state: RouterState,
     reason: string
 ): {
@@ -189,7 +220,10 @@ export function denyCalls(
     readonly reason: string;
     readonly info: { readonly name: string; readonly code: string; readonly reason: string };
 } {
-    for (const call of calls) pendingFeedback.set(feedbackKey(state.agent.id, call.callId), reason);
+    const callIds = [...new Set(calls.map(call => call.callId))];
+    const groupKey = exec.parent !== undefined ? (exec.rootCallId ?? exec.callId) : callIds.toSorted().join('|');
+    const group: FeedbackGroup = { key: groupKey, callCount: callIds.length, claimed: false };
+    for (const call of calls) pendingFeedback.set(feedbackKey(state.agent.id, call.callId), { reason, group });
     if (exec.parent !== undefined) state.blockedRoots.set(exec.rootCallId ?? exec.callId, reason);
     return { kind: 'deny', reason, info: { name: 'AgentsRouterPreflightError', code: 'AGENTS_ROUTER_REPLAN_REQUIRED', reason } };
 }

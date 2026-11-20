@@ -33,7 +33,7 @@
 - [providerRouting.ts](../../../packages/dsh-proxy-provider/src/host/services/providerRouting.ts) преобразует привязки провайдеров в таблицу `hostToProfile`. Для общего домена с разными настройками формируется конфликт и выбирается первый активный профиль.
 - [controller.ts](../../../packages/dsh-proxy-provider/src/host/services/controller.ts) перехватывает `fetch`, выбирая профиль по URL. Идентификатор провайдера в этом выборе не участвует. Запрос с явно переданным dispatcher пропускается в нижележащий fetch.
 - [providerDiscovery.ts](../../../packages/dsh-proxy-provider/src/host/services/providerDiscovery.ts) обнаруживает провайдеров через сервис LLM, включая `listProviders`. Отображение строки провайдера не доказывает правильность его сетевой маршрутизации.
-- [proxy-manager.ts](../../../packages/dsh-openai-codex-provider/src/host/proxy-manager.ts) в текущем режиме DSH использует глобальный fetch, а отдельный системный режим использует настройки Windows. Это не механизм выбора независимых профилей прокси-плагина.
+- Исторический OpenAI Codex proxy-manager удален в dsh-5. OpenAI Hub использует обычный `fetch` без собственного транспорта; контекст независимой provider-routing здесь пока отсутствует.
 
 Следствие: одного добавления новых идентификаторов или строк интерфейса недостаточно. Контекст провайдера должен доходить до транспорта каждого запроса. Ограничение общих доменов потенциально касается и стандартных провайдеров, а не только Codex.
 

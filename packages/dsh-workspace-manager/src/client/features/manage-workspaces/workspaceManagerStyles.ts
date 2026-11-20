@@ -2,6 +2,8 @@ import { buildCoreThemeStyles, subscribeDshThemeChanges } from '@kalex/dsh-core'
 
 export const styles = `
 .addir-modal {
+    background: var(--dsh-ui-bg-modal);
+    color: var(--dsh-ui-text);
     width: min(640px, calc(100vw - 32px));
     max-height: calc(100dvh - 32px);
     display: flex;

@@ -14,10 +14,8 @@ const commands = [
     ['dsh-core source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-core/tsconfig.json']],
     ['agents-router source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-agents-router/tsconfig.json']],
     ['proxy-provider source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-proxy-provider/tsconfig.json']],
-    [
-        'openai-codex-provider source',
-        ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-openai-codex-provider/tsconfig.json']
-    ],
+    ['openai-hub source', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-openai-hub/tsconfig.json']],
+    ['openai-hub tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-openai-hub/tsconfig.test.json']],
     ['dsh-core tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-core/tsconfig.test.json']],
     ['agents-router tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-agents-router/tsconfig.test.json']],
     ['proxy-provider tests', ['exec', 'tsc', '--noEmit', '--pretty', '-p', 'configs/packages/dsh-proxy-provider/tsconfig.test.json']]
@@ -26,7 +24,10 @@ const commands = [
 let failed = false;
 for (const [label, args] of commands) {
     console.log(`[typecheck] Checking ${label}...`);
-    const result = spawnSync(packageManager, args, { cwd: rootDir, stdio: 'inherit' });
+    const result = spawnSync(packageManager, args, {
+        cwd: rootDir,
+        stdio: 'inherit'
+    });
     if (result.error) {
         console.error(`[typecheck] Failed to run ${label}: ${result.error.message}`);
         failed = true;

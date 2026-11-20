@@ -4,9 +4,10 @@ import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/re
 import { WorkspaceAddirModal, type WorkspaceEditorProps } from '../src/client/features/manage-workspaces/components/WorkspaceAddirModal.js'
 import { fetchWorkspaceDirectories, replaceWorkspaceDirectories } from '../src/client/features/manage-workspaces/services/addirApi.js'
 import { ru } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.js'
+import { ensureWorkspaceManagerStyles } from '../src/client/features/manage-workspaces/workspaceManagerStyles.js'
 
 vi.mock('../src/client/features/manage-workspaces/services/addirApi.js', () => ({ fetchWorkspaceDirectories: vi.fn(), replaceWorkspaceDirectories: vi.fn() }))
-afterEach(() => { cleanup(); vi.resetAllMocks() })
+afterEach(() => { cleanup(); vi.resetAllMocks(); document.documentElement.removeAttribute('data-theme') })
 
 function editor(overrides: Partial<WorkspaceEditorProps> = {}) {
   const props: WorkspaceEditorProps = {
@@ -20,6 +21,22 @@ function editor(overrides: Partial<WorkspaceEditorProps> = {}) {
 async function loaded() { await waitFor(() => expect(screen.getByRole('button', { name: 'Сохранить' }).hasAttribute('disabled')).toBe(false)) }
 
 describe('project editor', () => {
+  it.each(['light', 'dark'])('applies the themed background to the actual addir modal card in %s mode', async theme => {
+    document.documentElement.dataset.theme = theme
+    vi.mocked(fetchWorkspaceDirectories).mockResolvedValue([])
+    ensureWorkspaceManagerStyles()
+    editor()
+    await loaded()
+
+    const dialog = screen.getByRole('dialog')
+    const stylesTag = document.querySelector('style[data-plugin-css="@kalex/dsh-workspace-manager/styles"]')
+
+    expect(dialog.classList.contains('addir-modal')).toBe(true)
+    expect(dialog.closest('.dsh-core-root')?.getAttribute('data-theme')).toBe(theme)
+    expect(stylesTag?.textContent).toContain('.addir-modal')
+    expect(stylesTag?.textContent).toContain('background: var(--dsh-ui-bg-modal)')
+  })
+
   it('calls the native picker directly and commits the complete draft only on Save', async () => {
     vi.mocked(fetchWorkspaceDirectories).mockResolvedValue([])
     vi.mocked(replaceWorkspaceDirectories).mockResolvedValue()

@@ -1,0 +1,5 @@
+- insert:
+    - id: dsh-openai-hub
+      name: "@kalex/dsh-openai-hub"
+      config:
+        accounts: []

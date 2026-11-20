@@ -144,18 +144,21 @@
         transform: translateX(16px);
         background: var(--dsh-ui-switch-thumb-on);
     }
-    .dsh-checkbox {
+    .dsh-checkbox,
+    .dsh-core-root input[type="checkbox"] {
         width: 16px;
         height: 16px;
         margin: 0;
-        accent-color: var(--dsh-ui-switch-on);
+        accent-color: var(--dsw-alias-brand-primary);
         cursor: pointer;
     }
-    .dsh-checkbox:focus-visible {
+    .dsh-checkbox:focus-visible,
+    .dsh-core-root input[type="checkbox"]:focus-visible {
         outline: 2px solid var(--dsh-ui-accent);
         outline-offset: 2px;
     }
-    .dsh-checkbox:disabled {
+    .dsh-checkbox:disabled,
+    .dsh-core-root input[type="checkbox"]:disabled {
         cursor: not-allowed;
         opacity: 0.55;
     }
@@ -191,6 +194,10 @@
         background: var(--dsh-ui-primary-bg);
         color: var(--dsh-ui-primary-fg);
         border-color: transparent;
+    }
+    .dsh-btn-primary:hover:not(:disabled) {
+        background: color-mix(in srgb, var(--dsh-ui-primary-bg) 90%, var(--dsh-ui-primary-fg));
+        color: var(--dsh-ui-primary-fg);
     }
     .dsh-btn-danger {
         color: var(--dsh-ui-danger);

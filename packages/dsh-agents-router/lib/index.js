@@ -1,6 +1,6 @@
+import { createHash, randomUUID } from "node:crypto";
 import { lstat, mkdir, open, readFile, readdir, realpath, rename, stat, unlink, writeFile } from "node:fs/promises";
 import path, { posix } from "node:path";
-import { createHash, randomUUID } from "node:crypto";
 import os from "node:os";
 // src/shared/constants/constants.ts
 var PLUGIN_ID = "dsh-agents-router";
@@ -7642,8 +7642,32 @@ function historyHasRule(session, rule) {
 	const contribution = latestSections.find((section) => section.name === RULE_CONTEXT);
 	return typeof contribution?.text === "string" && contribution.text.includes(`Revision: ${rule.hash}`);
 }
+function claimPendingFeedback(pendingFeedback, agentId, callId) {
+	const key = feedbackKey(agentId, callId);
+	const feedback = pendingFeedback.get(key);
+	if (!feedback) return void 0;
+	pendingFeedback.delete(key);
+	if (feedback.group.claimed) return {
+		feedback,
+		shouldDeliver: false
+	};
+	feedback.group.claimed = true;
+	return {
+		feedback,
+		shouldDeliver: true
+	};
+}
 function denyCalls(calls, exec, pendingFeedback, state, reason) {
-	for (const call of calls) pendingFeedback.set(feedbackKey(state.agent.id, call.callId), reason);
+	const callIds = [...new Set(calls.map((call) => call.callId))];
+	const group = {
+		key: exec.parent !== void 0 ? exec.rootCallId ?? exec.callId : callIds.toSorted().join("|"),
+		callCount: callIds.length,
+		claimed: false
+	};
+	for (const call of calls) pendingFeedback.set(feedbackKey(state.agent.id, call.callId), {
+		reason,
+		group
+	});
 	if (exec.parent !== void 0) state.blockedRoots.set(exec.rootCallId ?? exec.callId, reason);
 	return {
 		kind: "deny",
@@ -7797,11 +7821,10 @@ function createPreflightHook(ctx, store, states, pendingFeedback) {
 		const rootCallId = exec.rootCallId ?? exec.callId;
 		if (exec.parent !== void 0 && state.blockedRoots.has(rootCallId)) {
 			const reason = state.blockedRoots.get(rootCallId) ?? "";
-			pendingFeedback.set(feedbackKey(state.agent.id, exec.callId), reason);
-			return {
-				kind: "deny",
-				reason
-			};
+			return denyCalls([{
+				callId: exec.callId,
+				name: exec.name
+			}], exec, pendingFeedback, state, reason);
 		}
 		const batch = fileBatch(exec.agent, exec);
 		const calls = batch.calls.length ? batch.calls : [{
@@ -8846,25 +8869,34 @@ function apply(ctx) {
 	ctx.on("tools/post-execute", async (exec, _result, next) => {
 		const agentId = exec.agent?.id;
 		const state = agentId === void 0 ? void 0 : states.get(agentId);
-		const key = state ? feedbackKey(state.agent.id, exec.callId) : void 0;
-		const notice = key === void 0 ? void 0 : pendingFeedback.get(key);
-		if (key === void 0 || !notice) return next();
-		pendingFeedback.delete(key);
+		const claim = state ? claimPendingFeedback(pendingFeedback, state.agent.id, exec.callId) : void 0;
+		if (!state || !claim) return next();
+		if (!claim.shouldDeliver) return next();
 		const decision = await next();
-		const message = createUserMessage({
-			content: [{
-				type: "text",
-				text: notice
-			}],
-			source: {
-				kind: name,
-				form: "notice",
-				summary: "A project file operation was deferred until current rules were applied."
-			}
+		const notice = {
+			...createUserMessage({
+				content: [{
+					type: "text",
+					text: claim.feedback.reason
+				}],
+				source: {
+					kind: name,
+					form: "notice",
+					summary: "A project file operation was deferred until current rules were applied."
+				}
+			}),
+			id: randomUUID()
+		};
+		const suppressed = claim.feedback.group.callCount - 1;
+		const batch = createHash("sha256").update(claim.feedback.group.key).digest("hex").slice(0, 12);
+		ctx.logger.warn(`agents-router: replan notice delivered for batch=${batch} calls=${claim.feedback.group.callCount}; suppressed ${suppressed} duplicate notice(s)`);
+		await recordAudit(state, store, {
+			event: `preflight_replan_notice batch=${batch} calls=${claim.feedback.group.callCount} suppressed=${suppressed}`,
+			preflight: "one uniquely identified context returned; file batch remains denied"
 		});
 		return {
 			...decision,
-			additionalContexts: [...decision.additionalContexts ?? [], message]
+			additionalContexts: [...decision.additionalContexts ?? [], notice]
 		};
 	});
 	ctx.on("tools/result", (exec) => {

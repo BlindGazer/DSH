@@ -52,7 +52,7 @@ test('shows discovery mode and detected project sources for verification', () =>
     assert.match(markup, /discoveredRules: 1/);
     assert.match(markup, /activeRules: 1/);
     assert.match(markup, /discoveryMode/);
-    assert.match(markup, /value="merge"/);
-    assert.match(markup, /discoveryStrict/);
-    assert.match(markup, /discoveryFallback/);
+    assert.match(markup, /aria-label="discoveryMode"/);
+    assert.match(markup, /aria-haspopup="listbox"/);
+    assert.match(markup, /discoveryMerge/);
 });

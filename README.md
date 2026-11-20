@@ -12,7 +12,7 @@
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
 ---
@@ -25,7 +25,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-
 | **[@kalex/dsh-proxy-provider](./packages/dsh-proxy-provider)**               | **Плагин выборочного проксирования провайдеров LLM.** Решает проблему сетевых ограничений и блокировок API провайдеров (OpenAI, Anthropic, DeepSeek, OpenRouter и др.). Позволяет настраивать индивидуальные HTTP/HTTPS/SOCKS5 прокси для каждого провайдера, шифровать учетные данные (AES-256-GCM) и тестировать задержку соединения.      | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/README.md)        |
 | **[@kalex/dsh-agents-router](./packages/dsh-agents-router)**                 | **Интеллектуальный маршрутизатор правил и навыков агентов.** Решает проблему раздувания контекста (context window bloat) и перегрузки LLM лишними инструкциями. Динамически подгружает в контекст только те правила, которые соответствуют текущему рабочему набору файлов сессии, обеспечивает мягкий бюджет токенов и изоляцию инструкций. | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/README.md)         |
 | **[@kalex/dsh-workspace-manager](./packages/dsh-workspace-manager)**         | **Управление каталогами рабочего пространства.** Подключает несколько каталогов из разных расположений, позволяет задавать псевдонимы и описания, а также ограничивать доступ режимом только для чтения.                                                                                                                                     | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/README.md)     |
-| **[@kalex/dsh-openai-codex-provider](./packages/dsh-openai-codex-provider)** | **Вход через ChatGPT и модели OpenAI Codex.** Позволяет использовать модели OpenAI Codex в DSH без ключа OpenAI Platform API: вход по коду устройства ChatGPT, хранение токенов в локальном Credential Store DSH, настройка сетевого маршрута и карточек сброса.                                                                             | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-codex-provider/README.md) |
+| **[@kalex/dsh-openai-hub](./packages/dsh-openai-hub)** | **OpenAI Hub: несколько аккаунтов ChatGPT.** Единый маршрут моделей, авторизованный каталог с локальным fallback, изолированные настройки аккаунтов и лимиты выбранной модели. Токены хранятся только в Credential Store DSH.                                                                             | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-hub/README.md) |
 
 ---
 
@@ -106,7 +106,7 @@ Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
 dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
+dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
 ### Вариант 2: Установка из GitHub через pnpm
@@ -115,7 +115,7 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-
 pnpm install github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
 pnpm install github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-pnpm install github:BlindGazer/DSH#path:packages/dsh-openai-codex-provider
+pnpm install github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
 ### Вариант 3: Установка из локальной папки репозитория (рекомендуется для разработки)

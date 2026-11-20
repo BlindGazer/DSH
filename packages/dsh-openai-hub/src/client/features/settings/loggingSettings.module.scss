@@ -1,0 +1,97 @@
+.root {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    max-width: 100%;
+    padding: 16px;
+    border: 1px solid var(--dsh-ui-border);
+    border-radius: 12px;
+    background: var(--dsh-ui-surface);
+    color: var(--dsh-ui-text);
+}
+
+.header,
+.row,
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-width: 0;
+}
+
+.header h2,
+.header p,
+.copy small {
+    margin: 0;
+}
+
+.header p,
+.copy small,
+.pathHint {
+    color: var(--dsh-ui-muted);
+}
+
+.scope {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    border: 1px solid var(--dsh-ui-border);
+    border-radius: 999px;
+    color: var(--dsh-ui-muted);
+    font-size: 0.85em;
+}
+
+.copy {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.pathHint {
+    margin: 0;
+    overflow-wrap: anywhere;
+}
+
+.pathHint code {
+    color: var(--dsh-ui-text);
+}
+
+.warning {
+    margin: 0;
+    color: var(--dsh-ui-danger);
+}
+
+.footer {
+    flex-wrap: wrap;
+    border-top: 1px solid var(--dsh-ui-border);
+    padding-top: 12px;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.error {
+    color: var(--dsh-ui-danger);
+}
+
+.notice {
+    color: var(--dsh-ui-muted);
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: 12px;
+}
+
+@media (max-width: 480px) {
+    .header,
+    .row {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

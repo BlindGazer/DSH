@@ -17,7 +17,14 @@ export function WorkspaceAddirModal({ target, onClose, rename, removeWorkspace, 
     const editor = useWorkspaceEditor(target, { rename, removeWorkspace, pick }, onClose, t);
     const theme = useEffectiveTheme();
     return (
-        <Modal open title={t('title')} closeLabel={t('close')} onClose={editor.close} theme={theme} cardClassName="addir-modal">
+        <Modal
+            open
+            title={t('title')}
+            closeLabel={t('close')}
+            onClose={editor.close}
+            theme={theme}
+            backdropClassName="dsh-core-root"
+            cardClassName="addir-modal">
             <div className="addir-editor" data-testid={TestId.WorkspaceManager.Editor}>
                 <input
                     className="addir-name"

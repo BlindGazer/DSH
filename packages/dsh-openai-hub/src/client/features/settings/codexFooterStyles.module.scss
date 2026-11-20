@@ -1,0 +1,235 @@
+.footer {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    min-width: 0;
+}
+
+.container {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid var(--dsh-ui-border-strong);
+    border-radius: 12px;
+}
+
+.row {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    min-width: 0;
+}
+
+.quotaCharts {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-width: 0;
+    color: var(--dsw-alias-label-secondary);
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.modelsUsageGroup,
+.modelsUsageIndicators {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-width: 0;
+}
+
+.modelsUsageGroup {
+    flex: 1 1 auto;
+}
+
+.accountError {
+    box-sizing: border-box;
+    display: flex;
+    flex: 1 1 420px;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-width: 0;
+    padding: 8px 12px;
+    border: 1px solid var(--dsh-ui-danger);
+    border-radius: 8px;
+    background: var(--dsh-ui-surface);
+}
+
+.accountError p {
+    flex: 1 1 180px;
+    min-width: 0;
+    margin: 0;
+    color: var(--dsh-ui-danger);
+    overflow-wrap: anywhere;
+}
+
+.accountErrorActions,
+.confirmationActions {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.confirmationBody {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px 0;
+}
+
+.confirmationBody p {
+    margin: 0;
+    color: var(--dsh-ui-text);
+    overflow-wrap: anywhere;
+}
+
+.modelsUsageSummary {
+    color: var(--dsw-alias-label-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.modelsEnabledSegments {
+    display: flex;
+    flex: none;
+    align-items: stretch;
+    gap: 1px;
+    width: 52px;
+    height: 4px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--dsw-alias-interactive-bg-hover);
+}
+
+.modelsEnabledSegment {
+    flex: 1 1 0;
+    min-width: 8px;
+    height: 100%;
+    border-radius: 1px;
+    background: var(--dsw-alias-border-l3);
+}
+
+.modelsEnabledSegment[data-enabled="true"] {
+    background: var(--dsw-alias-button-info-fill);
+}
+
+.quotaIndicator {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    gap: 6px;
+    color: var(--dsw-alias-label-tertiary);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.openButton {
+    flex: 0 0 auto;
+}
+
+.autoRefreshControl {
+    display: inline-flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 6px;
+}
+
+.autoRefreshTooltipTrigger {
+    display: inline-grid;
+    width: 18px;
+    height: 18px;
+    place-items: center;
+    border: 1px solid var(--dsw-alias-border-l2);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--dsw-alias-label-secondary);
+    font: inherit;
+    font-size: 11px;
+}
+
+.summary {
+    flex: 1 1 360px;
+    min-width: 0;
+    color: var(--dsh-ui-tertiary);
+    font-size: 11px;
+    line-height: 16px;
+    overflow-wrap: anywhere;
+}
+
+.modalCard {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    background: var(--dsh-ui-bg-modal);
+    color: var(--dsh-ui-text);
+    width: min(760px, calc(100vw - 32px));
+    margin: 16px;
+    max-width: 100%;
+    max-height: 88dvh;
+    overflow: hidden;
+}
+
+// :global Ð½ÑƒÐ¶ÐµÐ½ Ð´Ð»Ñ ÑÑ‚Ð¸Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸ ÐºÐ½Ð¾Ð¿ÐºÐ¸ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ð¾Ð±Ñ‰ÐµÐ³Ð¾ Core Modal Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð²Ð½ÑƒÑ‚Ñ€Ð¸ ÑÑ‚Ð¾Ð¹ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸.
+.modalCard :global(.dsh-modal-header .dsh-btn) {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--dsh-ui-muted);
+    font-size: 0;
+    line-height: 0;
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn:hover:not(:disabled)) {
+    background: var(--dsh-ui-hover);
+    color: var(--dsh-ui-text);
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn:focus-visible) {
+    outline: 2px solid var(--dsh-ui-accent);
+    outline-offset: 2px;
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn)::before,
+.modalCard :global(.dsh-modal-header .dsh-btn)::after {
+    position: absolute;
+    width: 18px;
+    height: 2px;
+    border-radius: 1px;
+    background: currentColor;
+    content: "";
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn)::before {
+    transform: rotate(45deg);
+}
+
+.modalCard :global(.dsh-modal-header .dsh-btn)::after {
+    transform: rotate(-45deg);
+}
+
+.modalContent {
+    box-sizing: border-box;
+    min-width: 0;
+    max-width: 100%;
+    padding: 20px 24px 24px;
+    max-height: calc(88dvh - 72px);
+    overflow-y: auto;
+}
