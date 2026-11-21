@@ -1,0 +1,91 @@
+.gallery {
+    min-height: 100vh;
+    padding: 40px clamp(18px, 5vw, 72px);
+    background: var(--dsh-ui-bg-page);
+    color: var(--dsh-ui-text);
+    font-family: var(--dsw-font-family);
+}
+.gallery :global(*) {
+    box-sizing: border-box;
+}
+.gallery :global(.gallery-header) {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 22px;
+}
+.gallery :global(.gallery-header h1) {
+    margin: 4px 0 8px;
+    font-size: clamp(28px, 4vw, 42px);
+}
+.gallery :global(.gallery-header p),
+.gallery :global(.gallery-summary) {
+    color: var(--dsh-ui-muted);
+}
+.gallery :global(.eyebrow) {
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 12px;
+}
+.gallery :global(.gallery-summary) {
+    margin: 18px 0;
+}
+.gallery :global(.gallery-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+    gap: 16px;
+    margin-top: 24px;
+}
+.gallery :global(.sample) {
+    min-width: 0;
+    padding: 22px;
+    border: 1px solid var(--dsh-ui-border);
+    border-radius: var(--dsw-radius-lg);
+    background: var(--dsh-ui-surface);
+    box-shadow: var(--dsw-elevation-panel);
+}
+.gallery :global(.sample h2) {
+    margin: 0 0 12px;
+    font-size: 17px;
+}
+.gallery :global(.sample code),
+.gallery :global(.sample pre) {
+    display: block;
+    margin: 8px 0 16px;
+    padding: 8px;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+    border-radius: var(--dsw-radius-sm);
+    background: var(--dsw-alias-bg-layer-2);
+    color: var(--dsh-ui-muted);
+    font-family: var(--ds-font-family-code);
+    font-size: 12px;
+}
+.gallery :global(.row) {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.gallery :global(.stack) {
+    display: grid;
+    gap: 12px;
+}
+.gallery :global(.field-label) {
+    color: var(--dsh-ui-muted);
+    font-size: 14px;
+}
+.gallery :global(.modal-copy) {
+    padding: 8px 20px 20px;
+}
+@media (max-width: 580px) {
+    .gallery {
+        padding-top: 24px;
+    }
+    .gallery :global(.gallery-header) {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

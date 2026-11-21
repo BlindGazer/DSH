@@ -9,6 +9,7 @@ import { cx } from '../../utils/classNames.js';
 export interface IconButtonProps {
     readonly children: ReactNode;
     readonly ariaLabel: string;
+    readonly size?: 'small' | 'standard';
     readonly title?: string;
     readonly onClick?: () => void;
     readonly disabled?: boolean;
@@ -18,7 +19,7 @@ export interface IconButtonProps {
 /**
  * Квадратная кнопка с иконкой фиксированной высоты (32px) вровень с выпадающими списками и кнопками DSH.
  */
-export function IconButton({ children, ariaLabel, title, onClick, disabled = false, className }: IconButtonProps) {
+export function IconButton({ children, ariaLabel, size = 'standard', title, onClick, disabled = false, className }: IconButtonProps) {
     return (
         <button
             type="button"
@@ -27,7 +28,7 @@ export function IconButton({ children, ariaLabel, title, onClick, disabled = fal
             title={title ?? ariaLabel}
             disabled={disabled}
             onClick={onClick}
-            className={cx('dsh-icon-btn', className)}>
+            className={cx('dsh-icon-btn', size === 'small' && 'dsh-icon-btn-sm', className)}>
             {children}
         </button>
     );

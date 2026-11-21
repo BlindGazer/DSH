@@ -1,4 +1,4 @@
-import { Button } from '@kalex/dsh-core';
+import { Button, Checkbox } from '@kalex/dsh-core';
 import type { Dispatch, SetStateAction } from 'react';
 import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.js';
 import { TestId } from '../../../../shared/constants/testId.js';
@@ -23,20 +23,17 @@ export function DirectoryRow({ directory, index, busy, setDirectories, t }: Dire
                 </span>
             </div>
             <div className="addir-folder-actions">
-                <label className="addir-check">
-                    <input
-                        type="checkbox"
-                        className="dsh-checkbox"
+                <div className="addir-check">
+                    <Checkbox
                         checked={directory.readOnly}
                         disabled={busy}
-                        onChange={event =>
-                            setDirectories(rows =>
-                                rows.map((row, rowIndex) => (rowIndex === index ? { ...row, readOnly: event.target.checked } : row))
-                            )
+                        ariaLabel={t('readOnly')}
+                        onChange={checked =>
+                            setDirectories(rows => rows.map((row, rowIndex) => (rowIndex === index ? { ...row, readOnly: checked } : row)))
                         }
                     />
                     {t('readOnly')}
-                </label>
+                </div>
                 <Button
                     ariaLabel={`${t('remove')}: ${directory.alias || directory.path}`}
                     title={t('remove')}

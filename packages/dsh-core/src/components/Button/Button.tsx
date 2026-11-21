@@ -10,7 +10,7 @@ export interface ButtonProps {
     readonly children: ReactNode;
     readonly onClick?: () => void;
     readonly variant?: 'secondary' | 'primary' | 'danger';
-    readonly size?: 'md' | 'sm';
+    readonly size?: 'standard' | 'small' | 'md' | 'sm';
     readonly disabled?: boolean;
     readonly title?: string;
     readonly ariaLabel?: string;
@@ -44,7 +44,7 @@ export function Button({
                 'dsh-btn',
                 variant === 'primary' && 'dsh-btn-primary',
                 variant === 'danger' && 'dsh-btn-danger',
-                size === 'sm' && 'dsh-btn-sm ar-btn-sm',
+                (size === 'sm' || size === 'small') && 'dsh-btn-sm ar-btn-sm',
                 className
             )}>
             {children}

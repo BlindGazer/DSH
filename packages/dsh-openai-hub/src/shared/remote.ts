@@ -60,6 +60,7 @@ export const SnapshotSchema = z
         deviceCode: z.string(),
         verificationUri: z.string(),
         callbackUrlRequested: z.boolean().optional(),
+        retryAvailable: z.boolean().optional(),
         error: z.string()
     })
     .strict();
@@ -90,6 +91,7 @@ export interface OpenAIHubRemote {
     recordClientLog(input: OpenAIHubClientLogEvent): Promise<true>;
     startLogin(input: LoginRequest): Promise<OpenAICodexSnapshot>;
     cancelLogin(): Promise<OpenAICodexSnapshot>;
+    retryLogin(): Promise<OpenAICodexSnapshot>;
     submitCallbackUrl(input: SubmitCallbackUrlRequest): Promise<OpenAICodexSnapshot>;
     updateAccount(input: UpdateAccountRequest): Promise<OpenAICodexSnapshot>;
     deleteAccount(input: AccountRequest): Promise<OpenAICodexSnapshot>;
@@ -117,6 +119,7 @@ const inputs = {
     recordClientLog: codec('OpenAIHubClientLogEvent', OpenAIHubClientLogEventSchema),
     startLogin: codec('LoginRequest', LoginRequestSchema),
     cancelLogin: undefined,
+    retryLogin: undefined,
     submitCallbackUrl: codec('SubmitCallbackUrlRequest', SubmitCallbackUrlRequestSchema),
     updateAccount: codec('UpdateAccountRequest', UpdateAccountRequestSchema),
     deleteAccount: codec('AccountRequest', AccountRequestSchema),
@@ -134,6 +137,7 @@ const methods = [
     'recordClientLog',
     'startLogin',
     'cancelLogin',
+    'retryLogin',
     'submitCallbackUrl',
     'updateAccount',
     'deleteAccount',

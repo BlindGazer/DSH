@@ -3,6 +3,7 @@ import os from 'node:os';
 import path from 'node:path';
 import { afterEach, describe, expect, test } from 'vitest';
 import { OpenAIHubLogging } from '../src/host/logging.js';
+import { OpenAIHubClientLogEventSchema } from '../src/shared/logging.js';
 
 const temporaryDirectories: string[] = [];
 
@@ -24,6 +25,24 @@ describe('OpenAI Hub diagnostic logging', () => {
 
         await expect(logging.loadSettings()).resolves.toEqual({ enabled: false });
         await expect(logging.recordHost({ event: 'plugin', phase: 'started' })).resolves.toBe(false);
+    });
+
+    test('stores fixed callback rejection reasons and refuses URL or free-text diagnostic fields', async () => {
+        const { logging } = await createLogging();
+        await logging.saveSettings({ enabled: true });
+        const event = {
+            event: 'login',
+            phase: 'failed',
+            operation: 'submitCallbackUrl',
+            errorCode: 'validation_failed',
+            callbackError: 'duplicate_state'
+        } as const;
+        await expect(logging.recordHost(event)).resolves.toBe(true);
+        expect(await readFile(logging.getLogPath(), 'utf8')).toContain('"callbackError":"duplicate_state"');
+        expect(OpenAIHubClientLogEventSchema.safeParse({ ...event, url: 'http://localhost:1455/auth/callback?code=private' }).success).toBe(
+            false
+        );
+        expect(OpenAIHubClientLogEventSchema.safeParse({ ...event, callbackError: 'private-code-value' }).success).toBe(false);
     });
 
     test('stores client and host events and deletes log files when disabled', async () => {

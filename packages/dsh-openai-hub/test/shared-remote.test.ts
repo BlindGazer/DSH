@@ -95,6 +95,7 @@ describe('OpenAI Hub shared remote contract', () => {
             'recordClientLog',
             'startLogin',
             'cancelLogin',
+            'retryLogin',
             'submitCallbackUrl',
             'updateAccount',
             'deleteAccount',

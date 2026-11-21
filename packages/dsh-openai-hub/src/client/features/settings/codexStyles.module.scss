@@ -28,25 +28,6 @@
     min-width: 0;
 }
 
-.panel .addAccountButton {
-    box-sizing: border-box;
-    display: flex;
-    flex: 1 1 0;
-    width: 100%;
-    min-width: 180px;
-    height: 44px;
-    justify-content: center;
-    gap: 6px;
-    border: 1px dashed var(--dsh-ui-border-strong);
-    border-radius: 12px;
-    background: transparent;
-    color: var(--dsh-ui-text);
-}
-
-.panel .addAccountButton:hover:not(:disabled) {
-    background: var(--dsh-ui-hover);
-}
-
 .header,
 .actions,
 .usageRow {

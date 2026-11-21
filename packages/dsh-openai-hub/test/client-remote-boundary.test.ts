@@ -15,6 +15,7 @@ function wire(): OpenAIHubWireRemote {
         recordClientLog: accepted,
         startLogin: snapshot,
         cancelLogin: snapshot,
+        retryLogin: snapshot,
         submitCallbackUrl: snapshot,
         updateAccount: snapshot,
         deleteAccount: snapshot,

@@ -46,6 +46,7 @@ function makeRemote(value: OpenAICodexSnapshot): OpenAICodexRemote {
         recordClientLog: vi.fn(async () => true as const),
         startLogin: vi.fn(async () => value),
         cancelLogin: vi.fn(async () => value),
+        retryLogin: vi.fn(async () => value),
         submitCallbackUrl: vi.fn(async () => value),
         updateAccount: vi.fn(async () => value),
         deleteAccount: vi.fn(async () => value),
@@ -67,6 +68,151 @@ afterEach(() => {
     document.documentElement.removeAttribute('data-theme');
 });
 describe('OpenAI Hub account settings', () => {
+    it.each([
+        ['en', 'light'],
+        ['en', 'dark'],
+        ['ru', 'light'],
+        ['ru', 'dark']
+    ] as const)('shows localized authorization cards in %s with the %s theme', async (locale, theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        const t = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex(locale, key);
+        const controller = new OpenAICodexController(makeRemote(snapshot));
+        render(<CodexSettingsPanel controller={controller} locale={locale} text={t} />);
+        fireEvent.click(await screen.findByRole('button', { name: t('addAccount') }));
+        const group = screen.getByRole('group', { name: t('authMethod') });
+        const device = within(group).getByRole<HTMLInputElement>('radio', { name: t('deviceCode') });
+        const browser = within(group).getByRole<HTMLInputElement>('radio', { name: t('browserOAuth') });
+        expect(device.checked).toBe(true);
+        expect(browser.checked).toBe(false);
+        expect(group.closest('[data-theme]')?.getAttribute('data-theme')).toBe(theme);
+        expect(document.getElementById(browser.getAttribute('aria-describedby') ?? '')?.textContent).toBe(t('browserOAuthDescription'));
+        expect(screen.queryByRole('combobox', { name: t('authMethod') })).toBeNull();
+        fireEvent.click(within(group).getByText(t('browserOAuthDescription')));
+        expect(browser.checked).toBe(true);
+        expect(device.checked).toBe(false);
+    });
+    it.each([
+        ['en', 'light'],
+        ['en', 'dark'],
+        ['ru', 'light'],
+        ['ru', 'dark']
+    ] as const)('shows callback progress until completion in %s with the %s theme', async (locale, theme) => {
+        document.documentElement.setAttribute('data-theme', theme);
+        const t = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex(locale, key);
+        const empty: OpenAICodexSnapshot = { ...snapshot, accounts: [], status: 'idle' };
+        const waiting: OpenAICodexSnapshot = {
+            ...empty,
+            status: 'waiting',
+            callbackUrlRequested: true,
+            verificationUri: 'https://auth.openai.com/oauth/authorize'
+        };
+        let current = empty;
+        const api = makeRemote(empty);
+        const pending = Promise.withResolvers<OpenAICodexSnapshot>();
+        vi.mocked(api.snapshot).mockImplementation(async () => current);
+        vi.mocked(api.startLogin).mockImplementation(async () => {
+            current = waiting;
+            return current;
+        });
+        vi.mocked(api.submitCallbackUrl).mockReturnValueOnce(pending.promise);
+        const controller = new OpenAICodexController(api);
+        render(<CodexSettingsPanel controller={controller} locale={locale} text={t} />);
+        fireEvent.click(await screen.findByRole('button', { name: t('addFirstAccount') }));
+        fireEvent.change(screen.getByLabelText(t('accountLabel')), { target: { value: 'work' } });
+        fireEvent.click(screen.getByRole('radio', { name: t('browserOAuth') }));
+        fireEvent.click(screen.getByRole('button', { name: t('login') }));
+        const input = await screen.findByLabelText(t('manualCallbackLabel'));
+        fireEvent.change(input, { target: { value: 'http://localhost:1455/auth/callback?code=test-code&state=test-state' } });
+        expect(api.submitCallbackUrl).not.toHaveBeenCalled();
+        fireEvent.click(screen.getByRole('button', { name: t('submitCallback') }));
+        const dialog = screen.getByRole('dialog');
+        expect(await within(dialog).findByRole('status', { name: t('signingIn') })).toBeTruthy();
+        expect(within(dialog).getByText(t('signingInHint'))).toBeTruthy();
+        expect(within(dialog).queryByText(t('waiting'))).toBeNull();
+        expect(within(dialog).queryByRole('link')).toBeNull();
+        expect(within(dialog).queryByLabelText(t('manualCallbackLabel'))).toBeNull();
+        expect(within(dialog).queryByRole('button', { name: t('submitCallback') })).toBeNull();
+        expect(within(dialog).getByRole('button', { name: t('cancel') })).toBeTruthy();
+        current = { ...empty, status: 'starting', callbackUrlRequested: false };
+        await act(async () => pending.resolve(current));
+        expect(within(dialog).getByRole('status', { name: t('signingIn') })).toBeTruthy();
+        current = { ...empty, status: 'done', accounts: [account('work')] };
+        await act(async () => {
+            await controller.load(true);
+        });
+        await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull(), { timeout: 2500 });
+    });
+
+    it('offers a manual retry after token-exchange timeout without asking for the callback again', async () => {
+        const timedOut: OpenAICodexSnapshot = {
+            ...snapshot,
+            accounts: [],
+            status: 'error',
+            retryAvailable: true,
+            error: 'Connection timed out.'
+        };
+        const api = makeRemote(timedOut);
+        vi.mocked(api.retryLogin).mockResolvedValueOnce({ ...timedOut, status: 'starting', retryAvailable: false, error: '' });
+        const controller = new OpenAICodexController(api);
+        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
+        const dialog = screen.getByRole('dialog');
+        expect(within(dialog).getByText('Connection timed out.')).toBeTruthy();
+        expect(within(dialog).getByRole('button', { name: text('retry') })).toBeTruthy();
+        expect(within(dialog).queryByLabelText(text('manualCallbackLabel'))).toBeNull();
+        fireEvent.click(within(dialog).getByRole('button', { name: text('retry') }));
+        await waitFor(() => expect(api.retryLogin).toHaveBeenCalledOnce());
+        expect(await within(dialog).findByRole('status', { name: text('signingIn') })).toBeTruthy();
+        expect(api.submitCallbackUrl).not.toHaveBeenCalled();
+    });
+
+    it('restores the callback form when submission is rejected', async () => {
+        const waiting: OpenAICodexSnapshot = {
+            ...snapshot,
+            accounts: [],
+            status: 'waiting',
+            callbackUrlRequested: true,
+            verificationUri: 'https://auth.openai.com/oauth/authorize'
+        };
+        const api = makeRemote(waiting);
+        vi.mocked(api.submitCallbackUrl).mockRejectedValueOnce(new Error('Synthetic rejection'));
+        const controller = new OpenAICodexController(api);
+        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
+        const callback = 'http://localhost:1455/auth/callback?code=test-code&state=test-state';
+        fireEvent.change(await screen.findByLabelText(text('manualCallbackLabel')), { target: { value: callback } });
+        fireEvent.click(screen.getByRole('button', { name: text('submitCallback') }));
+        expect(await screen.findByRole('alert')).toBeTruthy();
+        expect(screen.queryByRole('status', { name: text('signingIn') })).toBeNull();
+        expect(screen.getByDisplayValue(callback)).toBeTruthy();
+        expect(screen.getByRole('button', { name: text('submitCallback') }).hasAttribute('disabled')).toBe(false);
+    });
+
+    it.each(['device-code', 'browser-oauth'] as const)('submits the selected %s authorization card', async authMethod => {
+        const api = makeRemote({ ...snapshot, status: 'idle', accounts: [] });
+        const pending = Promise.withResolvers<OpenAICodexSnapshot>();
+        vi.mocked(api.startLogin).mockReturnValueOnce(pending.promise);
+        const controller = new OpenAICodexController(api);
+        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
+        fireEvent.change(screen.getByRole('textbox', { name: text('accountLabel') }), { target: { value: 'work' } });
+        fireEvent.click(screen.getByRole('radio', { name: text(authMethod === 'device-code' ? 'deviceCode' : 'browserOAuth') }));
+        fireEvent.click(screen.getByRole('button', { name: text('login') }));
+        await waitFor(() => expect(api.startLogin).toHaveBeenCalledWith({ accountLabel: 'work', authMethod }));
+        expect(screen.getByRole('group', { name: text('authMethod') }).hasAttribute('disabled')).toBe(true);
+        await act(async () => pending.resolve({ ...snapshot, status: 'waiting', accounts: [] }));
+    });
+    it.each(['light', 'dark'] as const)('uses the Core collection add action in the %s theme', async theme => {
+        document.documentElement.setAttribute('data-theme', theme);
+        const controller = new OpenAICodexController(makeRemote(snapshot));
+        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        const button = await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' });
+        expect(button.classList.contains('dsh-collection-add-btn')).toBe(true);
+        expect(button.querySelector('svg[aria-hidden="true"]')).toBeTruthy();
+        expect(button.closest('.dsh-core-root')?.getAttribute('data-theme')).toBe(theme);
+        fireEvent.click(button);
+        expect(await screen.findByRole('dialog')).toBeTruthy();
+    });
     it('does not show a catalog failure in the account information panel', async () => {
         const failedCatalog = { ...account('alpha'), catalogStatus: 'error' as const };
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [failedCatalog] }));
@@ -131,6 +277,17 @@ describe('OpenAI Hub account settings', () => {
 
         expect(fiveHourChart.querySelector('title')?.textContent).toBe('Лимит на 5 часов: 92%');
         expect(weeklyChart.querySelector('title')?.textContent).toBe('Недельный лимит: 93%');
+    });
+    it('hides the five-hour chart when only the weekly limit is available', async () => {
+        const localized = {
+            ...account('alpha'),
+            usageLimits: [{ name: 'Codex', usedPercent: 7, windowSeconds: 604_800, resetAt: 0 }]
+        };
+        const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [localized] }));
+        render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
+
+        expect(await screen.findByRole('progressbar', { name: 'Weekly limit: 93%' })).toBeTruthy();
+        expect(screen.queryByRole('progressbar', { name: '5-hour limit: 100%' })).toBeNull();
     });
     it('keeps the latest quota data when automatic refresh is disabled', async () => {
         const current = {
@@ -221,7 +378,9 @@ describe('OpenAI Hub account settings', () => {
         const emptySnapshot = { ...snapshot, accounts: [] };
         vi.mocked(api.snapshot).mockResolvedValue(emptySnapshot);
         vi.mocked(api.deleteAccount).mockResolvedValueOnce(emptySnapshot);
-        fireEvent.click(within(panel).getByRole('button', { name: 'Delete account' }));
+        const deleteButton = within(panel).getByRole('button', { name: 'Delete account' });
+        expect(deleteButton.querySelector('svg')).toBeTruthy();
+        fireEvent.click(deleteButton);
         const deleteDialog = await screen.findByRole('dialog');
         expect(within(deleteDialog).getByText('Delete this account and its settings?')).toBeTruthy();
         fireEvent.click(within(deleteDialog).getByRole('button', { name: 'Delete account' }));
@@ -272,12 +431,13 @@ describe('OpenAI Hub account settings', () => {
         const noData = { ...account('empty'), usageStatus: 'idle' as const };
         const emptyController = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [noData] }));
         render(<CodexModelsFooterEntry controller={emptyController} locale="en" text={text} />);
-        expect(await screen.findByRole('progressbar', { name: '5-hour limit: 0%' })).toBeTruthy();
-        expect(screen.getByRole('progressbar', { name: 'Weekly limit: 0%' })).toBeTruthy();
+        expect(await screen.findByRole('progressbar', { name: 'Weekly limit: 0%' })).toBeTruthy();
+        expect(screen.queryByRole('progressbar', { name: '5-hour limit: 0%' })).toBeNull();
         expect(screen.queryByText('Loading usage...')).toBeNull();
         fireEvent.click(screen.getByRole('button', { name: 'OpenAI Codex' }));
         const accountDialog = await screen.findByTestId('dsh-modal-card');
-        expect(within(accountDialog).getByRole('progressbar', { name: '5-hour limit: 0%' })).toBeTruthy();
+        expect(within(accountDialog).getByRole('progressbar', { name: 'Weekly limit: 0%' })).toBeTruthy();
+        expect(within(accountDialog).queryByRole('progressbar', { name: '5-hour limit: 0%' })).toBeNull();
         expect(within(accountDialog).queryByText('Usage details are unavailable.')).toBeNull();
         cleanup();
 

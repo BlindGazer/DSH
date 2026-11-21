@@ -4,10 +4,12 @@ import {
     Button,
     ChildrenLazy,
     CircularProgress,
+    CollectionAddButton,
     IconButton,
     LinearProgress,
     Modal,
     ProgressBar,
+    RadioCardGroup,
     Skeleton,
     Spinner,
     SwitchControl,
@@ -18,6 +20,29 @@ import {
 } from '../src/index.js';
 
 describe('@kalex/dsh-core UI Components', () => {
+    it('renders radio cards as one named native group with descriptions and disabled state', () => {
+        const html = renderToString(
+            <RadioCardGroup
+                name="method"
+                label="Sign-in method"
+                value="code"
+                disabled
+                options={[
+                    { value: 'code', label: 'By code', description: 'Enter the device code.' },
+                    { value: 'link', label: 'By link', description: 'Paste the callback URL.' }
+                ]}
+                onChange={() => undefined}
+            />
+        );
+        expect(html).toContain('<fieldset class="dsh-radio-card-group" disabled="">');
+        expect(html).toContain('<legend class="dsh-radio-card-legend">Sign-in method</legend>');
+        expect(html.match(/type="radio"/g)).toHaveLength(2);
+        expect(html.match(/name="method"/g)).toHaveLength(2);
+        expect(html.match(/checked=""/g)).toHaveLength(1);
+        expect(html).toContain('aria-describedby="method-link-description"');
+        expect(html).toContain('id="method-link-description"');
+    });
+
     it('renders ThemedSelect', () => {
         const html = renderToString(
             <ThemedSelect
@@ -52,6 +77,20 @@ describe('@kalex/dsh-core UI Components', () => {
         const iconBtnHtml = renderToString(<IconButton ariaLabel="Proxy settings">gear</IconButton>);
         expect(iconBtnHtml).toContain('aria-label="Proxy settings"');
         expect(iconBtnHtml).toContain('dsh-icon-btn');
+    });
+
+    it('renders CollectionAddButton with a decorative plus and native button props', () => {
+        const html = renderToString(
+            <CollectionAddButton disabled className="custom-add" title="Add an account">
+                Add account
+            </CollectionAddButton>
+        );
+        expect(html).toContain('dsh-collection-add-btn custom-add');
+        expect(html).toContain('type="button"');
+        expect(html).toContain('disabled=""');
+        expect(html).toContain('aria-hidden="true"');
+        expect(html).toContain('title="Add an account"');
+        expect(html).toContain('<span>Add account</span>');
     });
 
     it('renders Tabs', () => {
@@ -113,6 +152,16 @@ describe('@kalex/dsh-core UI Components', () => {
         expect(html).toContain('aria-label="Usage"');
         expect(html).toContain('type="button"');
         expect(html).not.toContain('role="tooltip"');
+    });
+
+    it('supports non-button tooltip triggers for interactive children', () => {
+        const html = renderToString(
+            <Tooltip triggerLabel="Usage" content="Usage details" triggerElement="span">
+                <span>Usage</span>
+            </Tooltip>
+        );
+        expect(html).toContain('<span aria-label="Usage"><span>Usage</span></span>');
+        expect(html).not.toContain('<button');
     });
 
     it('renders loading indicators with TestId.Common.Loading', () => {

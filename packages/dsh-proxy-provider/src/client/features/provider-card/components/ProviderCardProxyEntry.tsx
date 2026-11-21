@@ -1,4 +1,4 @@
-import { Spinner, ThemedSelect, useEffectiveTheme } from '@kalex/dsh-core';
+import { SettingsIcon, Spinner, ThemedSelect, useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect } from 'react';
 
 import { ProxyTestId } from '../../../../shared/constants/testId.js';
@@ -95,9 +95,7 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
                     aria-label={tProxy('Proxy settings')}
                     title={tProxy('Proxy settings')}
                     onClick={() => proxyStore.publish({ modalOpen: true })}>
-                    <svg width={16} height={16} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .12-.61l-1.92-3.32a.5.5 0 0 0-.59-.21l-2.39.96a7.2 7.2 0 0 0-1.62-.92l-.36-2.57a.5.5 0 0 0-.47-.41h-3.84a.5.5 0 0 0-.47.41L9.26 5.38a7.2 7.2 0 0 0-1.62.92l-2.39-.96a.5.5 0 0 0-.59.21L2.74 8.87a.5.5 0 0 0 .12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58a.5.5 0 0 0-.12.61l1.92 3.32c.12.21.37.29.59.21l2.39-.96c.5.38 1.03.69 1.62.92l.36 2.57a.5.5 0 0 0 .47.41h3.84a.5.5 0 0 0 .47-.41l.36-2.57a7.2 7.2 0 0 0 1.62-.92l2.39.96a.5.5 0 0 0 .59-.21l1.92-3.32a.5.5 0 0 0-.12-.61l-2.02-1.58ZM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z" />
-                    </svg>
+                    <SettingsIcon />
                 </button>
             </div>
         </div>

@@ -1,0 +1,25 @@
+@import url("../../node_modules/dsh-github-styles/base.css");
+@import url("../../node_modules/dsh-github-styles/corner-shape.css");
+@import url("../../node_modules/dsh-github-styles/design-platform.css");
+@import url("../../node_modules/dsh-github-styles/focus.css");
+@import url("../../node_modules/dsh-github-styles/gradient-shadow-text.css");
+@import url("../../node_modules/dsh-github-styles/onboarding.css");
+@import url("../../node_modules/dsh-github-styles/scrollbar.css");
+@import url("../../node_modules/dsh-github-styles/shiki.css");
+@import url("../../node_modules/dsh-github-styles/brand-font.css");
+
+html,
+body,
+#root {
+    min-height: 100%;
+    margin: 0;
+    font-family: var(--dsw-font-family);
+    font-size: 14px;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}

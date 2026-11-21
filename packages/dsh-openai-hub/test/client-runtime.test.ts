@@ -12,6 +12,7 @@ function remote(value: OpenAICodexSnapshot): OpenAICodexRemote {
         recordClientLog: vi.fn(async () => true as const),
         startLogin: vi.fn(async () => value),
         cancelLogin: vi.fn(async () => value),
+        retryLogin: vi.fn(async () => value),
         submitCallbackUrl: vi.fn(async () => value),
         updateAccount: vi.fn(async () => value),
         deleteAccount: vi.fn(async () => value),

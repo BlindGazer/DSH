@@ -1,3 +1,4 @@
+import { Button } from '@kalex/dsh-core';
 import type React from 'react';
 import type { DiagnosisData, RouterStateResponse } from '../../../shared/models/RouterModels.js';
 
@@ -41,9 +42,9 @@ export function DiagnosticsTab({ data, t, inspect, inspectPath, setInspectPath, 
                         value={inspectPath}
                         onChange={event => setInspectPath(event.target.value)}
                     />
-                    <button className="ar-btn" disabled={busy} type="submit">
+                    <Button className="ar-btn" disabled={busy} type="submit">
                         {t('check')}
-                    </button>
+                    </Button>
                 </form>
                 {diagnosis?.note ? <p className="ar-muted">{diagnosis.note}</p> : null}
                 {diagnosis?.results?.map(row => (

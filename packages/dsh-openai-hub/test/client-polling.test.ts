@@ -14,6 +14,7 @@ function makeController() {
         recordClientLog: vi.fn(async () => true as const),
         startLogin: vi.fn(async () => snapshot),
         cancelLogin: vi.fn(async () => snapshot),
+        retryLogin: vi.fn(async () => snapshot),
         submitCallbackUrl: vi.fn(async () => snapshot),
         updateAccount: vi.fn(async () => snapshot),
         deleteAccount: vi.fn(async () => snapshot),

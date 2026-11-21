@@ -25,6 +25,10 @@ test('registers the OpenAI Hub remote and forwards the complete account-oriented
             calls.push('cancel-login');
             return snapshot;
         },
+        retryLogin: async () => {
+            calls.push('retry-login');
+            return snapshot;
+        },
         submitCallbackUrl: async () => {
             calls.push('callback-url');
             return snapshot;

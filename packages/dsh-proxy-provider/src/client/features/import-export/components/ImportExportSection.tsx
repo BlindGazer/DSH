@@ -1,3 +1,4 @@
+import { Checkbox } from '@kalex/dsh-core';
 import { type ProxyClientSnapshot, tProxy } from '../../../app/proxyStore.js';
 import { proxyClasses } from '../../../app/proxyStyles.js';
 
@@ -53,22 +54,22 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         gap: '10px',
                         flexWrap: 'wrap'
                     }}>
-                    <label
+                    <div
                         className={proxyClasses('checkboxRow')}
                         style={{ fontSize: '12px', marginRight: '2px' }}
                         title={tProxy(
                             'When checked, Export will ask for a password and include encrypted login & password for portable transfer to another computer'
                         )}>
-                        <input
-                            type="checkbox"
+                        <Checkbox
                             checked={exportWithCreds}
-                            onChange={event => {
-                                setExportWithCreds(event.target.checked);
-                                if (!event.target.checked) setExportPasswordPromptOpen(false);
+                            ariaLabel={tProxy('Include credentials')}
+                            onChange={checked => {
+                                setExportWithCreds(checked);
+                                if (!checked) setExportPasswordPromptOpen(false);
                             }}
                         />
                         <span>{tProxy('Include credentials')}</span>
-                    </label>
+                    </div>
                     <button
                         type="button"
                         className={proxyClasses('button', 'buttonSmall')}

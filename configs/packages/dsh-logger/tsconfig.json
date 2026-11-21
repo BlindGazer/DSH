@@ -1,0 +1,10 @@
+{
+    "extends": "../../tsconfig.base.json",
+    "compilerOptions": {
+        "composite": true,
+        "rootDir": "../../../packages/dsh-logger/src",
+        "outDir": "../../../packages/dsh-logger/lib",
+        "declarationDir": "../../../packages/dsh-logger/lib"
+    },
+    "include": ["../../../packages/dsh-logger/src/**/*"]
+}

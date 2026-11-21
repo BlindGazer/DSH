@@ -15,7 +15,8 @@
     "fix": "node scripts/fix.mjs",
     "check": "node scripts/check.mjs",
     "verify": "pnpm -r run verify",
-    "verify:tree-shaking": "node scripts/verify-tree-shaking.mjs"
+    "verify:tree-shaking": "node scripts/verify-tree-shaking.mjs",
+    "demo-core": "pnpm --filter @kalex/dsh-core demo --host 127.0.0.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.6.5",

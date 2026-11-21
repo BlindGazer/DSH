@@ -1,8 +1,11 @@
+import { randomUUID } from 'node:crypto';
 import type { Context } from '@deepseek-ai/cordis';
 import type { ConfigEditor } from '@deepseek-ai/dsh-config-editor';
+import type { ProviderAuthInteraction } from '@earendil-works/pi-ai';
 import type { z } from 'zod';
 import { type AccountConfig, type AuthMethod, Config, reconcileModels } from '../shared/accounts.js';
 import { credentialRefForAccount, PackageId } from '../shared/constants/runtime.js';
+import type { OpenAIHubLogEvent } from '../shared/logging.js';
 import type {
     AccountRequest,
     AccountSnapshot,
@@ -22,9 +25,13 @@ import {
     SubmitCallbackUrlRequestSchema,
     UpdateAccountRequestSchema
 } from '../shared/remote.js';
+import { loginBrowser } from './browser-login.js';
+import { BrowserLoginError } from './browser-login-error.js';
 import { catalogForIds, localCatalog, mergeCatalog, requestCatalog } from './catalog.js';
 import { AccountCredentials, type OAuthCredential, OAuthCredentialSchema } from './credentials.js';
 import type { OpenAIHubLogging } from './logging.js';
+import { withOAuthNetworkDiagnostics } from './oauth-network-diagnostics.js';
+import { oauthNetworkFailure } from './oauth-network-error.js';
 import { type CodexModel, createCodexProvider } from './provider.js';
 import { createResetRedeemer, requestResetCredits } from './reset-credits.js';
 import { requestCodexUsage } from './usage.js';
@@ -34,6 +41,7 @@ interface LoginStatus {
     deviceCode: string;
     verificationUri: string;
     callbackUrlRequested: boolean;
+    retryAvailable?: boolean;
     error: string;
 }
 interface LoginAttempt {
@@ -100,6 +108,7 @@ export class AccountsRuntime {
     private loginController?: AbortController;
     private readonly login: LoginStatus;
     private submitManualCode: ((url: string) => void) | undefined;
+    private retryOAuthTokenExchange: (() => void) | undefined;
     constructor(
         private readonly ctx: Context,
         config: z.infer<typeof Config>,
@@ -111,6 +120,7 @@ export class AccountsRuntime {
             deviceCode: '',
             verificationUri: '',
             callbackUrlRequested: false,
+            retryAvailable: false,
             error: ''
         };
         loginStatuses.set(ctx, this.login);
@@ -120,6 +130,7 @@ export class AccountsRuntime {
                 this.disposed = true;
                 this.loginGeneration++;
                 this.loginController?.abort();
+                this.retryOAuthTokenExchange = undefined;
                 const attempt = loginAttempts.get(this.ctx);
                 if (attempt && !attempt.committing) {
                     attempt.cancelled = true;
@@ -128,6 +139,7 @@ export class AccountsRuntime {
                         deviceCode: '',
                         verificationUri: '',
                         callbackUrlRequested: false,
+                        retryAvailable: false,
                         error: ''
                     });
                 }
@@ -162,6 +174,29 @@ export class AccountsRuntime {
     private diagnostic(message: string): void {
         console.error(`[${PackageId}] ${message}`);
         this.ctx.logger.error(`[${PackageId}] ${message}`);
+    }
+    private waitForOAuthRetry(error: BrowserLoginError, signal?: AbortSignal): Promise<void> {
+        return new Promise(resolve => {
+            let settled = false;
+            const finish = () => {
+                if (settled) return;
+                settled = true;
+                signal?.removeEventListener('abort', finish);
+                this.retryOAuthTokenExchange = undefined;
+                resolve();
+            };
+            this.retryOAuthTokenExchange = () => {
+                Object.assign(this.login, { status: 'starting', retryAvailable: false, error: '' });
+                finish();
+            };
+            Object.assign(this.login, {
+                status: 'error',
+                retryAvailable: true,
+                error: error.message
+            });
+            signal?.addEventListener('abort', finish, { once: true });
+            if (signal?.aborted) finish();
+        });
     }
     async snapshot(): Promise<OpenAICodexSnapshot> {
         for (const account of this.accounts) {
@@ -207,9 +242,31 @@ export class AccountsRuntime {
         };
         loginAttempts.set(this.ctx, attempt);
         this.loginController = controller;
-        Object.assign(this.login, { status: 'starting', deviceCode: '', verificationUri: '', callbackUrlRequested: false, error: '' });
+        this.retryOAuthTokenExchange = undefined;
+        Object.assign(this.login, {
+            status: 'starting',
+            deviceCode: '',
+            verificationUri: '',
+            callbackUrlRequested: false,
+            retryAvailable: false,
+            error: ''
+        });
         const oauth = createCodexProvider().auth.oauth;
         if (!oauth) throw new Error('OpenAI Hub OAuth unavailable');
+        const loginAttemptId = randomUUID();
+        let observedFailure: OpenAIHubLogEvent | undefined;
+        const report = (event: OpenAIHubLogEvent) => {
+            if (event.phase === 'failed') observedFailure = event;
+            else if (event.phase === 'started' && event.loginStage === 'token_exchange') observedFailure = undefined;
+            void this.logging.recordHost({ ...event, loginAttemptId, accountLabel: request.accountLabel, authMethod: request.authMethod });
+        };
+        const invokeLogin =
+            request.authMethod === 'browser-oauth'
+                ? (interaction: ProviderAuthInteraction) =>
+                      loginBrowser(interaction, fetch, report, (error, signal) => this.waitForOAuthRetry(error, signal))
+                : oauth.login;
+        const login = (interaction: ProviderAuthInteraction) => withOAuthNetworkDiagnostics(() => invokeLogin(interaction), report);
+        report({ event: 'login', phase: 'started', diagnosticVersion: 3 });
         let notifyReady: (() => void) | undefined;
         const ready = new Promise<void>(resolve => {
             notifyReady = resolve;
@@ -218,7 +275,7 @@ export class AccountsRuntime {
         const operation = (async () => {
             try {
                 const credential = OAuthCredentialSchema.parse(
-                    await oauth.login({
+                    await login({
                         signal: controller.signal,
                         notify: info => {
                             if (!current()) return;
@@ -255,24 +312,12 @@ export class AccountsRuntime {
                         prompt: async prompt => {
                             if (prompt.type === 'select') return request.authMethod === 'device-code' ? 'device_code' : 'browser';
                             if (prompt.type === 'manual_code' && request.authMethod === 'browser-oauth') {
-                                const signal = AbortSignal.any([
-                                    controller.signal,
-                                    ...(prompt.signal ? [prompt.signal] : []),
-                                    AbortSignal.timeout(600000)
-                                ]);
+                                const signal = controller.signal;
                                 Object.assign(this.login, { status: 'waiting', callbackUrlRequested: true });
                                 void this.logging.recordHost({ event: 'login', phase: 'waiting', authMethod: request.authMethod });
                                 notifyReady?.();
                                 return new Promise<string>((resolve, reject) => {
                                     const abort = () => {
-                                        if (prompt.signal?.aborted && !controller.signal.aborted) {
-                                            void this.logging.recordHost({
-                                                event: 'login',
-                                                phase: 'callback_received',
-                                                accountLabel: request.accountLabel,
-                                                authMethod: request.authMethod
-                                            });
-                                        }
                                         this.submitManualCode = undefined;
                                         Object.assign(this.login, { callbackUrlRequested: false });
                                         reject(new Error('OpenAI Hub browser authorization ended'));
@@ -280,7 +325,12 @@ export class AccountsRuntime {
                                     this.submitManualCode = url => {
                                         signal.removeEventListener('abort', abort);
                                         this.submitManualCode = undefined;
-                                        Object.assign(this.login, { callbackUrlRequested: false });
+                                        Object.assign(this.login, {
+                                            status: 'starting',
+                                            callbackUrlRequested: false,
+                                            verificationUri: '',
+                                            deviceCode: ''
+                                        });
                                         resolve(url);
                                     };
                                     if (signal.aborted) abort();
@@ -400,6 +450,7 @@ export class AccountsRuntime {
                         deviceCode: '',
                         verificationUri: '',
                         callbackUrlRequested: false,
+                        retryAvailable: false,
                         error: ''
                     });
                     await this.logging.recordHost({
@@ -414,24 +465,30 @@ export class AccountsRuntime {
                         if (existingAccount) void this.refreshUsage({ accountLabel: config.accountLabel }).catch(() => undefined);
                     }
                 });
-            } catch {
+            } catch (error) {
                 if (current()) {
+                    const failure =
+                        (error instanceof BrowserLoginError ? error.diagnostic : undefined) ??
+                        observedFailure ??
+                        oauthNetworkFailure(error instanceof Error ? error : undefined, 'oauth_internal_failed');
                     Object.assign(this.login, {
                         status: 'error',
                         deviceCode: '',
                         verificationUri: '',
                         callbackUrlRequested: false,
-                        error: 'OpenAI Hub sign-in failed'
+                        retryAvailable: false,
+                        error: error instanceof BrowserLoginError ? error.message : 'OpenAI Hub sign-in failed'
                     });
                     await this.logging.recordHost({
+                        ...failure,
                         event: 'login',
                         phase: 'failed',
                         state: 'error',
-                        errorCode: 'oauth_failed',
+                        loginAttemptId,
                         accountLabel: request.accountLabel,
                         authMethod: request.authMethod
                     });
-                    this.diagnostic('Sign-in failed');
+                    this.diagnostic(`${failure.errorCode}: ${failure.errorMessage} [${failure.networkError ?? 'other'}]`);
                 }
             } finally {
                 if (loginAttempts.get(this.ctx) === attempt) loginAttempts.delete(this.ctx);
@@ -461,25 +518,45 @@ export class AccountsRuntime {
             this.loginController?.abort();
             delete this.loginController;
             this.submitManualCode = undefined;
+            this.retryOAuthTokenExchange = undefined;
             Object.assign(this.login, {
                 status: 'idle',
                 deviceCode: '',
                 verificationUri: '',
                 callbackUrlRequested: false,
+                retryAvailable: false,
                 error: ''
             });
         }
         return this.snapshot();
     }
+    async retryLogin(): Promise<OpenAICodexSnapshot> {
+        const retry = this.retryOAuthTokenExchange;
+        if (!retry || !this.login.retryAvailable || this.disposed) throw new Error('OpenAI Hub sign-in retry is unavailable');
+        retry();
+        return this.snapshot();
+    }
     async submitCallbackUrl(input: SubmitCallbackUrlRequest): Promise<OpenAICodexSnapshot> {
-        const { url: rawUrl } = SubmitCallbackUrlRequestSchema.parse(input);
+        const reject = async (callbackError: NonNullable<OpenAIHubLogEvent['callbackError']>): Promise<never> => {
+            // Только фиксированная причина: URL, code и state не должны попадать в журнал.
+            await this.logging.recordHost({
+                event: 'login',
+                phase: 'failed',
+                operation: 'submitCallbackUrl',
+                errorCode: 'validation_failed',
+                callbackError
+            });
+            throw new Error('OpenAI callback URL could not be accepted');
+        };
+        const parsed = SubmitCallbackUrlRequestSchema.safeParse(input);
+        if (!parsed.success) return reject('invalid_url');
+        const rawUrl = parsed.data.url.trim();
         let url: URL;
         try {
             url = new URL(rawUrl);
         } catch {
-            throw new Error('Invalid OpenAI callback URL');
+            return reject('invalid_url');
         }
-        const parameters = [...url.searchParams.keys()];
         if (
             url.protocol !== 'http:' ||
             url.hostname !== 'localhost' ||
@@ -487,17 +564,15 @@ export class AccountsRuntime {
             url.pathname !== '/auth/callback' ||
             url.username ||
             url.password ||
-            url.hash ||
-            !url.searchParams.get('code') ||
-            !url.searchParams.get('state') ||
-            parameters.length !== 2 ||
-            new Set(parameters).size !== 2 ||
-            !parameters.includes('code') ||
-            !parameters.includes('state')
+            url.hash
         )
-            throw new Error('Invalid OpenAI callback URL');
-        if (!this.login.callbackUrlRequested || !this.submitManualCode || this.disposed)
-            throw new Error('OpenAI callback prompt is no longer active');
+            return reject('invalid_endpoint');
+        // OpenAI может добавлять scope и другие метаданные; уникальными обязаны быть только code и state.
+        if (url.searchParams.getAll('code').length > 1) return reject('duplicate_code');
+        if (url.searchParams.getAll('state').length > 1) return reject('duplicate_state');
+        if (!url.searchParams.get('code')?.trim()) return reject('missing_code');
+        if (!url.searchParams.get('state')?.trim()) return reject('missing_state');
+        if (!this.login.callbackUrlRequested || !this.submitManualCode || this.disposed) return reject('inactive_prompt');
         const attempt = loginAttempts.get(this.ctx);
         if (attempt)
             void this.logging.recordHost({

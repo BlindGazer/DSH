@@ -1,4 +1,7 @@
+import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { openaiCodexProvider } from "@earendil-works/pi-ai/providers/openai-codex";
+import { AsyncLocalStorage } from "node:async_hooks";
+import { channel } from "node:diagnostics_channel";
 import { createRequire } from "node:module";
 import "node:buffer";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
@@ -7,10 +10,24 @@ import { googleGenerativeAIApi } from "@earendil-works/pi-ai/api/google-generati
 import { openAICompletionsApi } from "@earendil-works/pi-ai/api/openai-completions.lazy";
 import { openAIResponsesApi } from "@earendil-works/pi-ai/api/openai-responses.lazy";
 import { isContextOverflow } from "@earendil-works/pi-ai/utils/overflow";
-import { createHash, randomUUID } from "node:crypto";
 import os from "node:os";
 import { lstat, mkdir, readFile, readdir, realpath, rename, unlink, writeFile } from "node:fs/promises";
 import path from "node:path";
+// ../dsh-logger/lib/host.js
+function createHostLogger(options = {}) {
+	const write = options.write ?? ((level, message, context) => {
+		const payload = context === void 0 ? message : `${message} ${JSON.stringify(context)}`;
+		if (level === "error") console.error(payload);
+		else if (level === "warn") console.warn(payload);
+		else console.log(payload);
+	});
+	return {
+		debug: (message, context) => write("debug", message, context),
+		info: (message, context) => write("info", message, context),
+		warn: (message, context) => write("warn", message, context),
+		error: (message, context) => write("error", message, context)
+	};
+}
 // ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js
 function getEnumValues(entries) {
 	const numericValues = Object.values(entries).filter((v) => typeof v === "number");
@@ -1033,7 +1050,7 @@ function datetime(args) {
 	return new RegExp(`^${dateSource}T(?:${timeRegex})$`);
 }
 var anyString = /^[\s\S]{0,}$/;
-var number$1 = /^-?\d+(?:\.\d+)?$/;
+var number$2 = /^-?\d+(?:\.\d+)?$/;
 var boolean$1 = /^(?:true|false)$/i;
 var lowercase = /^[^A-Z]*$/;
 var uppercase = /^[^a-z]*$/;
@@ -1324,6 +1341,41 @@ var $ZodCheckEndsWith = /*@__PURE__*/ $constructor("$ZodCheckEndsWith", (inst, d
 			inst,
 			continue: !def.abort
 		});
+	};
+});
+function handleCheckPropertyResult(result, payload, property) {
+	if (result.issues.length) payload.issues.push(...prefixIssues(property, result.issues));
+}
+var $ZodCheckProperties = /*@__PURE__*/ $constructor("$ZodCheckProperties", (inst, def) => {
+	$ZodCheck.init(inst, def);
+	hide(inst, Symbol.iterator, function* () {
+		yield inst;
+	});
+	let entries;
+	inst._zod.check = (payload) => {
+		if (payload.value == null) {
+			payload.issues.push({
+				expected: "object",
+				code: "invalid_type",
+				input: payload.value,
+				inst
+			});
+			return;
+		}
+		entries ?? (entries = Reflect.ownKeys(def.shape).map((key) => [key, def.shape[key]]));
+		const input = payload.value;
+		let proms;
+		for (const [key, schema] of entries) {
+			const result = schema._zod.run({
+				value: input[key],
+				issues: []
+			}, {});
+			if (result instanceof Promise) {
+				proms ?? (proms = []);
+				proms.push(result.then((result) => handleCheckPropertyResult(result, payload, key)));
+			} else handleCheckPropertyResult(result, payload, key);
+		}
+		if (proms) return Promise.all(proms).then(() => void 0);
 	};
 });
 var $ZodCheckOverwrite = /*@__PURE__*/ $constructor("$ZodCheckOverwrite", (inst, def) => {
@@ -1812,7 +1864,7 @@ var $ZodJWT = /*@__PURE__*/ $constructor("$ZodJWT", (inst, def) => {
 });
 var $ZodNumber = /*@__PURE__*/ $constructor("$ZodNumber", (inst, def) => {
 	$ZodType.init(inst, def);
-	inst._zod.pattern = number$1;
+	inst._zod.pattern = number$2;
 	inst._zod.parse = (payload, _ctx) => {
 		if (def.coerce) try {
 			payload.value = Number(payload.value);
@@ -3323,6 +3375,15 @@ function _number(Class, params) {
 	}));
 }
 // @__NO_SIDE_EFFECTS__
+function _coercedNumber(Class, params) {
+	return new Class(snapshotChecks({
+		type: "number",
+		coerce: true,
+		checks: [],
+		...normalizeParams(params)
+	}));
+}
+// @__NO_SIDE_EFFECTS__
 function _int(Class, params) {
 	return new Class({
 		type: "number",
@@ -3468,6 +3529,14 @@ function _endsWith(suffix, params) {
 		format: "ends_with",
 		...normalizeParams(params),
 		suffix
+	});
+}
+// @__NO_SIDE_EFFECTS__
+function _properties(shape, params) {
+	return new $ZodCheckProperties({
+		check: "properties",
+		shape,
+		...normalizeParams(params)
 	});
 }
 // @__NO_SIDE_EFFECTS__
@@ -4878,7 +4947,7 @@ var ZodNumber = /*@__PURE__*/ $constructor("ZodNumber", (inst, def) => {
 		return this;
 	}
 }));
-function number(params) {
+function number$1(params) {
 	return /* @__PURE__ */ _number(ZodNumber, params);
 }
 var ZodNumberFormat = /*@__PURE__*/ $constructor("ZodNumberFormat", (inst, def) => {
@@ -5238,6 +5307,35 @@ function refine(fn, _params = {}) {
 function superRefine(fn, params) {
 	return /* @__PURE__ */ _superRefine(fn, params);
 }
+var ZodInstanceOf = /*@__PURE__*/ $constructor("ZodInstanceOf", (inst, def) => {
+	ZodCustom.init(inst, def);
+}, { properties(shape, params) {
+	return this.check(/* @__PURE__ */ _properties(shape, params));
+} });
+function _instanceof(cls, params = {}) {
+	const inst = new ZodInstanceOf({
+		type: "custom",
+		check: "custom",
+		fn: (data) => data instanceof cls,
+		abort: true,
+		...normalizeParams(params)
+	});
+	inst._zod.bag.Class = cls;
+	inst._zod.check = (payload) => {
+		if (!(payload.value instanceof cls)) payload.issues.push({
+			code: "invalid_type",
+			expected: cls.name,
+			input: payload.value,
+			inst,
+			path: [...inst._zod.def.path ?? []]
+		});
+	};
+	return inst;
+}
+// ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/classic/coerce.js
+function number(params) {
+	return /* @__PURE__ */ _coercedNumber(ZodNumber, params);
+}
 // node_modules/.cache/host-build/shared/accounts.js
 var AccountLabelSchema = string().regex(/^[a-z][a-z0-9-]{0,31}$/);
 var AuthMethodSchema = _enum(["device-code", "browser-oauth"]);
@@ -5256,8 +5354,8 @@ var Config = object({ accounts: array(object({
 	catalogLoaded: boolean().default(false),
 	catalogMetadata: array(object({
 		id: string().min(1).max(200),
-		contextWindow: number().positive(),
-		maxTokens: number().positive()
+		contextWindow: number$1().positive(),
+		maxTokens: number$1().positive()
 	}).strict()).max(100).default([])
 }).strict().refine((account) => account.credentialKey.startsWith(`openai_hub_${account.authMethod.replace("-", "_")}_`), { message: "Credential key does not match authentication method" })).max(100).default([]) }).strict().superRefine((value, ctx) => {
 	const labels = /* @__PURE__ */ new Set();
@@ -5309,7 +5407,64 @@ function credentialRefForAccount(authMethod, accountId) {
 	return `${CredentialRefPrefix}_${authMethod.replace("-", "_")}_${hex}`;
 }
 var ResetStorageKey = "@kalex/dsh-openai-hub.pending-reset";
+// node_modules/.cache/host-build/shared/constants/oauth-errors.js
+var OAuthFailureMessages = {
+	oauth_connect_timeout: "Establishing a connection for the OAuth request timed out; that connection returned no HTTP response.",
+	oauth_dns_failed: "DNS resolution failed for the OAuth connection to auth.openai.com.",
+	oauth_connection_refused: "The OAuth connection was refused.",
+	oauth_connection_reset: "The OAuth connection was reset.",
+	oauth_tls_failed: "TLS certificate verification failed for the OAuth connection.",
+	oauth_headers_timeout: "The OAuth connection did not return HTTP response headers in time.",
+	oauth_body_timeout: "Reading the OAuth response body timed out.",
+	oauth_network_failed: "The OAuth request to auth.openai.com failed; inspect the recorded exception types and codes.",
+	oauth_http_failed: "The OAuth endpoint returned an unsuccessful HTTP status.",
+	oauth_response_invalid: "The OAuth endpoint returned an invalid token response.",
+	oauth_claim_invalid: "The OAuth token contains no valid ChatGPT account claim.",
+	oauth_callback_invalid: "The callback does not match the current OAuth sign-in attempt.",
+	oauth_internal_failed: "OAuth sign-in failed outside the observed token exchange; no network cause was established."
+};
 // node_modules/.cache/host-build/shared/logging.js
+var OAuthFailureCodeSchema = _enum([
+	"oauth_connect_timeout",
+	"oauth_dns_failed",
+	"oauth_connection_refused",
+	"oauth_connection_reset",
+	"oauth_tls_failed",
+	"oauth_headers_timeout",
+	"oauth_body_timeout",
+	"oauth_network_failed",
+	"oauth_http_failed",
+	"oauth_response_invalid",
+	"oauth_claim_invalid",
+	"oauth_callback_invalid",
+	"oauth_internal_failed"
+]);
+var OpenAIHubOAuthServerErrorSchema = _enum([
+	"invalid_grant",
+	"invalid_request",
+	"invalid_client",
+	"unauthorized_client",
+	"unsupported_grant_type",
+	"access_denied",
+	"temporarily_unavailable",
+	"server_error",
+	"invalid_scope",
+	"expired_token",
+	"other"
+]);
+var OAuthExceptionNameSchema = _enum([
+	"Error",
+	"TypeError",
+	"AbortError",
+	"TimeoutError",
+	"AggregateError",
+	"ConnectTimeoutError",
+	"HeadersTimeoutError",
+	"BodyTimeoutError",
+	"SocketError",
+	"RequestAbortedError",
+	"other"
+]);
 var OpenAIHubLogSettingsSchema = object({ enabled: boolean().default(false) }).strict().prefault({});
 var OpenAIHubLogEventSchema = _enum([
 	"plugin",
@@ -5344,6 +5499,7 @@ var OpenAIHubLogOperationSchema = _enum([
 	"snapshot",
 	"startLogin",
 	"cancelLogin",
+	"retryLogin",
 	"submitCallbackUrl",
 	"updateAccount",
 	"deleteAccount",
@@ -5365,12 +5521,18 @@ var OpenAIHubLogErrorCodeSchema = _enum([
 	"unknown"
 ]);
 var OpenAIHubLogRequestJsonSchema = object({
-	endpoint: _enum(["codex_models", "codex_usage"]),
+	endpoint: _enum([
+		"codex_models",
+		"codex_usage",
+		"oauth_token",
+		"oauth_device_code",
+		"oauth_device_poll"
+	]),
 	method: _enum(["GET", "POST"]),
 	body: _enum(["none", "redacted"])
 }).strict();
 var OpenAIHubLogResponseJsonSchema = object({
-	status: number().int().min(100).max(599),
+	status: number$1().int().min(100).max(599),
 	contentType: _enum([
 		"application/json",
 		"other",
@@ -5391,8 +5553,22 @@ var OpenAIHubLogResponseJsonSchema = object({
 		"credits",
 		"rate_limit_reset_credits"
 	])).max(8),
-	itemCount: number().int().nonnegative().max(1e5).optional()
+	itemCount: number$1().int().nonnegative().max(1e5).optional()
 }).strict();
+var OpenAIHubNetworkErrorSchema = _enum([
+	"UND_ERR_CONNECT_TIMEOUT",
+	"UND_ERR_HEADERS_TIMEOUT",
+	"UND_ERR_BODY_TIMEOUT",
+	"ENOTFOUND",
+	"EAI_AGAIN",
+	"ECONNREFUSED",
+	"ECONNRESET",
+	"ETIMEDOUT",
+	"CERT_HAS_EXPIRED",
+	"UNABLE_TO_VERIFY_LEAF_SIGNATURE",
+	"DEPTH_ZERO_SELF_SIGNED_CERT",
+	"other"
+]);
 var OpenAIHubLogFieldsSchema = object({
 	event: OpenAIHubLogEventSchema,
 	phase: OpenAIHubLogPhaseSchema,
@@ -5406,10 +5582,15 @@ var OpenAIHubLogFieldsSchema = object({
 		"done",
 		"error"
 	]).optional(),
-	durationMs: number().int().nonnegative().max(864e5).optional(),
-	count: number().int().nonnegative().max(1e5).optional(),
-	endpoint: _enum(["codex_models"]).optional(),
-	httpStatus: number().int().min(100).max(599).optional(),
+	durationMs: number$1().int().nonnegative().max(864e5).optional(),
+	count: number$1().int().nonnegative().max(1e5).optional(),
+	endpoint: _enum([
+		"codex_models",
+		"oauth_token",
+		"oauth_device_code",
+		"oauth_device_poll"
+	]).optional(),
+	httpStatus: number$1().int().min(100).max(599).optional(),
 	responseShape: _enum([
 		"models",
 		"data",
@@ -5417,7 +5598,45 @@ var OpenAIHubLogFieldsSchema = object({
 	]).optional(),
 	requestJson: OpenAIHubLogRequestJsonSchema.optional(),
 	responseJson: OpenAIHubLogResponseJsonSchema.optional(),
-	errorCode: OpenAIHubLogErrorCodeSchema.optional()
+	errorCode: OpenAIHubLogErrorCodeSchema.or(OAuthFailureCodeSchema).optional(),
+	errorMessage: _enum(Object.values(OAuthFailureMessages)).optional(),
+	errorCauses: array(object({
+		name: OAuthExceptionNameSchema,
+		code: OpenAIHubNetworkErrorSchema
+	}).strict()).max(8).optional(),
+	networkTimeoutMs: number$1().int().positive().max(6e5).optional(),
+	loginAttemptId: string().uuid().optional(),
+	transport: literal("undici").optional(),
+	transportEvent: _enum([
+		"request_created",
+		"response_headers",
+		"before_connect",
+		"connected",
+		"connect_error",
+		"request_error"
+	]).optional(),
+	connectionHost: _enum(["auth.openai.com", "other"]).optional(),
+	connectionPort: number$1().int().min(1).max(65535).optional(),
+	diagnosticVersion: union([literal(2), literal(3)]).optional(),
+	loginStage: _enum([
+		"callback_validation",
+		"token_exchange",
+		"token_response",
+		"account_claim",
+		"http_request",
+		"network_connect"
+	]).optional(),
+	networkError: OpenAIHubNetworkErrorSchema.optional(),
+	oauthServerError: OpenAIHubOAuthServerErrorSchema.optional(),
+	callbackError: _enum([
+		"invalid_url",
+		"invalid_endpoint",
+		"missing_code",
+		"missing_state",
+		"duplicate_code",
+		"duplicate_state",
+		"inactive_prompt"
+	]).optional()
 }).strict();
 var OpenAIHubClientLogEventSchema = OpenAIHubLogFieldsSchema;
 var OpenAIHubLogRecordSchema = OpenAIHubLogFieldsSchema.extend({
@@ -5444,9 +5663,9 @@ var ResetRequestSchema = object({
 }).strict();
 var UsageLimitSchema = object({
 	name: string(),
-	usedPercent: number().finite(),
-	windowSeconds: number().finite(),
-	resetAt: number().finite()
+	usedPercent: number$1().finite(),
+	windowSeconds: number$1().finite(),
+	resetAt: number$1().finite()
 }).strict();
 var SnapshotSchema = object({
 	accounts: array(object({
@@ -5461,7 +5680,7 @@ var SnapshotSchema = object({
 		]),
 		catalogError: string(),
 		loggedIn: boolean(),
-		expiresAt: number().finite(),
+		expiresAt: number$1().finite(),
 		usageStatus: _enum([
 			"idle",
 			"loading",
@@ -5472,10 +5691,10 @@ var SnapshotSchema = object({
 		usageLimits: array(UsageLimitSchema),
 		usageCredits: string(),
 		usageCreditsUnlimited: boolean(),
-		usageResetCredits: number().optional(),
+		usageResetCredits: number$1().optional(),
 		resetCards: array(object({
 			id: string(),
-			expiresAt: number().optional()
+			expiresAt: number$1().optional()
 		})),
 		resetCardsStatus: _enum([
 			"idle",
@@ -5493,7 +5712,7 @@ var SnapshotSchema = object({
 			"pending",
 			"account_changed"
 		]).optional(),
-		usageUpdatedAt: number().finite(),
+		usageUpdatedAt: number$1().finite(),
 		usageError: string()
 	}).strict()),
 	status: _enum([
@@ -5506,6 +5725,7 @@ var SnapshotSchema = object({
 	deviceCode: string(),
 	verificationUri: string(),
 	callbackUrlRequested: boolean().optional(),
+	retryAvailable: boolean().optional(),
 	error: string()
 }).strict();
 var LoginRequestSchema = object({
@@ -5537,6 +5757,7 @@ var inputs = {
 	recordClientLog: codec("OpenAIHubClientLogEvent", OpenAIHubClientLogEventSchema),
 	startLogin: codec("LoginRequest", LoginRequestSchema),
 	cancelLogin: void 0,
+	retryLogin: void 0,
 	submitCallbackUrl: codec("SubmitCallbackUrlRequest", SubmitCallbackUrlRequestSchema),
 	updateAccount: codec("UpdateAccountRequest", UpdateAccountRequestSchema),
 	deleteAccount: codec("AccountRequest", AccountRequestSchema),
@@ -5554,6 +5775,7 @@ var descriptors = Object.freeze([
 	"recordClientLog",
 	"startLogin",
 	"cancelLogin",
+	"retryLogin",
 	"submitCallbackUrl",
 	"updateAccount",
 	"deleteAccount",
@@ -5592,266 +5814,15 @@ var TYPERT = Object.freeze({
 		objects: Object.freeze([])
 	})
 });
-// node_modules/.cache/host-build/host/provider.js
-function createCodexProvider(models, settings) {
-	const provider = openaiCodexProvider();
-	const catalog = models ?? provider.getModels();
-	return {
-		...provider,
-		id: ProviderRoute,
-		name: "OpenAI Hub",
-		auth: {
-			...provider.auth,
-			apiKey: {
-				name: "OpenAI Hub",
-				async resolve({ credential }) {
-					return credential?.type === "api_key" && credential.key ? {
-						auth: { apiKey: credential.key },
-						source: "OpenAI Hub"
-					} : void 0;
-				}
-			}
-		},
-		stream(model, context, options) {
-			const clean = { ...options };
-			delete clean.temperature;
-			return provider.stream(model, context, clean);
-		},
-		streamSimple(model, context, options) {
-			const clean = { ...options };
-			delete clean.temperature;
-			return provider.streamSimple(model, context, clean);
-		},
-		getModels() {
-			if (!settings) return catalog.map((model) => ({
-				...model,
-				provider: ProviderRoute
-			}));
-			return settings.flatMap((preference) => {
-				const model = catalog.find((item) => item.id === preference.id);
-				return model && preference.enabled ? [{
-					...model,
-					provider: ProviderRoute,
-					name: preference.name
-				}] : [];
-			});
-		}
-	};
-}
-// node_modules/.cache/host-build/host/usage.js
-var CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
-var REQUEST_TIMEOUT_MS = 1e4;
-var MAX_RESPONSE_BYTES = 1048576;
-/** Ограничение размера действует и для ответов без Content-Length. */
-async function readUsageJson(response) {
-	if (!response.body) throw new Error("OpenAI Codex usage response was empty");
-	const reader = response.body.getReader();
-	const chunks = [];
-	let size = 0;
-	try {
-		while (true) {
-			const { done, value } = await reader.read();
-			if (done) break;
-			size += value.byteLength;
-			if (size > MAX_RESPONSE_BYTES) throw new Error("OpenAI Codex usage response was too large");
-			chunks.push(value);
-		}
-	} finally {
-		await reader.cancel().catch(() => void 0);
-		reader.releaseLock();
+// node_modules/.cache/host-build/host/browser-login-error.js
+var BrowserLoginError = class extends Error {
+	diagnostic;
+	name = "BrowserLoginError";
+	constructor(message, diagnostic) {
+		super(message);
+		this.diagnostic = diagnostic;
 	}
-	const bytes = new Uint8Array(size);
-	let offset = 0;
-	for (const chunk of chunks) {
-		bytes.set(chunk, offset);
-		offset += chunk.byteLength;
-	}
-	return JSON.parse(new TextDecoder().decode(bytes));
-}
-function finiteNumber(value) {
-	const number = typeof value === "number" ? value : Number(value);
-	return Number.isFinite(number) ? number : void 0;
-}
-function normalizeWindow(value, name, now) {
-	if (!value) return void 0;
-	const used = finiteNumber(value.used_percent);
-	if (used === void 0) return void 0;
-	const window = finiteNumber(value.limit_window_seconds);
-	const reset = finiteNumber(value.reset_at);
-	const after = finiteNumber(value.reset_after_seconds);
-	const resetAt = reset !== void 0 ? reset * 1e3 : after !== void 0 ? now + Math.max(0, after) * 1e3 : 0;
-	return {
-		name,
-		usedPercent: Math.min(100, Math.max(0, used)),
-		windowSeconds: window === void 0 ? 0 : Math.max(0, window),
-		resetAt
-	};
-}
-function appendRateLimit(target, rateLimit, name, now) {
-	if (!rateLimit) return;
-	const primary = normalizeWindow(rateLimit.primary_window, name, now);
-	const secondary = normalizeWindow(rateLimit.secondary_window, name, now);
-	if (primary) target.push(primary);
-	if (secondary) target.push(secondary);
-}
-/** Клиент получает только сводные лимиты, а не исходный ответ с идентификаторами. */
-function parseCodexUsage(payload, now = Date.now()) {
-	const limits = [];
-	appendRateLimit(limits, payload.rate_limit, "Codex", now);
-	for (const entry of (payload.additional_rate_limits ?? []).slice(0, 8)) if (typeof entry.limit_name === "string" && entry.limit_name.length > 0 && entry.limit_name.length <= 80) appendRateLimit(limits, entry.rate_limit, entry.limit_name, now);
-	const rateLimit = payload.rate_limit;
-	const credits = payload.credits;
-	const hasCredits = credits?.has_credits === true;
-	const rawBalance = hasCredits ? credits.balance : void 0;
-	const balance = typeof rawBalance === "number" && Number.isFinite(rawBalance) ? String(rawBalance) : typeof rawBalance === "string" && /^\d+(?:\.\d+)?$/.test(rawBalance) ? rawBalance : "";
-	const available = payload.rate_limit_reset_credits?.available_count;
-	return {
-		limits,
-		limited: rateLimit?.limit_reached === true || rateLimit?.allowed === false,
-		resetCredits: Number.isSafeInteger(available) && available !== void 0 && available >= 0 ? available : void 0,
-		credits: {
-			hasCredits,
-			unlimited: hasCredits && credits?.unlimited === true,
-			balance
-		}
-	};
-}
-async function requestCodexUsage(credential, fetchImpl = globalThis.fetch, now = Date.now(), report) {
-	if (!credential.access || !credential.accountId) throw new Error("OpenAI Codex usage requires a valid OAuth credential");
-	const response = await fetchImpl(CODEX_USAGE_URL, {
-		method: "GET",
-		redirect: "error",
-		headers: {
-			Authorization: `Bearer ${credential.access}`,
-			"chatgpt-account-id": credential.accountId,
-			Accept: "application/json"
-		},
-		signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
-	});
-	const requestJson = {
-		endpoint: "codex_usage",
-		method: "GET",
-		body: "none"
-	};
-	const contentType = response.headers.get("content-type")?.toLowerCase().includes("application/json") ? "application/json" : response.headers.has("content-type") ? "other" : "missing";
-	const reportResponse = (status, shape, fields, itemCount = 0) => report?.({
-		requestJson,
-		responseJson: {
-			status,
-			contentType,
-			shape,
-			fields,
-			itemCount
-		}
-	});
-	if (!response.ok) {
-		reportResponse(response.status, "invalid", []);
-		await response.body?.cancel().catch(() => void 0);
-		throw new Error(`OpenAI Codex usage request failed (${response.status})`);
-	}
-	const payload = await readUsageJson(response).catch(() => {
-		reportResponse(response.status, "invalid", []);
-		throw new Error("OpenAI Codex usage response was invalid");
-	});
-	const fields = [
-		...payload.rate_limit ? ["rate_limit"] : [],
-		...payload.additional_rate_limits ? ["additional_rate_limits"] : [],
-		...payload.credits ? ["credits"] : [],
-		...payload.rate_limit_reset_credits ? ["rate_limit_reset_credits"] : []
-	];
-	const usage = parseCodexUsage(payload, now);
-	reportResponse(response.status, fields.length ? "usage" : "invalid", fields, usage.limits.length);
-	return usage;
-}
-// node_modules/.cache/host-build/host/catalog.js
-var CATALOG_URL = "https://chatgpt.com/backend-api/codex/models?client_version=0.116.0";
-var IdSchema = string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,199}$/);
-var EntrySchema = object({
-	slug: IdSchema.optional(),
-	id: IdSchema.optional(),
-	context_window: number().positive().optional(),
-	max_output_tokens: number().positive().optional()
-}).refine((entry) => Boolean(entry.slug ?? entry.id));
-var CatalogSchema = union([object({ models: array(EntrySchema).max(100) }), object({ data: array(EntrySchema).max(100) }).transform((value) => ({ models: value.data }))]);
-function localCatalog() {
-	return [...createCodexProvider().getModels()];
-}
-function catalogForIds(ids) {
-	const local = localCatalog();
-	const template = local[0];
-	if (ids.length === 0) return [];
-	if (!template) throw new Error("OpenAI Hub local model metadata is unavailable");
-	return [...new Set(ids)].map((id) => ({
-		...local.find((model) => model.id === id) ?? template,
-		id,
-		name: id
-	}));
-}
-function mergeCatalog(remote) {
-	const local = localCatalog();
-	const merged = new Map(local.map((model) => [model.id, model]));
-	for (const model of remote) merged.set(model.id, {
-		...merged.get(model.id),
-		...model
-	});
-	return [...merged.values()];
-}
-async function requestCatalog(credential, fetchImpl = globalThis.fetch, report) {
-	const response = await fetchImpl(CATALOG_URL, {
-		headers: {
-			Authorization: `Bearer ${credential.access}`,
-			"chatgpt-account-id": credential.accountId,
-			Accept: "application/json"
-		},
-		redirect: "error",
-		signal: AbortSignal.timeout(1e4)
-	});
-	const requestJson = {
-		endpoint: "codex_models",
-		method: "GET",
-		body: "none"
-	};
-	const responseFields = [];
-	const reportResponse = (shape, fields, itemCount = 0) => report?.({
-		endpoint: "codex_models",
-		httpStatus: response.status,
-		responseShape: shape === "models" || shape === "data" ? shape : "invalid",
-		count: itemCount,
-		requestJson,
-		responseJson: {
-			status: response.status,
-			contentType: response.headers.get("content-type")?.toLowerCase().includes("application/json") ? "application/json" : response.headers.has("content-type") ? "other" : "missing",
-			shape,
-			fields,
-			itemCount
-		}
-	});
-	if (!response.ok) {
-		reportResponse("invalid", responseFields);
-		await response.body?.cancel().catch(() => void 0);
-		throw new Error("OpenAI Hub catalog request failed");
-	}
-	const raw = await readUsageJson(response).catch(() => {
-		reportResponse("invalid", responseFields);
-		throw new Error("OpenAI Hub catalog response was invalid");
-	});
-	const shape = raw !== null && typeof raw === "object" && !Array.isArray(raw) ? "models" in raw ? "models" : "data" in raw ? "data" : "invalid" : "invalid";
-	const parsed = CatalogSchema.safeParse(raw);
-	if (!parsed.success) {
-		reportResponse("invalid", responseFields);
-		throw new Error("OpenAI Hub catalog response was invalid");
-	}
-	const models = mergeCatalog(catalogForIds(parsed.data.models.flatMap((entry) => entry.slug ?? entry.id ?? [])).map((model) => {
-		const entry = parsed.data.models.find((item) => (item.slug ?? item.id) === model.id);
-		return {
-			...model,
-			...entry?.context_window ? { contextWindow: entry.context_window } : {},
-			...entry?.max_output_tokens ? { maxTokens: entry.max_output_tokens } : {}
-		};
-	}));
-	reportResponse(shape, shape === "models" ? ["models"] : shape === "data" ? ["data"] : [], parsed.data.models.length);
-	return models;
-}
+};
 // ../../node_modules/.pnpm/@deepseek-ai+cosmokit@1.9.0/node_modules/@deepseek-ai/cosmokit/lib/index.js
 /** Return true when a value is `null` or `undefined`. */
 function isNullable(value) {
@@ -8082,12 +8053,58 @@ function credentialRef(value) {
 function isCredentialRefName(value) {
 	return REF_PATTERN.test(value);
 }
+// node_modules/.cache/host-build/host/provider.js
+function createCodexProvider(models, settings) {
+	const provider = openaiCodexProvider();
+	const catalog = models ?? provider.getModels();
+	return {
+		...provider,
+		id: ProviderRoute,
+		name: "OpenAI Hub",
+		auth: {
+			...provider.auth,
+			apiKey: {
+				name: "OpenAI Hub",
+				async resolve({ credential }) {
+					return credential?.type === "api_key" && credential.key ? {
+						auth: { apiKey: credential.key },
+						source: "OpenAI Hub"
+					} : void 0;
+				}
+			}
+		},
+		stream(model, context, options) {
+			const clean = { ...options };
+			delete clean.temperature;
+			return provider.stream(model, context, clean);
+		},
+		streamSimple(model, context, options) {
+			const clean = { ...options };
+			delete clean.temperature;
+			return provider.streamSimple(model, context, clean);
+		},
+		getModels() {
+			if (!settings) return catalog.map((model) => ({
+				...model,
+				provider: ProviderRoute
+			}));
+			return settings.flatMap((preference) => {
+				const model = catalog.find((item) => item.id === preference.id);
+				return model && preference.enabled ? [{
+					...model,
+					provider: ProviderRoute,
+					name: preference.name
+				}] : [];
+			});
+		}
+	};
+}
 // node_modules/.cache/host-build/host/credentials.js
 var OAuthCredentialSchema = object({
 	type: literal("oauth"),
 	access: string().min(1),
 	refresh: string().min(1),
-	expires: number().finite(),
+	expires: number$1().finite(),
 	accountId: string().min(1)
 });
 var oauth = createCodexProvider().auth.oauth;
@@ -8167,6 +8184,528 @@ var AccountCredentials = class {
 		return this.serialize(() => this.ctx.credentials.unset(credentialRef(account.credentialKey)));
 	}
 };
+// node_modules/.cache/host-build/host/oauth-network-error.js
+function oauthNetworkFailure(error, fallback = "oauth_network_failed") {
+	const pending = error ? [error] : [];
+	const visited = /* @__PURE__ */ new Set();
+	const errorCauses = [];
+	let networkTimeoutMs;
+	while (pending.length > 0 && errorCauses.length < 8) {
+		const current = pending.shift();
+		if (!current || visited.has(current)) continue;
+		visited.add(current);
+		const name = OAuthExceptionNameSchema.safeParse(current.name);
+		const code = OpenAIHubNetworkErrorSchema.safeParse("code" in current ? current.code : void 0);
+		errorCauses.push({
+			name: name.success ? name.data : "other",
+			code: code.success ? code.data : "other"
+		});
+		const timeout = Number(/\btimeout:\s*(\d+)ms\b/i.exec(current.message)?.[1]);
+		if (Number.isSafeInteger(timeout) && timeout > 0 && timeout <= 6e5) networkTimeoutMs ??= timeout;
+		if (current.cause instanceof Error) pending.push(current.cause);
+		if (current instanceof AggregateError) {
+			for (const child of current.errors) if (child instanceof Error) pending.push(child);
+		}
+	}
+	const networkError = errorCauses.find((cause) => cause.code !== "other")?.code ?? "other";
+	let errorCode = fallback;
+	switch (networkError) {
+		case "UND_ERR_CONNECT_TIMEOUT":
+		case "ETIMEDOUT":
+			errorCode = "oauth_connect_timeout";
+			break;
+		case "UND_ERR_HEADERS_TIMEOUT":
+			errorCode = "oauth_headers_timeout";
+			break;
+		case "UND_ERR_BODY_TIMEOUT":
+			errorCode = "oauth_body_timeout";
+			break;
+		case "ENOTFOUND":
+		case "EAI_AGAIN":
+			errorCode = "oauth_dns_failed";
+			break;
+		case "ECONNREFUSED":
+			errorCode = "oauth_connection_refused";
+			break;
+		case "ECONNRESET":
+			errorCode = "oauth_connection_reset";
+			break;
+		case "CERT_HAS_EXPIRED":
+		case "UNABLE_TO_VERIFY_LEAF_SIGNATURE":
+		case "DEPTH_ZERO_SELF_SIGNED_CERT": errorCode = "oauth_tls_failed";
+	}
+	return {
+		errorCode,
+		errorMessage: OAuthFailureMessages[errorCode],
+		networkError,
+		errorCauses,
+		...networkTimeoutMs ? { networkTimeoutMs } : {}
+	};
+}
+// node_modules/.cache/host-build/host/browser-login.js
+var clientId = "app_EMoamEEZ73f0CkXaXp7hrann";
+var redirectUri = "http://localhost:1455/auth/callback";
+var tokenSchema = object({
+	access_token: string().min(1),
+	refresh_token: string().min(1),
+	expires_in: number$1().finite().positive()
+});
+var claimsSchema = object({ "https://api.openai.com/auth": object({ chatgpt_account_id: string().min(1) }) });
+async function loginBrowser(interaction, request = fetch, report = () => void 0, waitForRetry) {
+	const fail = (message, details, failure) => {
+		const diagnostic = {
+			event: "login",
+			phase: "failed",
+			...oauthNetworkFailure(void 0, details.loginStage === "callback_validation" ? "oauth_callback_invalid" : details.loginStage === "token_response" ? "oauth_response_invalid" : details.loginStage === "account_claim" ? "oauth_claim_invalid" : "oauth_http_failed"),
+			...failure,
+			...details,
+			...details.loginStage !== "callback_validation" ? {
+				endpoint: "oauth_token",
+				requestJson: {
+					endpoint: "oauth_token",
+					method: "POST",
+					body: "redacted"
+				}
+			} : {}
+		};
+		report(diagnostic);
+		return new BrowserLoginError(message, diagnostic);
+	};
+	interaction.signal?.throwIfAborted();
+	const verifier = randomBytes(32).toString("base64url");
+	const state = randomBytes(16).toString("hex");
+	const url = new URL("https://auth.openai.com/oauth/authorize");
+	url.search = new URLSearchParams({
+		response_type: "code",
+		client_id: clientId,
+		redirect_uri: redirectUri,
+		scope: "openid profile email offline_access",
+		code_challenge: createHash("sha256").update(verifier).digest("base64url"),
+		code_challenge_method: "S256",
+		state,
+		id_token_add_organizations: "true",
+		codex_cli_simplified_flow: "true",
+		originator: "pi"
+	}).toString();
+	interaction.notify({
+		type: "auth_url",
+		url: url.toString()
+	});
+	const input = await interaction.prompt({
+		type: "manual_code",
+		message: "Paste the callback URL",
+		placeholder: redirectUri
+	});
+	interaction.signal?.throwIfAborted();
+	const callback = new URL(SubmitCallbackUrlRequestSchema.parse({ url: input }).url);
+	if (callback.origin !== "http://localhost:1455" || callback.pathname !== "/auth/callback" || callback.username || callback.password || callback.hash) throw fail("Invalid OpenAI callback URL", { loginStage: "callback_validation" });
+	if (callback.searchParams.get("state") !== state) throw fail("OpenAI Hub callback belongs to another sign-in attempt. Start sign-in again.", { loginStage: "callback_validation" });
+	const code = callback.searchParams.get("code");
+	if (!code) throw fail("OpenAI Hub callback code missing", { loginStage: "callback_validation" });
+	let response;
+	let startedAt = Date.now();
+	while (true) {
+		interaction.signal?.throwIfAborted();
+		startedAt = Date.now();
+		report({
+			event: "login",
+			phase: "started",
+			loginStage: "token_exchange",
+			endpoint: "oauth_token",
+			requestJson: {
+				endpoint: "oauth_token",
+				method: "POST",
+				body: "redacted"
+			}
+		});
+		try {
+			response = await request("https://auth.openai.com/oauth/token", {
+				method: "POST",
+				headers: { "Content-Type": "application/x-www-form-urlencoded" },
+				body: new URLSearchParams({
+					grant_type: "authorization_code",
+					client_id: clientId,
+					code,
+					code_verifier: verifier,
+					redirect_uri: redirectUri
+				}),
+				...interaction.signal ? { signal: interaction.signal } : {}
+			});
+			break;
+		} catch (error) {
+			if (interaction.signal?.aborted) throw error;
+			const failure = oauthNetworkFailure(error instanceof Error ? error : void 0);
+			const loginError = fail(`OpenAI Hub request to auth.openai.com: ${failure.errorMessage} [${failure.networkError}]`, {
+				loginStage: "token_exchange",
+				durationMs: Date.now() - startedAt
+			}, failure);
+			if (![
+				"oauth_connect_timeout",
+				"oauth_headers_timeout",
+				"oauth_body_timeout"
+			].includes(failure.errorCode) || !waitForRetry) throw loginError;
+			await waitForRetry(loginError, interaction.signal);
+		}
+	}
+	if (!response.ok) {
+		const envelope = object({ error: union([OpenAIHubOAuthServerErrorSchema, object({ code: OpenAIHubOAuthServerErrorSchema })]) }).safeParse(await response.json().catch(() => void 0));
+		interaction.signal?.throwIfAborted();
+		const oauthServerError = envelope.success ? typeof envelope.data.error === "string" ? envelope.data.error : envelope.data.error.code : "other";
+		throw fail(`OpenAI Hub token exchange failed (HTTP ${response.status}, ${oauthServerError}). Start sign-in again.`, {
+			loginStage: "token_exchange",
+			httpStatus: response.status,
+			oauthServerError,
+			durationMs: Date.now() - startedAt
+		});
+	}
+	report({
+		event: "login",
+		phase: "completed",
+		loginStage: "token_exchange",
+		httpStatus: response.status,
+		durationMs: Date.now() - startedAt
+	});
+	let token;
+	try {
+		token = tokenSchema.parse(await response.json());
+	} catch (error) {
+		if (interaction.signal?.aborted) throw error;
+		throw fail("OpenAI Hub received an invalid token response.", {
+			loginStage: "token_response",
+			httpStatus: response.status
+		}, oauthNetworkFailure(error instanceof Error ? error : void 0, "oauth_response_invalid"));
+	}
+	try {
+		const payload = token.access_token.split(".")[1];
+		if (!payload) throw new Error("Missing account claim");
+		const claims = claimsSchema.parse(JSON.parse(Buffer.from(payload, "base64url").toString("utf8")));
+		const credential = OAuthCredentialSchema.parse({
+			type: "oauth",
+			access: token.access_token,
+			refresh: token.refresh_token,
+			expires: Date.now() + token.expires_in * 1e3,
+			accountId: claims["https://api.openai.com/auth"].chatgpt_account_id
+		});
+		report({
+			event: "login",
+			phase: "completed",
+			loginStage: "account_claim"
+		});
+		return credential;
+	} catch {
+		throw fail("OpenAI Hub token response contains no valid ChatGPT account.", { loginStage: "account_claim" });
+	}
+}
+// node_modules/.cache/host-build/host/usage.js
+var CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
+var REQUEST_TIMEOUT_MS = 1e4;
+var MAX_RESPONSE_BYTES = 1048576;
+/** Ограничение размера действует и для ответов без Content-Length. */
+async function readUsageJson(response) {
+	if (!response.body) throw new Error("OpenAI Codex usage response was empty");
+	const reader = response.body.getReader();
+	const chunks = [];
+	let size = 0;
+	try {
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			size += value.byteLength;
+			if (size > MAX_RESPONSE_BYTES) throw new Error("OpenAI Codex usage response was too large");
+			chunks.push(value);
+		}
+	} finally {
+		await reader.cancel().catch(() => void 0);
+		reader.releaseLock();
+	}
+	const bytes = new Uint8Array(size);
+	let offset = 0;
+	for (const chunk of chunks) {
+		bytes.set(chunk, offset);
+		offset += chunk.byteLength;
+	}
+	return JSON.parse(new TextDecoder().decode(bytes));
+}
+function finiteNumber(value) {
+	const number = typeof value === "number" ? value : Number(value);
+	return Number.isFinite(number) ? number : void 0;
+}
+function normalizeWindow(value, name, now) {
+	if (!value) return void 0;
+	const used = finiteNumber(value.used_percent);
+	if (used === void 0) return void 0;
+	const window = finiteNumber(value.limit_window_seconds);
+	const reset = finiteNumber(value.reset_at);
+	const after = finiteNumber(value.reset_after_seconds);
+	const resetAt = reset !== void 0 ? reset * 1e3 : after !== void 0 ? now + Math.max(0, after) * 1e3 : 0;
+	return {
+		name,
+		usedPercent: Math.min(100, Math.max(0, used)),
+		windowSeconds: window === void 0 ? 0 : Math.max(0, window),
+		resetAt
+	};
+}
+function appendRateLimit(target, rateLimit, name, now) {
+	if (!rateLimit) return;
+	const primary = normalizeWindow(rateLimit.primary_window, name, now);
+	const secondary = normalizeWindow(rateLimit.secondary_window, name, now);
+	if (primary) target.push(primary);
+	if (secondary) target.push(secondary);
+}
+/** Клиент получает только сводные лимиты, а не исходный ответ с идентификаторами. */
+function parseCodexUsage(payload, now = Date.now()) {
+	const limits = [];
+	appendRateLimit(limits, payload.rate_limit, "Codex", now);
+	for (const entry of (payload.additional_rate_limits ?? []).slice(0, 8)) if (typeof entry.limit_name === "string" && entry.limit_name.length > 0 && entry.limit_name.length <= 80) appendRateLimit(limits, entry.rate_limit, entry.limit_name, now);
+	const rateLimit = payload.rate_limit;
+	const credits = payload.credits;
+	const hasCredits = credits?.has_credits === true;
+	const rawBalance = hasCredits ? credits.balance : void 0;
+	const balance = typeof rawBalance === "number" && Number.isFinite(rawBalance) ? String(rawBalance) : typeof rawBalance === "string" && /^\d+(?:\.\d+)?$/.test(rawBalance) ? rawBalance : "";
+	const available = payload.rate_limit_reset_credits?.available_count;
+	return {
+		limits,
+		limited: rateLimit?.limit_reached === true || rateLimit?.allowed === false,
+		resetCredits: Number.isSafeInteger(available) && available !== void 0 && available >= 0 ? available : void 0,
+		credits: {
+			hasCredits,
+			unlimited: hasCredits && credits?.unlimited === true,
+			balance
+		}
+	};
+}
+async function requestCodexUsage(credential, fetchImpl = globalThis.fetch, now = Date.now(), report) {
+	if (!credential.access || !credential.accountId) throw new Error("OpenAI Codex usage requires a valid OAuth credential");
+	const response = await fetchImpl(CODEX_USAGE_URL, {
+		method: "GET",
+		redirect: "error",
+		headers: {
+			Authorization: `Bearer ${credential.access}`,
+			"chatgpt-account-id": credential.accountId,
+			Accept: "application/json"
+		},
+		signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS)
+	});
+	const requestJson = {
+		endpoint: "codex_usage",
+		method: "GET",
+		body: "none"
+	};
+	const contentType = response.headers.get("content-type")?.toLowerCase().includes("application/json") ? "application/json" : response.headers.has("content-type") ? "other" : "missing";
+	const reportResponse = (status, shape, fields, itemCount = 0) => report?.({
+		requestJson,
+		responseJson: {
+			status,
+			contentType,
+			shape,
+			fields,
+			itemCount
+		}
+	});
+	if (!response.ok) {
+		reportResponse(response.status, "invalid", []);
+		await response.body?.cancel().catch(() => void 0);
+		throw new Error(`OpenAI Codex usage request failed (${response.status})`);
+	}
+	const payload = await readUsageJson(response).catch(() => {
+		reportResponse(response.status, "invalid", []);
+		throw new Error("OpenAI Codex usage response was invalid");
+	});
+	const fields = [
+		...payload.rate_limit ? ["rate_limit"] : [],
+		...payload.additional_rate_limits ? ["additional_rate_limits"] : [],
+		...payload.credits ? ["credits"] : [],
+		...payload.rate_limit_reset_credits ? ["rate_limit_reset_credits"] : []
+	];
+	const usage = parseCodexUsage(payload, now);
+	reportResponse(response.status, fields.length ? "usage" : "invalid", fields, usage.limits.length);
+	return usage;
+}
+// node_modules/.cache/host-build/host/catalog.js
+var CATALOG_URL = "https://chatgpt.com/backend-api/codex/models?client_version=0.116.0";
+var IdSchema = string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,199}$/);
+var EntrySchema = object({
+	slug: IdSchema.optional(),
+	id: IdSchema.optional(),
+	context_window: number$1().positive().optional(),
+	max_output_tokens: number$1().positive().optional()
+}).refine((entry) => Boolean(entry.slug ?? entry.id));
+var CatalogSchema = union([object({ models: array(EntrySchema).max(100) }), object({ data: array(EntrySchema).max(100) }).transform((value) => ({ models: value.data }))]);
+function localCatalog() {
+	return [...createCodexProvider().getModels()];
+}
+function catalogForIds(ids) {
+	const local = localCatalog();
+	const template = local[0];
+	if (ids.length === 0) return [];
+	if (!template) throw new Error("OpenAI Hub local model metadata is unavailable");
+	return [...new Set(ids)].map((id) => ({
+		...local.find((model) => model.id === id) ?? template,
+		id,
+		name: id
+	}));
+}
+function mergeCatalog(remote) {
+	const local = localCatalog();
+	const merged = new Map(local.map((model) => [model.id, model]));
+	for (const model of remote) merged.set(model.id, {
+		...merged.get(model.id),
+		...model
+	});
+	return [...merged.values()];
+}
+async function requestCatalog(credential, fetchImpl = globalThis.fetch, report) {
+	const response = await fetchImpl(CATALOG_URL, {
+		headers: {
+			Authorization: `Bearer ${credential.access}`,
+			"chatgpt-account-id": credential.accountId,
+			Accept: "application/json"
+		},
+		redirect: "error",
+		signal: AbortSignal.timeout(1e4)
+	});
+	const requestJson = {
+		endpoint: "codex_models",
+		method: "GET",
+		body: "none"
+	};
+	const responseFields = [];
+	const reportResponse = (shape, fields, itemCount = 0) => report?.({
+		endpoint: "codex_models",
+		httpStatus: response.status,
+		responseShape: shape === "models" || shape === "data" ? shape : "invalid",
+		count: itemCount,
+		requestJson,
+		responseJson: {
+			status: response.status,
+			contentType: response.headers.get("content-type")?.toLowerCase().includes("application/json") ? "application/json" : response.headers.has("content-type") ? "other" : "missing",
+			shape,
+			fields,
+			itemCount
+		}
+	});
+	if (!response.ok) {
+		reportResponse("invalid", responseFields);
+		await response.body?.cancel().catch(() => void 0);
+		throw new Error("OpenAI Hub catalog request failed");
+	}
+	const raw = await readUsageJson(response).catch(() => {
+		reportResponse("invalid", responseFields);
+		throw new Error("OpenAI Hub catalog response was invalid");
+	});
+	const shape = raw !== null && typeof raw === "object" && !Array.isArray(raw) ? "models" in raw ? "models" : "data" in raw ? "data" : "invalid" : "invalid";
+	const parsed = CatalogSchema.safeParse(raw);
+	if (!parsed.success) {
+		reportResponse("invalid", responseFields);
+		throw new Error("OpenAI Hub catalog response was invalid");
+	}
+	const models = mergeCatalog(catalogForIds(parsed.data.models.flatMap((entry) => entry.slug ?? entry.id ?? [])).map((model) => {
+		const entry = parsed.data.models.find((item) => (item.slug ?? item.id) === model.id);
+		return {
+			...model,
+			...entry?.context_window ? { contextWindow: entry.context_window } : {},
+			...entry?.max_output_tokens ? { maxTokens: entry.max_output_tokens } : {}
+		};
+	}));
+	reportResponse(shape, shape === "models" ? ["models"] : shape === "data" ? ["data"] : [], parsed.data.models.length);
+	return models;
+}
+// node_modules/.cache/host-build/host/oauth-network-diagnostics.js
+var activeReport = new AsyncLocalStorage();
+var endpoints = {
+	"/oauth/token": "oauth_token",
+	"/api/accounts/deviceauth/usercode": "oauth_device_code",
+	"/api/accounts/deviceauth/token": "oauth_device_poll"
+};
+var requestMessage = object({
+	request: object({
+		origin: union([string(), _instanceof(URL)]),
+		path: string(),
+		method: literal("POST")
+	}),
+	response: object({ statusCode: number$1().int().min(100).max(599) }).optional(),
+	error: _instanceof(Error).optional()
+});
+var connectMessage = object({
+	connectParams: object({
+		hostname: string(),
+		port: number().int().min(1).max(65535)
+	}),
+	error: _instanceof(Error).optional()
+});
+function withOAuthNetworkDiagnostics(action, report) {
+	return activeReport.run(report, async () => {
+		const requestStarts = /* @__PURE__ */ new Map();
+		const connectStarts = /* @__PURE__ */ new Map();
+		const unsubscribe = [];
+		for (const [name, transportEvent] of [
+			["undici:request:create", "request_created"],
+			["undici:request:headers", "response_headers"],
+			["undici:request:error", "request_error"],
+			["undici:client:beforeConnect", "before_connect"],
+			["undici:client:connected", "connected"],
+			["undici:client:connectError", "connect_error"]
+		]) {
+			const source = channel(name);
+			const listener = (message) => {
+				if (activeReport.getStore() !== report) return;
+				try {
+					const request = requestMessage.safeParse(message);
+					const connect = connectMessage.safeParse(message);
+					const common = {
+						event: "login",
+						transport: "undici",
+						transportEvent,
+						phase: transportEvent.endsWith("error") ? "failed" : transportEvent === "before_connect" || transportEvent === "request_created" ? "started" : "completed"
+					};
+					if (request.success) {
+						if (String(request.data.request.origin) !== "https://auth.openai.com") return;
+						const endpoint = Object.entries(endpoints).find(([path]) => path === request.data.request.path)?.[1];
+						if (!endpoint) return;
+						if (transportEvent === "request_created") requestStarts.set(endpoint, Date.now());
+						const startedAt = requestStarts.get(endpoint);
+						report({
+							...common,
+							...startedAt !== void 0 ? { durationMs: Math.min(864e5, Date.now() - startedAt) } : {},
+							endpoint,
+							loginStage: "http_request",
+							requestJson: {
+								endpoint,
+								method: "POST",
+								body: "redacted"
+							},
+							...request.data.response ? { httpStatus: request.data.response.statusCode } : {},
+							...endpoint !== "oauth_device_poll" && request.data.response && request.data.response.statusCode >= 400 ? {
+								...oauthNetworkFailure(void 0, "oauth_http_failed"),
+								phase: "failed"
+							} : {},
+							...request.data.error ? oauthNetworkFailure(request.data.error) : {}
+						});
+					} else if (connect.success) {
+						const target = `${connect.data.connectParams.hostname}:${connect.data.connectParams.port}`;
+						if (transportEvent === "before_connect") connectStarts.set(target, Date.now());
+						const startedAt = connectStarts.get(target);
+						report({
+							...common,
+							...startedAt !== void 0 ? { durationMs: Math.min(864e5, Date.now() - startedAt) } : {},
+							loginStage: "network_connect",
+							connectionHost: connect.data.connectParams.hostname === "auth.openai.com" ? "auth.openai.com" : "other",
+							connectionPort: connect.data.connectParams.port,
+							...connect.data.error ? oauthNetworkFailure(connect.data.error) : {}
+						});
+					}
+				} catch {}
+			};
+			source.subscribe(listener);
+			unsubscribe.push(() => source.unsubscribe(listener));
+		}
+		try {
+			return await action();
+		} finally {
+			for (const stop of unsubscribe) stop();
+		}
+	});
+}
 // node_modules/.cache/host-build/host/reset-credits.js
 var RESET_CREDITS_URL = "https://chatgpt.com/backend-api/wham/rate-limit-reset-credits";
 var RESET_CODES = [
@@ -8327,6 +8866,7 @@ var AccountsRuntime = class {
 	loginController;
 	login;
 	submitManualCode;
+	retryOAuthTokenExchange;
 	constructor(ctx, config, logging) {
 		this.ctx = ctx;
 		this.logging = logging;
@@ -8336,6 +8876,7 @@ var AccountsRuntime = class {
 			deviceCode: "",
 			verificationUri: "",
 			callbackUrlRequested: false,
+			retryAvailable: false,
 			error: ""
 		};
 		loginStatuses.set(ctx, this.login);
@@ -8344,6 +8885,7 @@ var AccountsRuntime = class {
 			this.disposed = true;
 			this.loginGeneration++;
 			this.loginController?.abort();
+			this.retryOAuthTokenExchange = void 0;
 			const attempt = loginAttempts.get(this.ctx);
 			if (attempt && !attempt.committing) {
 				attempt.cancelled = true;
@@ -8352,6 +8894,7 @@ var AccountsRuntime = class {
 					deviceCode: "",
 					verificationUri: "",
 					callbackUrlRequested: false,
+					retryAvailable: false,
 					error: ""
 				});
 			}
@@ -8384,6 +8927,33 @@ var AccountsRuntime = class {
 	diagnostic(message) {
 		console.error(`[${PackageId}] ${message}`);
 		this.ctx.logger.error(`[${PackageId}] ${message}`);
+	}
+	waitForOAuthRetry(error, signal) {
+		return new Promise((resolve) => {
+			let settled = false;
+			const finish = () => {
+				if (settled) return;
+				settled = true;
+				signal?.removeEventListener("abort", finish);
+				this.retryOAuthTokenExchange = void 0;
+				resolve();
+			};
+			this.retryOAuthTokenExchange = () => {
+				Object.assign(this.login, {
+					status: "starting",
+					retryAvailable: false,
+					error: ""
+				});
+				finish();
+			};
+			Object.assign(this.login, {
+				status: "error",
+				retryAvailable: true,
+				error: error.message
+			});
+			signal?.addEventListener("abort", finish, { once: true });
+			if (signal?.aborted) finish();
+		});
 	}
 	async snapshot() {
 		for (const account of this.accounts) {
@@ -8426,15 +8996,36 @@ var AccountsRuntime = class {
 		};
 		loginAttempts.set(this.ctx, attempt);
 		this.loginController = controller;
+		this.retryOAuthTokenExchange = void 0;
 		Object.assign(this.login, {
 			status: "starting",
 			deviceCode: "",
 			verificationUri: "",
 			callbackUrlRequested: false,
+			retryAvailable: false,
 			error: ""
 		});
 		const oauth = createCodexProvider().auth.oauth;
 		if (!oauth) throw new Error("OpenAI Hub OAuth unavailable");
+		const loginAttemptId = randomUUID();
+		let observedFailure;
+		const report = (event) => {
+			if (event.phase === "failed") observedFailure = event;
+			else if (event.phase === "started" && event.loginStage === "token_exchange") observedFailure = void 0;
+			this.logging.recordHost({
+				...event,
+				loginAttemptId,
+				accountLabel: request.accountLabel,
+				authMethod: request.authMethod
+			});
+		};
+		const invokeLogin = request.authMethod === "browser-oauth" ? (interaction) => loginBrowser(interaction, fetch, report, (error, signal) => this.waitForOAuthRetry(error, signal)) : oauth.login;
+		const login = (interaction) => withOAuthNetworkDiagnostics(() => invokeLogin(interaction), report);
+		report({
+			event: "login",
+			phase: "started",
+			diagnosticVersion: 3
+		});
 		let notifyReady;
 		const ready = new Promise((resolve) => {
 			notifyReady = resolve;
@@ -8442,7 +9033,7 @@ var AccountsRuntime = class {
 		const current = () => !this.disposed && !controller.signal.aborted && generation === this.loginGeneration;
 		const operation = (async () => {
 			try {
-				const credential = OAuthCredentialSchema.parse(await oauth.login({
+				const credential = OAuthCredentialSchema.parse(await login({
 					signal: controller.signal,
 					notify: (info) => {
 						if (!current()) return;
@@ -8480,11 +9071,7 @@ var AccountsRuntime = class {
 					prompt: async (prompt) => {
 						if (prompt.type === "select") return request.authMethod === "device-code" ? "device_code" : "browser";
 						if (prompt.type === "manual_code" && request.authMethod === "browser-oauth") {
-							const signal = AbortSignal.any([
-								controller.signal,
-								...prompt.signal ? [prompt.signal] : [],
-								AbortSignal.timeout(6e5)
-							]);
+							const signal = controller.signal;
 							Object.assign(this.login, {
 								status: "waiting",
 								callbackUrlRequested: true
@@ -8497,12 +9084,6 @@ var AccountsRuntime = class {
 							notifyReady?.();
 							return new Promise((resolve, reject) => {
 								const abort = () => {
-									if (prompt.signal?.aborted && !controller.signal.aborted) this.logging.recordHost({
-										event: "login",
-										phase: "callback_received",
-										accountLabel: request.accountLabel,
-										authMethod: request.authMethod
-									});
 									this.submitManualCode = void 0;
 									Object.assign(this.login, { callbackUrlRequested: false });
 									reject(/* @__PURE__ */ new Error("OpenAI Hub browser authorization ended"));
@@ -8510,7 +9091,12 @@ var AccountsRuntime = class {
 								this.submitManualCode = (url) => {
 									signal.removeEventListener("abort", abort);
 									this.submitManualCode = void 0;
-									Object.assign(this.login, { callbackUrlRequested: false });
+									Object.assign(this.login, {
+										status: "starting",
+										callbackUrlRequested: false,
+										verificationUri: "",
+										deviceCode: ""
+									});
 									resolve(url);
 								};
 								if (signal.aborted) abort();
@@ -8610,6 +9196,7 @@ var AccountsRuntime = class {
 						deviceCode: "",
 						verificationUri: "",
 						callbackUrlRequested: false,
+						retryAvailable: false,
 						error: ""
 					});
 					await this.logging.recordHost({
@@ -8624,24 +9211,27 @@ var AccountsRuntime = class {
 						if (existingAccount) this.refreshUsage({ accountLabel: config.accountLabel }).catch(() => void 0);
 					}
 				});
-			} catch {
+			} catch (error) {
 				if (current()) {
+					const failure = (error instanceof BrowserLoginError ? error.diagnostic : void 0) ?? observedFailure ?? oauthNetworkFailure(error instanceof Error ? error : void 0, "oauth_internal_failed");
 					Object.assign(this.login, {
 						status: "error",
 						deviceCode: "",
 						verificationUri: "",
 						callbackUrlRequested: false,
-						error: "OpenAI Hub sign-in failed"
+						retryAvailable: false,
+						error: error instanceof BrowserLoginError ? error.message : "OpenAI Hub sign-in failed"
 					});
 					await this.logging.recordHost({
+						...failure,
 						event: "login",
 						phase: "failed",
 						state: "error",
-						errorCode: "oauth_failed",
+						loginAttemptId,
 						accountLabel: request.accountLabel,
 						authMethod: request.authMethod
 					});
-					this.diagnostic("Sign-in failed");
+					this.diagnostic(`${failure.errorCode}: ${failure.errorMessage} [${failure.networkError ?? "other"}]`);
 				}
 			} finally {
 				if (loginAttempts.get(this.ctx) === attempt) loginAttempts.delete(this.ctx);
@@ -8671,27 +9261,50 @@ var AccountsRuntime = class {
 			this.loginController?.abort();
 			delete this.loginController;
 			this.submitManualCode = void 0;
+			this.retryOAuthTokenExchange = void 0;
 			Object.assign(this.login, {
 				status: "idle",
 				deviceCode: "",
 				verificationUri: "",
 				callbackUrlRequested: false,
+				retryAvailable: false,
 				error: ""
 			});
 		}
 		return this.snapshot();
 	}
+	async retryLogin() {
+		const retry = this.retryOAuthTokenExchange;
+		if (!retry || !this.login.retryAvailable || this.disposed) throw new Error("OpenAI Hub sign-in retry is unavailable");
+		retry();
+		return this.snapshot();
+	}
 	async submitCallbackUrl(input) {
-		const { url: rawUrl } = SubmitCallbackUrlRequestSchema.parse(input);
+		const reject = async (callbackError) => {
+			await this.logging.recordHost({
+				event: "login",
+				phase: "failed",
+				operation: "submitCallbackUrl",
+				errorCode: "validation_failed",
+				callbackError
+			});
+			throw new Error("OpenAI callback URL could not be accepted");
+		};
+		const parsed = SubmitCallbackUrlRequestSchema.safeParse(input);
+		if (!parsed.success) return reject("invalid_url");
+		const rawUrl = parsed.data.url.trim();
 		let url;
 		try {
 			url = new URL(rawUrl);
 		} catch {
-			throw new Error("Invalid OpenAI callback URL");
+			return reject("invalid_url");
 		}
-		const parameters = [...url.searchParams.keys()];
-		if (url.protocol !== "http:" || url.hostname !== "localhost" || url.port !== "1455" || url.pathname !== "/auth/callback" || url.username || url.password || url.hash || !url.searchParams.get("code") || !url.searchParams.get("state") || parameters.length !== 2 || new Set(parameters).size !== 2 || !parameters.includes("code") || !parameters.includes("state")) throw new Error("Invalid OpenAI callback URL");
-		if (!this.login.callbackUrlRequested || !this.submitManualCode || this.disposed) throw new Error("OpenAI callback prompt is no longer active");
+		if (url.protocol !== "http:" || url.hostname !== "localhost" || url.port !== "1455" || url.pathname !== "/auth/callback" || url.username || url.password || url.hash) return reject("invalid_endpoint");
+		if (url.searchParams.getAll("code").length > 1) return reject("duplicate_code");
+		if (url.searchParams.getAll("state").length > 1) return reject("duplicate_state");
+		if (!url.searchParams.get("code")?.trim()) return reject("missing_code");
+		if (!url.searchParams.get("state")?.trim()) return reject("missing_state");
+		if (!this.login.callbackUrlRequested || !this.submitManualCode || this.disposed) return reject("inactive_prompt");
 		const attempt = loginAttempts.get(this.ctx);
 		if (attempt) this.logging.recordHost({
 			event: "login",
@@ -14061,6 +14674,7 @@ var OpenAICodexRemoteService = (() => {
 	let _recordClientLog_decorators;
 	let _startLogin_decorators;
 	let _cancelLogin_decorators;
+	let _retryLogin_decorators;
 	let _submitCallbackUrl_decorators;
 	let _updateAccount_decorators;
 	let _deleteAccount_decorators;
@@ -14079,6 +14693,7 @@ var OpenAICodexRemoteService = (() => {
 			_recordClientLog_decorators = [Remote];
 			_startLogin_decorators = [Remote];
 			_cancelLogin_decorators = [Remote];
+			_retryLogin_decorators = [Remote];
 			_submitCallbackUrl_decorators = [Remote];
 			_updateAccount_decorators = [Remote];
 			_deleteAccount_decorators = [Remote];
@@ -14151,6 +14766,17 @@ var OpenAICodexRemoteService = (() => {
 				access: {
 					has: (obj) => "cancelLogin" in obj,
 					get: (obj) => obj.cancelLogin
+				},
+				metadata: _metadata
+			}, null, _instanceExtraInitializers);
+			__esDecorate(this, null, _retryLogin_decorators, {
+				kind: "method",
+				name: "retryLogin",
+				static: false,
+				private: false,
+				access: {
+					has: (obj) => "retryLogin" in obj,
+					get: (obj) => obj.retryLogin
 				},
 				metadata: _metadata
 			}, null, _instanceExtraInitializers);
@@ -14283,6 +14909,9 @@ var OpenAICodexRemoteService = (() => {
 		cancelLogin() {
 			return this.handlers.cancelLogin();
 		}
+		retryLogin() {
+			return this.handlers.retryLogin();
+		}
 		submitCallbackUrl(input) {
 			return this.handlers.submitCallbackUrl(input);
 		}
@@ -14322,9 +14951,17 @@ var OpenAICodexAuthService = class {
 	static Config = Config;
 	static name = PackageId;
 	constructor(ctx, config = Config.parse({})) {
+		const logger = createHostLogger({ write: (level, message, context) => {
+			const payload = context === void 0 ? message : `${message} ${JSON.stringify(context)}`;
+			if (level === "error") ctx.logger.error(`[${PackageId}] ${payload}`);
+			else if (level === "warn") ctx.logger.warn(`[${PackageId}] ${payload}`);
+			else ctx.logger.info(`[${PackageId}] ${payload}`);
+		} });
 		const logging = new OpenAIHubLogging((message) => {
-			console.error(`[${PackageId}] ${message}`);
-			ctx.logger.error(`[${PackageId}] ${message}`);
+			logger.error(message, {
+				event: "diagnostic_log",
+				operation: "write"
+			});
 		});
 		const runtime = new AccountsRuntime(ctx, config, logging);
 		ctx.llm.registerAdapter([ProviderRoute], new HubAdapter(ctx, runtime, logging));
@@ -14333,14 +14970,16 @@ var OpenAICodexAuthService = class {
 				return await operation();
 			} catch {
 				const message = "OpenAI Hub operation failed; retry or check account settings";
-				console.error(`[${PackageId}] ${message}`);
-				ctx.logger.error(`[${PackageId}] ${message}`);
+				logger.error(message, {
+					event: "operation",
+					operation: "guard"
+				});
 				throw new Error(message);
 			}
 		};
 		const track = async (event, operation, action, details = {}, stateFor) => {
 			const startedAt = Date.now();
-			logging.recordHost({
+			if (operation !== "snapshot") logging.recordHost({
 				event,
 				phase: "started",
 				operation,
@@ -14348,7 +14987,7 @@ var OpenAICodexAuthService = class {
 			});
 			try {
 				const result = await guard(action);
-				logging.recordHost({
+				if (operation !== "snapshot") logging.recordHost({
 					event,
 					phase: "completed",
 					operation,
@@ -14393,6 +15032,7 @@ var OpenAICodexAuthService = class {
 				authMethod: input.authMethod
 			}),
 			cancelLogin: () => track("login", "cancelLogin", () => runtime.cancelLogin()),
+			retryLogin: () => track("login", "retryLogin", () => runtime.retryLogin()),
 			submitCallbackUrl: (input) => track("login", "submitCallbackUrl", () => runtime.submitCallbackUrl(input)),
 			updateAccount: (input) => track("account_update", "updateAccount", () => runtime.updateAccount(input), { accountLabel: input.accountLabel }),
 			deleteAccount: (input) => track("account_delete", "deleteAccount", () => runtime.deleteAccount(input), { accountLabel: input.accountLabel }),
@@ -14401,8 +15041,10 @@ var OpenAICodexAuthService = class {
 			saveModels: (input) => track("models_save", "saveModels", () => runtime.saveModels(input), { accountLabel: input.accountLabel }),
 			consumeReset: (input) => track("reset", "consumeReset", () => runtime.consumeReset(input), { accountLabel: input.accountLabel }),
 			async reportUiError() {
-				console.error(`[${PackageId}] Client UI render failed`);
-				ctx.logger.error(`[${PackageId}] Client UI render failed`);
+				logger.error("Client UI render failed", {
+					event: "ui_render",
+					operation: "reportUiError"
+				});
 				await logging.recordHost({
 					event: "ui_render",
 					phase: "failed",
@@ -14422,7 +15064,8 @@ var OpenAICodexAuthService = class {
 		ctx.logger.info(`[${PackageId}] Host initialized`);
 		logging.recordHost({
 			event: "plugin",
-			phase: "started"
+			phase: "started",
+			diagnosticVersion: 3
 		});
 	}
 };

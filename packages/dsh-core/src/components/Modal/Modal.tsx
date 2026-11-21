@@ -4,6 +4,7 @@ import { TestId } from '../../constants/testId.js';
 import { useEffectiveTheme } from '../../hooks/useEffectiveTheme.js';
 import type { DshThemeId } from '../../models/DshContext.js';
 import { cx } from '../../utils/classNames.js';
+import CloseIcon from '../icons/CloseIcon.js';
 
 /**
  * Свойства модального окна Modal дизайн-системы @kalex/dsh-core.
@@ -13,6 +14,8 @@ export interface ModalProps {
     readonly onClose: () => void;
     readonly title?: ReactNode;
     readonly headerExtra?: ReactNode;
+    readonly footer?: ReactNode;
+    readonly description?: ReactNode;
     readonly closeLabel?: string;
     readonly theme?: DshThemeId;
     readonly backdropClassName?: string;
@@ -28,6 +31,8 @@ export function Modal({
     onClose,
     title,
     headerExtra,
+    footer,
+    description,
     closeLabel = 'Close',
     theme,
     backdropClassName,
@@ -106,15 +111,17 @@ export function Modal({
                             <button
                                 type="button"
                                 data-testid={TestId.Common.ModalClose}
-                                className="dsh-btn dsh-btn-sm"
+                                className="dsh-modal-close"
                                 aria-label={closeLabel}
                                 onClick={onClose}>
-                                {closeLabel}
+                                <CloseIcon size={16} />
                             </button>
                         </div>
                     </div>
                 ) : undefined}
-                {children}
+                {description}
+                <div className="dsh-modal-body">{children}</div>
+                {footer !== undefined ? <div className="dsh-modal-footer">{footer}</div> : undefined}
             </div>
         </div>
     );

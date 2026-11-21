@@ -44,8 +44,9 @@
     min-width: 0;
 }
 
-.modelsUsageGroup {
-    flex: 1 1 auto;
+.modelsUsageActions {
+    display: flex;
+    gap: 8px;
 }
 
 .accountError {
@@ -69,6 +70,21 @@
     margin: 0;
     color: var(--dsh-ui-danger);
     overflow-wrap: anywhere;
+}
+
+.deletePendingAccountButton {
+    flex: 0 0 auto;
+    color: var(--dsh-ui-danger);
+}
+
+.deletePendingAccountButton svg {
+    display: block;
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .accountErrorActions,
@@ -128,32 +144,66 @@
     align-items: center;
     gap: 6px;
     color: var(--dsw-alias-label-tertiary);
+    font-size: var(--dsh-content-font-size-secondary, 13px);
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
 }
 
-.openButton {
-    flex: 0 0 auto;
-}
-
-.autoRefreshControl {
+.quotaDockTrigger,
+.quotaDockValue {
     display: inline-flex;
-    flex: 0 0 auto;
     align-items: center;
     gap: 6px;
+    color: var(--dsw-alias-label-primary);
+    font-size: var(--dsh-content-font-size-secondary, 13px);
+    font-weight: 400;
+    line-height: 18px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.quotaTooltip {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+}
+
+.quotaTooltipItem {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.quotaTooltipLabel {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    min-width: 0;
+    font-variant-numeric: tabular-nums;
+}
+
+.quotaTooltipReset {
+    color: var(--dsw-alias-label-tertiary);
+    font-size: 12px;
+    line-height: 18px;
+}
+
+.openButton {
+    margin-left: auto;
+    flex: 0 0 auto;
 }
 
 .autoRefreshTooltipTrigger {
     display: inline-grid;
     width: 18px;
     height: 18px;
-    place-items: center;
     border: 1px solid var(--dsw-alias-border-l2);
     border-radius: 50%;
     background: transparent;
     color: var(--dsw-alias-label-secondary);
     font: inherit;
     font-size: 11px;
+    margin-right: 8px;
 }
 
 .summary {
@@ -176,53 +226,51 @@
     max-width: 100%;
     max-height: 88dvh;
     overflow: hidden;
-}
 
-// :global Ð½ÑƒÐ¶ÐµÐ½ Ð´Ð»Ñ ÑÑ‚Ð¸Ð»Ð¸Ð·Ð°Ñ†Ð¸Ð¸ ÐºÐ½Ð¾Ð¿ÐºÐ¸ Ð·Ð°ÐºÑ€Ñ‹Ñ‚Ð¸Ñ Ð¾Ð±Ñ‰ÐµÐ³Ð¾ Core Modal Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð²Ð½ÑƒÑ‚Ñ€Ð¸ ÑÑ‚Ð¾Ð¹ ÐºÐ°Ñ€Ñ‚Ð¾Ñ‡ÐºÐ¸.
-.modalCard :global(.dsh-modal-header .dsh-btn) {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-    background: transparent;
-    color: var(--dsh-ui-muted);
-    font-size: 0;
-    line-height: 0;
-}
+    :global(.dsh-modal-header .dsh-btn) {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        min-height: 40px;
+        padding: 0;
+        border: 0;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--dsh-ui-muted);
+        font-size: 0;
+        line-height: 0;
+    }
+    :global(.dsh-modal-header .dsh-btn:hover:not(:disabled)) {
+        background: var(--dsh-ui-hover);
+        color: var(--dsh-ui-text);
+    }
 
-.modalCard :global(.dsh-modal-header .dsh-btn:hover:not(:disabled)) {
-    background: var(--dsh-ui-hover);
-    color: var(--dsh-ui-text);
-}
+    :global(.dsh-modal-header .dsh-btn:focus-visible) {
+        outline: 2px solid var(--dsh-ui-accent);
+        outline-offset: 2px;
+    }
 
-.modalCard :global(.dsh-modal-header .dsh-btn:focus-visible) {
-    outline: 2px solid var(--dsh-ui-accent);
-    outline-offset: 2px;
-}
+    :global(.dsh-modal-header .dsh-btn)::before,
+    :global(.dsh-modal-header .dsh-btn)::after {
+        position: absolute;
+        width: 18px;
+        height: 2px;
+        border-radius: 1px;
+        background: currentColor;
+        content: "";
+    }
 
-.modalCard :global(.dsh-modal-header .dsh-btn)::before,
-.modalCard :global(.dsh-modal-header .dsh-btn)::after {
-    position: absolute;
-    width: 18px;
-    height: 2px;
-    border-radius: 1px;
-    background: currentColor;
-    content: "";
-}
+    :global(.dsh-modal-header .dsh-btn)::before {
+        transform: rotate(45deg);
+    }
 
-.modalCard :global(.dsh-modal-header .dsh-btn)::before {
-    transform: rotate(45deg);
-}
-
-.modalCard :global(.dsh-modal-header .dsh-btn)::after {
-    transform: rotate(-45deg);
+    :global(.dsh-modal-header .dsh-btn)::after {
+        transform: rotate(-45deg);
+    }
 }
 
 .modalContent {

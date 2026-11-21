@@ -1,4 +1,5 @@
 import type { Context } from '@deepseek-ai/cordis';
+import { createHostLogger } from '@kalex/dsh-logger';
 import type { z } from 'zod';
 import { Config } from '../shared/accounts.js';
 import { PackageId, ProviderRoute } from '../shared/constants/runtime.js';
@@ -13,9 +14,16 @@ export class OpenAICodexAuthService {
     static Config = Config;
     static name = PackageId;
     constructor(ctx: Context, config: z.infer<typeof Config> = Config.parse({})) {
+        const logger = createHostLogger({
+            write: (level, message, context) => {
+                const payload = context === undefined ? message : `${message} ${JSON.stringify(context)}`;
+                if (level === 'error') ctx.logger.error(`[${PackageId}] ${payload}`);
+                else if (level === 'warn') ctx.logger.warn(`[${PackageId}] ${payload}`);
+                else ctx.logger.info(`[${PackageId}] ${payload}`);
+            }
+        });
         const logging = new OpenAIHubLogging(message => {
-            console.error(`[${PackageId}] ${message}`);
-            ctx.logger.error(`[${PackageId}] ${message}`);
+            logger.error(message, { event: 'diagnostic_log', operation: 'write' });
         });
         const runtime = new AccountsRuntime(ctx, config, logging);
         ctx.llm.registerAdapter([ProviderRoute], new HubAdapter(ctx, runtime, logging));
@@ -24,8 +32,7 @@ export class OpenAICodexAuthService {
                 return await operation();
             } catch {
                 const message = 'OpenAI Hub operation failed; retry or check account settings';
-                console.error(`[${PackageId}] ${message}`);
-                ctx.logger.error(`[${PackageId}] ${message}`);
+                logger.error(message, { event: 'operation', operation: 'guard' });
                 throw new Error(message);
             }
         };
@@ -37,17 +44,18 @@ export class OpenAICodexAuthService {
             stateFor?: (value: T) => OpenAIHubLogEvent['state']
         ): Promise<T> => {
             const startedAt = Date.now();
-            void logging.recordHost({ event, phase: 'started', operation, ...details });
+            if (operation !== 'snapshot') void logging.recordHost({ event, phase: 'started', operation, ...details });
             try {
                 const result = await guard(action);
-                void logging.recordHost({
-                    event,
-                    phase: 'completed',
-                    operation,
-                    durationMs: Date.now() - startedAt,
-                    ...(stateFor ? { state: stateFor(result) } : {}),
-                    ...details
-                });
+                if (operation !== 'snapshot')
+                    void logging.recordHost({
+                        event,
+                        phase: 'completed',
+                        operation,
+                        durationMs: Date.now() - startedAt,
+                        ...(stateFor ? { state: stateFor(result) } : {}),
+                        ...details
+                    });
                 return result;
             } catch {
                 void logging.recordHost({
@@ -100,6 +108,7 @@ export class OpenAICodexAuthService {
                     authMethod: input.authMethod
                 }),
             cancelLogin: () => track('login', 'cancelLogin', () => runtime.cancelLogin()),
+            retryLogin: () => track('login', 'retryLogin', () => runtime.retryLogin()),
             submitCallbackUrl: input => track('login', 'submitCallbackUrl', () => runtime.submitCallbackUrl(input)),
             updateAccount: input =>
                 track('account_update', 'updateAccount', () => runtime.updateAccount(input), { accountLabel: input.accountLabel }),
@@ -112,8 +121,7 @@ export class OpenAICodexAuthService {
             saveModels: input => track('models_save', 'saveModels', () => runtime.saveModels(input), { accountLabel: input.accountLabel }),
             consumeReset: input => track('reset', 'consumeReset', () => runtime.consumeReset(input), { accountLabel: input.accountLabel }),
             async reportUiError() {
-                console.error(`[${PackageId}] Client UI render failed`);
-                ctx.logger.error(`[${PackageId}] Client UI render failed`);
+                logger.error('Client UI render failed', { event: 'ui_render', operation: 'reportUiError' });
                 await logging.recordHost({ event: 'ui_render', phase: 'failed', errorCode: 'unknown' });
                 return true;
             },
@@ -127,7 +135,7 @@ export class OpenAICodexAuthService {
             if (!account.config.catalogLoaded)
                 void runtime.refreshCatalog({ accountLabel: account.config.accountLabel }).catch(() => undefined);
         ctx.logger.info(`[${PackageId}] Host initialized`);
-        void logging.recordHost({ event: 'plugin', phase: 'started' });
+        void logging.recordHost({ event: 'plugin', phase: 'started', diagnosticVersion: 3 });
     }
 }
 export { Config };

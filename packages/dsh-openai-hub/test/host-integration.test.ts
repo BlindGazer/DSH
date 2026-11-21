@@ -2,18 +2,21 @@ import { Context } from '@deepseek-ai/cordis';
 import type { CredentialRef } from '@deepseek-ai/dsh-credentials';
 import { credentialRef } from '@deepseek-ai/dsh-credentials';
 import type { LlmAdapter, StreamChunk } from '@deepseek-ai/dsh-llm';
-import type { AssistantMessage, Provider } from '@earendil-works/pi-ai';
+import type { AssistantMessage, AuthInteraction, Provider } from '@earendil-works/pi-ai';
 import { createAssistantMessageEventStream } from '@earendil-works/pi-ai';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { BrowserLoginError } from '../src/host/browser-login-error.js';
 import type * as CatalogModule from '../src/host/catalog.js';
 import type { OAuthCredential } from '../src/host/credentials.js';
 import type { CodexModel } from '../src/host/provider.js';
 import type { AccountConfig } from '../src/shared/accounts.js';
 import { credentialRefForAccount, PackageId, ProviderRoute, ServiceKey } from '../src/shared/constants/runtime.js';
+import type { OpenAIHubLogEvent } from '../src/shared/logging.js';
 import type { OpenAIHubRemote } from '../src/shared/remote.js';
 
 const mocks = vi.hoisted(() => ({
     oauthLogin: vi.fn(),
+    hostLog: vi.fn<(event: OpenAIHubLogEvent) => void>(),
     oauthRefresh: vi.fn(),
     usage: vi.fn(),
     resetCards: vi.fn(),
@@ -43,6 +46,7 @@ vi.mock('@earendil-works/pi-ai/providers/openai-codex', () => ({
         streamSimple: mocks.providerStream
     })
 }));
+vi.mock('../src/host/browser-login.js', () => ({ loginBrowser: mocks.oauthLogin }));
 vi.mock('../src/host/usage.js', () => ({ requestCodexUsage: mocks.usage }));
 vi.mock('../src/host/reset-credits.js', () => ({
     createResetRedeemer: () => vi.fn(async () => 'reset'),
@@ -62,7 +66,8 @@ vi.mock('../src/host/logging.js', () => ({
             return input;
         }
 
-        async recordHost() {
+        async recordHost(event: OpenAIHubLogEvent) {
+            mocks.hostLog(event);
             return false;
         }
 
@@ -743,12 +748,13 @@ describe('OpenAI Hub host integration', () => {
         await tick();
     });
 
-    it('passes one validated localhost callback URL through the live browser OAuth prompt', async () => {
+    it.each([false, true])('marks an accepted callback as processing and supports cancellation=%s', async cancel => {
         const host = harness();
-        let sdkReceived = '';
+        const exchange = deferred<void>();
         mocks.oauthLogin.mockImplementation(async interaction => {
             interaction.notify({ type: 'auth_url', url: 'https://auth.openai.com/oauth/authorize' });
-            sdkReceived = await interaction.prompt({ type: 'manual_code', message: 'Complete browser sign-in' });
+            await interaction.prompt({ type: 'manual_code', message: 'Complete browser sign-in' });
+            await exchange.promise;
             return {
                 type: 'oauth',
                 access: 'synthetic-access',
@@ -759,17 +765,159 @@ describe('OpenAI Hub host integration', () => {
         });
         const { OpenAICodexAuthService } = await import('../src/host/index.js');
         void new OpenAICodexAuthService(host.ctx);
-        const waiting = await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' });
+        await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' });
+        expect(await remote().submitCallbackUrl({ url: 'http://localhost:1455/auth/callback?code=test&state=test' })).toMatchObject({
+            status: 'starting',
+            callbackUrlRequested: false,
+            verificationUri: '',
+            deviceCode: ''
+        });
+        await expect(remote().submitCallbackUrl({ url: 'http://localhost:1455/auth/callback?code=test&state=test' })).rejects.toThrow();
+        if (cancel) await remote().cancelLogin();
+        exchange.resolve();
+        await vi.waitFor(async () => expect((await remote().snapshot()).status).toBe(cancel ? 'idle' : 'done'));
+        if (cancel) expect((await remote().snapshot()).accounts).toEqual([]);
+    });
+
+    it('keeps the browser login alive after a token timeout and retries without another callback prompt', async () => {
+        const host = harness();
+        const retryWaiting = deferred<void>();
+        let callbackReceived = '';
+        mocks.oauthLogin.mockImplementation(
+            async (
+                interaction: AuthInteraction,
+                _request: typeof fetch,
+                _report: (event: OpenAIHubLogEvent) => void,
+                waitForRetry: ((error: BrowserLoginError, signal?: AbortSignal) => Promise<void>) | undefined
+            ) => {
+                interaction.notify({ type: 'auth_url', url: 'https://auth.openai.com/oauth/authorize' });
+                callbackReceived = await interaction.prompt({ type: 'manual_code', message: 'Complete browser sign-in' });
+                if (!waitForRetry) throw new Error('Retry handler unavailable');
+                const retry = waitForRetry(new BrowserLoginError('Connection timed out.'), interaction.signal);
+                retryWaiting.resolve();
+                await retry;
+                return {
+                    type: 'oauth',
+                    access: 'synthetic-access',
+                    refresh: 'synthetic-refresh',
+                    expires: Date.now() + 3_600_000,
+                    accountId: 'synthetic-account'
+                };
+            }
+        );
+        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        void new OpenAICodexAuthService(host.ctx);
+        const waiting = await remote().startLogin({ accountLabel: 'browser-retry', authMethod: 'browser-oauth' });
         expect(waiting).toMatchObject({ status: 'waiting', callbackUrlRequested: true });
-        await expect(
-            remote().submitCallbackUrl({ url: 'https://localhost:1455/auth/callback?code=sample&state=sample' })
-        ).rejects.toThrow();
-        expect((await remote().snapshot()).callbackUrlRequested).toBe(true);
-        const callbackUrl = 'http://localhost:1455/auth/callback?code=sample&state=state-sample';
+        const callbackUrl = 'http://localhost:1455/auth/callback?code=test&state=test';
         await remote().submitCallbackUrl({ url: callbackUrl });
+        await retryWaiting.promise;
+        expect(await remote().snapshot()).toMatchObject({ status: 'error', retryAvailable: true, error: 'Connection timed out.' });
+        expect(callbackReceived).toBe(callbackUrl);
+        expect(await remote().retryLogin()).toMatchObject({ status: 'starting', retryAvailable: false });
         await vi.waitFor(async () => expect((await remote().snapshot()).status).toBe('done'));
-        expect(sdkReceived).toBe(callbackUrl);
-        expect(JSON.stringify(await remote().snapshot())).not.toContain('sample');
+        expect(mocks.oauthLogin).toHaveBeenCalledOnce();
+        expect(JSON.stringify(await remote().snapshot())).not.toContain('test');
+    });
+
+    it.each(['', '&scope=openid+profile+email+offline_access', '&scope=openid&iss=https%3A%2F%2Fauth.openai.com'])(
+        'passes a validated localhost callback URL with metadata %s through the browser OAuth prompt',
+        async metadata => {
+            const host = harness();
+            let sdkReceived = '';
+            mocks.oauthLogin.mockImplementation(async interaction => {
+                interaction.notify({ type: 'auth_url', url: 'https://auth.openai.com/oauth/authorize' });
+                sdkReceived = await interaction.prompt({ type: 'manual_code', message: 'Complete browser sign-in' });
+                return {
+                    type: 'oauth',
+                    access: 'synthetic-access',
+                    refresh: 'synthetic-refresh',
+                    expires: Date.now() + 3_600_000,
+                    accountId: 'synthetic-account'
+                };
+            });
+            const { OpenAICodexAuthService } = await import('../src/host/index.js');
+            void new OpenAICodexAuthService(host.ctx);
+            const waiting = await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' });
+            expect(waiting).toMatchObject({ status: 'waiting', callbackUrlRequested: true });
+            for (const [url, callbackError] of [
+                ['not-a-url', 'invalid_url'],
+                ['https://localhost:1455/auth/callback?code=sample&state=sample', 'invalid_endpoint'],
+                ['http://example.com:1455/auth/callback?code=sample&state=sample', 'invalid_endpoint'],
+                ['http://localhost:1455/other?code=sample&state=sample', 'invalid_endpoint'],
+                ['http://user:sample@localhost:1455/auth/callback?code=sample&state=sample', 'invalid_endpoint'],
+                ['http://localhost:1455/auth/callback?code=sample&state=sample#fragment', 'invalid_endpoint'],
+                ['http://localhost:1455/auth/callback?state=sample&scope=openid', 'missing_code'],
+                ['http://localhost:1455/auth/callback?code=sample&scope=openid', 'missing_state'],
+                ['http://localhost:1455/auth/callback?code=sample&code=other&state=sample&scope=openid', 'duplicate_code'],
+                ['http://localhost:1455/auth/callback?code=sample&state=sample&state=other&scope=openid', 'duplicate_state']
+            ] as const) {
+                await expect(remote().submitCallbackUrl({ url })).rejects.toThrow();
+                expect(mocks.hostLog).toHaveBeenCalledWith({
+                    event: 'login',
+                    phase: 'failed',
+                    operation: 'submitCallbackUrl',
+                    errorCode: 'validation_failed',
+                    callbackError
+                });
+                expect((await remote().snapshot()).callbackUrlRequested).toBe(true);
+                expect(sdkReceived).toBe('');
+            }
+            expect(JSON.stringify(mocks.hostLog.mock.calls)).not.toContain('sample');
+            vi.useFakeTimers();
+            try {
+                await vi.advanceTimersByTimeAsync(20 * 60 * 1000);
+                expect(await remote().snapshot()).toMatchObject({ status: 'waiting', callbackUrlRequested: true });
+            } finally {
+                vi.useRealTimers();
+            }
+            const callbackUrl = `http://localhost:1455/auth/callback?code=sample&state=state-sample${metadata}`;
+            await remote().submitCallbackUrl({ url: callbackUrl });
+            await vi.waitFor(async () => expect((await remote().snapshot()).status).toBe('done'));
+            expect(sdkReceived).toBe(callbackUrl);
+            expect(JSON.stringify(await remote().snapshot())).not.toContain('sample');
+        }
+    );
+
+    it.each(['browser-oauth', 'device-code'] as const)('preserves the primary network failure for %s', async authMethod => {
+        const host = harness();
+        const cause = Object.assign(new Error('private-proxy-address timeout: 10000ms'), {
+            name: 'ConnectTimeoutError',
+            code: 'UND_ERR_CONNECT_TIMEOUT'
+        });
+        mocks.oauthLogin.mockRejectedValueOnce(new TypeError('private-callback-code', { cause }));
+        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        void new OpenAICodexAuthService(host.ctx);
+        expect(await remote().startLogin({ accountLabel: 'network-failure', authMethod })).toMatchObject({ status: 'error' });
+        expect(mocks.hostLog).toHaveBeenCalledWith(
+            expect.objectContaining({
+                event: 'login',
+                phase: 'failed',
+                state: 'error',
+                authMethod,
+                errorCode: 'oauth_connect_timeout',
+                networkError: 'UND_ERR_CONNECT_TIMEOUT',
+                networkTimeoutMs: 10000,
+                loginAttemptId: expect.any(String)
+            })
+        );
+        expect(JSON.stringify(mocks.hostLog.mock.calls)).not.toContain('private');
+    });
+
+    it('surfaces safe browser errors and keeps routine snapshots out of diagnostic history', async () => {
+        const host = harness();
+        const message = 'OpenAI Hub connection to auth.openai.com timed out. Check network and proxy settings.';
+        mocks.oauthLogin.mockRejectedValueOnce(new BrowserLoginError(message));
+        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        void new OpenAICodexAuthService(host.ctx);
+        expect(await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' })).toMatchObject({
+            status: 'error',
+            error: message
+        });
+        await remote().snapshot();
+        await remote().snapshot();
+        expect(mocks.hostLog).toHaveBeenCalledWith({ event: 'plugin', phase: 'started', diagnosticVersion: 3 });
+        expect(mocks.hostLog.mock.calls.some(([event]) => event.operation === 'snapshot')).toBe(false);
     });
 
     it('refreshes only the selected account credential and never serializes rotated tokens', async () => {

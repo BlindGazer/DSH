@@ -1,4 +1,4 @@
-import { Button, CircularProgress, Modal, SwitchControl, Tooltip, useEffectiveTheme } from '@kalex/dsh-core';
+import { Button, CircularProgress, IconButton, Modal, SettingsIcon, SwitchControl, Tooltip, useEffectiveTheme } from '@kalex/dsh-core';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
 import { TestId } from '../../../shared/constants/testId.js';
 import type { AccountSnapshot } from '../../../shared/remote.js';
@@ -48,13 +48,17 @@ export function CodexModelsAccountEntry({
     const summary = text('modelsEnabledSummary').replace('{enabled}', String(enabled)).replace('{total}', String(account.models.length));
     const needsAttention = !account.loggedIn;
     const chartLimits = [
-        {
-            name: text('fiveHourLimit'),
-            usedPercent:
-                account.usageStatus === 'error'
-                    ? 100
-                    : (account.usageLimits.find(limit => limit.windowSeconds === 18_000)?.usedPercent ?? 100)
-        },
+        ...(account.usageStatus === 'error' || account.usageLimits.some(limit => limit.windowSeconds === 18_000)
+            ? [
+                  {
+                      name: text('fiveHourLimit'),
+                      usedPercent:
+                          account.usageStatus === 'error'
+                              ? 100
+                              : (account.usageLimits.find(limit => limit.windowSeconds === 18_000)?.usedPercent ?? 100)
+                  }
+              ]
+            : []),
         {
             name: text('weeklyLimit'),
             usedPercent:
@@ -70,9 +74,6 @@ export function CodexModelsAccountEntry({
                 data-theme={theme}
                 data-testid={`${TestId.OpenAIHub.ModelsFooter}-${account.accountLabel}`}>
                 <div className={styles.row}>
-                    <Button className={styles.openButton ?? ''} variant="secondary" size="sm" onClick={onOpen}>
-                        {text('compactTitle')}
-                    </Button>
                     <div className={styles.quotaCharts}>
                         <div className={styles.modelsUsageGroup}>
                             <span className={styles.modelsUsageSummary}>{summary}</span>
@@ -80,7 +81,9 @@ export function CodexModelsAccountEntry({
                                 className={styles.modelsEnabledSegments}
                                 role="img"
                                 aria-label={summary}
-                                style={{ width: `${Math.max(52, account.models.length * 9 - 1)}px` }}>
+                                style={{
+                                    width: `${Math.max(52, account.models.length * 9 - 1)}px`
+                                }}>
                                 {account.models.map(model => (
                                     <span key={model.id} className={styles.modelsEnabledSegment} data-enabled={model.enabled} />
                                 ))}
@@ -97,27 +100,32 @@ export function CodexModelsAccountEntry({
                                     </span>
                                 );
                             })}
-                            {!needsAttention ? (
-                                <span className={styles.autoRefreshControl}>
-                                    <SwitchControl
-                                        ariaLabel={text('autoRefreshLimits')}
-                                        checked={account.autoRefreshLimits}
-                                        disabled={autoRefreshBusy}
-                                        onChange={onAutoRefreshChange}
-                                    />
-                                    <Tooltip
-                                        triggerLabel={text('autoRefreshInfo')}
-                                        content={text('autoRefreshTooltip')}
-                                        theme={theme}
-                                        {...(styles.autoRefreshTooltipTrigger
-                                            ? { triggerClassName: styles.autoRefreshTooltipTrigger }
-                                            : {})}>
-                                        <span aria-hidden="true">i</span>
-                                    </Tooltip>
-                                </span>
-                            ) : undefined}
                         </div>
                     </div>
+                    <span className={styles.modelsUsageActions}>
+                        {!needsAttention ? (
+                            <Tooltip
+                                triggerLabel={text('autoRefreshInfo')}
+                                content={text('autoRefreshTooltip')}
+                                theme={theme}
+                                {...(styles.autoRefreshTooltipTrigger ? { triggerClassName: styles.autoRefreshTooltipTrigger } : {})}>
+                                <SwitchControl
+                                    ariaLabel={text('autoRefreshLimits')}
+                                    checked={account.autoRefreshLimits}
+                                    disabled={autoRefreshBusy}
+                                    onChange={onAutoRefreshChange}
+                                />
+                            </Tooltip>
+                        ) : undefined}
+                        <Button
+                            className={styles.openButton ?? ''}
+                            variant="secondary"
+                            size="sm"
+                            ariaLabel={text('compactTitle')}
+                            onClick={onOpen}>
+                            <SettingsIcon />
+                        </Button>
+                    </span>
                     {needsAttention ? (
                         <div className={styles.accountError} role="alert">
                             <p>{text('signInRequired')}</p>
@@ -130,9 +138,15 @@ export function CodexModelsAccountEntry({
                                     onClick={onSignIn}>
                                     {text('signIn')}
                                 </Button>
-                                <Button variant="danger" size="sm" disabled={accountActionPending} onClick={onDelete}>
-                                    {accountActionPending ? text('working') : text('deleteAccount')}
-                                </Button>
+                                <IconButton
+                                    ariaLabel={text('deleteAccount')}
+                                    disabled={accountActionPending}
+                                    className={styles.deletePendingAccountButton ?? ''}
+                                    onClick={onDelete}>
+                                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                                        <path d="M4 7h16M10 11v6m4-6v6M5.5 7l1 14h11l1-14M9 7V4h6v3" />
+                                    </svg>
+                                </IconButton>
                             </div>
                         </div>
                     ) : undefined}

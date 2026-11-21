@@ -1,4 +1,5 @@
 import type { DshClientContext, DshLocaleCode, DshLocaleService, DshSlotRegistrationOptions } from '@kalex/dsh-core';
+import { createClientLogger } from '@kalex/dsh-logger';
 import type { ReactElement } from 'react';
 import { createElement, useSyncExternalStore } from 'react';
 import type { AuthMethod, ModelChoice } from '../../../shared/accounts.js';
@@ -53,8 +54,27 @@ export class OpenAICodexController {
         this.state = state;
         for (const listener of this.listeners) listener();
     }
+    private readonly logger = createClientLogger({
+        sink: (_level, _message, context) => {
+            if (!context) return;
+            const input: OpenAIHubClientLogEvent = {
+                event: context.event as OpenAIHubClientLogEvent['event'],
+                phase: (typeof context.phase === 'string' ? context.phase : 'failed') as OpenAIHubClientLogEvent['phase'],
+                ...(typeof context.operation === 'string' ? { operation: context.operation as OpenAIHubClientLogEvent['operation'] } : {}),
+                ...(typeof context.durationMs === 'number' ? { durationMs: context.durationMs } : {}),
+                ...(typeof context.errorCode === 'string' ? { errorCode: context.errorCode as OpenAIHubClientLogEvent['errorCode'] } : {})
+            };
+            void this.remote.recordClientLog(input).catch(() => undefined);
+        }
+    });
     private log(input: OpenAIHubClientLogEvent): void {
-        void this.remote.recordClientLog(input).catch(() => undefined);
+        this.logger.info(input.event, {
+            event: input.event,
+            ...(input.operation ? { operation: input.operation } : {}),
+            ...(input.phase ? { phase: input.phase } : {}),
+            ...(input.durationMs !== undefined ? { durationMs: input.durationMs } : {}),
+            ...(input.errorCode ? { errorCode: input.errorCode } : {})
+        });
     }
     async load(background = false): Promise<void> {
         if (this.inFlight) return this.inFlight;
@@ -121,6 +141,9 @@ export class OpenAICodexController {
     }
     cancelLogin(): Promise<OpenAICodexSnapshot> {
         return this.act({ event: 'login', operation: 'cancelLogin' }, () => this.remote.cancelLogin());
+    }
+    retryLogin(): Promise<OpenAICodexSnapshot> {
+        return this.act({ event: 'login', operation: 'retryLogin' }, () => this.remote.retryLogin());
     }
     submitCallbackUrl(url: string): Promise<OpenAICodexSnapshot> {
         return this.act({ event: 'login', operation: 'submitCallbackUrl' }, () => this.remote.submitCallbackUrl({ url }));

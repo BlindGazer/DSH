@@ -1,8 +1,9 @@
-import { Button, IconButton, Modal, ThemedSelect, useEffectiveTheme } from '@kalex/dsh-core';
+import { Button, CollectionAddButton, IconButton, Modal, RadioCardGroup, TextField, useEffectiveTheme } from '@kalex/dsh-core';
 import type { AuthMethod } from '../../../shared/accounts.js';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
 import { TestId } from '../../../shared/constants/testId.js';
 import type { AccountSnapshot } from '../../../shared/remote.js';
+import { CodexLoginProgress } from './CodexLoginProgress.js';
 import styles from './codexStyles.module.scss';
 import { useCodexSettingsPanel } from './hooks/useCodexSettingsPanel.js';
 import type { OpenAICodexController } from './openAICodexRuntime.js';
@@ -32,7 +33,8 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                     <p>{text('usageError')}</p>
                 </div>
             ) : undefined}
-            {panel.snapshot?.status === 'waiting' && !panel.loginOpen ? (
+            {panel.signingIn && !panel.loginOpen ? <CodexLoginProgress text={text} /> : undefined}
+            {panel.snapshot?.status === 'waiting' && !panel.signingIn && !panel.loginOpen ? (
                 <div className={styles.card} role="status">
                     <p>{text('waiting')}</p>
                     <code data-testid={TestId.OpenAIHub.DeviceCode}>{panel.snapshot.deviceCode}</code>
@@ -54,9 +56,9 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                     <p>{panel.snapshot.error || text('loginFailed')}</p>
                 </div>
             ) : undefined}
-            <Button className={styles.addAccountButton ?? ''} onClick={panel.openLogin}>
+            <CollectionAddButton onClick={panel.openLogin}>
                 {text(panel.snapshot?.accounts.length ? 'addAccount' : 'addFirstAccount')}
-            </Button>
+            </CollectionAddButton>
             <Modal
                 open={panel.loginOpen}
                 onClose={panel.closeLogin}
@@ -66,7 +68,9 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                 backdropClassName="dsh-core-root"
                 {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
                 <div className={styles.modalBody}>
-                    {panel.snapshot?.status === 'waiting' ? (
+                    {panel.signingIn ? (
+                        <CodexLoginProgress text={text} />
+                    ) : panel.snapshot?.status === 'waiting' ? (
                         <>
                             <div className={styles.card} role="status">
                                 <p>{text('waiting')}</p>
@@ -89,7 +93,7 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                 <div className={styles.card}>
                                     <label htmlFor={panel.labelId}>{text('manualCallbackLabel')}</label>
                                     <p>{text('manualCallbackHint')}</p>
-                                    <input
+                                    <TextField
                                         type="url"
                                         id={panel.labelId}
                                         value={panel.callbackUrl}
@@ -97,12 +101,16 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                         autoComplete="off"
                                         spellCheck={false}
                                         placeholder={text('callbackPlaceholder')}
-                                        onChange={event => panel.setCallbackUrl(event.currentTarget.value)}
+                                        onChange={panel.setCallbackUrl}
                                     />
                                     {panel.error ? <p role="alert">{panel.error}</p> : undefined}
                                 </div>
                             ) : undefined}
                         </>
+                    ) : panel.snapshot?.status === 'error' && panel.snapshot.retryAvailable ? (
+                        <div className={styles.card} role="alert">
+                            <p>{panel.snapshot.error || text('loginFailed')}</p>
+                        </div>
                     ) : panel.loginStarted && panel.snapshot?.status === 'done' && !panel.busy ? (
                         <p role="status">{text('connected')}</p>
                     ) : panel.isReauthentication ? (
@@ -113,19 +121,15 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                     ) : (
                         <>
                             <label htmlFor={panel.labelId}>{text('accountLabel')}</label>
-                            <input
-                                id={panel.labelId}
-                                value={panel.label}
-                                maxLength={32}
-                                onChange={event => panel.setLabel(event.currentTarget.value)}
-                            />
-                            <span>{text('authMethod')}</span>
-                            <ThemedSelect
+                            <TextField id={panel.labelId} value={panel.label} maxLength={32} onChange={panel.setLabel} />
+                            <RadioCardGroup<AuthMethod>
+                                name={`${panel.labelId}-auth-method`}
+                                label={text('authMethod')}
                                 value={panel.authMethod}
-                                ariaLabel={text('authMethod')}
+                                disabled={panel.busy}
                                 options={[
-                                    { value: 'device-code' as AuthMethod, label: text('deviceCode') },
-                                    { value: 'browser-oauth' as AuthMethod, label: text('browserOAuth') }
+                                    { value: 'device-code', label: text('deviceCode'), description: text('deviceCodeDescription') },
+                                    { value: 'browser-oauth', label: text('browserOAuth'), description: text('browserOAuthDescription') }
                                 ]}
                                 onChange={panel.setAuthMethod}
                             />
@@ -137,7 +141,15 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                 </div>
                 <div className={styles.modalFooter}>
                     <div className={styles.actions}>
-                        {panel.snapshot?.status === 'waiting' && panel.snapshot.callbackUrlRequested ? (
+                        {panel.signingIn ? undefined : panel.snapshot?.retryAvailable ? (
+                            <Button
+                                data-testid={TestId.OpenAIHub.Login}
+                                variant="primary"
+                                disabled={panel.busy}
+                                onClick={() => void panel.retryLogin()}>
+                                {panel.busy ? text('working') : text('retry')}
+                            </Button>
+                        ) : panel.snapshot?.status === 'waiting' && panel.snapshot.callbackUrlRequested ? (
                             <Button
                                 data-testid={TestId.OpenAIHub.Login}
                                 variant="primary"

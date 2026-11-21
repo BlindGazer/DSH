@@ -36,7 +36,11 @@ export function CircularProgress({ value, label, size = 'standard', color = 'def
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={boundedValue}
-            style={{ '--dsh-progress-color': resolveDshProgressColor(color) } as CSSProperties}>
+            style={
+                {
+                    '--dsh-progress-color': resolveDshProgressColor(color)
+                } as CSSProperties
+            }>
             <title>{title ?? label}</title>
             <circle className="dsh-circular-progress-track" cx={center} cy={center} r={radius} strokeWidth={strokeWidth} />
             <circle

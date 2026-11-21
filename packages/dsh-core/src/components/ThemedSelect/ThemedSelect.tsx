@@ -10,6 +10,7 @@ import { cx } from '../../utils/classNames.js';
  */
 export interface ThemedSelectProps<TValue extends string = string> {
     readonly value: TValue;
+    readonly size?: 'small' | 'standard';
     readonly options: ReadonlyArray<SelectOption<TValue>>;
     readonly onChange: (nextValue: TValue) => void;
     readonly ariaLabel?: string;
@@ -28,6 +29,7 @@ export interface ThemedSelectProps<TValue extends string = string> {
  */
 export function ThemedSelect<TValue extends string = string>({
     value,
+    size = 'standard',
     options,
     onChange,
     ariaLabel,
@@ -99,7 +101,15 @@ export function ThemedSelect<TValue extends string = string>({
             ref={el => {
                 rootRef.current = el ?? undefined;
             }}
-            className={cx(coreStyleScopeClass, 'dsh-select', 'ar-themed-select', fullWidth && 'dsh-select-full', className)}>
+            className={cx(
+                coreStyleScopeClass,
+                'dsh-select',
+                'ar-themed-select',
+                size === 'small' && 'dsh-select-sm',
+                fullWidth && 'dsh-select-full',
+                className
+            )}
+            data-size={size}>
             <button
                 type="button"
                 data-testid={TestId.Common.SelectTrigger}

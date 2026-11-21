@@ -17,6 +17,7 @@ export function useCodexSettingsPanel(
         [authMethod, setAuthMethod] = useState<AuthMethod>('device-code'),
         [error, setError] = useState(''),
         [busy, setBusy] = useState(false),
+        [callbackInFlight, setCallbackInFlight] = useState(false),
         [loginStarted, setLoginStarted] = useState(false),
         [loginPending, setLoginPending] = useState(false),
         [callbackUrl, setCallbackUrl] = useState(''),
@@ -76,11 +77,12 @@ export function useCodexSettingsPanel(
         setAddLoginOpen(true);
     };
     const closeLogin = () => {
-        if (loginStarted || loginPending || snapshot?.status === 'starting' || snapshot?.status === 'waiting')
+        if (loginStarted || loginPending || snapshot?.status === 'starting' || snapshot?.status === 'waiting' || snapshot?.retryAvailable)
             void controller.cancelLogin().catch(() => undefined);
         setAddLoginOpen(false);
         setLoginStarted(false);
         setLoginPending(false);
+        setCallbackInFlight(false);
         if (isReauthentication) onReauthenticationClose?.();
         setCallbackUrl('');
     };
@@ -91,6 +93,7 @@ export function useCodexSettingsPanel(
             return;
         }
         setBusy(true);
+        setCallbackInFlight(true);
         setError('');
         try {
             const result = await controller.submitCallbackUrl(url);
@@ -108,6 +111,22 @@ export function useCodexSettingsPanel(
             }
         } catch {
             setError(text('callbackFailed'));
+        } finally {
+            setCallbackInFlight(false);
+            setBusy(false);
+        }
+    };
+    const retryLogin = async () => {
+        setBusy(true);
+        setError('');
+        try {
+            const result = await controller.retryLogin();
+            if (result.status === 'starting') {
+                setLoginStarted(true);
+                setLoginPending(true);
+            }
+        } catch {
+            setError(text('loginFailed'));
         } finally {
             setBusy(false);
         }
@@ -144,6 +163,7 @@ export function useCodexSettingsPanel(
         authMethod: activeAuthMethod,
         error,
         busy,
+        signingIn: (callbackInFlight || snapshot?.status === 'starting') && snapshot?.status !== 'error' && snapshot?.status !== 'done',
         loginStarted,
         isReauthentication,
         labelId,
@@ -156,6 +176,7 @@ export function useCodexSettingsPanel(
         setLabel,
         setAuthMethod,
         startLogin,
-        submitCallbackUrl
+        submitCallbackUrl,
+        retryLogin
     };
 }

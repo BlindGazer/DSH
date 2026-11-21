@@ -40,6 +40,9 @@ export class OpenAICodexRemoteService extends TypertRemoteService {
     @Remote cancelLogin(): Promise<OpenAICodexSnapshot> {
         return this.handlers.cancelLogin();
     }
+    @Remote retryLogin(): Promise<OpenAICodexSnapshot> {
+        return this.handlers.retryLogin();
+    }
     @Remote submitCallbackUrl(input: SubmitCallbackUrlRequest): Promise<OpenAICodexSnapshot> {
         return this.handlers.submitCallbackUrl(input);
     }

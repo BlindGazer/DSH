@@ -1,4 +1,4 @@
-import { Button, LinearProgress, Modal, useEffectiveTheme } from '@kalex/dsh-core';
+import { Button, Checkbox, LinearProgress, Modal, TextField, useEffectiveTheme } from '@kalex/dsh-core';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
 import { TestId } from '../../../shared/constants/testId.js';
 import type { AccountSnapshot } from '../../../shared/remote.js';
@@ -15,12 +15,24 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
     const theme = useEffectiveTheme();
     const panel = useCodexAccountCard(account, controller, text);
     const chartLimits =
-        account.usageStatus !== 'error' && account.usageLimits.length
-            ? account.usageLimits
-            : [
-                  { name: text('fiveHourLimit'), usedPercent: 100, windowSeconds: 18_000, resetAt: 0 },
-                  { name: text('weeklyLimit'), usedPercent: 100, windowSeconds: 604_800, resetAt: 0 }
-              ];
+        account.usageStatus === 'error'
+            ? account.usageLimits.length
+                ? account.usageLimits
+                : [
+                      {
+                          name: text('fiveHourLimit'),
+                          usedPercent: 100,
+                          windowSeconds: 18_000,
+                          resetAt: 0
+                      },
+                      {
+                          name: text('weeklyLimit'),
+                          usedPercent: 100,
+                          windowSeconds: 604_800,
+                          resetAt: 0
+                      }
+                  ]
+            : account.usageLimits;
     return (
         <section
             className={`dsh-core-root ${styles.panel} ${styles.modalLayout}`}
@@ -30,12 +42,7 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                 {panel.editingLabel ? (
                     <div className={styles.renameEditor}>
                         <label htmlFor={panel.labelId}>{text('accountLabel')}</label>
-                        <input
-                            id={panel.labelId}
-                            value={panel.label}
-                            onChange={event => panel.setLabel(event.currentTarget.value)}
-                            maxLength={32}
-                        />
+                        <TextField id={panel.labelId} value={panel.label} onChange={panel.setLabel} maxLength={32} />
                     </div>
                 ) : undefined}
                 <section
@@ -214,19 +221,18 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                                     </div>
                                     <div className={`${styles.modelCell} ${styles.modelIdColumn} ${styles.modelId}`}>{model.id}</div>
                                     <div className={`${styles.modelCell} ${styles.modelNameColumn}`}>
-                                        <input
-                                            aria-label={`${text('modelName')}: ${model.id}`}
+                                        <TextField
+                                            ariaLabel={`${text('modelName')}: ${model.id}`}
                                             value={model.name}
-                                            onChange={event => panel.updateModel(index, { name: event.currentTarget.value })}
+                                            onChange={value => panel.updateModel(index, { name: value })}
                                         />
                                     </div>
                                     <div className={`${styles.modelCell} ${styles.modelEnabledColumn}`}>
-                                        <label className={styles.checkLabel}>
-                                            <input
-                                                className="dsh-checkbox"
-                                                type="checkbox"
+                                        <label className={styles.checkLabel} htmlFor={`model-enabled-${model.id}`}>
+                                            <Checkbox
                                                 checked={model.enabled}
-                                                onChange={event => panel.updateModel(index, { enabled: event.currentTarget.checked })}
+                                                ariaLabel={`${text('enabled')}: ${model.id}`}
+                                                onChange={checked => panel.updateModel(index, { enabled: checked })}
                                             />
                                             {text('enabled')}
                                         </label>
@@ -236,7 +242,7 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                         </ul>
                     </section>
                 </div>
-                <div className={styles.modalFooter}>
+                <div className={styles.modalFooter} data-core-modal-footer>
                     {panel.error ? <p role="alert">{panel.error}</p> : undefined}
                     <div className={styles.actionsRight}>
                         <Button
@@ -261,7 +267,7 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                     <p>{text('resetConfirm')}</p>
                     {panel.error ? <p role="alert">{panel.error}</p> : undefined}
                 </div>
-                <div className={styles.modalFooter}>
+                <div className={styles.modalFooter} data-core-modal-footer>
                     <div className={styles.actionsRight}>
                         <Button variant="danger" disabled={panel.busy} onClick={() => void panel.confirmReset()}>
                             {text('confirm')}
@@ -284,7 +290,7 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                     <p>{text('deleteAccountConfirm')}</p>
                     {panel.error ? <p role="alert">{panel.error}</p> : undefined}
                 </div>
-                <div className={styles.modalFooter}>
+                <div className={styles.modalFooter} data-core-modal-footer>
                     <div className={styles.actionsRight}>
                         <Button variant="danger" disabled={panel.busy} onClick={() => void panel.deleteAccount()}>
                             {text('deleteAccount')}

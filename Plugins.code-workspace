@@ -21,6 +21,10 @@
       "path": "packages/dsh-openai-hub",
     },
     {
+      "name": "Logger",
+      "path": "packages/dsh-logger",
+    },
+    {
       "name": "Root",
       "path": ".",
     },

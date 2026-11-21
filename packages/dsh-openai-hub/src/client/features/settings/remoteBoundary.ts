@@ -33,6 +33,7 @@ export function createOpenAIHubRemote(wire: OpenAIHubWireRemote): OpenAIHubRemot
         recordClientLog: (input: OpenAIHubClientLogEvent) => accepted(wire.recordClientLog(input)),
         startLogin: input => snapshot(wire.startLogin(input)),
         cancelLogin: () => snapshot(wire.cancelLogin()),
+        retryLogin: () => snapshot(wire.retryLogin()),
         submitCallbackUrl: input => snapshot(wire.submitCallbackUrl(input)),
         updateAccount: input => snapshot(wire.updateAccount(input)),
         deleteAccount: input => snapshot(wire.deleteAccount(input)),

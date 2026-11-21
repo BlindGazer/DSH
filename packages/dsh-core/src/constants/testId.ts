@@ -9,6 +9,7 @@ export const TestId = {
         SelectOption: 'dsh-select-option',
         Switch: 'dsh-switch-control',
         Button: 'dsh-button',
+        Checkbox: 'dsh-checkbox',
         IconButton: 'dsh-icon-button',
         ModalBackdrop: 'dsh-modal-backdrop',
         ModalCard: 'dsh-modal-card',
