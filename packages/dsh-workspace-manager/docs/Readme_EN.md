@@ -15,6 +15,10 @@ No public `.d.ts` files are generated: this package is installed as a DSH plugin
 
 Link folders from different locations, give them aliases and descriptions, and optionally restrict access to read-only.
 
+Select **New worktree session** from a workspace's `...` menu. Create a new branch from any local branch, check out a free local branch in a new worktree, or start a session in an existing worktree of the same repository. New folders default to `.worktrees` inside the selected workspace directory. When creating a worktree there, the plugin adds `/.worktrees/` to that workspace directory's `.gitignore` if Git does not already ignore it. The base path is editable.
+
+Git and a repository with at least one commit are required on the DSH Host. Uncommitted changes stay in the source checkout. The resulting session is always new. Archiving it does not delete the worktree.
+
 ## 🚀 Install from GitHub
 
 ```powershell

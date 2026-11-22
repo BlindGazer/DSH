@@ -12,7 +12,8 @@ description: Enforces unified DSH plus Google Material 3 design-system tokens, t
 - Use CSS custom properties (`--dsh-ui-*`) defined in `@kalex/dsh-core` for all surfaces, text, borders, elevations, and semantic states (`info`, `success`, `warning`, `danger`). Never hardcode raw hex or RGB values inside feature components.
 - Preserve DSH plus Google Material 3 parity: plugin surfaces must blend with the host DSH shell while providing clear `default`, `hover`, `active`, `focus-visible`, and `disabled` states and legible contrast in `light`, `dark`, and custom registered themes.
 - Allow local style overrides in plugins and components through `className`, `variant`, and scoped CSS variables without modifying shared component internals.
-- CSS Modules must use locally scoped selectors. Avoid `:global` and other unscoped selectors; allow them only when required to style host-provided or shared-component DOM, with a nearby comment explaining the need and scope.
+- Author all frontend styles in `.scss` files. Use `*.module.scss` for component and feature styles. Do not author plain `.css` files, CSS strings, `<style>` blocks, inline `style` props, CSS-in-JS, or imperative DOM styles. Code may select SCSS classes or load compiled styles. Put a style in code only when SCSS cannot express the required behavior; limit the exception to that declaration and document the technical reason next to it.
+- Keep SCSS Module selectors local, including in modals. Before using `:global` or another unscoped selector, try a local class, a public component prop, or a scoped CSS variable. Use an unscoped selector only if no local solution is technically possible or the user explicitly approves that specific exception. Scope it as narrowly as possible and document the reason next to the selector.
 
 ## 2. Core Theme Integration (Required)
 

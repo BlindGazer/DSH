@@ -2,6 +2,7 @@ import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.ts';
 
 export interface WorkspaceMenuActions {
     readonly label: () => string;
+    readonly nativeRenameLabel: () => string;
     readonly resolve: (key: string) => WorkspaceEditTarget | undefined;
     readonly open: (target: WorkspaceEditTarget) => void;
 }
@@ -66,7 +67,7 @@ export function installWorkspaceMenu(doc: Document, actions: WorkspaceMenuAction
         active.menu = menu;
 
         const nativeRows = menu.querySelectorAll<HTMLButtonElement>('button[role="menuitem"]');
-        const rename = nativeRows.item(0) ?? undefined;
+        const rename = [...nativeRows].find(button => button.textContent?.trim() === actions.nativeRenameLabel());
         const wrapper = rename?.parentElement ?? undefined;
         // Переиспользуем строку переименования, чтобы не создавать дублирующий пункт меню.
         if (

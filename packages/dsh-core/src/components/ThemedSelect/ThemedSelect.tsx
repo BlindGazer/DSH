@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 
 import { TestId } from '../../constants/testId.ts';
 import type { SelectOption } from '../../models/SelectOption.ts';
@@ -45,6 +45,9 @@ export function ThemedSelect<TValue extends string = string>({
     error
 }: ThemedSelectProps<TValue>) {
     const rootRef = useRef<HTMLDivElement | undefined>(undefined);
+    const triggerRef = useRef<HTMLButtonElement>(null);
+    const menuRef = useRef<HTMLDivElement>(null);
+    const keyboardMove = useRef(false);
     const [open, setOpen] = useState(false);
     const foundIndex = options.findIndex(option => option.value === value);
     const selectedIndex = Math.max(foundIndex, 0);
@@ -65,19 +68,40 @@ export function ThemedSelect<TValue extends string = string>({
         };
     }, [open]);
 
+    useEffect(() => {
+        if (!keyboardMove.current || !open) return;
+        keyboardMove.current = false;
+        const menu = menuRef.current;
+        const option = menu?.children.item(activeIndex);
+        if (!(option instanceof HTMLElement) || menu === null) return;
+        const item = option.getBoundingClientRect();
+        const viewport = menu.getBoundingClientRect();
+        if (item.top < viewport.top) menu.scrollTop += item.top - viewport.top;
+        if (item.bottom > viewport.bottom) menu.scrollTop += item.bottom - viewport.bottom;
+    }, [activeIndex, open]);
+
+    const dismissOnEscape = (event: KeyboardEvent): void => {
+        if (!open || event.key !== 'Escape') return;
+        event.preventDefault();
+        event.stopPropagation();
+        setOpen(false);
+        triggerRef.current?.focus();
+    };
+
     const moveActive = (delta: number): void => {
         if (options.length === 0) return;
         setActiveIndex(prev => (prev + delta + options.length) % options.length);
     };
 
-    const handleKeyDown = (event: { key: string; preventDefault(): void }): void => {
+    const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
         if (disabled || options.length === 0) return;
         if (event.key === 'Escape') {
-            setOpen(false);
+            dismissOnEscape(event);
             return;
         }
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
+            keyboardMove.current = true;
             if (!open) {
                 setActiveIndex(selectedIndex);
                 setOpen(true);
@@ -87,6 +111,7 @@ export function ThemedSelect<TValue extends string = string>({
         } else if (event.key === 'Enter') {
             event.preventDefault();
             if (!open) {
+                keyboardMove.current = true;
                 setActiveIndex(selectedIndex);
                 setOpen(true);
             } else {
@@ -114,6 +139,7 @@ export function ThemedSelect<TValue extends string = string>({
             )}
             data-size={size}>
             <button
+                ref={triggerRef}
                 type="button"
                 id={id}
                 data-invalid={error ? true : undefined}
@@ -141,7 +167,10 @@ export function ThemedSelect<TValue extends string = string>({
                 </svg>
             </button>
             {open ? (
-                <div data-testid={TestId.Common.SelectMenu} className={cx('dsh-select-menu', 'ar-themed-select-menu', menuClassName)}>
+                <div
+                    ref={menuRef}
+                    data-testid={TestId.Common.SelectMenu}
+                    className={cx('dsh-select-menu', 'ar-themed-select-menu', menuClassName)}>
                     {options.map((option, index) => {
                         const isSelected = index === selectedIndex;
                         const isActive = index === activeIndex;
@@ -152,6 +181,7 @@ export function ThemedSelect<TValue extends string = string>({
                                 data-testid={TestId.Common.SelectOption}
                                 disabled={option.disabled}
                                 className={cx('dsh-select-option', (isActive || isSelected) && 'active', optionClassName)}
+                                onKeyDown={dismissOnEscape}
                                 onMouseEnter={() => setActiveIndex(index)}
                                 onClick={() => {
                                     if (!option.disabled) {

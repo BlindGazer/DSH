@@ -11,6 +11,12 @@ export interface WorkspaceView {
     readonly updatedAt: string;
 }
 
+interface MenuWorkspaceTarget {
+    readonly workspaceId: string;
+    readonly path: string;
+    readonly displayTitle: string;
+}
+
 export interface WorkspaceSnapshot {
     readonly items: readonly WorkspaceView[];
 }
@@ -21,7 +27,8 @@ export interface LocaleSnapshot {
 
 export interface WorkspaceManagerLocaleService {
     register(namespace: string, dictionaries: Record<'en' | 'ru', Record<CopyKey, string>>): () => void;
-    bind(namespace: string): Translate;
+    bind(namespace: 'dsh-workspace-manager'): Translate;
+    bind(namespace: 'workspace'): (key: 'rename') => string;
     getSnapshot(): LocaleSnapshot;
     subscribe(listener: () => void): () => void;
 }
@@ -42,11 +49,34 @@ export interface WorkspaceManagerClientContext extends Omit<DshClientContext, 's
     readonly slots: WorkspaceManagerSlotsService;
     readonly locale: WorkspaceManagerLocaleService;
     readonly workspaces: {
+        create(input: { path: string }): Promise<WorkspaceView>;
         rename(workspaceId: string, title: string): Promise<WorkspaceView>;
         delete(workspaceId: string): Promise<void>;
     };
     readonly uiWorkspace: {
-        pickDirectory(): Promise<string | undefined>;
+        openSession(sessionId: string): void;
+        pickDirectory(): Promise<string | null>;
+    };
+    readonly sessions: {
+        create(options: { workspaceId: string }): Promise<string>;
+    };
+    readonly contextMenus: {
+        register(contribution: {
+            readonly id: string;
+            readonly target: 'workspace';
+            readonly order: number;
+            observe(
+                target: MenuWorkspaceTarget
+            ): readonly { getSnapshot(): LocaleSnapshot | boolean; subscribe(listener: () => void): () => void }[];
+            resolve(target: MenuWorkspaceTarget): readonly { id: string; label: string; icon: { key: string }; run: () => void }[];
+        }): () => void;
+    };
+    readonly remoteAccess: {
+        source(
+            resource: 'workspace',
+            workspaceId: string,
+            endpoint: 'session/create'
+        ): { getSnapshot(): boolean; subscribe(listener: () => void): () => void };
     };
     effect(callback: () => undefined | (() => void), label?: string): () => void;
 }

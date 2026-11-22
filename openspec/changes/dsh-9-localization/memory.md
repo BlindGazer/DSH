@@ -10,7 +10,7 @@
 
 ## 3. Progress and Completed Tasks
 - User approved the minimal Core contract, native DSH infrastructure, and plugin-owned dictionaries. No new package or runtime.
-- Approved checklist created in tasks.md. No implementation or commits.
+- Both reviews incorporated in the existing checklist: minimum supported DSH, packed Core declarations, release smoke, formatting of existing data, live DOM menu, and legacy Proxy storage. No implementation or commits.
 
 ## 4. Current State and Open Tasks
 - **Status:** ready-for-review

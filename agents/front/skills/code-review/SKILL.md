@@ -18,7 +18,8 @@ Use this skill when reviewing changes in `packages/**` and related tests.
 3. Check styles:
    - colors, surfaces, borders, focus, and states use DSH tokens;
    - fonts use existing typography or DSH CSS variables;
-   - CSS Modules are local, with no unjustified `:global` or broad selectors;
+   - check changed files, including TS helpers and JSX, for styles authored outside SCSS; verify each exception against design-system section 1;
+   - inspect `:global` and other unscoped selectors in SCSS Modules against the same section; a feature prefix alone does not make a selector local;
    - no duplicated rules or new visual primitives replacing `@kalex/dsh-core` components;
    - no overflow, unjustified fixed widths, or narrow-panel issues;
    - light, dark, and localized variants are checked.

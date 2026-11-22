@@ -10,6 +10,7 @@ import type { PreStepDecision } from '@deepseek-ai/dsh-agent';
 import type { DshLogger } from '@kalex/dsh-logger-core';
 import type { AddDirectoryOptions, AddirService } from '../shared/models/WorkspaceDirectories.ts';
 import { registerAddirRoutes } from './api/httpRoutes.ts';
+import { registerWorktreeRoutes } from './api/worktreeRoutes.ts';
 import { Config, type ConfigSchema, resolveConfig } from './config.ts';
 import {
     createWorkspaceDirectoriesMessage,
@@ -115,6 +116,7 @@ export class AddirProvider extends Service implements AddirService {
 
         // Register Web API routes
         registerAddirRoutes(ctx, this.impl, resolved);
+        registerWorktreeRoutes(ctx, this.impl);
     }
 
     list(sessionId?: string) {

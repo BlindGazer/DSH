@@ -46,7 +46,7 @@ function setup() {
     two: { workspaceId: 'two', displayTitle: 'Two', path: '/two' },
   }
   const open = vi.fn()
-  dispose = installWorkspaceMenu(document, { label: () => '编辑', resolve: key => targets[key], open })
+  dispose = installWorkspaceMenu(document, { label: () => '编辑', nativeRenameLabel: () => 'Rename', resolve: key => targets[key], open })
   return { targets, open, anchor, show }
 }
 
@@ -80,9 +80,11 @@ describe('workspace menu adapter', () => {
   it('keeps the Edit entry when upstream adds workspace menu actions', async () => {
     const state = setup()
     state.show(state.anchor('one'))
-    queryElement('[role="menu"] [role="presentation"]').insertAdjacentHTML('beforeend', '<div><button role="menuitem">Show in folder</button></div>')
+    const menu = queryElement('[role="menu"] [role="presentation"]')
+   menu.insertAdjacentHTML('afterbegin', '<div><button role="menuitem">New worktree session</button></div>')
+   menu.insertAdjacentHTML('beforeend', '<div><button role="menuitem">Show in folder</button></div>')
     await flush()
-    expect([...document.querySelectorAll('[role="menuitem"]')].map(row => row.textContent)).toEqual(['编辑', 'Delete', 'Show in folder'])
+    expect([...document.querySelectorAll('[role="menuitem"]')].map(row => row.textContent)).toEqual(['New worktree session', '编辑', 'Delete', 'Show in folder'])
   })
 
   it('ignores session menus and the Workspace New Session button', async () => {
