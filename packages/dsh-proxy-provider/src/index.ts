@@ -1,2 +1,2 @@
-export * from './host/index.js';
-export * from './shared/index.js';
+export * from './host/index.ts';
+export * from './shared/index.ts';

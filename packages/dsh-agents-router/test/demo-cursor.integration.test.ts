@@ -3,11 +3,11 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, test } from 'vitest';
-import { discoverProject } from '../src/host/services/discovery.js';
-import { selectRules } from '../src/host/services/ruleSelector.js';
-import { type RouterAgent, type RouterHostContext, type RouterState, readRouterState } from '../src/host/services/sessionController.js';
-import { RouterStore } from '../src/host/services/store.js';
-import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/constants/constants.js';
+import { discoverProject } from '../src/host/services/discovery.ts';
+import { selectRules } from '../src/host/services/ruleSelector.ts';
+import { type RouterAgent, type RouterHostContext, type RouterState, readRouterState } from '../src/host/services/sessionController.ts';
+import { RouterStore } from '../src/host/services/store.ts';
+import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/constants/constants.ts';
 
 const demoCursorRoot = fileURLToPath(new URL('../examples/demo-cursor/', import.meta.url));
 
@@ -44,7 +44,7 @@ test('exposes discovered and selected demo rules through host router state', asy
             runMaintenance: async action => action({ throwIfAborted: () => {} })
         };
         const context: RouterHostContext = {
-            logger: { warn: () => {}, error: () => {} },
+            scopedLogger: { warn: () => {}, error: () => {} },
             agents: { list: () => [agent] },
             workingDirectory: { get: () => undefined },
             skills: { list: async () => [] }

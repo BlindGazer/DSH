@@ -1,7 +1,8 @@
+import { createClientLogger } from '@kalex/dsh-logger-core';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { locales, resolveLocale } from '../locales/index.js';
-import { getHostLocale } from '../utils/locale-context.js';
-import { RouterView } from './RouterView.js';
+import { locales, resolveLocale } from '../locales/index.ts';
+import { getHostLocale } from '../utils/locale-context.ts';
+import { RouterView } from './RouterView.tsx';
 
 interface RouterViewBoundaryProps {
     readonly sessionId: string;
@@ -10,6 +11,8 @@ interface RouterViewBoundaryProps {
 interface RouterViewBoundaryState {
     readonly hasError: boolean;
 }
+
+const logger = createClientLogger();
 
 /** Keeps an unexpected render failure visible instead of leaving the conversation view blank. */
 export class RouterViewBoundary extends Component<RouterViewBoundaryProps, RouterViewBoundaryState> {
@@ -20,7 +23,12 @@ export class RouterViewBoundary extends Component<RouterViewBoundaryProps, Route
     }
 
     public override componentDidCatch(error: Error, info: ErrorInfo): void {
-        console.error('[Agents Router] conversation.view render failed', error, info.componentStack);
+        logger.error('Agents Router conversation.view render failed', {
+            event: 'ui_render',
+            operation: 'conversation_view_boundary',
+            errorCode: error.name,
+            ...(info.componentStack ? { componentStack: info.componentStack } : {})
+        });
     }
 
     public override render(): ReactNode {
@@ -28,7 +36,7 @@ export class RouterViewBoundary extends Component<RouterViewBoundaryProps, Route
             const locale = resolveLocale('auto', getHostLocale());
             const t = (key: string): string => (locales[locale] as Record<string, string>)[key] ?? key;
             return (
-                <main role="alert" style={{ padding: 20, color: 'var(--dsh-ui-text)' }}>
+                <main style={{ padding: 20 }}>
                     <h2>{t('renderFailureTitle')}</h2>
                     <p>{t('renderFailureDetails')}</p>
                 </main>

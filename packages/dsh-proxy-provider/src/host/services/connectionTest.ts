@@ -1,8 +1,8 @@
 import net from 'node:net';
-import { DEFAULT_TEST_URL } from '../../shared/constants/endpoints.js';
-import type { ProxyProfile, TestConnectionResult } from '../../shared/models/ProxyModels.js';
-import { createProfileDispatcher } from './profileDispatcher.js';
-import { loadUndici, type UndiciDispatcherLike } from './undiciLoader.js';
+import { DEFAULT_TEST_URL } from '../../shared/constants/endpoints.ts';
+import type { ProxyProfile, TestConnectionResult } from '../../shared/models/ProxyModels.ts';
+import { createProfileDispatcher } from './profileDispatcher.ts';
+import { loadUndici, type UndiciDispatcherLike } from './undiciLoader.ts';
 
 export interface RequestLikeInput {
     readonly url?: string;

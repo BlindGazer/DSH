@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 
-import { TestId } from '../../constants/testId.js';
-import { cx } from '../../utils/classNames.js';
+import { TestId } from '../../constants/testId.ts';
+import { cx } from '../../utils/classNames.ts';
+import { Tooltip } from '../Tooltip/Tooltip.tsx';
 
 /**
  * Свойства стандартной кнопки Button дизайн-системы @kalex/dsh-core.
@@ -12,8 +13,7 @@ export interface ButtonProps {
     readonly variant?: 'secondary' | 'primary' | 'danger';
     readonly size?: 'standard' | 'small' | 'md' | 'sm';
     readonly disabled?: boolean;
-    readonly title?: string;
-    readonly ariaLabel?: string;
+    readonly tooltip?: string;
     readonly className?: string;
     readonly type?: 'button' | 'submit';
 }
@@ -27,18 +27,15 @@ export function Button({
     variant = 'secondary',
     size = 'md',
     disabled = false,
-    title,
-    ariaLabel,
+    tooltip,
     className,
     type = 'button'
 }: ButtonProps) {
-    return (
+    const button = (
         <button
             type={type}
             data-testid={TestId.Common.Button}
             disabled={disabled}
-            title={title}
-            aria-label={ariaLabel}
             onClick={onClick}
             className={cx(
                 'dsh-btn',
@@ -49,5 +46,12 @@ export function Button({
             )}>
             {children}
         </button>
+    );
+    return tooltip ? (
+        <Tooltip content={tooltip} triggerElement="span" side="top">
+            {button}
+        </Tooltip>
+    ) : (
+        button
     );
 }

@@ -1,6 +1,6 @@
-import type { RouterDiagnostic } from '../../shared/models/RouterModels.js';
-import { computeRuleMetrics } from './metrics.js';
-import type { selectRules } from './ruleSelector.js';
+import type { RouterDiagnostic } from '../../shared/models/RouterModels.ts';
+import { computeRuleMetrics } from './metrics.ts';
+import type { selectRules } from './ruleSelector.ts';
 
 type SelectedRule = ReturnType<typeof selectRules>[number];
 

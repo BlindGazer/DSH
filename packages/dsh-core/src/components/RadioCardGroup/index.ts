@@ -1,1 +1,1 @@
-export { RadioCardGroup, type RadioCardGroupProps } from './RadioCardGroup.js';
+export { RadioCardGroup, type RadioCardGroupProps } from './RadioCardGroup.tsx';

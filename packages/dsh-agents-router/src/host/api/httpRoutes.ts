@@ -1,5 +1,5 @@
 import type { IncomingMessage, ServerResponse } from 'node:http';
-import { PREFIX } from '../../shared/constants/index.js';
+import { PREFIX } from '../../shared/constants/index.ts';
 
 interface RouterActions {
     globalSettings: () => Promise<{ settings: Record<string, unknown> }>;

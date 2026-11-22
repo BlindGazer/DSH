@@ -1,9 +1,9 @@
 import { useId, useState } from 'react';
-import { AccountLabelSchema } from '../../../../shared/accounts.js';
-import type { OpenAICodexText } from '../../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import type { AccountSnapshot, ModelChoice, OpenAICodexSnapshot, ResetRequest } from '../../../../shared/remote.js';
-import type { OpenAICodexController } from '../openAICodexRuntime.js';
-import { useCodexAccountPolling } from './useCodexAccountPolling.js';
+import { AccountLabelSchema } from '../../../../shared/accounts.ts';
+import type { OpenAICodexText } from '../../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import type { AccountSnapshot, ModelChoice, OpenAICodexSnapshot, ResetRequest } from '../../../../shared/remote.ts';
+import type { OpenAICodexController } from '../openAICodexRuntime.ts';
+import { useCodexAccountPolling } from './useCodexAccountPolling.ts';
 
 const RESET_PREFIX = '@kalex/dsh-openai-hub.pending-reset';
 const resetCreditKey = (label: string) => `${RESET_PREFIX}-credit:${label}`;

@@ -6,12 +6,12 @@
 
 import { existsSync, statSync } from 'node:fs';
 import { basename, isAbsolute, resolve } from 'node:path';
-import type { AddDirectoryOptions, LinkedDirectory, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.js';
-import type { ResolvedConfig } from '../config.js';
-import { AddirStorage, type StoredDirectoryEntry } from './AddirStorage.js';
-import { canonicalizePath, isHarnessProfilePath, isSubPath } from './pathUtils.js';
+import type { AddDirectoryOptions, LinkedDirectory, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.ts';
+import type { ResolvedConfig } from '../config.ts';
+import { AddirStorage, type StoredDirectoryEntry } from './AddirStorage.ts';
+import { canonicalizePath, isHarnessProfilePath, isSubPath } from './pathUtils.ts';
 
-export { canonicalizePath, isHarnessProfilePath, isSubPath } from './pathUtils.js';
+export { canonicalizePath, isHarnessProfilePath, isSubPath } from './pathUtils.ts';
 
 export class WorkspaceDirectoriesServiceImpl implements WorkspaceDirectoriesService {
     /**

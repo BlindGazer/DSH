@@ -4,10 +4,10 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, test } from 'vitest';
-import { discoverProject, loadSkillDefinition } from '../src/host/services/discovery.js';
-import { diagnosePath, selectRules } from '../src/host/services/ruleSelector.js';
-import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.js';
-import type { DiscoveredRule, ProjectDiscoverySnapshot, ProjectSettings } from '../src/shared/models/RouterModels.js';
+import { discoverProject, loadSkillDefinition } from '../src/host/services/discovery.ts';
+import { diagnosePath, selectRules } from '../src/host/services/ruleSelector.ts';
+import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.ts';
+import type { DiscoveredRule, ProjectDiscoverySnapshot, ProjectSettings } from '../src/shared/models/RouterModels.ts';
 
 interface PathDiagnosis {
     rule: DiscoveredRule;

@@ -17,7 +17,7 @@ export function SettingRow({ id, label, note, checked, disabled, onChange }: Set
                 <span id={labelId}>{label}</span>
                 <p>{note}</p>
             </div>
-            <SwitchControl checked={checked} onChange={onChange} disabled={disabled} labelledBy={labelId} />
+            <SwitchControl checked={checked} onChange={onChange} disabled={disabled} />
         </div>
     );
 }

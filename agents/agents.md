@@ -1,26 +1,26 @@
 # AGENTS
 
-Инструкции для ИИ-агентов монорепозитория плагинов DeepSeek Harness (DSH).
-Пакеты расположены в `packages/dsh-core`, `packages/dsh-agents-router`, `packages/dsh-proxy-provider` и `packages/dsh-workspace-manager`.
+Instructions for AI agents in the DeepSeek Harness (DSH) plugin monorepo.
+Packages are located in `packages/dsh-core`, `packages/dsh-agents-router`, `packages/dsh-proxy-provider`, and `packages/dsh-workspace-manager`.
 
-## Правила и навыки по областям
+## Rules and skills by area
 
-Глобальные правила хранятся в `agents/rules/`, глобальные навыки - в `agents/skills/`.
-Правила и навыки предметных областей автоматически подгружаются по путям и ключевым словам через `agents/dsh/agents-router.json`:
+Global rules are stored in `agents/rules/`; global skills are stored in `agents/skills/`.
+Domain rules and skills are automatically loaded by path and keywords through `agents/dsh/agents-router.json`:
 
-- `agents/front/` - клиентский интерфейс (React 19.3, дизайн-система DSH + Google M3, компоненты, хуки, тесты Vitest).
-- `agents/host/` - серверная часть плагинов (Node.js, Cordis, прокси, маршрутизация, общие контракты).
-- `agents/openspec/` - работа со спецификациями и задачами OpenSpec.
+- `agents/front/` - client interface (React 19.3, DSH + Google M3 design system, components, hooks, Vitest tests).
+- `agents/host/` - plugin server side (Node.js, Cordis, proxy, routing, shared contracts).
+- `agents/openspec/` - work with OpenSpec specifications and tasks.
 
-Базовая роль агента - [ponytail](/agents/rules/ponytail.md).
+The agent's base role is defined by the active profile and system instructions; no separate ponytail file is used.
 
-## Постоянные границы проекта
+## Permanent project boundaries
 
-- Перед поиском и чтением файлов учитывай исключения из `.agentignore`, если он есть, и [`.gitignore`](/.gitignore).
-- Не добавлять секреты, ключи, токены и реальные строки подключения в репозиторий.
-- Коммит, amend, push и PR выполнять только по явной просьбе человека (исключение: при закрытии выполненного пункта в `tasks.md` по OpenSpec агент коммитит изменения этапа через навык [commit](/agents/skills/commit/SKILL.md)). Не обходить хуки и не делать force push в `main` или `master`.
-- Для проверки и автоисправления кода запускать `pnpm fix` и `pnpm check` вместо ручного форматирования.
+- Before searching and reading files, account for exclusions in `.agentignore`, if present, and [`.gitignore`](/.gitignore).
+- Do not add secrets, keys, tokens, or real connection strings to the repository.
+- Perform commit, amend, push, and PR operations only at a person's explicit request (exception: when closing a completed item in OpenSpec `tasks.md`, the agent commits the stage through the [commit](/agents/skills/commit/SKILL.md) skill). Do not bypass hooks or force-push to `main` or `master`.
+- Run `pnpm fix` and `pnpm check` for code validation and automatic fixes instead of manual formatting.
 
-## Язык и отчеты
+## Language and reports
 
-- Используй правила из файла [human-communication](/agents/rules/human-communication.md) и [no-fancy-symbols](/agents/rules/no-fancy-symbols.md).
+- Follow the rules in [human-communication](/agents/rules/human-communication.md) and [no-fancy-symbols](/agents/rules/no-fancy-symbols.md).

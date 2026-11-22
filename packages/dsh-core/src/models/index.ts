@@ -8,6 +8,7 @@ export type {
     DshThemeId,
     DshThemeMode,
     DshThemePreference
-} from './DshContext.js';
-export type { SelectOption } from './SelectOption.js';
-export type { DshThemeDefinition, DshThemeTokens } from './ThemePalette.js';
+} from './DshContext.ts';
+export type { FieldValidator } from './FieldValidator.ts';
+export type { SelectOption } from './SelectOption.ts';
+export type { DshThemeDefinition, DshThemeTokens } from './ThemePalette.ts';

@@ -1,6 +1,6 @@
-import { BUILTIN_PROVIDER_ENDPOINTS } from '../../shared/constants/endpoints.js';
-import type { DiscoveredProvider, HostConflict, KalexProviderProxyConfig, ProxyProfile } from '../../shared/models/ProxyModels.js';
-import { resolveProviderHosts } from '../../shared/utils/hostUtils.js';
+import { BUILTIN_PROVIDER_ENDPOINTS } from '../../shared/constants/endpoints.ts';
+import type { DiscoveredProvider, HostConflict, KalexProviderProxyConfig, ProxyProfile } from '../../shared/models/ProxyModels.ts';
+import { resolveProviderHosts } from '../../shared/utils/hostUtils.ts';
 
 interface HostRoutingEntry {
     readonly providerId: string;

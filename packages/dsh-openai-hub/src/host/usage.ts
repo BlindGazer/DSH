@@ -1,4 +1,4 @@
-import type { OpenAIHubLogEvent } from '../shared/logging.js';
+import type { OpenAIHubLogEvent } from '../shared/logging.ts';
 
 export const CODEX_USAGE_URL = 'https://chatgpt.com/backend-api/wham/usage';
 const REQUEST_TIMEOUT_MS = 10000;

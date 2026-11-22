@@ -3,8 +3,8 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, test } from 'vitest';
-import { registerSkillsProvider } from '../src/host/services/skillsProvider.js';
-import { RouterStore } from '../src/host/services/store.js';
+import { registerSkillsProvider } from '../src/host/services/skillsProvider.ts';
+import { RouterStore } from '../src/host/services/store.ts';
 
 interface SkillCandidate {
     path: string;

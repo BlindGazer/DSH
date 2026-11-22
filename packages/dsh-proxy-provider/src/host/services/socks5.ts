@@ -1,5 +1,5 @@
 import net from 'node:net';
-import type { ProxyProfile } from '../../shared/models/ProxyModels.js';
+import type { ProxyProfile } from '../../shared/models/ProxyModels.ts';
 
 function parseIpv6Bytes(ipv6: string): Buffer | null {
     const clean = ipv6.replace(/^\[|\]$/g, '');

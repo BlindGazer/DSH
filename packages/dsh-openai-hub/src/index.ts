@@ -1,5 +1,5 @@
-export { Config, default, inject, name, OpenAICodexAuthService } from './host/index.js';
-export { TYPERT, TYPERT_REMOTE } from './remote.js';
+export { Config, default, inject, name, OpenAICodexAuthService } from './host/index.ts';
+export { TYPERT, TYPERT_REMOTE } from './remote.ts';
 export {
     CredentialRefPrefix,
     credentialRefForAccount,
@@ -8,4 +8,4 @@ export {
     RemoteNamespace,
     ResetStorageKey,
     ServiceKey
-} from './shared/constants/runtime.js';
+} from './shared/constants/runtime.ts';

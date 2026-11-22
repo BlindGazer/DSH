@@ -13,7 +13,7 @@ $desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli
 
 ```powershell
 Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
+pnpm add github:BlindGazer/DSH#path:packages/dsh-agents-router
 ```
 
 ## Установка из локальной папки
@@ -53,4 +53,4 @@ pnpm run verify
 ## Требования
 
 - Node.js и pnpm.
-- Версия DSH не ниже `0.2.2-rc.1` (см. `engines.dsh` в `package.json`).
+- Версия DSH не ниже `0.2.2-rc.5` (см. `engines.dsh` в `package.json`).

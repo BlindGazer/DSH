@@ -1,8 +1,8 @@
 import { z } from 'zod';
-import type { OpenAIHubLogEvent } from '../shared/logging.js';
-import type { CodexModel } from './provider.js';
-import { createCodexProvider } from './provider.js';
-import { readUsageJson } from './usage.js';
+import type { OpenAIHubLogEvent } from '../shared/logging.ts';
+import type { CodexModel } from './provider.ts';
+import { createCodexProvider } from './provider.ts';
+import { readUsageJson } from './usage.ts';
 
 export const CATALOG_URL = 'https://chatgpt.com/backend-api/codex/models?client_version=0.116.0';
 const IdSchema = z.string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,199}$/);

@@ -1,4 +1,4 @@
-import { PREFIX } from '../../shared/constants/constants.js';
+import { PREFIX } from '../../shared/constants/constants.ts';
 
 export async function request<T = Record<string, string | number | boolean>>(route: string, options?: RequestInit): Promise<T> {
     const response = await fetch(`${PREFIX}${route}`, options);

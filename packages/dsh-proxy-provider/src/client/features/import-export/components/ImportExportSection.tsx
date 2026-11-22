@@ -1,8 +1,8 @@
-import { Checkbox } from '@kalex/dsh-core';
-import { type ProxyClientSnapshot, tProxy } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
+import { Checkbox, Tooltip } from '@kalex/dsh-core';
+import { type ProxyClientSnapshot, tProxy } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
 
-import type { ImportExportHandlersState } from '../hooks/useImportExportHandlers.js';
+import type { ImportExportHandlersState } from '../hooks/useImportExportHandlers.ts';
 
 export interface ImportExportSectionProps extends Omit<ImportExportHandlersState, 'resetForOpen'> {
     readonly placement: 'header' | 'body';
@@ -54,42 +54,46 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         gap: '10px',
                         flexWrap: 'wrap'
                     }}>
-                    <div
-                        className={proxyClasses('checkboxRow')}
-                        style={{ fontSize: '12px', marginRight: '2px' }}
-                        title={tProxy(
+                    <Tooltip
+                        content={tProxy(
                             'When checked, Export will ask for a password and include encrypted login & password for portable transfer to another computer'
-                        )}>
-                        <Checkbox
-                            checked={exportWithCreds}
-                            ariaLabel={tProxy('Include credentials')}
-                            onChange={checked => {
-                                setExportWithCreds(checked);
-                                if (!checked) setExportPasswordPromptOpen(false);
-                            }}
-                        />
-                        <span>{tProxy('Include credentials')}</span>
-                    </div>
-                    <button
-                        type="button"
-                        className={proxyClasses('button', 'buttonSmall')}
-                        onClick={() => {
-                            handleExportClick().catch(() => {});
-                        }}
-                        title={tProxy(
+                        )}
+                        triggerElement="span">
+                        <span className={proxyClasses('checkboxRow')} style={{ fontSize: '12px', marginRight: '2px' }}>
+                            <Checkbox
+                                checked={exportWithCreds}
+                                onChange={checked => {
+                                    setExportWithCreds(checked);
+                                    if (!checked) setExportPasswordPromptOpen(false);
+                                }}
+                            />
+                            <span>{tProxy('Include credentials')}</span>
+                        </span>
+                    </Tooltip>
+                    <Tooltip
+                        content={tProxy(
                             exportWithCreds
                                 ? 'Export proxy settings and password-encrypted credentials'
                                 : 'Export proxy settings without credentials'
-                        )}>
-                        {tProxy('Export')}
-                    </button>
-                    <button
-                        type="button"
-                        className={proxyClasses('button', 'buttonSmall')}
-                        onClick={() => fileInputRef.current?.click?.()}
-                        title={tProxy('Import proxy profiles and routing from JSON file')}>
-                        {tProxy('Import')}
-                    </button>
+                        )}
+                        triggerElement="span">
+                        <button
+                            type="button"
+                            className={proxyClasses('button', 'buttonSmall')}
+                            onClick={() => {
+                                handleExportClick().catch(() => {});
+                            }}>
+                            {tProxy('Export')}
+                        </button>
+                    </Tooltip>
+                    <Tooltip content={tProxy('Import proxy profiles and routing from JSON file')} triggerElement="span">
+                        <button
+                            type="button"
+                            className={proxyClasses('button', 'buttonSmall')}
+                            onClick={() => fileInputRef.current?.click?.()}>
+                            {tProxy('Import')}
+                        </button>
+                    </Tooltip>
                 </div>
             </>
         );
@@ -119,20 +123,20 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         />
                         <button
                             type="button"
-                            className={proxyClasses('button', 'buttonPrimary')}
-                            onClick={() => {
-                                handleConfirmEncryptedExport().catch(() => {});
-                            }}>
-                            {tProxy('Download Export')}
-                        </button>
-                        <button
-                            type="button"
                             className={proxyClasses('button')}
                             onClick={() => {
                                 setExportPasswordPromptOpen(false);
                                 setExportPassword('');
                             }}>
                             {tProxy('Cancel')}
+                        </button>
+                        <button
+                            type="button"
+                            className={proxyClasses('button', 'buttonPrimary')}
+                            onClick={() => {
+                                handleConfirmEncryptedExport().catch(() => {});
+                            }}>
+                            {tProxy('Download Export')}
                         </button>
                     </div>
                 </div>
@@ -160,14 +164,6 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                         />
                         <button
                             type="button"
-                            className={proxyClasses('button', 'buttonPrimary')}
-                            onClick={() => {
-                                handleConfirmEncryptedImport(false).catch(() => {});
-                            }}>
-                            {tProxy('Decrypt & Import')}
-                        </button>
-                        <button
-                            type="button"
                             className={proxyClasses('button')}
                             onClick={() => {
                                 handleConfirmEncryptedImport(true).catch(() => {});
@@ -182,6 +178,14 @@ export function ImportExportSection(props: ImportExportSectionProps) {
                                 setImportPassword('');
                             }}>
                             {tProxy('Cancel')}
+                        </button>
+                        <button
+                            type="button"
+                            className={proxyClasses('button', 'buttonPrimary')}
+                            onClick={() => {
+                                handleConfirmEncryptedImport(false).catch(() => {});
+                            }}>
+                            {tProxy('Decrypt & Import')}
                         </button>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
-import type { AccountSnapshot } from '../../../../shared/remote.js';
-import type { OpenAICodexController } from '../openAICodexRuntime.js';
-import { useCodexState } from '../openAICodexRuntime.js';
+import type { AccountSnapshot } from '../../../../shared/remote.ts';
+import type { OpenAICodexController } from '../openAICodexRuntime.ts';
+import { useCodexState } from '../openAICodexRuntime.ts';
 export function useCodexModelsFooterEntry(controller: OpenAICodexController) {
     const [openAccountLabel, setOpenAccountLabel] = useState('');
     const [autoRefreshPendingLabel, setAutoRefreshPendingLabel] = useState('');
@@ -16,11 +16,14 @@ export function useCodexModelsFooterEntry(controller: OpenAICodexController) {
         state.snapshot?.status === 'waiting' ||
         state.snapshot?.status === 'starting' ||
         state.snapshot?.accounts.some(account => account.catalogStatus === 'fallback') === true;
+    const accounts: readonly AccountSnapshot[] = state.snapshot?.accounts ?? [];
+    const shouldPoll = initializing || accounts.some(account => account.autoRefreshLimits);
     useEffect(() => {
         const refresh = () => {
             if (document.visibilityState === 'visible') void controller.load(true);
         };
         refresh();
+        if (!shouldPoll) return undefined;
         const timer = window.setInterval(refresh, initializing ? 2500 : 300000);
         const visibility = () => {
             if (document.visibilityState === 'visible') refresh();
@@ -30,8 +33,7 @@ export function useCodexModelsFooterEntry(controller: OpenAICodexController) {
             if (timer !== undefined) window.clearInterval(timer);
             document.removeEventListener('visibilitychange', visibility);
         };
-    }, [controller, initializing]);
-    const accounts: readonly AccountSnapshot[] = state.snapshot?.accounts ?? [];
+    }, [controller, initializing, shouldPoll]);
     const reauthenticate = (account: AccountSnapshot) =>
         setReauthenticateAccount({ accountLabel: account.accountLabel, authMethod: account.authMethod });
     const requestDeleteAccount = (accountLabel: string) => {

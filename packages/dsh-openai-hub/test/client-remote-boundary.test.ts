@@ -1,8 +1,8 @@
 import { RemoteError } from '@deepseek-ai/dsh-typert-protocol';
 import { describe, expect, it, vi } from 'vitest';
-import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.js';
-import { createOpenAIHubRemote, type OpenAIHubWireRemote } from '../src/client/features/settings/remoteBoundary.js';
-import { type OpenAICodexSnapshot, SnapshotSchema } from '../src/shared/remote.js';
+import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { createOpenAIHubRemote, type OpenAIHubWireRemote } from '../src/client/features/settings/remoteBoundary.ts';
+import { type OpenAICodexSnapshot, SnapshotSchema } from '../src/shared/remote.ts';
 
 const accepted = async () => ({ ok: true as const, value: true as const });
 function wire(): OpenAIHubWireRemote {
@@ -10,9 +10,6 @@ function wire(): OpenAIHubWireRemote {
     const snapshot = async () => ({ ok: true as const, value });
     return {
         snapshot,
-        loadLoggingSettings: async () => ({ ok: true as const, value: { enabled: false } }),
-        saveLoggingSettings: async input => ({ ok: true as const, value: input }),
-        recordClientLog: accepted,
         startLogin: snapshot,
         cancelLogin: snapshot,
         retryLogin: snapshot,

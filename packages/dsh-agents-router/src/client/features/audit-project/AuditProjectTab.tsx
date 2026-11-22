@@ -1,7 +1,7 @@
 import { ThemedSelect } from '@kalex/dsh-core';
 import type React from 'react';
-import type { ProjectSettings, RouterStateResponse } from '../../../shared/models/RouterModels.js';
-import { parseNameList } from '../../utils/name-list.js';
+import type { ProjectSettings, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
+import { parseNameList } from '../../utils/name-list.ts';
 
 const CATEGORIES = ['events', 'workset', 'rulesDiff', 'preflight'] as const;
 
@@ -82,7 +82,6 @@ export function AuditProjectTab({
                         <small>{t('discoveryModeHint')}</small>
                         <ThemedSelect
                             fullWidth
-                            ariaLabel={t('discoveryMode')}
                             value={settings.discoveryMode ?? 'merge'}
                             onChange={value => updateProject('discoveryMode', value)}
                             options={[
@@ -175,11 +174,7 @@ export function AuditProjectTab({
                         {t('saveProject')}
                     </button>
                 </form>
-                {notice ? (
-                    <p role="status" className="ar-success">
-                        {notice}
-                    </p>
-                ) : null}
+                {notice ? <p className="ar-success">{notice}</p> : null}
             </article>
         </section>
     );

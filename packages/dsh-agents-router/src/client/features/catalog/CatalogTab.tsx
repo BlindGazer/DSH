@@ -1,7 +1,8 @@
+import { Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
 import { useState } from 'react';
-import type { DiscoveredRuleWithState, RouterStateResponse } from '../../../shared/models/RouterModels.js';
-import { RuleRow } from '../../components/common/RuleRow.js';
+import type { DiscoveredRuleWithState, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
+import { RuleRow } from '../../components/common/RuleRow.tsx';
 
 export interface CatalogTabProps {
     data: RouterStateResponse;
@@ -27,7 +28,7 @@ export function CatalogTab({ data, t, filter, setFilter, openFile }: CatalogTabP
     });
 
     return (
-        <section className="ar-panel" role="tabpanel">
+        <section className="ar-panel">
             <article className="ar-card">
                 <div className="ar-card-heading ar-catalog-heading">
                     <h2>
@@ -35,7 +36,7 @@ export function CatalogTab({ data, t, filter, setFilter, openFile }: CatalogTabP
                     </h2>
                     <div className="ar-catalog-controls">
                         <div className="ar-rule-search">
-                            <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
+                            <svg viewBox="0 0 24 24" fill="none">
                                 <path
                                     d="M21 21l-4.35-4.35M16.65 10.85a5.8 5.8 0 11-11.6 0 5.8 5.8 0 0111.6 0z"
                                     stroke="currentColor"
@@ -47,32 +48,26 @@ export function CatalogTab({ data, t, filter, setFilter, openFile }: CatalogTabP
                             <input
                                 className="ar-rule-filter"
                                 type="text"
-                                aria-label={t('filterRules')}
                                 placeholder={t('filterRules')}
                                 value={search}
                                 onChange={event => setSearch(event.currentTarget.value)}
                             />
                             {search ? (
-                                <button
-                                    className="ar-rule-search-clear"
-                                    type="button"
-                                    aria-label={t('clearFilter')}
-                                    title={t('clearFilter')}
-                                    onClick={() => setSearch('')}>
-                                    <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">
-                                        <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                                    </svg>
-                                </button>
+                                <Tooltip className="ar-rule-search-tip" content={t('clearFilter')} triggerElement="span">
+                                    <button className="ar-rule-search-clear" type="button" onClick={() => setSearch('')}>
+                                        <svg viewBox="0 0 24 24" fill="none">
+                                            <path d="M6 18L18 6M6 6l12 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                                        </svg>
+                                    </button>
+                                </Tooltip>
                             ) : null}
                         </div>
                         <fieldset className="ar-segments">
-                            <legend className="ar-sr-only">{t('allRules')}</legend>
                             {(['all', 'active', 'skipped'] as const).map(value => (
                                 <button
                                     key={value}
                                     type="button"
                                     className={`ar-segment-btn${filter === value ? ' selected' : ''}`}
-                                    aria-pressed={filter === value}
                                     onClick={() => setFilter(value)}>
                                     {t(value)} ({counts[value]})
                                 </button>

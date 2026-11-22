@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.js';
-import type { WorkspaceEditActions } from '../models/WorkspaceEditActions.js';
-import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.js';
-import { type ClientLinkedDirectory, fetchWorkspaceDirectories, replaceWorkspaceDirectories } from '../services/addirApi.js';
+import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import type { WorkspaceEditActions } from '../models/WorkspaceEditActions.ts';
+import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.ts';
+import { type ClientLinkedDirectory, fetchWorkspaceDirectories, replaceWorkspaceDirectories } from '../services/addirApi.ts';
 
 interface WorkspaceLoadState {
     readonly requestKey: string;

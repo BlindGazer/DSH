@@ -1,4 +1,4 @@
-import type { RawRuleFrontmatter } from '../../shared/models/RouterModels.js';
+import type { RawRuleFrontmatter } from '../../shared/models/RouterModels.ts';
 
 const UNQUOTED_GLOB_LINE = /^(\s*(?:globs?|paths?)\s*:\s*)(.+)$/i;
 const GLOB_META = /[*?[{!]/;

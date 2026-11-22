@@ -1,0 +1,30 @@
+{
+  "name": "@kalex/dsh-logger-core",
+  "version": "2.0.0",
+  "description": "Dependency-free logging contracts and optional logger facades",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlindGazer/DSH.git",
+    "directory": "packages/dsh-logger-core"
+  },
+  "homepage": "https://github.com/BlindGazer/DSH/tree/main/packages/dsh-logger-core",
+  "bugs": {
+    "url": "https://github.com/BlindGazer/DSH/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "import": "./lib/index.js",
+      "default": "./lib/index.js"
+    }
+  },
+  "files": ["lib", "README.md"],
+  "scripts": {
+    "build": "vite build --config ../../configs/packages/dsh-logger-core/vite.config.ts && tsc -p ../../configs/packages/dsh-logger-core/tsconfig.build.json",
+    "test": "vitest run --config ../../configs/packages/dsh-logger-core/vitest.config.ts"
+  }
+}

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { startRouterPolling } from '../services/routerPolling.js';
+import { startRouterPolling } from '../services/routerPolling.ts';
 
 export function useRouterPolling(enabled: boolean, interval: number, reload: (signal: AbortSignal) => Promise<boolean>): void {
     useEffect(() => {

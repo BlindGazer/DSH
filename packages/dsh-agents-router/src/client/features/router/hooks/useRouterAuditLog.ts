@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { routerApi } from '../services/routerApi.js';
+import { routerApi } from '../services/routerApi.ts';
 
 export function useRouterAuditLog(sessionId: string, active: boolean, setError: (error: string) => void) {
     const [auditText, setAuditText] = useState('');

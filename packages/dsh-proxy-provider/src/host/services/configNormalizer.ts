@@ -1,4 +1,4 @@
-import { DEFAULT_TEST_URL } from '../../shared/constants/endpoints.js';
+import { DEFAULT_TEST_URL } from '../../shared/constants/endpoints.ts';
 import type {
     ExportedProxyConfigPayload,
     KalexProviderProxyConfig,
@@ -6,13 +6,13 @@ import type {
     ProxyProtocol,
     ProxyStateSnapshot,
     SanitizedProxyConfig
-} from '../../shared/models/ProxyModels.js';
-import type { RawConfigCandidate, RawProfileCandidate } from '../models/ProxyServiceContracts.js';
+} from '../../shared/models/ProxyModels.ts';
+import type { RawConfigCandidate, RawProfileCandidate } from '../models/ProxyServiceContracts.ts';
 
-export type { RawConfigCandidate, RawProfileCandidate } from '../models/ProxyServiceContracts.js';
+export type { RawConfigCandidate, RawProfileCandidate } from '../models/ProxyServiceContracts.ts';
 
-import { sanitizeHostInput } from '../../shared/utils/hostUtils.js';
-import { decryptAuthSecret, decryptWithPassphrase, encryptAuthSecret, encryptWithPassphrase, maskUsername } from './cryptoStore.js';
+import { sanitizeHostInput } from '../../shared/utils/hostUtils.ts';
+import { decryptAuthSecret, decryptWithPassphrase, encryptAuthSecret, encryptWithPassphrase, maskUsername } from './cryptoStore.ts';
 
 /**
  * Проверяет и нормализует одиночный профиль прокси, при необходимости расшифровывая секреты.

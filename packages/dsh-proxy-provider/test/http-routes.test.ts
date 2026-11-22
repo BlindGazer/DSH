@@ -1,6 +1,6 @@
 import { PassThrough } from 'node:stream';
 import { describe, expect, it } from 'vitest';
-import { readJsonBody } from '../src/host/api/httpRoutes.js';
+import { readJsonBody } from '../src/host/api/httpRoutes.ts';
 
 describe('proxy HTTP request body', () => {
     it('rejects non-object JSON bodies', async () => {

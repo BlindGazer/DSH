@@ -1,12 +1,12 @@
 import type { DshClientContext } from '@kalex/dsh-core';
-import { KNOWN_SETTINGS_NS } from '../../shared/constants/endpoints.js';
-import { ProxyLocaleSettings } from '../features/locale-settings/components/ProxyLocaleSettings.js';
-import { ProxyPluginSettingsAction } from '../features/locale-settings/components/ProxyPluginSettingsAction.js';
-import { ProviderCardProxyEntry } from '../features/provider-card/components/ProviderCardProxyEntry.js';
-import { ModelsFooterProxyEntry } from '../features/settings-modal/components/ModelsFooterProxyEntry.js';
-import { ProxySettingsModal } from '../features/settings-modal/components/ProxySettingsModal.js';
-import { loadProxyLocale, proxyStore, tProxy } from './proxyStore.js';
-import { ensureProxyStyles } from './proxyStyles.js';
+import { KNOWN_SETTINGS_NS } from '../../shared/constants/endpoints.ts';
+import { ProxyLocaleSettings } from '../features/locale-settings/components/ProxyLocaleSettings.tsx';
+import { ProxyPluginSettingsAction } from '../features/locale-settings/components/ProxyPluginSettingsAction.tsx';
+import { ProviderCardProxyEntry } from '../features/provider-card/components/ProviderCardProxyEntry.tsx';
+import { ModelsFooterProxyEntry } from '../features/settings-modal/components/ModelsFooterProxyEntry.tsx';
+import { ProxySettingsModal } from '../features/settings-modal/components/ProxySettingsModal.tsx';
+import { loadProxyLocale, proxyStore, tProxy } from './proxyStore.ts';
+import { ensureProxyStyles } from './proxyStyles.ts';
 
 export const name = 'dsh-proxy-provider-client';
 export const inject: readonly string[] = ['slots', 'locale'];

@@ -47,9 +47,9 @@ Profiles can be imported and exported; passwords are encrypted.
 | ---------- | ---------------------- |
 | TypeScript | >= 7.0.2, strict typing |
 | React      | 19                     |
-| undici     | 8.12.3, networking     |
-| Vite (Oxc) | 8.3.5                  |
-| Vitest     | 3.2.0                  |
+| undici     | 8.13.1, networking     |
+| Vite (Oxc) | 8                  |
+| Vitest     | 5                  |
 | Cordis     | DSH plugin environment |
 
 ## Architecture

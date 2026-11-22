@@ -1,7 +1,8 @@
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
-import { ProxySettingsModal } from '../../settings-modal/components/ProxySettingsModal.js';
-import { ProxyLocaleSettings } from './ProxyLocaleSettings.js';
+import { useEffectiveTheme } from '@kalex/dsh-core';
+import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
+import { ProxySettingsModal } from '../../settings-modal/components/ProxySettingsModal.tsx';
+import { ProxyLocaleControl } from './ProxyLocaleSettings.tsx';
 
 const PACKAGE_ID = '@kalex/dsh-proxy-provider';
 
@@ -18,11 +19,12 @@ export function ProxyPluginSettingsAction({ subject }: ProxyPluginSettingsAction
 }
 
 function ProxyPluginSettingsActionContent() {
+    const theme = useEffectiveTheme();
     const snap = useProxyStore();
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <ProxyLocaleSettings />
+        <div className="dsh-core-root" data-theme={theme} style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+            <ProxyLocaleControl />
             <button type="button" className={proxyClasses('button')} onClick={() => proxyStore.publish({ modalOpen: true })}>
                 {tProxy('Proxy settings')}
             </button>

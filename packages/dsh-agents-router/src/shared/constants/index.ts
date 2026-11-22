@@ -1,2 +1,2 @@
-export * from './constants.js';
-export * from './localizations/RouterLocalization.js';
+export * from './constants.ts';
+export * from './localizations/RouterLocalization.ts';

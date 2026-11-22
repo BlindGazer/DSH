@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { ProjectSettings, RouterPostBody, RouterStateResponse } from '../../../../shared/models/RouterModels.js';
-import { routerApi } from '../services/routerApi.js';
+import type { ProjectSettings, RouterPostBody, RouterStateResponse } from '../../../../shared/models/RouterModels.ts';
+import { routerApi } from '../services/routerApi.ts';
 
 export function useRouterData(sessionId: string) {
     const [data, setData] = useState<RouterStateResponse>();

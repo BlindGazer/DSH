@@ -1,5 +1,5 @@
-import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS } from '../constants/constants.js';
-import type { AreaDefinition, GlobalSettings, ProjectSettings } from '../models/RouterModels.js';
+import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS } from '../constants/constants.ts';
+import type { AreaDefinition, GlobalSettings, ProjectSettings } from '../models/RouterModels.ts';
 
 type ConfigValue = string | number | boolean | object | undefined;
 type ConfigRecord = Record<string, ConfigValue>;

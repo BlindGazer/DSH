@@ -1,7 +1,7 @@
 import { useEffect, useSyncExternalStore } from 'react';
-import type { UseWorkspaceSnapshot, WorkspaceSnapshot } from '../../../models/WorkspaceManagerClientContext.js';
-import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.js';
-import type { SnapshotStore } from '../services/snapshotStore.js';
+import type { UseWorkspaceSnapshot, WorkspaceSnapshot } from '../../../models/WorkspaceManagerClientContext.ts';
+import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.ts';
+import type { SnapshotStore } from '../services/snapshotStore.ts';
 
 export interface WorkspaceEditOverlayOptions {
     readonly editRequest: SnapshotStore<WorkspaceEditTarget | undefined>;

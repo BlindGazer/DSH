@@ -1,12 +1,12 @@
-import { Button, CollectionAddButton, IconButton, Modal, RadioCardGroup, TextField, useEffectiveTheme } from '@kalex/dsh-core';
-import type { AuthMethod } from '../../../shared/accounts.js';
-import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import { TestId } from '../../../shared/constants/testId.js';
-import type { AccountSnapshot } from '../../../shared/remote.js';
-import { CodexLoginProgress } from './CodexLoginProgress.js';
+import { Button, CollectionAddButton, IconButton, Modal, RadioCardGroup, TextField } from '@kalex/dsh-core';
+import type { AuthMethod } from '../../../shared/accounts.ts';
+import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import { TestId } from '../../../shared/constants/testId.ts';
+import type { AccountSnapshot } from '../../../shared/remote.ts';
+import { CodexLoginProgress } from './CodexLoginProgress.tsx';
 import styles from './codexStyles.module.scss';
-import { useCodexSettingsPanel } from './hooks/useCodexSettingsPanel.js';
-import type { OpenAICodexController } from './openAICodexRuntime.js';
+import { useCodexSettingsPanel } from './hooks/useCodexSettingsPanel.ts';
+import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexSettingsPanelProps {
     readonly controller: OpenAICodexController;
     readonly locale: 'en' | 'ru';
@@ -16,10 +16,9 @@ export interface CodexSettingsPanelProps {
     readonly onReauthenticationClose?: () => void;
 }
 export function CodexSettingsPanel({ controller, text, reauthenticateAccount, onReauthenticationClose }: CodexSettingsPanelProps) {
-    const theme = useEffectiveTheme();
     const panel = useCodexSettingsPanel(controller, text, reauthenticateAccount, onReauthenticationClose);
     return (
-        <section className={`dsh-core-root ${styles.panel}`} data-theme={theme} data-testid={TestId.OpenAIHub.Settings}>
+        <section className={styles.panel} data-testid={TestId.OpenAIHub.Settings}>
             {!panel.snapshot?.accounts.length ? (
                 <header className={styles.header}>
                     <div className={styles.grow}>
@@ -29,13 +28,13 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                 </header>
             ) : undefined}
             {panel.state.status === 'error' && !panel.snapshot ? (
-                <div className={styles.card} role="alert">
+                <div className={styles.card}>
                     <p>{text('usageError')}</p>
                 </div>
             ) : undefined}
             {panel.signingIn && !panel.loginOpen ? <CodexLoginProgress text={text} /> : undefined}
             {panel.snapshot?.status === 'waiting' && !panel.signingIn && !panel.loginOpen ? (
-                <div className={styles.card} role="status">
+                <div className={styles.card}>
                     <p>{text('waiting')}</p>
                     <code data-testid={TestId.OpenAIHub.DeviceCode}>{panel.snapshot.deviceCode}</code>
                     {panel.snapshot.verificationUri ? (
@@ -43,16 +42,16 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                             <a href={panel.snapshot.verificationUri} target="_blank" rel="noreferrer">
                                 {text('openVerification')}
                             </a>
-                            <IconButton ariaLabel={text('copyVerificationLink')} onClick={() => void panel.copyVerificationLink()}>
-                                <span className={styles.copyIcon} aria-hidden="true" />
+                            <IconButton tooltip={text('copyVerificationLink')} onClick={() => void panel.copyVerificationLink()}>
+                                <span className={styles.copyIcon} />
                             </IconButton>
-                            <span aria-live="polite">{panel.copyFeedback}</span>
+                            <span>{panel.copyFeedback}</span>
                         </div>
                     ) : undefined}
                 </div>
             ) : undefined}
             {panel.snapshot?.status === 'error' && !panel.loginOpen ? (
-                <div className={styles.card} role="alert">
+                <div className={styles.card}>
                     <p>{panel.snapshot.error || text('loginFailed')}</p>
                 </div>
             ) : undefined}
@@ -64,15 +63,13 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                 onClose={panel.closeLogin}
                 title={panel.isReauthentication ? `${text('signIn')}: ${panel.label}` : text('addAccountDialog')}
                 closeLabel={text('close')}
-                theme={theme}
-                backdropClassName="dsh-core-root"
                 {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
                 <div className={styles.modalBody}>
                     {panel.signingIn ? (
                         <CodexLoginProgress text={text} />
                     ) : panel.snapshot?.status === 'waiting' ? (
                         <>
-                            <div className={styles.card} role="status">
+                            <div className={styles.card}>
                                 <p>{text('waiting')}</p>
                                 {panel.snapshot.deviceCode ? <code>{panel.snapshot.deviceCode}</code> : undefined}
                                 {panel.snapshot.verificationUri ? (
@@ -81,11 +78,11 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                             {text('openVerification')}
                                         </a>
                                         <IconButton
-                                            ariaLabel={text('copyVerificationLink')}
+                                            tooltip={text('copyVerificationLink')}
                                             onClick={() => void panel.copyVerificationLink()}>
-                                            <span className={styles.copyIcon} aria-hidden="true" />
+                                            <span className={styles.copyIcon} />
                                         </IconButton>
-                                        <span aria-live="polite">{panel.copyFeedback}</span>
+                                        <span>{panel.copyFeedback}</span>
                                     </div>
                                 ) : undefined}
                             </div>
@@ -103,20 +100,20 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                         placeholder={text('callbackPlaceholder')}
                                         onChange={panel.setCallbackUrl}
                                     />
-                                    {panel.error ? <p role="alert">{panel.error}</p> : undefined}
+                                    {panel.error ? <p>{panel.error}</p> : undefined}
                                 </div>
                             ) : undefined}
                         </>
                     ) : panel.snapshot?.status === 'error' && panel.snapshot.retryAvailable ? (
-                        <div className={styles.card} role="alert">
+                        <div className={styles.card}>
                             <p>{panel.snapshot.error || text('loginFailed')}</p>
                         </div>
                     ) : panel.loginStarted && panel.snapshot?.status === 'done' && !panel.busy ? (
-                        <p role="status">{text('connected')}</p>
+                        <p>{text('connected')}</p>
                     ) : panel.isReauthentication ? (
                         <div className={styles.card}>
                             <p>{text('reauthenticateHint').replace('{account}', panel.label)}</p>
-                            {panel.error ? <p role="alert">{panel.error}</p> : undefined}
+                            {panel.error ? <p>{panel.error}</p> : undefined}
                         </div>
                     ) : (
                         <>
@@ -134,13 +131,16 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                 onChange={panel.setAuthMethod}
                             />
                             {panel.error || (panel.loginStarted && panel.snapshot?.status === 'error' ? panel.snapshot.error : '') ? (
-                                <p role="alert">{panel.error || panel.snapshot?.error || text('loginFailed')}</p>
+                                <p>{panel.error || panel.snapshot?.error || text('loginFailed')}</p>
                             ) : undefined}
                         </>
                     )}
                 </div>
                 <div className={styles.modalFooter}>
-                    <div className={styles.actions}>
+                    <div className={styles.actionsRight}>
+                        <Button onClick={panel.closeLogin}>
+                            {text(panel.loginStarted && panel.snapshot?.status === 'done' && !panel.busy ? 'close' : 'cancel')}
+                        </Button>
                         {panel.signingIn ? undefined : panel.snapshot?.retryAvailable ? (
                             <Button
                                 data-testid={TestId.OpenAIHub.Login}
@@ -167,9 +167,6 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                 {panel.busy ? text('working') : text(panel.isReauthentication ? 'signIn' : 'login')}
                             </Button>
                         )}
-                        <Button onClick={panel.closeLogin}>
-                            {text(panel.loginStarted && panel.snapshot?.status === 'done' && !panel.busy ? 'close' : 'cancel')}
-                        </Button>
                     </div>
                 </div>
             </Modal>

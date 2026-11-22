@@ -1,8 +1,8 @@
-import { tProxy } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
+import { tProxy } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
 
-import type { ProfileActionsState } from '../hooks/useProfileActions.js';
-import { ProfileEditor } from './ProfileEditor.js';
+import type { ProfileActionsState } from '../hooks/useProfileActions.ts';
+import { ProfileEditor } from './ProfileEditor.tsx';
 
 interface ProfilesSectionProps extends Omit<ProfileActionsState, 'resetForOpen'> {}
 

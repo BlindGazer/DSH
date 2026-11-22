@@ -1,0 +1,7 @@
+- insert:
+    - id: dsh-logger
+      name: '@kalex/dsh-logger'
+      config:
+        enabled: false
+        level: info
+        maxFileBytes: 10485760

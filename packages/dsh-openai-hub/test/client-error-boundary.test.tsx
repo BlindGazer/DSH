@@ -3,7 +3,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { createElement, type ReactElement } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { CodexRenderErrorBoundary } from '../src/client/features/settings/CodexRenderErrorBoundary.js';
+import { CodexRenderErrorBoundary } from '../src/client/features/settings/CodexRenderErrorBoundary.tsx';
 
 function BrokenPanel(): ReactElement {
     throw new Error('render exploded');
@@ -35,7 +35,7 @@ describe('Codex render error boundary', () => {
             )
         );
 
-        expect(screen.getByRole('alert').textContent).toBe('Panel render failed');
+        expect(screen.getByText('Panel render failed').textContent).toBe('Panel render failed');
         await waitFor(() => expect(reportUiError).toHaveBeenCalledOnce());
         expect(reportUiError).toHaveBeenCalledWith({
             name: 'UIError',

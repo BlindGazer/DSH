@@ -1,0 +1,216 @@
+.section {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    min-block-size: 0;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+}
+.fieldset {
+    box-sizing: border-box;
+    block-size: 100%;
+    min-block-size: 0;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+.summary {
+    color: var(--dsh-ui-muted);
+    font-size: 12px;
+    line-height: 1.5;
+}
+.panel {
+    box-sizing: border-box;
+    width: 100%;
+    display: grid;
+    grid-template-rows: minmax(0, 1fr) auto;
+    block-size: 100%;
+    min-width: 0;
+    margin: 0;
+    font-family: inherit;
+    color: var(--dsh-ui-text);
+    overflow-wrap: anywhere;
+}
+.panel h2 {
+    margin: 0 0 20px;
+    font-size: 18px;
+}
+.panel h3 {
+    margin: 0 0 6px;
+    font-size: 15px;
+}
+.panel p {
+    line-height: 1.5;
+}
+.panel small,
+.panel code {
+    font-size: 12px;
+}
+.panel code {
+    color: var(--dsh-ui-muted);
+    overflow-wrap: anywhere;
+}
+.panel small,
+.muted {
+    color: var(--dsh-ui-muted);
+    line-height: 1.5;
+}
+.row h2 {
+    margin: 0;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    min-width: 0;
+}
+.row > div {
+    min-width: 0;
+}
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    gap: 12px;
+    min-width: 0;
+}
+.rules .grid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+}
+.field {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+    margin: 0;
+    font-size: 14px;
+}
+.field .levelMenu {
+    position: static;
+    margin-top: 4px;
+}
+.input {
+    box-sizing: border-box;
+    min-width: 0;
+    width: 100%;
+    max-width: 100%;
+}
+.body > section,
+.rules {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+}
+.body > section > h2,
+.body > section > p,
+.rules > h3,
+.rules > p {
+    margin: 0;
+}
+.rules .grid {
+    align-items: start;
+}
+.collection summary {
+    cursor: pointer;
+}
+.collection summary h3 {
+    display: inline;
+    margin: 0;
+}
+.collection summary:focus-visible {
+    outline: 2px solid var(--dsh-ui-focus-ring);
+    outline-offset: 2px;
+}
+.collection details > small {
+    display: block;
+}
+.collection summary + small,
+.collection details > button {
+    margin-block-start: 8px;
+}
+.collection {
+    min-width: 0;
+    border: 1px solid var(--dsh-ui-border);
+    border-radius: 10px;
+    padding: 16px;
+}
+.rule {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-width: 0;
+    margin: 12px 0;
+}
+.rule .input {
+    flex: 1 1 8rem;
+}
+.rule button {
+    flex-shrink: 0;
+}
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+}
+.plugin {
+    min-width: 0;
+    padding: 16px;
+    margin-block-end: 8px;
+    border-radius: 12px;
+    background: var(--dsh-ui-elevated);
+}
+.pluginBody {
+    margin-block-start: 10px;
+    padding-block-start: 12px;
+    border-top: 1px solid var(--dsh-ui-border);
+}
+.pluginBody > .actions {
+    margin-top: 12px;
+}
+.body {
+    display: grid;
+    align-content: start;
+    gap: 24px;
+    min-width: 0;
+    overflow: auto;
+    /* Контур фокуса выходит за границы поля. */
+    margin-inline-start: -4px;
+    padding: 4px 4px 12px;
+}
+/* Компенсирует отступ оболочки DSH только внутри слота настроек. */
+:global([data-slot="settings.section"]) .body {
+    --logger-settings-edge: 24px;
+    margin-inline-end: calc(-1 * var(--logger-settings-edge));
+    padding-inline-end: calc(var(--logger-settings-edge) + 4px);
+}
+@media (max-width: 767px) {
+    :global(html:not([data-windows-titlebar]):not([data-platform="darwin"]) [data-slot="settings.section"]) .body {
+        --logger-settings-edge: 16px;
+    }
+}
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 12px 0;
+    border-top: 1px solid var(--dsh-ui-border);
+    background-color: var(--dsh-ui-bg-modal);
+}
+.pathDialog {
+    max-width: 35rem;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+.footer > .actions {
+    margin-inline-start: auto;
+}

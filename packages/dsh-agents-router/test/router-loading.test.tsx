@@ -1,8 +1,8 @@
 import { TestId } from '@kalex/dsh-core';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { RouterView } from '../src/client/app/RouterView.js';
-import { GlobalSettingsCard } from '../src/client/features/global-settings/GlobalSettingsCard.js';
+import { RouterView } from '../src/client/app/RouterView.tsx';
+import { GlobalSettingsCard } from '../src/client/features/global-settings/GlobalSettingsCard.tsx';
 
 describe('router loading states', () => {
     it('shows the shared loading indicator while router data is pending', () => {

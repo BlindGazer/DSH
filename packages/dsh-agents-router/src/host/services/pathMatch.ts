@@ -1,5 +1,5 @@
 import { isAbsolute, posix, relative, resolve, sep } from 'node:path';
-import type { NormalizedRuleMetadata } from '../../shared/models/RouterModels.js';
+import type { NormalizedRuleMetadata } from '../../shared/models/RouterModels.ts';
 
 const GLOB_META = /[?*[{]/;
 const REGEX_META = new Set(['\\', '.', '^', '$', '+', '?', '(', ')', '[', ']', '{', '}', '|']);

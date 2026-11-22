@@ -1,1 +1,1 @@
-export { SwitchControl, type SwitchControlProps } from './SwitchControl.js';
+export { SwitchControl, type SwitchControlProps } from './SwitchControl.tsx';

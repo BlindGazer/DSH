@@ -1,7 +1,7 @@
 import path from 'node:path';
-import { RULE_CONTEXT } from '../../shared/constants/index.js';
-import type { DiscoveredRule, ProjectDiscoverySnapshot, ProjectSettings, RouterDiagnostic } from '../../shared/models/RouterModels.js';
-import type { RouterStore } from './store.js';
+import { RULE_CONTEXT } from '../../shared/constants/index.ts';
+import type { DiscoveredRule, ProjectDiscoverySnapshot, ProjectSettings, RouterDiagnostic } from '../../shared/models/RouterModels.ts';
+import type { RouterStore } from './store.ts';
 
 export interface RouterSession {
     readonly id: string;
@@ -53,7 +53,7 @@ export interface RouterState {
 }
 
 export interface RouterHostContext {
-    readonly logger: { warn(message: string): void; error(message: string): void };
+    readonly scopedLogger?: { warn(message: string): void; error(message: string): void };
     readonly agents: { list(): RouterAgent[] };
     readonly workingDirectory: { get(session: RouterSession): string | undefined };
     readonly skills: { list(options: { readonly cwd: string; readonly scope?: RouterAgent }): Promise<RouterSkill[]> };
@@ -67,12 +67,12 @@ export interface RouterSkill {
     readonly invocation?: { readonly modelInvocable?: boolean; readonly userInvocable?: boolean };
 }
 
-import { discoverProject } from './discovery.js';
-import { computeContextMetrics } from './metrics.js';
-import { renderAreas, renderRules, selectRules } from './ruleSelector.js';
+import { discoverProject } from './discovery.ts';
+import { computeContextMetrics } from './metrics.ts';
+import { renderAreas, renderRules, selectRules } from './ruleSelector.ts';
 
 export async function reportDiagnostics(
-    ctx: RouterHostContext,
+    _ctx: RouterHostContext,
     store: RouterStore,
     state: RouterState,
     items: RouterDiagnostic[]
@@ -81,11 +81,11 @@ export async function reportDiagnostics(
     if (!items.length) return [];
     try {
         const fresh = await store.markDiagnostics(state.sessionId, state.projectRoot, items);
-        for (const item of fresh) ctx.logger.warn(`agents-router: ${item.path}: ${item.message}`);
+        for (const item of fresh) _ctx.scopedLogger?.warn(`agents-router: ${item.path}: ${item.message}`);
         return fresh;
     } catch (error) {
         const message = error instanceof Error ? error.message : String(error);
-        ctx.logger.error(`agents-router: could not persist diagnostics for ${state.sessionId}: ${message}`);
+        _ctx.scopedLogger?.error(`agents-router: could not persist diagnostics for ${state.sessionId}: ${message}`);
         return items;
     }
 }

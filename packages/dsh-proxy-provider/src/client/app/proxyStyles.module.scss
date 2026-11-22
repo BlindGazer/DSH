@@ -133,13 +133,13 @@
     font-size: 13px;
     outline: none;
 }
-.cardBar[data-theme],
-.footerRow[data-theme] {
+.cardBar,
+.footerRow {
     color: var(--dsh-ui-text);
     border-color: var(--dsh-ui-border);
     background: transparent;
 }
-.modalBackdrop[data-theme] .modal {
+.modalBackdrop .modal {
     background: var(--dsw-alias-bg-layer-2);
     color: var(--dsh-ui-text);
     border-color: var(--dsh-ui-border-strong);

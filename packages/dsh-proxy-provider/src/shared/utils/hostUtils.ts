@@ -1,6 +1,6 @@
-import { extractHost, sanitizeHostInput } from '@kalex/dsh-core/utils/hostSanitizer.js';
-import { BUILTIN_PROVIDER_ENDPOINTS } from '../constants/endpoints.js';
-import type { ProfileDraft, ProxyProfile, SanitizedProxyProfile } from '../models/ProxyModels.js';
+import { extractHost, sanitizeHostInput } from '@kalex/dsh-core/utils/hostSanitizer.ts';
+import { BUILTIN_PROVIDER_ENDPOINTS } from '../constants/endpoints.ts';
+import type { ProfileDraft, ProxyProfile, SanitizedProxyProfile } from '../models/ProxyModels.ts';
 
 export { extractHost, sanitizeHostInput };
 

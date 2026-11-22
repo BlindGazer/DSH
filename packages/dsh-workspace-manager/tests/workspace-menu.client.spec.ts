@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest'
-import { installWorkspaceMenu } from '../src/client/features/manage-workspaces/services/workspaceMenuAdapter.js'
-import type { WorkspaceEditTarget } from '../src/client/features/manage-workspaces/models/WorkspaceEditTarget.js'
+import { installWorkspaceMenu } from '../src/client/features/manage-workspaces/services/workspaceMenuAdapter.ts'
+import type { WorkspaceEditTarget } from '../src/client/features/manage-workspaces/models/WorkspaceEditTarget.ts'
 
 let dispose: (() => void) | undefined
 afterEach(() => { dispose?.(); dispose = undefined; document.body.replaceChildren() })

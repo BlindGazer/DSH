@@ -1,12 +1,12 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react'
-import { WorkspaceAddirModal, type WorkspaceEditorProps } from '../src/client/features/manage-workspaces/components/WorkspaceAddirModal.js'
-import { fetchWorkspaceDirectories, replaceWorkspaceDirectories } from '../src/client/features/manage-workspaces/services/addirApi.js'
-import { ru } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.js'
-import { ensureWorkspaceManagerStyles } from '../src/client/features/manage-workspaces/workspaceManagerStyles.js'
+import { WorkspaceAddirModal, type WorkspaceEditorProps } from '../src/client/features/manage-workspaces/components/WorkspaceAddirModal.tsx'
+import { fetchWorkspaceDirectories, replaceWorkspaceDirectories } from '../src/client/features/manage-workspaces/services/addirApi.ts'
+import { ru } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.ts'
+import { ensureWorkspaceManagerStyles } from '../src/client/features/manage-workspaces/workspaceManagerStyles.ts'
 
-vi.mock('../src/client/features/manage-workspaces/services/addirApi.js', () => ({ fetchWorkspaceDirectories: vi.fn(), replaceWorkspaceDirectories: vi.fn() }))
+vi.mock('../src/client/features/manage-workspaces/services/addirApi.ts', () => ({ fetchWorkspaceDirectories: vi.fn(), replaceWorkspaceDirectories: vi.fn() }))
 afterEach(() => { cleanup(); vi.resetAllMocks(); document.documentElement.removeAttribute('data-theme') })
 
 function editor(overrides: Partial<WorkspaceEditorProps> = {}) {
@@ -28,7 +28,7 @@ describe('project editor', () => {
     editor()
     await loaded()
 
-    const dialog = screen.getByRole('dialog')
+    const dialog = screen.getByTestId('dsh-modal-card')
     const stylesTag = document.querySelector('style[data-plugin-css="@kalex/dsh-workspace-manager/styles"]')
 
     expect(dialog.classList.contains('addir-modal')).toBe(true)
@@ -47,8 +47,8 @@ describe('project editor', () => {
     expect(props.pick).toHaveBeenCalledOnce()
     expect(screen.queryByRole('textbox', { name: '文件夹路径' })).toBeNull()
     expect(replaceWorkspaceDirectories).not.toHaveBeenCalled()
-    fireEvent.click(screen.getByRole('checkbox', { name: 'Только чтение' }))
-    fireEvent.change(screen.getByRole('textbox', { name: 'Название проекта' }), { target: { value: 'Updated' } })
+    fireEvent.click(screen.getByRole('checkbox'))
+    fireEvent.change(screen.getByDisplayValue('Project'), { target: { value: 'Updated' } })
     fireEvent.click(screen.getByRole('button', { name: 'Сохранить' }))
     await waitFor(() => expect(props.onClose).toHaveBeenCalledOnce())
     expect(props.rename).toHaveBeenCalledWith(props.target.workspaceId, 'Updated')
@@ -62,7 +62,7 @@ describe('project editor', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Добавить каталог' }))
     await waitFor(() => expect(screen.getByRole('button', { name: 'Добавить каталог' }).hasAttribute('disabled')).toBe(false))
     expect(screen.getByText('saved')).toBeTruthy()
-    fireEvent.click(screen.getByRole('button', { name: 'Удалить каталог: saved' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Удалить каталог' }))
     fireEvent.click(screen.getByRole('button', { name: 'Отмена' }))
     expect(props.onClose).toHaveBeenCalledOnce()
     expect(replaceWorkspaceDirectories).not.toHaveBeenCalled()
@@ -74,9 +74,9 @@ describe('project editor', () => {
     vi.mocked(replaceWorkspaceDirectories).mockRejectedValue(new Error('Disk is unavailable'))
     const props = editor()
     await loaded()
-    fireEvent.change(screen.getByRole('textbox', { name: 'Название проекта' }), { target: { value: 'Updated' } })
+    fireEvent.change(screen.getByDisplayValue('Project'), { target: { value: 'Updated' } })
     fireEvent.click(screen.getByRole('button', { name: 'Сохранить' }))
-    expect(await screen.findByRole('alert')).toHaveProperty('textContent', 'Disk is unavailable')
+    expect(await screen.findByText('Disk is unavailable')).toHaveProperty('textContent', 'Disk is unavailable')
     expect(props.rename).toHaveBeenNthCalledWith(1, props.target.workspaceId, 'Updated')
     expect(props.rename).toHaveBeenNthCalledWith(2, props.target.workspaceId, 'Project')
     expect(props.onClose).not.toHaveBeenCalled()
@@ -85,7 +85,7 @@ describe('project editor', () => {
   it('blocks Save after a load failure instead of replacing unread associations with an empty list', async () => {
     vi.mocked(fetchWorkspaceDirectories).mockRejectedValue(new Error('HTTP 404'))
     editor()
-    expect(await screen.findByRole('alert')).toHaveProperty('textContent', 'HTTP 404')
+    expect(await screen.findByText('HTTP 404')).toHaveProperty('textContent', 'HTTP 404')
     expect(screen.getByRole('button', { name: 'Сохранить' }).hasAttribute('disabled')).toBe(true)
     expect(screen.getByRole('button', { name: 'Повторить' })).toBeTruthy()
     expect(replaceWorkspaceDirectories).not.toHaveBeenCalled()

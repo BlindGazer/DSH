@@ -6,9 +6,26 @@
  */
 
 import { createUserMessage, type UserMessage } from '@deepseek-ai/dsh-llm';
-import type { LinkedDirectory } from '../../shared/models/WorkspaceDirectories.js';
+import type { LinkedDirectory } from '../../shared/models/WorkspaceDirectories.ts';
 
 export const WORKSPACE_DIRECTORIES_CONTEXT_KIND = 'workspace-directories';
+
+/**
+ * Возвращает стабильный отпечаток каталогов без служебного времени добавления.
+ * Порядок записей не влияет на результат, чтобы перестановка не считалась изменением.
+ */
+export function getWorkspaceDirectoriesFingerprint(directories: readonly LinkedDirectory[]): string {
+    return JSON.stringify(
+        directories
+            .map(directory => ({
+                path: directory.path,
+                alias: directory.alias,
+                description: directory.description ?? '',
+                readOnly: directory.readOnly
+            }))
+            .toSorted((left, right) => left.path.localeCompare(right.path))
+    );
+}
 
 declare module '@deepseek-ai/dsh-llm' {
     interface MessageSourceMap {

@@ -6,4 +6,4 @@ export {
     ProviderCardProxyEntry,
     ProxyLocaleSettings,
     ProxySettingsModal
-} from './client/app/index.js';
+} from './client/app/index.tsx';

@@ -4,7 +4,7 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, expect, test } from 'vitest';
-import { RouterStore } from '../src/host/services/store.js';
+import { RouterStore } from '../src/host/services/store.ts';
 
 const sessionId = 'session_test_123';
 const projectRoot = fileURLToPath(new URL('../examples/demo-project', import.meta.url));

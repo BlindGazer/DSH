@@ -1,9 +1,9 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
-import type { KalexProviderProxyConfig } from '../../shared/models/ProxyModels.js';
-import type { ProxyConfigStorage, RawConfigCandidate } from '../models/ProxyServiceContracts.js';
-import { normalizeProxyConfig, serializeConfigForDisk } from './configNormalizer.js';
+import type { KalexProviderProxyConfig } from '../../shared/models/ProxyModels.ts';
+import type { ProxyConfigStorage, RawConfigCandidate } from '../models/ProxyServiceContracts.ts';
+import { normalizeProxyConfig, serializeConfigForDisk } from './configNormalizer.ts';
 
 /**
  * Определяет путь к файлу хранения конфигурации прокси на диске.

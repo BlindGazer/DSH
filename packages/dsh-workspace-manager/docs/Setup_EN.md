@@ -3,7 +3,7 @@
 ## Requirements
 
 - Node.js and pnpm (to build from source).
-- Installed DSH Desktop (profile `desktop`), version >= 0.2.2-rc.1.
+- Installed DSH Desktop (profile `desktop`), version >= 0.2.2-rc.5.
 
 ## Install from GitHub using the DSH CLI
 
@@ -17,7 +17,7 @@ Run from the DSH Desktop profile directory:
 
 ```powershell
 Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm install github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+pnpm add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
 ## Install from a local folder (recommended for development)

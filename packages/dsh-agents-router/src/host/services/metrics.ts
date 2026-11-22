@@ -1,4 +1,4 @@
-import { AREA_CONTEXT, RULE_CONTEXT } from '../../shared/constants/index.js';
+import { AREA_CONTEXT, RULE_CONTEXT } from '../../shared/constants/index.ts';
 
 interface MetricSkill {
     name: string;

@@ -6,6 +6,42 @@ import net from "node:net";
 import tls from "node:tls";
 import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
+// ../dsh-logger-core/src/types.ts
+var NOOP_LOGGER = Object.freeze({ record: () => void 0 });
+// ../dsh-logger-core/src/factory.ts
+function createFacade(logger, sink) {
+	const write = (level, message, context) => {
+		sink?.(level, message, context);
+		logger.record(context === void 0 ? {
+			event: message,
+			level
+		} : {
+			event: context.event ?? message,
+			level,
+			data: context
+		});
+	};
+	return {
+		debug: (message, context) => write("debug", message, context),
+		info: (message, context) => write("info", message, context),
+		warn: (message, context) => write("warn", message, context),
+		error: (message, context) => write("error", message, context)
+	};
+}
+/** Ожидаем реальный сервис, а имя пакета передаём явно: имя fiber не является идентификатором пакета. */
+function createOptionalLogger(context, packageName) {
+	let target = NOOP_LOGGER;
+	context.inject?.(["dshLoggerService"], (scope) => {
+		target = scope.dshLoggerService?.getLogger({ packageName }, "host") ?? NOOP_LOGGER;
+		scope.effect(() => () => {
+			target = NOOP_LOGGER;
+		}, "optional dsh-logger binding");
+	});
+	return { record: (record) => target.record(record) };
+}
+function createHostLogger(logger) {
+	return createFacade(logger ?? NOOP_LOGGER);
+}
 // src/shared/constants/endpoints.ts
 /**
 * Базовый URL HTTP API плагина внутри веб-сервера DSH.
@@ -1791,8 +1827,13 @@ function apply(ctx, config = {}) {
 		initialConfig: config
 	});
 	controller.installFetchInterceptor();
+	const logger = createHostLogger(createOptionalLogger(ctx, "@kalex/dsh-proxy-provider"));
 	controller.refreshRouting().catch((error) => {
-		ctx.logger?.warn?.(`[${name}] Initial routing refresh failed: ${error?.message || error}`);
+		logger.warn(`[${name}] Initial routing refresh failed`, {
+			event: "routing_refresh_failed",
+			operation: "initial_refresh",
+			errorCode: error.message
+		});
 	});
 	if (typeof ctx.on === "function") {
 		ctx.on("loader/volatile-update", () => {

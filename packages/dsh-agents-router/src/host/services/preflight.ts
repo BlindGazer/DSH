@@ -1,7 +1,7 @@
 import { realpath } from 'node:fs/promises';
 import path from 'node:path';
-import { isRecord } from '../../shared/utils/validation.js';
-import type { currentDirectory } from './sessionController.js';
+import { isRecord } from '../../shared/utils/validation.ts';
+import type { currentDirectory } from './sessionController.ts';
 
 const FILE_TOOLS = new Set(['read', 'read_image', 'write', 'edit', 'str_replace_editor']);
 const SEARCH_TOOLS = new Set(['glob', 'grep']);

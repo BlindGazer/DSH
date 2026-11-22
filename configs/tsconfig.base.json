@@ -27,12 +27,15 @@
         "forceConsistentCasingInFileNames": true,
         "isolatedModules": true,
         "verbatimModuleSyntax": true,
-        "declaration": true,
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
         "declarationMap": false,
         "sourceMap": false,
         "paths": {
             "@kalex/dsh-core": ["../packages/dsh-core/src/index.ts"],
-            "@kalex/dsh-core/*": ["../packages/dsh-core/src/*"]
+            "@kalex/dsh-core/*": ["../packages/dsh-core/src/*"],
+            "@kalex/dsh-logger-core": ["../packages/dsh-logger-core/src/index.ts"],
+            "@kalex/dsh-logger-core/*": ["../packages/dsh-logger-core/src/*"]
         }
     }
 }

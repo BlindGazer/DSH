@@ -6,11 +6,11 @@ import {
   type ToolCallId,
   type UserMessage,
 } from "@deepseek-ai/dsh-llm";
-import { apply, WorkspaceDirectoriesProvider } from "../src/index.js";
+import { apply, WorkspaceDirectoriesProvider } from "../src/index.ts";
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import { tmpdir } from "node:os";
-import { canonicalizePath } from "../src/host/services/WorkspaceDirectoriesService.js";
+import { canonicalizePath } from "../src/host/services/WorkspaceDirectoriesService.ts";
 import type {
   ToolDispatchExecution,
   ToolExecutionToken,
@@ -67,7 +67,7 @@ describe("WorkspaceDirectoriesProvider (dsh-workspace-manager) integration", () 
     expect(sub?.path).toBe(subDir);
   });
 
-  it("triggers agent/pre-step and enriches messages", async () => {
+  it("injects once per turn and again when the directory fingerprint changes", async () => {
     const ctx = new Context();
     await ctx.plugin(WorkspaceDirectoriesProvider, {
       defaultDirectories: [{ path: subDir, alias: "sub-service" }],
@@ -108,7 +108,6 @@ describe("WorkspaceDirectoriesProvider (dsh-workspace-manager) integration", () 
 
     expect(result.kind).toBe("enter");
     if (result.kind === "enter") {
-      // Should have injected the workspace-directories message
       expect(result.messages.length).toBe(2);
       const contextMsg = result.messages[0];
       expect(contextMsg).toBeDefined();
@@ -122,6 +121,36 @@ describe("WorkspaceDirectoriesProvider (dsh-workspace-manager) integration", () 
         }
       }
     }
+
+    const sameTurn = await ctx.waterfall(
+      "agent/pre-step",
+      {
+        agent: mockAgent,
+        messages: originalMessages,
+        turn: 1,
+        step: 2,
+        signal: new AbortController().signal,
+        modelSelection,
+      },
+      async () => ({ kind: "enter", messages: originalMessages }),
+    );
+    expect(sameTurn.kind).toBe("enter");
+    if (sameTurn.kind === "enter") expect(sameTurn.messages).toEqual(originalMessages);
+
+    const nextTurn = await ctx.waterfall(
+      "agent/pre-step",
+      {
+        agent: mockAgent,
+        messages: originalMessages,
+        turn: 2,
+        step: 1,
+        signal: new AbortController().signal,
+        modelSelection,
+      },
+      async () => ({ kind: "enter", messages: originalMessages }),
+    );
+    expect(nextTurn.kind).toBe("enter");
+    if (nextTurn.kind === "enter") expect(nextTurn.messages.length).toBe(2);
   });
 
   it("delegates permitted tool calls and disposes tool registrations", async () => {

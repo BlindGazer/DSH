@@ -1,12 +1,10 @@
 import type { InvocationDescriptor, TypertRemoteContribution } from '@deepseek-ai/dsh-typert-protocol';
 import { z } from 'zod';
-import { AccountLabelSchema, AuthMethodSchema, ModelChoiceSchema, ModelSettingsSchema } from './accounts.js';
-import { PackageId, RemoteNamespace, ServiceKey } from './constants/runtime.js';
-import type { OpenAIHubClientLogEvent, OpenAIHubLogSettings } from './logging.js';
-import { OpenAIHubClientLogEventSchema, OpenAIHubLogSettingsSchema } from './logging.js';
+import { AccountLabelSchema, AuthMethodSchema, ModelChoiceSchema, ModelSettingsSchema } from './accounts.ts';
+import { PackageId, RemoteNamespace, ServiceKey } from './constants/runtime.ts';
 
-export type { ModelChoice, ModelSettings } from './accounts.js';
-export { ModelChoiceSchema, ModelSettingsSchema } from './accounts.js';
+export type { ModelChoice, ModelSettings } from './accounts.ts';
+export { ModelChoiceSchema, ModelSettingsSchema } from './accounts.ts';
 
 const UiComponentIdSchema = z.string().min(1).max(200);
 const UiRenderErrorSchema = z
@@ -73,7 +71,6 @@ export const UpdateAccountRequestSchema = z
     .object({ accountLabel: AccountLabelSchema, newLabel: AccountLabelSchema, autoRefreshLimits: z.boolean() })
     .strict();
 export const SaveModelsRequestSchema = z.object({ accountLabel: AccountLabelSchema, models: ModelSettingsSchema }).strict();
-export const SaveLoggingSettingsRequestSchema = OpenAIHubLogSettingsSchema;
 export type UiComponentId = z.infer<typeof UiComponentIdSchema>;
 export type UiRenderError = z.infer<typeof UiRenderErrorSchema>;
 export type ResetRequest = z.infer<typeof ResetRequestSchema>;
@@ -86,9 +83,6 @@ export type UpdateAccountRequest = z.infer<typeof UpdateAccountRequestSchema>;
 export type SaveModelsRequest = z.infer<typeof SaveModelsRequestSchema>;
 export interface OpenAIHubRemote {
     snapshot(): Promise<OpenAICodexSnapshot>;
-    loadLoggingSettings(): Promise<OpenAIHubLogSettings>;
-    saveLoggingSettings(input: OpenAIHubLogSettings): Promise<OpenAIHubLogSettings>;
-    recordClientLog(input: OpenAIHubClientLogEvent): Promise<true>;
     startLogin(input: LoginRequest): Promise<OpenAICodexSnapshot>;
     cancelLogin(): Promise<OpenAICodexSnapshot>;
     retryLogin(): Promise<OpenAICodexSnapshot>;
@@ -114,9 +108,6 @@ const codec = <T extends z.ZodType>(symbol: string, schema: T) => ({
 });
 const inputs = {
     snapshot: undefined,
-    loadLoggingSettings: undefined,
-    saveLoggingSettings: codec('OpenAIHubLogSettings', SaveLoggingSettingsRequestSchema),
-    recordClientLog: codec('OpenAIHubClientLogEvent', OpenAIHubClientLogEventSchema),
     startLogin: codec('LoginRequest', LoginRequestSchema),
     cancelLogin: undefined,
     retryLogin: undefined,
@@ -132,9 +123,6 @@ const inputs = {
 };
 const methods = [
     'snapshot',
-    'loadLoggingSettings',
-    'saveLoggingSettings',
-    'recordClientLog',
     'startLogin',
     'cancelLogin',
     'retryLogin',
@@ -166,11 +154,9 @@ const descriptors = Object.freeze(
               ]
             : [],
         result:
-            method === 'reportUiError' || method === 'reportUiReady' || method === 'recordClientLog'
+            method === 'reportUiError' || method === 'reportUiReady'
                 ? codec('RemoteActionAccepted', z.literal(true))
-                : method === 'loadLoggingSettings' || method === 'saveLoggingSettings'
-                  ? codec('OpenAIHubLogSettings', OpenAIHubLogSettingsSchema)
-                  : codec('OpenAICodexSnapshot', SnapshotSchema)
+                : codec('OpenAICodexSnapshot', SnapshotSchema)
     }))
 );
 export const TYPERT_REMOTE = Object.freeze({ package: PackageId, descriptors }) satisfies TypertRemoteContribution;

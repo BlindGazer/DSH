@@ -1,6 +1,7 @@
+import { Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
 import { useState } from 'react';
-import type { DiscoveredRuleWithState } from '../../../shared/models/RouterModels.js';
+import type { DiscoveredRuleWithState } from '../../../shared/models/RouterModels.ts';
 
 export interface RuleRowProps {
     rule: DiscoveredRuleWithState;
@@ -26,18 +27,18 @@ export function RuleRow({ rule, sessionId, openFile, t }: RuleRowProps): React.J
         <article className="ar-rule">
             <details className="ar-rule-details">
                 <summary className="ar-rule-header">
-                    <svg className="ar-rule-chevron" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none">
+                    <svg className="ar-rule-chevron" focusable="false" viewBox="0 0 24 24" fill="none">
                         <path d="M9 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     <span className="ar-rule-heading">
-                        <span className="ar-rule-path-title" title={rule.sourcePath}>
+                        <Tooltip className="ar-rule-path-title" content={rule.sourcePath} triggerElement="span">
                             <span className="ar-rule-directory">{sourceDirectory}</span>
                             <strong className="ar-rule-title">{sourceName}</strong>
-                        </span>
+                        </Tooltip>
                         {hasDescription ? (
-                            <span className="ar-rule-description-preview" title={description}>
+                            <Tooltip className="ar-rule-description-preview" content={description} triggerElement="span">
                                 | {description}
-                            </span>
+                            </Tooltip>
                         ) : null}
                     </span>
                     <span className="ar-rule-badges">
@@ -50,23 +51,24 @@ export function RuleRow({ rule, sessionId, openFile, t }: RuleRowProps): React.J
                 <div className="ar-rule-content">
                     <div className="ar-rule-path">
                         <span className="ar-rule-path-label">{t?.('path') ?? 'Path'}:</span>
-                        <a
-                            href={fileUrl}
-                            title={rule.filePath}
-                            onClick={event => {
-                                event.preventDefault();
-                                void openFile(rule.filePath);
-                            }}>
-                            {rule.sourcePath}
-                        </a>
-                        <button
-                            className="ar-rule-copy"
-                            type="button"
-                            aria-label={t?.('copyPath') ?? 'Copy path'}
-                            title={t?.('copyPath') ?? 'Copy path'}
-                            onClick={() => void navigator.clipboard?.writeText(rule.filePath).catch(() => undefined)}>
-                            {t?.('copyPath') ?? 'Copy path'}
-                        </button>
+                        <Tooltip className="ar-rule-path-link" content={rule.filePath} triggerElement="span">
+                            <a
+                                href={fileUrl}
+                                onClick={event => {
+                                    event.preventDefault();
+                                    void openFile(rule.filePath);
+                                }}>
+                                {rule.sourcePath}
+                            </a>
+                        </Tooltip>
+                        <Tooltip content={t?.('copyPath') ?? 'Copy path'} triggerElement="span">
+                            <button
+                                className="ar-rule-copy"
+                                type="button"
+                                onClick={() => void navigator.clipboard?.writeText(rule.filePath).catch(() => undefined)}>
+                                {t?.('copyPath') ?? 'Copy path'}
+                            </button>
+                        </Tooltip>
                     </div>
                     {hasDescription ? <pre>{description}</pre> : null}
                 </div>
@@ -78,11 +80,7 @@ export function RuleRow({ rule, sessionId, openFile, t }: RuleRowProps): React.J
                         <code key={condition}>{condition}</code>
                     ))}
                     {conditions.length > 1 ? (
-                        <button
-                            className="ar-rule-more"
-                            type="button"
-                            aria-expanded={showAllConditions}
-                            onClick={() => setShowAllConditions(!showAllConditions)}>
+                        <button className="ar-rule-more" type="button" onClick={() => setShowAllConditions(!showAllConditions)}>
                             {showAllConditions
                                 ? (t?.('less') ?? 'Less')
                                 : (t?.('morePaths')?.replace('{count}', String(conditions.length - 1)) ?? `+${conditions.length - 1} more`)}

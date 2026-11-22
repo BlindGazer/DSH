@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Commit changes to git using the standard one-line message format "{номер задачи} Краткое описание в одну строку". Use when completing a task item or when asked to commit.
+description: Commit changes to git using the standard one-line message format "{change number} {task number} Short description in one line". Use when completing a task item or when asked to commit.
 ---
 
 # Git Commit Format

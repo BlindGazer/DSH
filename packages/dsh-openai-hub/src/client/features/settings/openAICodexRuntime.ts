@@ -1,10 +1,9 @@
 import type { DshClientContext, DshLocaleCode, DshLocaleService, DshSlotRegistrationOptions } from '@kalex/dsh-core';
-import { createClientLogger } from '@kalex/dsh-logger';
+import { createClientLogger } from '@kalex/dsh-logger-core';
 import type { ReactElement } from 'react';
 import { createElement, useSyncExternalStore } from 'react';
-import type { AuthMethod, ModelChoice } from '../../../shared/accounts.js';
-import type { openAICodexLocaleDictionaries } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import type { OpenAIHubClientLogEvent } from '../../../shared/logging.js';
+import type { AuthMethod, ModelChoice } from '../../../shared/accounts.ts';
+import type { openAICodexLocaleDictionaries } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import type {
     AccountSnapshot,
     OpenAICodexSnapshot,
@@ -12,10 +11,10 @@ import type {
     TYPERT_REMOTE,
     UiComponentId,
     UiRenderError
-} from '../../../shared/remote.js';
-import { CodexRenderErrorBoundary } from './CodexRenderErrorBoundary.js';
-import type { ModelDirectories } from './modelSelectionSource.js';
-import type { OpenAIHubWireRemote } from './remoteBoundary.js';
+} from '../../../shared/remote.ts';
+import { CodexRenderErrorBoundary } from './CodexRenderErrorBoundary.tsx';
+import type { ModelDirectories } from './modelSelectionSource.ts';
+import type { OpenAIHubWireRemote } from './remoteBoundary.ts';
 
 export type OpenAICodexRemote = OpenAIHubRemote;
 interface RemoteMountService {
@@ -54,20 +53,8 @@ export class OpenAICodexController {
         this.state = state;
         for (const listener of this.listeners) listener();
     }
-    private readonly logger = createClientLogger({
-        sink: (_level, _message, context) => {
-            if (!context) return;
-            const input: OpenAIHubClientLogEvent = {
-                event: context.event as OpenAIHubClientLogEvent['event'],
-                phase: (typeof context.phase === 'string' ? context.phase : 'failed') as OpenAIHubClientLogEvent['phase'],
-                ...(typeof context.operation === 'string' ? { operation: context.operation as OpenAIHubClientLogEvent['operation'] } : {}),
-                ...(typeof context.durationMs === 'number' ? { durationMs: context.durationMs } : {}),
-                ...(typeof context.errorCode === 'string' ? { errorCode: context.errorCode as OpenAIHubClientLogEvent['errorCode'] } : {})
-            };
-            void this.remote.recordClientLog(input).catch(() => undefined);
-        }
-    });
-    private log(input: OpenAIHubClientLogEvent): void {
+    private readonly logger = createClientLogger();
+    private log(input: { event: string; operation?: string; phase?: string; durationMs?: number; errorCode?: string }): void {
         this.logger.info(input.event, {
             event: input.event,
             ...(input.operation ? { operation: input.operation } : {}),
@@ -107,7 +94,7 @@ export class OpenAICodexController {
         else void this.load(true);
     }
     private async act(
-        details: Pick<OpenAIHubClientLogEvent, 'event' | 'operation' | 'accountLabel' | 'authMethod'>,
+        details: { event: string; operation?: string; accountLabel?: string; authMethod?: AuthMethod },
         action: () => Promise<OpenAICodexSnapshot>,
         beforePublish?: (snapshot: OpenAICodexSnapshot) => void
     ): Promise<OpenAICodexSnapshot> {
@@ -233,5 +220,5 @@ export function registerCodexSlot<TProps extends object>(
         );
     context.slots.inject(options.name, () => context.slots.register(options, render));
 }
-export { RemoteNamespace, ServiceKey } from '../../../shared/constants/runtime.js';
+export { RemoteNamespace, ServiceKey } from '../../../shared/constants/runtime.ts';
 export type { AccountSnapshot };

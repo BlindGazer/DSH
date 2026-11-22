@@ -1,1 +1,1 @@
-export { Tooltip, type TooltipProps } from './Tooltip.js';
+export { Tooltip, type TooltipProps } from './Tooltip.tsx';

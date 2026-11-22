@@ -10,12 +10,12 @@ import type {
   WebRoute,
   WebResourceRoute,
 } from "@deepseek-ai/dsh-host-webserver";
-import type { LinkedDirectory } from "../src/shared/models/WorkspaceDirectories.js";
-import type { ResolvedConfig } from "../src/host/config.js";
-import { WorkspaceDirectoriesServiceImpl } from "../src/host/services/WorkspaceDirectoriesService.js";
-import { AddirStorage } from "../src/host/services/AddirStorage.js";
-import { resolveConfig } from "../src/host/config.js";
-import { registerAddirRoutes } from "../src/host/api/httpRoutes.js";
+import type { LinkedDirectory } from "../src/shared/models/WorkspaceDirectories.ts";
+import type { ResolvedConfig } from "../src/host/config.ts";
+import { WorkspaceDirectoriesServiceImpl } from "../src/host/services/WorkspaceDirectoriesService.ts";
+import { AddirStorage } from "../src/host/services/AddirStorage.ts";
+import { resolveConfig } from "../src/host/config.ts";
+import { registerAddirRoutes } from "../src/host/api/httpRoutes.ts";
 
 interface ApiResponse {
   readonly ok?: boolean;

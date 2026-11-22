@@ -1,4 +1,4 @@
-import type { DshLocaleCode, DshLocalePreference } from '../models/DshContext.js';
+import type { DshLocaleCode, DshLocalePreference } from '../models/DshContext.ts';
 
 /**
  * Интерфейс хранилища настроек языка (совместимый с localStorage).

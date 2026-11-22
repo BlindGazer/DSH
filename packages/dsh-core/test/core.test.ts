@@ -18,7 +18,7 @@ import {
     resolveDshLocale,
     sanitizeHostInput,
     TestId
-} from '../src/index.js';
+} from '../src/index.ts';
 
 describe('@kalex/dsh-core Design System and Utilities', () => {
     it('provides theme palettes and supports custom theme registration', () => {

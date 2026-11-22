@@ -1,9 +1,9 @@
-import { SettingsIcon, Spinner, ThemedSelect, useEffectiveTheme } from '@kalex/dsh-core';
+import { SettingsIcon, Spinner, ThemedSelect, Tooltip, useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect } from 'react';
 
-import { ProxyTestId } from '../../../../shared/constants/testId.js';
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
+import { ProxyTestId } from '../../../../shared/constants/testId.ts';
+import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
 
 export interface ProviderCardProxyEntryProps {
     readonly provider?: string | { readonly provider?: string; readonly id?: string };
@@ -70,7 +70,6 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
             data-testid={ProxyTestId.providerCard(providerId)}>
             <div className={proxyClasses('cardLeft')}>
                 <ThemedSelect
-                    ariaLabel={tProxy(`Proxy profile for ${providerId}`)}
                     value={activeProfile ? activeProfile.id : ''}
                     options={dropdownOptions}
                     onChange={nextVal => {
@@ -79,24 +78,26 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
                     showCheckmark={true}
                 />
                 {conflict ? (
-                    <span
-                        className={proxyClasses('badge', 'badgeWarn')}
-                        title={tProxy(
+                    <Tooltip
+                        content={tProxy(
                             `Host ${conflict.host} is shared by multiple providers with different proxy settings. Active proxy "${conflict.appliedProfileName}" is applied to the entire host.`
-                        )}>
-                        {tProxy(`⚠ Host conflict (${conflict.host} → ${conflict.appliedProfileName})`)}
-                    </span>
+                        )}
+                        triggerElement="span">
+                        <span className={proxyClasses('badge', 'badgeWarn')}>
+                            {tProxy(`⚠ Host conflict (${conflict.host} → ${conflict.appliedProfileName})`)}
+                        </span>
+                    </Tooltip>
                 ) : undefined}
             </div>
             <div className={proxyClasses('cardRight')}>
-                <button
-                    type="button"
-                    className={proxyClasses('button', 'buttonIcon')}
-                    aria-label={tProxy('Proxy settings')}
-                    title={tProxy('Proxy settings')}
-                    onClick={() => proxyStore.publish({ modalOpen: true })}>
-                    <SettingsIcon />
-                </button>
+                <Tooltip content={tProxy('Proxy settings')} triggerElement="span">
+                    <button
+                        type="button"
+                        className={proxyClasses('button', 'buttonIcon')}
+                        onClick={() => proxyStore.publish({ modalOpen: true })}>
+                        <SettingsIcon />
+                    </button>
+                </Tooltip>
             </div>
         </div>
     );

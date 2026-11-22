@@ -27,7 +27,6 @@
   },
   "files": [
     "lib",
-    "src",
     "cordis.patch.yml",
     "locale",
     "README.md",
@@ -66,14 +65,14 @@
     }
   },
   "engines": {
-    "dsh": ">=0.2.2-rc.1"
+    "dsh": ">=0.2.2-rc.5"
   },
   "scripts": {
     "build": "node scripts/build.ts",
     "build:client": "vite build --config ../../configs/packages/dsh-workspace-manager/vite.config.ts",
     "build:host": "vite build --config ../../configs/packages/dsh-workspace-manager/vite.config.host.ts",
     "test": "vitest run --config ../../configs/packages/dsh-workspace-manager/vitest.config.ts",
-    "typecheck": "tsc --build --force --emitDeclarationOnly --pretty false ../../configs/packages/dsh-workspace-manager/tsconfig.json",
+    "typecheck": "tsc --noEmit --pretty false -p ../../configs/packages/dsh-workspace-manager/tsconfig.json",
     "verify": "node scripts/check-client-bundle.ts",
     "check": "pnpm run build && pnpm run test && pnpm run verify"
   },
@@ -90,20 +89,20 @@
   },
   "peerDependencies": {
     "@deepseek-ai/cordis": "^4.0.1",
-    "@deepseek-ai/dsh-agent": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-llm": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-tools": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-host-webserver": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-config-editor": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-agent": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-llm": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-tools": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-host-webserver": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-config-editor": "^0.2.2-rc.5",
     "@deepseek-ai/schemastery": "^3.18.1"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.4",
-    "@deepseek-ai/dsh-agent": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-llm": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-tools": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-host-webserver": "^0.2.2-rc.1",
-    "@deepseek-ai/dsh-config-editor": "^0.2.2-rc.1",
+    "@deepseek-ai/dsh-agent": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-llm": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-tools": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-host-webserver": "^0.2.2-rc.5",
+    "@deepseek-ai/dsh-config-editor": "^0.2.2-rc.5",
     "@deepseek-ai/schemastery": "^3.18.1",
     "@types/node": "^26.6.6",
     "@types/react": "^19.0.0",
@@ -111,8 +110,8 @@
     "react": "19.3.1",
     "react-dom": "19.3.1",
     "react-compiler-runtime": "1.0.0",
-    "vitest": "^3.2.0",
-    "jsdom": "^29.1.1",
-    "@testing-library/react": "^16.3.2"
+    "vitest": "^5.1.1",
+    "jsdom": "^31.0.1",
+    "@testing-library/react": "^16.3.3"
   }
 }

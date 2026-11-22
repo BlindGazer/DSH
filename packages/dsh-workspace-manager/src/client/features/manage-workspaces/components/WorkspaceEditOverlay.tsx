@@ -1,8 +1,8 @@
-import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.js';
-import type { WorkspaceEditOverlayOptions } from '../hooks/useWorkspaceEditOverlay.js';
-import { useWorkspaceEditOverlay } from '../hooks/useWorkspaceEditOverlay.js';
-import type { WorkspaceEditActions } from '../models/WorkspaceEditActions.js';
-import { WorkspaceAddirModal } from './WorkspaceAddirModal.js';
+import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import type { WorkspaceEditOverlayOptions } from '../hooks/useWorkspaceEditOverlay.ts';
+import { useWorkspaceEditOverlay } from '../hooks/useWorkspaceEditOverlay.ts';
+import type { WorkspaceEditActions } from '../models/WorkspaceEditActions.ts';
+import { WorkspaceAddirModal } from './WorkspaceAddirModal.tsx';
 
 export interface WorkspaceEditOverlayProps extends WorkspaceEditOverlayOptions, WorkspaceEditActions {
     readonly t: Translate;

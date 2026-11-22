@@ -1,62 +1,63 @@
 ---
 name: code-review
-description: Проверка клиентских изменений DSH по дизайн-системе, стилям, React-компонентам, тестам и сборке; формирует список исправлений для другого агента.
+description: Review DSH client changes for the design system, styles, React components, tests, and builds; produce a fix list for another agent.
 ---
 
 # Frontend code review
 
-Используй этот skill при ревью изменений в `packages/**` и связанных тестов.
+Use this skill when reviewing changes in `packages/**` and related tests.
 
-## Обязательная проверка
+## Required checks
 
-1. Прочитай diff и все затронутые файлы до вынесения выводов.
-2. Проверь правила из:
+1. Read the diff and every affected file before drawing conclusions.
+2. Check the rules in:
    - `agents/front/skills/design-principles/SKILL.md`;
    - `agents/front/rules/design-system.md`;
    - `agents/rules/typescript-architecture.md`;
    - `agents/rules/dod.md`.
-3. Проверь стили:
-   - цвета, поверхности, границы, фокус и состояния используют DSH-токены;
-   - шрифты используют существующую типографику или CSS-переменные DSH;
-   - CSS Modules локальны, нет необоснованных `:global` и широких селекторов;
-   - нет дублирования правил и новых визуальных примитивов вместо компонентов `@kalex/dsh-core`;
-   - нет переполнения, фиксированных ширин без причины и проблем на узкой панели;
-   - проверены светлая, темная и локализованные версии.
-4. Проверь React и TypeScript:
-   - нет нарушения слоев `shared -> host/client`;
-   - нет `any`, `unknown`, `null`, подавления TypeScript и мутаций входных данных;
-   - компоненты имеют доступные имена, семантические роли и `:focus-visible`;
-   - вычисления не вызывают лишние ререндеры и не создают дублирующую логику.
-5. Проверь тесты для новых состояний: пустые, ошибочные, широкие и узкие варианты, доступность и локализацию.
-6. Запусти по возможности:
+3. Check styles:
+   - colors, surfaces, borders, focus, and states use DSH tokens;
+   - fonts use existing typography or DSH CSS variables;
+   - CSS Modules are local, with no unjustified `:global` or broad selectors;
+   - no duplicated rules or new visual primitives replacing `@kalex/dsh-core` components;
+   - no overflow, unjustified fixed widths, or narrow-panel issues;
+   - light, dark, and localized variants are checked.
+4. Check React and TypeScript:
+   - no violation of the `shared -> host/client` layers;
+   - no `any`, `unknown`, TypeScript suppression, or input mutation; `null` is allowed only for React, DOM, Vitest, and external contracts with boundary validation;
+   - components preserve keyboard operation, visible labels, native semantics and functionality, and `:focus-visible`;
+   - screenreader support is out of scope: do not require screenreader-only names, roles, or informational ARIA; preserve host contracts and functional attribute consumers as specified in the design-principles skill;
+   - computations do not cause unnecessary rerenders or duplicate logic.
+5. Check tests for new states: empty, error, wide, and narrow variants, keyboard/focus behavior, and localization. Migrate selectors without losing behavioral assertions.
+6. For a final review of code or configuration changes, always run:
    - `pnpm fix`;
    - `pnpm check`;
    - `pnpm test`;
    - `pnpm build`.
-   Если команда падает из-за существующих изменений или окружения, отдели это от регрессий diff.
+   Run `pnpm check` additionally when type or build diagnostics are needed. Any error blocks a positive verdict; state separately whether it is a diff regression or an environment issue.
 
-## Формат результата
+## Result format
 
-Сначала дай краткий verdict: `готово`, `нужны исправления` или `заблокировано`.
+First give a brief verdict: `ready`, `changes needed`, or `blocked`.
 
-Затем сформируй список:
+Then provide a list:
 
-- `[critical]` нарушение, которое ломает сборку, доступность, безопасность или поведение;
-- `[major]` нарушение правила или заметная регрессия;
-- `[minor]` улучшение без существенной регрессии;
-- `[note]` наблюдение или неподтвержденное предположение.
+- `[critical]` a violation that breaks build, keyboard usability, security, or behavior;
+- `[major]` a rule violation or significant regression;
+- `[minor]` an improvement without a significant regression;
+- `[note]` an observation or unconfirmed assumption.
 
-Для каждого пункта укажи файл, диапазон строк, правило, доказательство и конкретное исправление. Не исправляй файлы сам, если пользователь явно не попросил об этом. Не выдавай секреты и не копируй чувствительные значения из логов.
+For each item, give the file, line range, rule, evidence, and a specific fix. Do not edit files unless the user explicitly asks. Do not expose secrets or copy sensitive values from logs.
 
-## Что еще подключать
+## Additional files
 
-Для полного ревью также учитывай:
+For a complete review, also consider:
 
-- `agents/rules/code.md` - минимальность и отсутствие лишнего кода;
-- `agents/rules/files-encoding.md` - UTF-8 без BOM и LF;
-- `agents/rules/private.md` - секреты и чувствительные данные;
-- `agents/front/rules/react.md` и `agents/front/rules/testing.md`, если они существуют;
-- `agents/front/skills/react-best-practices/SKILL.md` для React-производительности;
-- `agents/front/skills/vitest-best-practices/SKILL.md` и `agents/fronts/skills/isolated-tests` для тестов.
+- `agents/rules/code.md` - minimality and no unnecessary code;
+- `agents/rules/files-encoding.md` - UTF-8 without BOM and LF;
+- `agents/rules/private.md` - secrets and sensitive data;
+- `agents/front/rules/common.md` and `agents/front/rules/tests.md`;
+- `agents/front/skills/react-best-practices/SKILL.md` for React performance;
+- `agents/front/skills/vitest-best-practices/SKILL.md` and `agents/front/skills/isolated-tests/SKILL.md` for tests.
 
-Если рекомендованный файл отсутствует, отметь это как рекомендацию, а не как ошибку.
+If a recommended file is missing, mark it as a recommendation, not an error.

@@ -1,6 +1,6 @@
 # Frontend conventions
 
-Prefer accessible semantics and existing design-system components.
+Prefer native semantics and existing design-system components. Preserve keyboard operation, focus, contrast, visible labels, and native functionality. Screenreader support is out of scope; do not add screenreader-only names, roles, or informational ARIA. Preserve external host DOM contracts and functional attribute consumers.
 
 ## React best practices
 

@@ -25,6 +25,10 @@
       "path": "packages/dsh-logger",
     },
     {
+      "name": "LoggerCore",
+      "path": "packages/dsh-logger-core",
+    },
+    {
       "name": "Root",
       "path": ".",
     },

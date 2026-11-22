@@ -1,6 +1,6 @@
 import coreStyles from './coreStyles.module.scss';
 import coreStyleText from './coreStyles.module.scss?inline';
-import { buildThemeCssVariables, getDshTheme, listDshThemes, subscribeDshThemeChanges } from './palettes.js';
+import { buildThemeCssVariables, getDshTheme, listDshThemes, subscribeDshThemeChanges } from './palettes.ts';
 
 const CORE_STYLE_ELEMENT_ID = 'kalex-dsh-core-theme-styles';
 

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { usageRefreshInterval } from '../src/client/features/settings/hooks/useCodexAccountPolling.js';
-import type { AccountSnapshot } from '../src/shared/remote.js';
+import { usageRefreshInterval } from '../src/client/features/settings/hooks/useCodexAccountPolling.ts';
+import type { AccountSnapshot } from '../src/shared/remote.ts';
 
 const account = (usageLimits: AccountSnapshot['usageLimits']): AccountSnapshot => ({
     accountLabel: 'primary',

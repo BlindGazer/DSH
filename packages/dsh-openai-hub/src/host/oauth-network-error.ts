@@ -1,5 +1,5 @@
-import { OAuthFailureMessages } from '../shared/constants/oauth-errors.js';
-import { OAuthExceptionNameSchema, type OpenAIHubLogEvent, OpenAIHubNetworkErrorSchema } from '../shared/logging.js';
+import { OAuthFailureMessages } from '../shared/constants/oauth-errors.ts';
+import { OAuthExceptionNameSchema, type OpenAIHubLogEvent, OpenAIHubNetworkErrorSchema } from '../shared/logging.ts';
 
 export interface OAuthFailureDiagnostic {
     errorCode: keyof typeof OAuthFailureMessages;

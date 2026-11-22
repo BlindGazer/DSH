@@ -1,46 +1,30 @@
-import { type CSSProperties, createElement, type ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { type CSSProperties, createElement, type MouseEvent, type ReactNode, useEffect, useId, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useEffectiveTheme } from '../../hooks/useEffectiveTheme.js';
-import type { DshThemeId } from '../../models/DshContext.js';
-import { cx } from '../../utils/classNames.js';
+import { cx } from '../../utils/classNames.ts';
 
 export interface PopoverProps {
     readonly children: ReactNode;
     readonly content: ReactNode;
-    readonly triggerLabel: string;
-    readonly theme?: DshThemeId;
-    readonly contentLabel?: string;
     readonly triggerClassName?: string;
     readonly contentClassName?: string;
     readonly triggerElement?: 'span' | 'div';
 }
 
-export function Popover({
-    children,
-    content,
-    triggerLabel,
-    theme,
-    contentLabel = triggerLabel,
-    triggerClassName,
-    contentClassName,
-    triggerElement
-}: PopoverProps) {
-    const effectiveTheme = useEffectiveTheme(theme ?? 'auto');
-    const panelTheme = theme ?? effectiveTheme;
+export function Popover({ children, content, triggerClassName, contentClassName, triggerElement }: PopoverProps) {
     const popoverId = useId();
     const anchorName = `--dsh-core-popover-${popoverId.replaceAll(':', '')}`;
-    const [open, setOpen] = useState(false);
+    const [portalTarget, setPortalTarget] = useState<Element>();
     const rootRef = useRef<HTMLSpanElement | null>(null);
     const panelRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
-        if (!open) return undefined;
+        if (!portalTarget) return undefined;
         const onPointerDown = (event: PointerEvent): void => {
             const target = event.target;
             if (!(target instanceof Node) || rootRef.current?.contains(target) || panelRef.current?.contains(target)) return;
-            setOpen(false);
+            setPortalTarget(undefined);
         };
         const onKeyDown = (event: KeyboardEvent): void => {
-            if (event.key === 'Escape') setOpen(false);
+            if (event.key === 'Escape') setPortalTarget(undefined);
         };
         document.addEventListener('pointerdown', onPointerDown, true);
         document.addEventListener('keydown', onKeyDown);
@@ -48,32 +32,21 @@ export function Popover({
             document.removeEventListener('pointerdown', onPointerDown, true);
             document.removeEventListener('keydown', onKeyDown);
         };
-    }, [open]);
+    }, [portalTarget]);
     const panelStyle = { positionAnchor: anchorName } as CSSProperties & {
         positionAnchor: string;
     };
-    const panel =
-        open && typeof document !== 'undefined'
-            ? createPortal(
-                  <div
-                      ref={panelRef}
-                      id={popoverId}
-                      className={cx('dsh-core-root', 'dsh-popover-content', contentClassName)}
-                      data-theme={panelTheme}
-                      style={panelStyle}
-                      role="dialog"
-                      aria-label={contentLabel}>
-                      {content}
-                  </div>,
-                  document.body
-              )
-            : undefined;
+    const panel = portalTarget
+        ? createPortal(
+              <div ref={panelRef} id={popoverId} role="dialog" className={cx('dsh-popover-content', contentClassName)} style={panelStyle}>
+                  {content}
+              </div>,
+              portalTarget
+          )
+        : undefined;
     const triggerProps = {
-        'aria-label': triggerLabel,
-        'aria-describedby': open ? popoverId : undefined,
-        'aria-haspopup': 'dialog' as const,
-        'aria-expanded': open,
-        onClick: () => setOpen(value => !value)
+        onClick: (event: MouseEvent<HTMLElement>) =>
+            setPortalTarget(portalTarget ? undefined : (event.currentTarget.closest('[data-theme]:not(html)') ?? document.body))
     };
     const trigger =
         triggerElement === undefined

@@ -18,7 +18,7 @@ Each package in `packages/*` follows a strict unidirectional dependency flow (`s
 
 ## 2. Strict TypeScript (Zero Suppression)
 
-- `any`, `unknown`, `null` (use `undefined` instead), non-null assertions (`!`), `as any`, and `@ts-ignore` / `@ts-expect-error` are forbidden in application and test code.
+- In application and test domain code, do not use `any`, `unknown`, non-null assertions (`!`), `as any`, or suppression directives. Use concrete interfaces and guards. `null` is allowed where required by React, DOM, Vitest, or external API contracts; model it explicitly and validate at the boundary.
 - Use `interface` for object shapes and component props; use `type` only for unions, primitives, or function signatures.
 - Do not prefix interfaces with `I` or suffix with `Interface`.
 - One logical model or component per file. Do not export internal helpers or types until needed by another module.

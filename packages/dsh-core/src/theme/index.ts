@@ -7,5 +7,5 @@ export {
     listDshThemes,
     registerDshTheme,
     subscribeDshThemeChanges
-} from './palettes.js';
-export { buildCoreThemeStyles, coreStyleScopeClass, coreThemeStyles, ensureCoreStyles } from './styles.js';
+} from './palettes.ts';
+export { buildCoreThemeStyles, coreStyleScopeClass, coreThemeStyles, ensureCoreStyles } from './styles.ts';

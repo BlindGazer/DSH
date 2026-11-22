@@ -324,6 +324,18 @@ function registerAddirRoutes(ctx, service, config = resolveConfig()) {
 */
 var WORKSPACE_DIRECTORIES_CONTEXT_KIND = "workspace-directories";
 /**
+* Возвращает стабильный отпечаток каталогов без служебного времени добавления.
+* Порядок записей не влияет на результат, чтобы перестановка не считалась изменением.
+*/
+function getWorkspaceDirectoriesFingerprint(directories) {
+	return JSON.stringify(directories.map((directory) => ({
+		path: directory.path,
+		alias: directory.alias,
+		description: directory.description ?? "",
+		readOnly: directory.readOnly
+	})).toSorted((left, right) => left.path.localeCompare(right.path)));
+}
+/**
 * Format the active workspace directories into a clear Markdown guide for the model.
 */
 function formatWorkspaceDirectoriesPrompt(directories) {
@@ -940,6 +952,7 @@ var name = "dsh-workspace-manager";
 var AddirProvider = class extends Service {
 	static Config = Config;
 	impl;
+	contextState = /* @__PURE__ */ new Map();
 	constructor(ctx, config = {}) {
 		super(ctx, "dsh-workspace-manager");
 		const resolved = resolveConfig(config);
@@ -949,19 +962,30 @@ var AddirProvider = class extends Service {
 			toolsCtx.effect(() => toolsCtx.tools.register(createAddTool(this, "addir_add")));
 			toolsCtx.effect(() => toolsCtx.tools.register(createRemoveTool(this, "addir_remove")));
 		});
-		if (resolved.enableContextInjection) ctx.on("agent/pre-step", async ({ agent }, next) => {
+		if (resolved.enableContextInjection) ctx.on("agent/pre-step", async ({ agent, turn }, next) => {
 			const decision = await next();
 			if (decision.kind === "reject") return decision;
 			const sessionId = agent.session.id;
 			const cwd = agent.session.header.cwd;
 			if (cwd !== void 0) this.setPrimary(cwd, sessionId);
-			const contextMsg = createWorkspaceDirectoriesMessage(this.list(sessionId));
+			const dirs = this.list(sessionId);
+			const contextMsg = createWorkspaceDirectoriesMessage(dirs);
 			if (!contextMsg) return decision;
+			const fingerprint = getWorkspaceDirectoriesFingerprint(dirs);
+			const previous = this.contextState.get(sessionId);
+			if (!(previous === void 0 || previous.turn !== turn || previous.fingerprint !== fingerprint)) return decision;
+			this.contextState.set(sessionId, {
+				turn,
+				fingerprint
+			});
 			const filteredMessages = decision.messages.filter((m) => !isWorkspaceDirectoriesMessage(m));
 			return {
 				...decision,
 				messages: [contextMsg, ...filteredMessages]
 			};
+		});
+		ctx.on("agent/disposed", ({ agent }) => {
+			this.contextState.delete(agent.session.id);
 		});
 		if (resolved.enforceReadOnly) ctx.on("tools/execute", async (execution, next) => {
 			const args = execution.arguments;

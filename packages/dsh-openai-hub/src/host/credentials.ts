@@ -1,9 +1,9 @@
 import type { Context } from '@deepseek-ai/cordis';
 import { credentialRef } from '@deepseek-ai/dsh-credentials';
 import { z } from 'zod';
-import type { AccountConfig } from '../shared/accounts.js';
-import { credentialRefForAccount } from '../shared/constants/runtime.js';
-import { createCodexProvider } from './provider.js';
+import type { AccountConfig } from '../shared/accounts.ts';
+import { credentialRefForAccount } from '../shared/constants/runtime.ts';
+import { createCodexProvider } from './provider.ts';
 
 export const OAuthCredentialSchema = z.object({
     type: z.literal('oauth'),

@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs';
 import { preprocessCSS, resolveConfig } from 'vite';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { darkThemeTokens, ensureCoreStyles, registerDshTheme } from '../src/index.js';
+import { darkThemeTokens, ensureCoreStyles, registerDshTheme } from '../src/index.ts';
 
 interface FakeStyleElement {
     id: string;
@@ -32,6 +32,13 @@ describe('@kalex/dsh-core injected theme styles', () => {
         expect(styles).toContain('accent-color: var(--dsw-alias-brand-primary)');
         expect(styles).toContain('position-try-fallbacks');
         expect(styles).not.toContain('.dsh-tooltip-content::after');
+    });
+
+    it('styles switch state through data-checked', () => {
+        const styles = readFileSync(new URL('../src/theme/coreStyles.module.scss', import.meta.url), 'utf8');
+        expect(styles).toContain('.dsh-switch[data-checked="true"]');
+        expect(styles).toContain('.dsh-switch[data-checked="true"] span');
+        expect(styles).toContain('.ar-settings-switch[data-checked="true"]');
     });
 
     it('styles collection add actions with native DSH tokens and interaction states', () => {

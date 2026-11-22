@@ -1,9 +1,9 @@
 import { useEffect, useState, useSyncExternalStore } from 'react';
-import { ProviderRoute } from '../../../../shared/constants/runtime.js';
-import type { ModelDirectories, ModelSelectionSource, ModelSelectionState } from '../modelSelectionSource.js';
-import { selectedModels } from '../modelSelectionSource.js';
-import { type OpenAICodexController, useCodexState } from '../openAICodexRuntime.js';
-import { useCodexAccountPolling } from './useCodexAccountPolling.js';
+import { ProviderRoute } from '../../../../shared/constants/runtime.ts';
+import type { ModelDirectories, ModelSelectionSource, ModelSelectionState } from '../modelSelectionSource.ts';
+import { selectedModels } from '../modelSelectionSource.ts';
+import { type OpenAICodexController, useCodexState } from '../openAICodexRuntime.ts';
+import { useCodexAccountPolling } from './useCodexAccountPolling.ts';
 
 const empty: ModelSelectionState = {};
 const noSelection: ModelSelectionSource['store'] = { getSnapshot: () => empty, subscribe: () => () => undefined };
@@ -40,13 +40,15 @@ export function useCodexQuotaDock(controller: OpenAICodexController, directories
         return selectedModels.retain({ provider, model });
     }, [accountLabel, model, provider]);
     const updatedAt = account?.usageUpdatedAt ?? 0;
+    const autoRefresh = account?.autoRefreshLimits;
     useEffect(() => {
+        if (!autoRefresh || !updatedAt) return undefined;
         const timer = setTimeout(() => setNow(Date.now()), Math.max(0, updatedAt + 600000 - Date.now()));
         return () => clearTimeout(timer);
-    }, [updatedAt]);
+    }, [autoRefresh, updatedAt]);
     useCodexAccountPolling(account, controller);
     return {
         account,
-        visible: Boolean(account && account.usageStatus === 'ready' && account.usageUpdatedAt > 0 && now - account.usageUpdatedAt < 600000)
+        visible: updatedAt > 0 && (!autoRefresh || now - updatedAt < 600000)
     };
 }

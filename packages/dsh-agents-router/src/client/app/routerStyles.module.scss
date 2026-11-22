@@ -163,6 +163,15 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+    .ar-header-title > .ar-header-project {
+        display: flex;
+    }
+    .ar-header-project > span {
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
     .ar-actions {
         flex-wrap: wrap;
     }
@@ -362,9 +371,11 @@
         padding-right: 36px !important;
         padding-left: 34px !important;
     }
-    .ar-rule-search-clear {
+    .ar-rule-search-tip {
         position: absolute;
         right: 7px;
+    }
+    .ar-rule-search-clear {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -407,14 +418,15 @@
     }
     .ar-stack {
         height: 12px;
-        display: flex;
+        display: grid;
         overflow: hidden;
         border: 1px solid var(--ar-border);
         border-radius: 5px;
         background: var(--ar-elevated);
         margin: 12px 0;
     }
-    .ar-stack span {
+    .ar-stack > span > span {
+        width: 100%;
         height: 100%;
     }
     .ar-blue {
@@ -561,8 +573,7 @@
         flex: 1 1 auto;
         min-width: 0;
     }
-    .ar-rule-path-title {
-        display: flex;
+    .ar-rule-heading > .ar-rule-path-title {
         flex: 1 1 auto;
         min-width: 0;
         max-width: 65%;
@@ -572,6 +583,10 @@
             13px ui-monospace,
             Consolas,
             monospace;
+    }
+    .ar-rule-path-title > span {
+        display: flex;
+        min-width: 0;
     }
     .ar-rule-directory {
         min-width: 0;
@@ -584,12 +599,15 @@
         color: var(--ar-text);
         font-weight: 600;
     }
-    .ar-rule-description-preview {
+    .ar-rule-heading > .ar-rule-description-preview {
         flex: 0 1 auto;
         min-width: 0;
-        overflow: hidden;
         color: var(--ar-muted);
         font-size: 12px;
+    }
+    .ar-rule-description-preview > span {
+        min-width: 0;
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
@@ -639,9 +657,15 @@
     .ar-rule-path-label {
         flex: 0 0 auto;
     }
-    .ar-rule-path a {
+    .ar-rule-path > .ar-rule-path-link {
         flex: 1 1 auto;
         min-width: 0;
+    }
+    .ar-rule-path-link > span {
+        min-width: 0;
+    }
+    .ar-rule-path a {
+        display: block;
         overflow: hidden;
         color: inherit;
         text-overflow: ellipsis;
@@ -751,15 +775,6 @@
         border: 1px solid var(--ar-border);
         border-radius: 8px;
         padding: 2px;
-    }
-    .ar-sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        clip-path: inset(50%);
     }
     .ar-segments button {
         height: 26px;

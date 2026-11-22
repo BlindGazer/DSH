@@ -1,10 +1,10 @@
-import { Button, Spinner } from '@kalex/dsh-core';
-import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.js';
-import { TestId } from '../../../../shared/constants/testId.js';
-import type { UseWorkspaceSnapshot } from '../../../models/WorkspaceManagerClientContext.js';
-import { useGlobalConfig } from '../hooks/useGlobalConfig.js';
-import { SettingRow } from './SettingRow.js';
-import { WorkspaceEditorList } from './WorkspaceEditorList.js';
+import { Button, Spinner, useEffectiveTheme } from '@kalex/dsh-core';
+import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import { TestId } from '../../../../shared/constants/testId.ts';
+import type { UseWorkspaceSnapshot } from '../../../models/WorkspaceManagerClientContext.ts';
+import { useGlobalConfig } from '../hooks/useGlobalConfig.ts';
+import { SettingRow } from './SettingRow.tsx';
+import { WorkspaceEditorList } from './WorkspaceEditorList.tsx';
 
 export interface SettingsSectionProps {
     readonly t: Translate;
@@ -13,14 +13,15 @@ export interface SettingsSectionProps {
 }
 
 export function AddirSettingsSection({ t, useWorkspaces, openEdit }: SettingsSectionProps) {
+    const theme = useEffectiveTheme();
     const { config, busy, error, saved, update, save } = useGlobalConfig();
     return (
-        <section className="addir-settings" data-testid={TestId.WorkspaceManager.Settings}>
+        <section className="dsh-core-root addir-settings" data-theme={theme} data-testid={TestId.WorkspaceManager.Settings}>
             <h2>{t('globalTitle')}</h2>
             <p>{t('globalNote')}</p>
             {config === undefined ? (
                 error === undefined ? (
-                    <Spinner label={t('loading')} />
+                    <Spinner />
                 ) : undefined
             ) : (
                 <>
@@ -55,19 +56,15 @@ export function AddirSettingsSection({ t, useWorkspaces, openEdit }: SettingsSec
                             onClick={() => {
                                 void save();
                             }}>
-                            {busy ? <Spinner label={t('loading')} markLoadingRoot={false} /> : undefined}
+                            {busy ? <Spinner markLoadingRoot={false} /> : undefined}
                             {t('save')}
                         </Button>
                     </div>
                 </>
             )}
             <WorkspaceEditorList useWorkspaces={useWorkspaces} openEdit={openEdit} t={t} />
-            {error !== undefined ? (
-                <div className="addir-error" role="alert">
-                    {error}
-                </div>
-            ) : undefined}
-            {saved ? <p role="status">{t('saved')}</p> : undefined}
+            {error !== undefined ? <div className="addir-error">{error}</div> : undefined}
+            {saved ? <p>{t('saved')}</p> : undefined}
         </section>
     );
 }

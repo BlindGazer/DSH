@@ -1,5 +1,5 @@
-import type { GlobalSettings } from '../../../shared/models/RouterModels.js';
-import { request } from '../../utils/api.js';
+import type { GlobalSettings } from '../../../shared/models/RouterModels.ts';
+import { request } from '../../utils/api.ts';
 
 interface GlobalSettingsResponse {
     settings: GlobalSettings;

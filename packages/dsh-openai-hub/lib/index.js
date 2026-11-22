@@ -2,6 +2,8 @@ import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { openaiCodexProvider } from "@earendil-works/pi-ai/providers/openai-codex";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { channel } from "node:diagnostics_channel";
+import { lstatSync, readFileSync, realpathSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { createRequire } from "node:module";
 import "node:buffer";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
@@ -10,23 +12,43 @@ import { googleGenerativeAIApi } from "@earendil-works/pi-ai/api/google-generati
 import { openAICompletionsApi } from "@earendil-works/pi-ai/api/openai-completions.lazy";
 import { openAIResponsesApi } from "@earendil-works/pi-ai/api/openai-responses.lazy";
 import { isContextOverflow } from "@earendil-works/pi-ai/utils/overflow";
-import os from "node:os";
-import { lstat, mkdir, readFile, readdir, realpath, rename, unlink, writeFile } from "node:fs/promises";
-import path from "node:path";
-// ../dsh-logger/lib/host.js
-function createHostLogger(options = {}) {
-	const write = options.write ?? ((level, message, context) => {
-		const payload = context === void 0 ? message : `${message} ${JSON.stringify(context)}`;
-		if (level === "error") console.error(payload);
-		else if (level === "warn") console.warn(payload);
-		else console.log(payload);
-	});
+import "node:os";
+import "node:fs/promises";
+// ../dsh-logger-core/src/types.ts
+var NOOP_LOGGER = Object.freeze({ record: () => void 0 });
+// ../dsh-logger-core/src/factory.ts
+function createFacade(logger, sink) {
+	const write = (level, message, context) => {
+		sink?.(level, message, context);
+		logger.record(context === void 0 ? {
+			event: message,
+			level
+		} : {
+			event: context.event ?? message,
+			level,
+			data: context
+		});
+	};
 	return {
 		debug: (message, context) => write("debug", message, context),
 		info: (message, context) => write("info", message, context),
 		warn: (message, context) => write("warn", message, context),
 		error: (message, context) => write("error", message, context)
 	};
+}
+/** Ожидаем реальный сервис, а имя пакета передаём явно: имя fiber не является идентификатором пакета. */
+function createOptionalLogger(context, packageName) {
+	let target = NOOP_LOGGER;
+	context.inject?.(["dshLoggerService"], (scope) => {
+		target = scope.dshLoggerService?.getLogger({ packageName }, "host") ?? NOOP_LOGGER;
+		scope.effect(() => () => {
+			target = NOOP_LOGGER;
+		}, "optional dsh-logger binding");
+	});
+	return { record: (record) => target.record(record) };
+}
+function createHostLogger(logger) {
+	return createFacade(logger ?? NOOP_LOGGER);
 }
 // ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/util.js
 function getEnumValues(entries) {
@@ -563,7 +585,7 @@ function constantCatch(value) {
 	return fn;
 }
 // ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/core.js
-var _a$1;
+var _a$2;
 var _zodDesc = {
 	value: void 0,
 	enumerable: false
@@ -662,7 +684,7 @@ var $ZodEncodeError = class extends Error {
 		this.name = "ZodEncodeError";
 	}
 };
-(_a$1 = globalThis).__zod_globalConfig ?? (_a$1.__zod_globalConfig = {});
+(_a$2 = globalThis).__zod_globalConfig ?? (_a$2.__zod_globalConfig = {});
 var globalConfig = globalThis.__zod_globalConfig;
 function config(newConfig) {
 	if (newConfig) Object.assign(globalConfig, newConfig);
@@ -3041,7 +3063,7 @@ function en_default() {
 	return { localeError: error() };
 }
 // ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/registries.js
-var _a;
+var _a$1;
 var $ZodRegistry = class {
 	constructor() {
 		this._map = /* @__PURE__ */ new WeakMap();
@@ -3084,7 +3106,7 @@ var $ZodRegistry = class {
 function registry() {
 	return new $ZodRegistry();
 }
-(_a = globalThis).__zod_globalRegistry ?? (_a.__zod_globalRegistry = registry());
+(_a$1 = globalThis).__zod_globalRegistry ?? (_a$1.__zod_globalRegistry = registry());
 var globalRegistry = globalThis.__zod_globalRegistry;
 // ../../node_modules/.pnpm/zod@4.6.7/node_modules/zod/v4/core/api.js
 function snapshotChecks(def) {
@@ -5064,6 +5086,14 @@ function object(shape, params) {
 		...normalizeParams(params)
 	});
 }
+function strictObject(shape, params) {
+	return new ZodObject({
+		type: "object",
+		shape,
+		catchall: never(),
+		...normalizeParams(params)
+	});
+}
 var ZodUnion = /*@__PURE__*/ $constructor("ZodUnion", (inst, def) => {
 	$ZodUnion.init(inst, def);
 	ZodType.init(inst, def);
@@ -5336,7 +5366,7 @@ function _instanceof(cls, params = {}) {
 function number(params) {
 	return /* @__PURE__ */ _coercedNumber(ZodNumber, params);
 }
-// node_modules/.cache/host-build/shared/accounts.js
+// src/shared/accounts.ts
 var AccountLabelSchema = string().regex(/^[a-z][a-z0-9-]{0,31}$/);
 var AuthMethodSchema = _enum(["device-code", "browser-oauth"]);
 var ModelChoiceSchema = object({
@@ -5394,7 +5424,7 @@ function splitModelId(id) {
 		upstreamModelId: id.slice(slash + 1)
 	};
 }
-// node_modules/.cache/host-build/shared/constants/runtime.js
+// src/shared/constants/runtime.ts
 var PackageId = "@kalex/dsh-openai-hub";
 var ServiceKey = "openai-hub";
 var ProviderRoute = "openai-hub";
@@ -5407,7 +5437,168 @@ function credentialRefForAccount(authMethod, accountId) {
 	return `${CredentialRefPrefix}_${authMethod.replace("-", "_")}_${hex}`;
 }
 var ResetStorageKey = "@kalex/dsh-openai-hub.pending-reset";
-// node_modules/.cache/host-build/shared/constants/oauth-errors.js
+// src/shared/remote.ts
+var UiComponentIdSchema = string().min(1).max(200);
+var UiRenderErrorSchema = object({
+	name: string().max(200),
+	message: string().max(2e3),
+	stack: string().max(1e4),
+	componentStack: string().max(1e4)
+}).strict();
+var ResetRequestSchema = object({
+	accountLabel: AccountLabelSchema,
+	creditId: string().regex(/^[A-Za-z0-9_-]{1,200}$/),
+	idempotencyKey: string().uuid(),
+	confirmed: literal(true)
+}).strict();
+var UsageLimitSchema = object({
+	name: string(),
+	usedPercent: number$1().finite(),
+	windowSeconds: number$1().finite(),
+	resetAt: number$1().finite()
+}).strict();
+var AccountSnapshotSchema = object({
+	accountLabel: AccountLabelSchema,
+	authMethod: AuthMethodSchema,
+	autoRefreshLimits: boolean(),
+	models: array(ModelChoiceSchema),
+	catalogStatus: _enum([
+		"fallback",
+		"ready",
+		"error"
+	]),
+	catalogError: string(),
+	loggedIn: boolean(),
+	expiresAt: number$1().finite(),
+	usageStatus: _enum([
+		"idle",
+		"loading",
+		"ready",
+		"error"
+	]),
+	usageLimited: boolean(),
+	usageLimits: array(UsageLimitSchema),
+	usageCredits: string(),
+	usageCreditsUnlimited: boolean(),
+	usageResetCredits: number$1().optional(),
+	resetCards: array(object({
+		id: string(),
+		expiresAt: number$1().optional()
+	})),
+	resetCardsStatus: _enum([
+		"idle",
+		"loading",
+		"ready",
+		"error"
+	]),
+	resetResult: _enum([
+		"reset",
+		"already_redeemed",
+		"no_credit",
+		"nothing_to_reset",
+		"unknown",
+		"unavailable",
+		"pending",
+		"account_changed"
+	]).optional(),
+	usageUpdatedAt: number$1().finite(),
+	usageError: string()
+}).strict();
+var SnapshotSchema = object({
+	accounts: array(AccountSnapshotSchema),
+	status: _enum([
+		"idle",
+		"starting",
+		"waiting",
+		"done",
+		"error"
+	]),
+	deviceCode: string(),
+	verificationUri: string(),
+	callbackUrlRequested: boolean().optional(),
+	retryAvailable: boolean().optional(),
+	error: string()
+}).strict();
+var LoginRequestSchema = object({
+	accountLabel: AccountLabelSchema,
+	authMethod: AuthMethodSchema,
+	reauthenticate: boolean().optional()
+}).strict();
+var SubmitCallbackUrlRequestSchema = object({ url: string().min(1).max(4096) }).strict();
+var AccountRequestSchema = object({ accountLabel: AccountLabelSchema }).strict();
+var UpdateAccountRequestSchema = object({
+	accountLabel: AccountLabelSchema,
+	newLabel: AccountLabelSchema,
+	autoRefreshLimits: boolean()
+}).strict();
+var SaveModelsRequestSchema = object({
+	accountLabel: AccountLabelSchema,
+	models: ModelSettingsSchema
+}).strict();
+var codec = (symbol, schema) => ({
+	mode: "strict",
+	typeSymbol: `${PackageId}/remote#${symbol}`,
+	create: () => schema
+});
+var inputs = {
+	snapshot: void 0,
+	startLogin: codec("LoginRequest", LoginRequestSchema),
+	cancelLogin: void 0,
+	retryLogin: void 0,
+	submitCallbackUrl: codec("SubmitCallbackUrlRequest", SubmitCallbackUrlRequestSchema),
+	updateAccount: codec("UpdateAccountRequest", UpdateAccountRequestSchema),
+	deleteAccount: codec("AccountRequest", AccountRequestSchema),
+	refreshCatalog: codec("AccountRequest", AccountRequestSchema),
+	refreshUsage: codec("AccountRequest", AccountRequestSchema),
+	saveModels: codec("SaveModelsRequest", SaveModelsRequestSchema),
+	consumeReset: codec("ResetRequest", ResetRequestSchema),
+	reportUiError: codec("UiRenderError", UiRenderErrorSchema),
+	reportUiReady: codec("UiComponentId", UiComponentIdSchema)
+};
+var descriptors = Object.freeze([
+	"snapshot",
+	"startLogin",
+	"cancelLogin",
+	"retryLogin",
+	"submitCallbackUrl",
+	"updateAccount",
+	"deleteAccount",
+	"refreshCatalog",
+	"refreshUsage",
+	"saveModels",
+	"consumeReset",
+	"reportUiError",
+	"reportUiReady"
+].map((method) => ({
+	id: `${PackageId}#OpenAICodexRemote/${method}`,
+	service: ServiceKey,
+	namespace: RemoteNamespace,
+	method,
+	invocation: { kind: "direct" },
+	parameters: inputs[method] ? [{
+		name: method === "reportUiError" ? "error" : method === "reportUiReady" ? "componentId" : "input",
+		wire: "input",
+		source: "json",
+		codec: inputs[method]
+	}] : [],
+	result: method === "reportUiError" || method === "reportUiReady" ? codec("RemoteActionAccepted", literal(true)) : codec("OpenAICodexSnapshot", SnapshotSchema)
+})));
+var TYPERT_REMOTE = Object.freeze({
+	package: PackageId,
+	descriptors
+});
+var TYPERT = Object.freeze({
+	package: PackageId,
+	face: "host",
+	schemas: Object.freeze([]),
+	invocations: descriptors,
+	model: Object.freeze({
+		services: Object.freeze([]),
+		events: Object.freeze([]),
+		objects: Object.freeze([])
+	})
+});
+// src/shared/constants/oauth-errors.ts
 var OAuthFailureMessages = {
 	oauth_connect_timeout: "Establishing a connection for the OAuth request timed out; that connection returned no HTTP response.",
 	oauth_dns_failed: "DNS resolution failed for the OAuth connection to auth.openai.com.",
@@ -5423,7 +5614,7 @@ var OAuthFailureMessages = {
 	oauth_callback_invalid: "The callback does not match the current OAuth sign-in attempt.",
 	oauth_internal_failed: "OAuth sign-in failed outside the observed token exchange; no network cause was established."
 };
-// node_modules/.cache/host-build/shared/logging.js
+// src/shared/logging.ts
 var OAuthFailureCodeSchema = _enum([
 	"oauth_connect_timeout",
 	"oauth_dns_failed",
@@ -5465,7 +5656,7 @@ var OAuthExceptionNameSchema = _enum([
 	"RequestAbortedError",
 	"other"
 ]);
-var OpenAIHubLogSettingsSchema = object({ enabled: boolean().default(false) }).strict().prefault({});
+object({ enabled: boolean().default(false) }).strict().prefault({});
 var OpenAIHubLogEventSchema = _enum([
 	"plugin",
 	"settings",
@@ -5508,7 +5699,6 @@ var OpenAIHubLogOperationSchema = _enum([
 	"saveModels",
 	"consumeReset",
 	"providerRequest",
-	"loadLoggingSettings",
 	"setLoggingEnabled"
 ]);
 var OpenAIHubLogErrorCodeSchema = _enum([
@@ -5569,7 +5759,7 @@ var OpenAIHubNetworkErrorSchema = _enum([
 	"DEPTH_ZERO_SELF_SIGNED_CERT",
 	"other"
 ]);
-var OpenAIHubLogFieldsSchema = object({
+object({
 	event: OpenAIHubLogEventSchema,
 	phase: OpenAIHubLogPhaseSchema,
 	operation: OpenAIHubLogOperationSchema.optional(),
@@ -5637,184 +5827,11 @@ var OpenAIHubLogFieldsSchema = object({
 		"duplicate_state",
 		"inactive_prompt"
 	]).optional()
-}).strict();
-var OpenAIHubClientLogEventSchema = OpenAIHubLogFieldsSchema;
-var OpenAIHubLogRecordSchema = OpenAIHubLogFieldsSchema.extend({
+}).strict().extend({
 	timestamp: string().datetime(),
 	source: _enum(["client", "host"])
 }).strict();
-var OpenAIHubLoggingSettingsFileSchema = object({
-	version: literal(1),
-	settings: OpenAIHubLogSettingsSchema
-});
-// node_modules/.cache/host-build/shared/remote.js
-var UiComponentIdSchema = string().min(1).max(200);
-var UiRenderErrorSchema = object({
-	name: string().max(200),
-	message: string().max(2e3),
-	stack: string().max(1e4),
-	componentStack: string().max(1e4)
-}).strict();
-var ResetRequestSchema = object({
-	accountLabel: AccountLabelSchema,
-	creditId: string().regex(/^[A-Za-z0-9_-]{1,200}$/),
-	idempotencyKey: string().uuid(),
-	confirmed: literal(true)
-}).strict();
-var UsageLimitSchema = object({
-	name: string(),
-	usedPercent: number$1().finite(),
-	windowSeconds: number$1().finite(),
-	resetAt: number$1().finite()
-}).strict();
-var SnapshotSchema = object({
-	accounts: array(object({
-		accountLabel: AccountLabelSchema,
-		authMethod: AuthMethodSchema,
-		autoRefreshLimits: boolean(),
-		models: array(ModelChoiceSchema),
-		catalogStatus: _enum([
-			"fallback",
-			"ready",
-			"error"
-		]),
-		catalogError: string(),
-		loggedIn: boolean(),
-		expiresAt: number$1().finite(),
-		usageStatus: _enum([
-			"idle",
-			"loading",
-			"ready",
-			"error"
-		]),
-		usageLimited: boolean(),
-		usageLimits: array(UsageLimitSchema),
-		usageCredits: string(),
-		usageCreditsUnlimited: boolean(),
-		usageResetCredits: number$1().optional(),
-		resetCards: array(object({
-			id: string(),
-			expiresAt: number$1().optional()
-		})),
-		resetCardsStatus: _enum([
-			"idle",
-			"loading",
-			"ready",
-			"error"
-		]),
-		resetResult: _enum([
-			"reset",
-			"already_redeemed",
-			"no_credit",
-			"nothing_to_reset",
-			"unknown",
-			"unavailable",
-			"pending",
-			"account_changed"
-		]).optional(),
-		usageUpdatedAt: number$1().finite(),
-		usageError: string()
-	}).strict()),
-	status: _enum([
-		"idle",
-		"starting",
-		"waiting",
-		"done",
-		"error"
-	]),
-	deviceCode: string(),
-	verificationUri: string(),
-	callbackUrlRequested: boolean().optional(),
-	retryAvailable: boolean().optional(),
-	error: string()
-}).strict();
-var LoginRequestSchema = object({
-	accountLabel: AccountLabelSchema,
-	authMethod: AuthMethodSchema,
-	reauthenticate: boolean().optional()
-}).strict();
-var SubmitCallbackUrlRequestSchema = object({ url: string().min(1).max(4096) }).strict();
-var AccountRequestSchema = object({ accountLabel: AccountLabelSchema }).strict();
-var UpdateAccountRequestSchema = object({
-	accountLabel: AccountLabelSchema,
-	newLabel: AccountLabelSchema,
-	autoRefreshLimits: boolean()
-}).strict();
-var SaveModelsRequestSchema = object({
-	accountLabel: AccountLabelSchema,
-	models: ModelSettingsSchema
-}).strict();
-var SaveLoggingSettingsRequestSchema = OpenAIHubLogSettingsSchema;
-var codec = (symbol, schema) => ({
-	mode: "strict",
-	typeSymbol: `${PackageId}/remote#${symbol}`,
-	create: () => schema
-});
-var inputs = {
-	snapshot: void 0,
-	loadLoggingSettings: void 0,
-	saveLoggingSettings: codec("OpenAIHubLogSettings", SaveLoggingSettingsRequestSchema),
-	recordClientLog: codec("OpenAIHubClientLogEvent", OpenAIHubClientLogEventSchema),
-	startLogin: codec("LoginRequest", LoginRequestSchema),
-	cancelLogin: void 0,
-	retryLogin: void 0,
-	submitCallbackUrl: codec("SubmitCallbackUrlRequest", SubmitCallbackUrlRequestSchema),
-	updateAccount: codec("UpdateAccountRequest", UpdateAccountRequestSchema),
-	deleteAccount: codec("AccountRequest", AccountRequestSchema),
-	refreshCatalog: codec("AccountRequest", AccountRequestSchema),
-	refreshUsage: codec("AccountRequest", AccountRequestSchema),
-	saveModels: codec("SaveModelsRequest", SaveModelsRequestSchema),
-	consumeReset: codec("ResetRequest", ResetRequestSchema),
-	reportUiError: codec("UiRenderError", UiRenderErrorSchema),
-	reportUiReady: codec("UiComponentId", UiComponentIdSchema)
-};
-var descriptors = Object.freeze([
-	"snapshot",
-	"loadLoggingSettings",
-	"saveLoggingSettings",
-	"recordClientLog",
-	"startLogin",
-	"cancelLogin",
-	"retryLogin",
-	"submitCallbackUrl",
-	"updateAccount",
-	"deleteAccount",
-	"refreshCatalog",
-	"refreshUsage",
-	"saveModels",
-	"consumeReset",
-	"reportUiError",
-	"reportUiReady"
-].map((method) => ({
-	id: `${PackageId}#OpenAICodexRemote/${method}`,
-	service: ServiceKey,
-	namespace: RemoteNamespace,
-	method,
-	invocation: { kind: "direct" },
-	parameters: inputs[method] ? [{
-		name: method === "reportUiError" ? "error" : method === "reportUiReady" ? "componentId" : "input",
-		wire: "input",
-		source: "json",
-		codec: inputs[method]
-	}] : [],
-	result: method === "reportUiError" || method === "reportUiReady" || method === "recordClientLog" ? codec("RemoteActionAccepted", literal(true)) : method === "loadLoggingSettings" || method === "saveLoggingSettings" ? codec("OpenAIHubLogSettings", OpenAIHubLogSettingsSchema) : codec("OpenAICodexSnapshot", SnapshotSchema)
-})));
-var TYPERT_REMOTE = Object.freeze({
-	package: PackageId,
-	descriptors
-});
-var TYPERT = Object.freeze({
-	package: PackageId,
-	face: "host",
-	schemas: Object.freeze([]),
-	invocations: descriptors,
-	model: Object.freeze({
-		services: Object.freeze([]),
-		events: Object.freeze([]),
-		objects: Object.freeze([])
-	})
-});
-// node_modules/.cache/host-build/host/browser-login-error.js
+// src/host/browser-login-error.ts
 var BrowserLoginError = class extends Error {
 	diagnostic;
 	name = "BrowserLoginError";
@@ -7999,7 +8016,7 @@ var Service = class Service {
 		return false;
 	}
 };
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-brand@0.2.2-rc.3_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-brand/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-brand@0.2.2-rc.5_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-brand/lib/index.js
 /**
 * Duplicate-install-safe nominal primitive helpers.
 *
@@ -8021,7 +8038,7 @@ var Service = class Service {
 function brandString(value) {
 	return value;
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-credential_2a5d36d7e0cb54ff126d4cde9a53040c/node_modules/@deepseek-ai/dsh-credentials/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-credential_03c9757a328e953b94cafd2d1ae18b8d/node_modules/@deepseek-ai/dsh-credentials/lib/index.js
 /**
 * Service Definition for the credential-reference capability seam (`ctx.credentials`). Settings and composition files carry
 * *references* to secrets — environment-variable names — while providers own
@@ -8053,7 +8070,7 @@ function credentialRef(value) {
 function isCredentialRefName(value) {
 	return REF_PATTERN.test(value);
 }
-// node_modules/.cache/host-build/host/provider.js
+// src/host/provider.ts
 function createCodexProvider(models, settings) {
 	const provider = openaiCodexProvider();
 	const catalog = models ?? provider.getModels();
@@ -8099,7 +8116,7 @@ function createCodexProvider(models, settings) {
 		}
 	};
 }
-// node_modules/.cache/host-build/host/credentials.js
+// src/host/credentials.ts
 var OAuthCredentialSchema = object({
 	type: literal("oauth"),
 	access: string().min(1),
@@ -8184,7 +8201,7 @@ var AccountCredentials = class {
 		return this.serialize(() => this.ctx.credentials.unset(credentialRef(account.credentialKey)));
 	}
 };
-// node_modules/.cache/host-build/host/oauth-network-error.js
+// src/host/oauth-network-error.ts
 function oauthNetworkFailure(error, fallback = "oauth_network_failed") {
 	const pending = error ? [error] : [];
 	const visited = /* @__PURE__ */ new Set();
@@ -8242,7 +8259,7 @@ function oauthNetworkFailure(error, fallback = "oauth_network_failed") {
 		...networkTimeoutMs ? { networkTimeoutMs } : {}
 	};
 }
-// node_modules/.cache/host-build/host/browser-login.js
+// src/host/browser-login.ts
 var clientId = "app_EMoamEEZ73f0CkXaXp7hrann";
 var redirectUri = "http://localhost:1455/auth/callback";
 var tokenSchema = object({
@@ -8396,7 +8413,7 @@ async function loginBrowser(interaction, request = fetch, report = () => void 0,
 		throw fail("OpenAI Hub token response contains no valid ChatGPT account.", { loginStage: "account_claim" });
 	}
 }
-// node_modules/.cache/host-build/host/usage.js
+// src/host/usage.ts
 var CODEX_USAGE_URL = "https://chatgpt.com/backend-api/wham/usage";
 var REQUEST_TIMEOUT_MS = 1e4;
 var MAX_RESPONSE_BYTES = 1048576;
@@ -8521,7 +8538,7 @@ async function requestCodexUsage(credential, fetchImpl = globalThis.fetch, now =
 	reportResponse(response.status, fields.length ? "usage" : "invalid", fields, usage.limits.length);
 	return usage;
 }
-// node_modules/.cache/host-build/host/catalog.js
+// src/host/catalog.ts
 var CATALOG_URL = "https://chatgpt.com/backend-api/codex/models?client_version=0.116.0";
 var IdSchema = string().regex(/^[a-zA-Z0-9][a-zA-Z0-9._/-]{0,199}$/);
 var EntrySchema = object({
@@ -8610,7 +8627,7 @@ async function requestCatalog(credential, fetchImpl = globalThis.fetch, report) 
 	reportResponse(shape, shape === "models" ? ["models"] : shape === "data" ? ["data"] : [], parsed.data.models.length);
 	return models;
 }
-// node_modules/.cache/host-build/host/oauth-network-diagnostics.js
+// src/host/oauth-network-diagnostics.ts
 var activeReport = new AsyncLocalStorage();
 var endpoints = {
 	"/oauth/token": "oauth_token",
@@ -8706,7 +8723,7 @@ function withOAuthNetworkDiagnostics(action, report) {
 		}
 	});
 }
-// node_modules/.cache/host-build/host/reset-credits.js
+// src/host/reset-credits.ts
 var RESET_CREDITS_URL = "https://chatgpt.com/backend-api/wham/rate-limit-reset-credits";
 var RESET_CODES = [
 	"reset",
@@ -8817,10 +8834,92 @@ function createResetRedeemer() {
 		return currentEntry.promise;
 	};
 }
-// node_modules/.cache/host-build/host/accounts-runtime.js
+// src/host/usage-cache.ts
+var summary = AccountSnapshotSchema.pick({
+	usageLimited: true,
+	usageLimits: true,
+	usageCredits: true,
+	usageCreditsUnlimited: true,
+	usageResetCredits: true,
+	usageUpdatedAt: true
+}).extend({
+	usageLimits: array(strictObject({
+		name: string().regex(/^[\p{L}\p{N} ._()+-]{1,80}$/u),
+		usedPercent: number$1().min(0).max(100),
+		windowSeconds: number$1().nonnegative(),
+		resetAt: number$1()
+	})).max(18),
+	usageCredits: string().regex(/^(?:-?\d+(?:\.\d+)?(?:e[+-]?\d+)?)?$/iu),
+	usageResetCredits: number$1().int().nonnegative().optional(),
+	usageUpdatedAt: number$1().int().positive()
+}).strip();
+var record = strictObject({
+	version: literal(1),
+	summary
+});
+var UsageCache = class {
+	profilePath;
+	constructor(profilePath = process.env.DSH_PROFILE_DIR?.trim() || process.env.DSH_PROFILE_PATH?.trim()) {
+		this.profilePath = profilePath;
+	}
+	path(key) {
+		if (!this.profilePath) return void 0;
+		const digest = createHash("sha256").update(key).digest("hex");
+		return join(realpathSync(this.profilePath), `dsh-openai-hub-quota-${digest}.json`);
+	}
+	read(key) {
+		try {
+			const path = this.path(key);
+			if (!path) return void 0;
+			const stat = lstatSync(path);
+			if (!stat.isFile() || stat.size > 65536) return void 0;
+			const parsed = record.safeParse(JSON.parse(readFileSync(path, "utf8")));
+			return parsed.success ? parsed.data.summary : void 0;
+		} catch {
+			return;
+		}
+	}
+	write(key, view) {
+		const path = this.path(key);
+		if (!path) return;
+		const payload = record.parse({
+			version: 1,
+			summary: view
+		});
+		const temp = `${path}.${randomUUID()}.tmp`;
+		try {
+			writeFileSync(temp, JSON.stringify(payload), {
+				encoding: "utf8",
+				flag: "wx",
+				mode: 384
+			});
+			renameSync(temp, path);
+		} finally {
+			rmSync(temp, { force: true });
+		}
+	}
+	delete(key) {
+		const path = this.path(key);
+		if (path) rmSync(path, { force: true });
+	}
+};
+// src/host/accounts-runtime.ts
 var loginAttempts = /* @__PURE__ */ new WeakMap();
 var loginStatuses = /* @__PURE__ */ new WeakMap();
-function runtime(config) {
+function initialUsage(cache, key) {
+	const cached = cache.read(key);
+	return {
+		usageStatus: cached ? "ready" : "idle",
+		usageLimited: false,
+		usageLimits: [],
+		usageCredits: "",
+		usageCreditsUnlimited: false,
+		usageUpdatedAt: 0,
+		usageError: "",
+		...cached
+	};
+}
+function runtime(config, cache) {
 	const catalog = config.catalogLoaded ? catalogForIds([...localCatalog().map((model) => model.id), ...config.models.map((model) => model.id)]).map((model) => ({
 		...model,
 		...config.catalogMetadata.find((metadata) => metadata.id === model.id)
@@ -8843,21 +8942,16 @@ function runtime(config) {
 			catalogError: "",
 			loggedIn: false,
 			expiresAt: 0,
-			usageStatus: "idle",
-			usageLimited: false,
-			usageLimits: [],
-			usageCredits: "",
-			usageCreditsUnlimited: false,
+			...initialUsage(cache, config.credentialKey),
 			resetCards: [],
-			resetCardsStatus: "idle",
-			usageUpdatedAt: 0,
-			usageError: ""
+			resetCardsStatus: "idle"
 		}
 	};
 }
 var AccountsRuntime = class {
 	ctx;
 	logging;
+	usageCache;
 	credentials;
 	accounts;
 	disposed = false;
@@ -8867,9 +8961,10 @@ var AccountsRuntime = class {
 	login;
 	submitManualCode;
 	retryOAuthTokenExchange;
-	constructor(ctx, config, logging) {
+	constructor(ctx, config, logging, usageCache = new UsageCache()) {
 		this.ctx = ctx;
 		this.logging = logging;
+		this.usageCache = usageCache;
 		this.credentials = new AccountCredentials(ctx);
 		this.login = loginStatuses.get(ctx) ?? {
 			status: "idle",
@@ -8880,7 +8975,7 @@ var AccountsRuntime = class {
 			error: ""
 		};
 		loginStatuses.set(ctx, this.login);
-		this.accounts = config.accounts.map(runtime);
+		this.accounts = config.accounts.map((account) => runtime(account, this.usageCache));
 		ctx.effect(() => () => {
 			this.disposed = true;
 			this.loginGeneration++;
@@ -8898,7 +8993,7 @@ var AccountsRuntime = class {
 					error: ""
 				});
 			}
-			this.logging.recordHost({
+			this.logging({
 				event: "plugin",
 				phase: "stopped"
 			});
@@ -8924,9 +9019,19 @@ var AccountsRuntime = class {
 		if (!editor || !entry) throw new Error("OpenAI Hub configuration cannot be saved");
 		await editor.edit(entry, () => config);
 	}
-	diagnostic(message) {
-		console.error(`[${PackageId}] ${message}`);
-		this.ctx.logger.error(`[${PackageId}] ${message}`);
+	removeCachedUsage(key) {
+		try {
+			this.usageCache.delete(key);
+		} catch {
+			this.diagnostic("Unable to remove cached usage");
+		}
+	}
+	diagnostic(_message) {
+		this.logging({
+			event: "plugin",
+			phase: "failed",
+			errorCode: "request_failed"
+		});
 	}
 	waitForOAuthRetry(error, signal) {
 		return new Promise((resolve) => {
@@ -9012,7 +9117,7 @@ var AccountsRuntime = class {
 		const report = (event) => {
 			if (event.phase === "failed") observedFailure = event;
 			else if (event.phase === "started" && event.loginStage === "token_exchange") observedFailure = void 0;
-			this.logging.recordHost({
+			this.logging({
 				...event,
 				loginAttemptId,
 				accountLabel: request.accountLabel,
@@ -9045,7 +9150,7 @@ var AccountsRuntime = class {
 								deviceCode: info.userCode,
 								verificationUri: url.toString()
 							});
-							this.logging.recordHost({
+							this.logging({
 								event: "login",
 								phase: "device_code_received",
 								accountLabel: request.accountLabel,
@@ -9060,7 +9165,7 @@ var AccountsRuntime = class {
 								deviceCode: "",
 								verificationUri: url.toString()
 							});
-							this.logging.recordHost({
+							this.logging({
 								event: "login",
 								phase: "authorization_url_received",
 								accountLabel: request.accountLabel,
@@ -9076,7 +9181,7 @@ var AccountsRuntime = class {
 								status: "waiting",
 								callbackUrlRequested: true
 							});
-							this.logging.recordHost({
+							this.logging({
 								event: "login",
 								phase: "waiting",
 								authMethod: request.authMethod
@@ -9178,15 +9283,22 @@ var AccountsRuntime = class {
 						existingAccount.config = config;
 						existingAccount.view.loggedIn = true;
 						existingAccount.view.expiresAt = credential.expires;
-						existingAccount.view.usageStatus = "idle";
-						existingAccount.view.usageError = "";
-						if (previousConfig && previousConfig.credentialKey !== config.credentialKey) try {
-							await this.credentials.delete(previousConfig);
-						} catch {
-							this.diagnostic("Unable to remove previous account credential after sign-in");
+						if (previousConfig && previousConfig.credentialKey !== config.credentialKey) {
+							delete existingAccount.view.usageResetCredits;
+							delete existingAccount.view.resetResult;
+							Object.assign(existingAccount.view, initialUsage(this.usageCache, config.credentialKey), {
+								resetCards: [],
+								resetCardsStatus: "idle"
+							});
+							this.removeCachedUsage(previousConfig.credentialKey);
+							try {
+								await this.credentials.delete(previousConfig);
+							} catch {
+								this.diagnostic("Unable to remove previous account credential after sign-in");
+							}
 						}
 					} else {
-						const account = runtime(config);
+						const account = runtime(config, this.usageCache);
 						this.accounts = [...this.accounts, account];
 						account.view.loggedIn = true;
 						account.view.expiresAt = credential.expires;
@@ -9199,7 +9311,7 @@ var AccountsRuntime = class {
 						retryAvailable: false,
 						error: ""
 					});
-					await this.logging.recordHost({
+					await this.logging({
 						event: "login",
 						phase: "completed",
 						state: "done",
@@ -9222,7 +9334,7 @@ var AccountsRuntime = class {
 						retryAvailable: false,
 						error: error instanceof BrowserLoginError ? error.message : "OpenAI Hub sign-in failed"
 					});
-					await this.logging.recordHost({
+					await this.logging({
 						...failure,
 						event: "login",
 						phase: "failed",
@@ -9281,7 +9393,7 @@ var AccountsRuntime = class {
 	}
 	async submitCallbackUrl(input) {
 		const reject = async (callbackError) => {
-			await this.logging.recordHost({
+			await this.logging({
 				event: "login",
 				phase: "failed",
 				operation: "submitCallbackUrl",
@@ -9306,7 +9418,7 @@ var AccountsRuntime = class {
 		if (!url.searchParams.get("state")?.trim()) return reject("missing_state");
 		if (!this.login.callbackUrlRequested || !this.submitManualCode || this.disposed) return reject("inactive_prompt");
 		const attempt = loginAttempts.get(this.ctx);
-		if (attempt) this.logging.recordHost({
+		if (attempt) this.logging({
 			event: "login",
 			phase: "callback_received",
 			accountLabel: attempt.accountLabel,
@@ -9367,6 +9479,7 @@ var AccountsRuntime = class {
 				});
 				await this.persist(this.accounts.filter((other) => other !== account).map((other) => other.config));
 				this.accounts = this.accounts.filter((other) => other !== account);
+				this.removeCachedUsage(account.config.credentialKey);
 				Object.assign(this.login, {
 					status: "idle",
 					deviceCode: "",
@@ -9386,7 +9499,7 @@ var AccountsRuntime = class {
 		const { accountLabel } = AccountRequestSchema.parse(input);
 		const account = this.find(accountLabel);
 		if (!account.catalogFlight) {
-			this.logging.recordHost({
+			this.logging({
 				event: "catalog_refresh",
 				phase: "started",
 				accountLabel
@@ -9394,7 +9507,7 @@ var AccountsRuntime = class {
 			account.catalogFlight = (async () => {
 				try {
 					const catalog = mergeCatalog(await requestCatalog(await this.credentials.valid(account.config, () => this.current(account, accountLabel)), globalThis.fetch, (diagnostic) => {
-						this.logging.recordHost({
+						this.logging({
 							event: "catalog_refresh",
 							phase: "completed",
 							operation: "refreshCatalog",
@@ -9424,7 +9537,7 @@ var AccountsRuntime = class {
 						account.view.catalogStatus = "ready";
 						account.view.catalogError = "";
 					});
-					await this.logging.recordHost({
+					await this.logging({
 						event: "catalog_refresh",
 						phase: "completed",
 						accountLabel
@@ -9433,7 +9546,7 @@ var AccountsRuntime = class {
 					if (this.current(account, accountLabel)) {
 						account.view.catalogStatus = "error";
 						account.view.catalogError = "OpenAI Hub catalog refresh failed; retained previous models";
-						await this.logging.recordHost({
+						await this.logging({
 							event: "catalog_refresh",
 							phase: "failed",
 							errorCode: "catalog_failed",
@@ -9453,17 +9566,19 @@ var AccountsRuntime = class {
 		const { accountLabel } = AccountRequestSchema.parse(input);
 		const account = this.find(accountLabel);
 		if (!account.usageFlight) {
-			this.logging.recordHost({
+			this.logging({
 				event: "usage_refresh",
 				phase: "started",
 				accountLabel
 			});
 			account.usageFlight = (async () => {
+				const key = account.config.credentialKey;
+				const current = () => this.current(account, accountLabel) && account.config.credentialKey === key;
 				account.view.usageStatus = "loading";
 				try {
-					const credential = await this.credentials.valid(account.config, () => this.current(account, accountLabel));
+					const credential = await this.credentials.valid(account.config, current);
 					const [usage, cards] = await Promise.allSettled([requestCodexUsage(credential, globalThis.fetch, Date.now(), (diagnostic) => {
-						this.logging.recordHost({
+						this.logging({
 							event: "usage_refresh",
 							phase: "completed",
 							operation: "refreshUsage",
@@ -9472,7 +9587,7 @@ var AccountsRuntime = class {
 							responseJson: diagnostic.responseJson
 						});
 					}), requestResetCredits(credential)]);
-					if (!this.current(account, accountLabel)) return;
+					if (!current()) return;
 					if (cards.status === "fulfilled") {
 						account.view.resetCards = cards.value.cards;
 						account.view.usageResetCredits = cards.value.availableCount;
@@ -9482,25 +9597,32 @@ var AccountsRuntime = class {
 						account.view.resetCardsStatus = "error";
 					}
 					if (usage.status !== "fulfilled") throw new Error("Usage unavailable");
-					Object.assign(account.view, {
-						usageStatus: "ready",
-						usageLimited: usage.value.limited,
-						usageLimits: usage.value.limits,
-						usageCredits: usage.value.credits.hasCredits ? usage.value.credits.balance : "",
-						usageCreditsUnlimited: usage.value.credits.unlimited,
-						usageUpdatedAt: Date.now(),
-						usageError: ""
-					});
-					await this.logging.recordHost({
+					account.view.usageStatus = "ready";
+					account.view.usageError = "";
+					if (usage.value.limits.length || !account.view.usageLimits.length) {
+						Object.assign(account.view, {
+							usageLimited: usage.value.limited,
+							usageLimits: usage.value.limits,
+							usageCredits: usage.value.credits.hasCredits ? usage.value.credits.balance : "",
+							usageCreditsUnlimited: usage.value.credits.unlimited,
+							usageUpdatedAt: Date.now()
+						});
+						try {
+							this.usageCache.write(key, account.view);
+						} catch {
+							this.diagnostic("Unable to save cached usage");
+						}
+					}
+					await this.logging({
 						event: "usage_refresh",
 						phase: "completed",
 						accountLabel
 					});
 				} catch {
-					if (this.current(account, accountLabel)) {
+					if (current()) {
 						account.view.usageStatus = "error";
 						account.view.usageError = "OpenAI Hub usage refresh failed";
-						await this.logging.recordHost({
+						await this.logging({
 							event: "usage_refresh",
 							phase: "failed",
 							errorCode: "usage_failed",
@@ -9529,7 +9651,7 @@ var AccountsRuntime = class {
 		return this.snapshot();
 	}
 };
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-typert-pro_2f8178087ff5b29d6de54290762a244a/node_modules/@deepseek-ai/dsh-typert-protocol/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-typert-pro_f0f4d51e615a3ad62f190c32796e6f0b/node_modules/@deepseek-ai/dsh-typert-protocol/lib/index.js
 /** The one Remote failure class shared by owners, the Gateway, and consumers. */
 /**
 * One Remote call failure: a real Error carrying its stable code and typed
@@ -9710,7 +9832,7 @@ function sameInvocation(left, right) {
 function validateName(subject, value) {
 	if (!isTypertRemoteSegment(value)) throw new TypeError(`typert-protocol: ${subject} must contain only RPC endpoint segment characters`);
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-util-value_f181d1fcd8a8b46f1abb181be7cb1d74/node_modules/@deepseek-ai/dsh-util-values/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-util-value_60f412e8de01ff6d1abcfe366664d716/node_modules/@deepseek-ai/dsh-util-values/lib/index.js
 /**
 * Lazily scanned view of one JSON object's top-level fields, built from text
 * that may still be streaming or from an already parsed object. Nothing is
@@ -11018,7 +11140,7 @@ defineMethod("transform", [
 	"callback",
 	"preserve"
 ], ({ inner }, isInner) => inner.toString(isInner));
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-timeout@0._d38b80e6c6a655a1624de0bc0b77c3e2/node_modules/@deepseek-ai/dsh-timeout/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-timeout@0._033c7e525df4c9cad59bf8fbedf14a09/node_modules/@deepseek-ai/dsh-timeout/lib/index.js
 /**
 * Shared timeout arithmetic, signal fusion, and classification. The library
 * only notifies through abort signals; each capability still owns the mechanism
@@ -11122,7 +11244,7 @@ function timeoutOf(x, code) {
 	if (!(reason instanceof TimeoutReason)) return void 0;
 	return code === void 0 || reason.code === code ? reason : void 0;
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-error@0.2.2-rc.3_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-error/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-error@0.2.2-rc.5_@deepseek-ai+cordis@4.1.0/node_modules/@deepseek-ai/dsh-error/lib/index.js
 /**
 * Harness error base with a stable machine-routable code and chained cause.
 * Package errors extend it so tool results and replay can retain failure class.
@@ -11143,7 +11265,7 @@ var HarnessError = class extends Error {
 		this.name = new.target.name;
 	}
 };
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm@0.2.2-_efc9ea42ca028c4c882e8755f45a1f19/node_modules/@deepseek-ai/dsh-llm/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm@0.2.2-_5c1ba2f076b7e08c630368e420c4b5b4/node_modules/@deepseek-ai/dsh-llm/lib/index.js
 /**
 * Detach and deep-freeze a message whose identity already exists.
 * @param message - complete message, including its stable identity.
@@ -11170,6 +11292,7 @@ var LLM_FAILURE_CODES = {
 	ACCOUNT_TOKEN_INVALID: {},
 	AUTH: {},
 	CLIENT_UPGRADE_REQUIRED: {},
+	CONTENT_REFUSED: {},
 	CONTEXT_WINDOW_EXCEEDED: {},
 	DISCOVERY_FAILED: {},
 	DISCOVERY_UNSUPPORTED: {},
@@ -11876,7 +11999,7 @@ var __runInitializers$1 = function(thisArg, initializers, value) {
 	for (var i = 0; i < initializers.length; i++) value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
 	return useValue ? value : void 0;
 };
-var __esDecorate$1 = function(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
+var __esDecorate = function(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
 	function accept(f) {
 		if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
 		return f;
@@ -12058,7 +12181,7 @@ var LlmAdapter = class {
 			_listProviders_decorators = [Remote];
 			_listConfigurableProviders_decorators = [Remote];
 			_remoteDiscoverModels_decorators = [Remote("discoverModels")];
-			__esDecorate$1(this, null, _listProviders_decorators, {
+			__esDecorate(this, null, _listProviders_decorators, {
 				kind: "method",
 				name: "listProviders",
 				static: false,
@@ -12069,7 +12192,7 @@ var LlmAdapter = class {
 				},
 				metadata: _metadata
 			}, null, _instanceExtraInitializers);
-			__esDecorate$1(this, null, _listConfigurableProviders_decorators, {
+			__esDecorate(this, null, _listConfigurableProviders_decorators, {
 				kind: "method",
 				name: "listConfigurableProviders",
 				static: false,
@@ -12080,7 +12203,7 @@ var LlmAdapter = class {
 				},
 				metadata: _metadata
 			}, null, _instanceExtraInitializers);
-			__esDecorate$1(this, null, _remoteDiscoverModels_decorators, {
+			__esDecorate(this, null, _remoteDiscoverModels_decorators, {
 				kind: "method",
 				name: "remoteDiscoverModels",
 				static: false,
@@ -12719,7 +12842,7 @@ function detachDirectoryEntry(entry) {
 		} }
 	};
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-attachment_469454f213c906f2dade56b9bfabee20/node_modules/@deepseek-ai/dsh-attachment/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-attachment_6d197ae2af134fbc8202dba23043438d/node_modules/@deepseek-ai/dsh-attachment/lib/index.js
 /** Attachment failure class. @module @deepseek-ai/dsh-attachment/error */
 var IMAGE_ADMISSION_ERROR_CODES = [
 	"TOO_MANY_IMAGES",
@@ -12785,7 +12908,7 @@ function requestImageDimensions(width, height, maxPixels) {
 		height: projectedHeight
 	};
 }
-// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@_f81370efe922f2e98e0083b062a5842d/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js
+// ../../node_modules/.pnpm/@deepseek-ai+dsh-llm-pi-ai@_b07f59b4bcc6779bddc2b29757375318/node_modules/@deepseek-ai/dsh-llm-pi-ai/lib/index.js
 /**
 * Durable pi-ai replay metadata and assistant-history reconstruction.
 *
@@ -14281,7 +14404,7 @@ var PiAiAdapter = class extends LlmAdapter {
 		}
 	}
 };
-// node_modules/.cache/host-build/host/hub-adapter.js
+// src/host/hub-adapter.ts
 var HubAdapter = class extends LlmAdapter {
 	ctx;
 	runtime;
@@ -14397,7 +14520,7 @@ var HubAdapter = class extends LlmAdapter {
 	async *safeStream(stream, accountLabel) {
 		const startedAt = Date.now();
 		let failed = false;
-		await this.logging.recordHost({
+		await this.logging({
 			event: "provider_request",
 			phase: "started",
 			accountLabel
@@ -14406,7 +14529,7 @@ var HubAdapter = class extends LlmAdapter {
 			for await (const chunk of stream) if (chunk.type === "finish" && (chunk.reason.kind === "error" || chunk.reason.kind === "aborted")) {
 				failed = true;
 				const failure = chunk.reason.failure;
-				await this.logging.recordHost({
+				await this.logging({
 					event: "provider_request",
 					phase: "failed",
 					errorCode: "request_failed",
@@ -14427,22 +14550,26 @@ var HubAdapter = class extends LlmAdapter {
 					}
 				};
 			} else yield chunk;
-			if (!failed) await this.logging.recordHost({
+			if (!failed) await this.logging({
 				event: "provider_request",
 				phase: "completed",
 				durationMs: Date.now() - startedAt,
 				accountLabel
 			});
 		} catch {
-			await this.logging.recordHost({
+			await this.logging({
 				event: "provider_request",
 				phase: "failed",
 				errorCode: "request_failed",
 				durationMs: Date.now() - startedAt,
 				accountLabel
 			});
-			console.error("[openai-hub] Model request failed");
-			this.ctx.logger.error("[openai-hub] Model request failed");
+			this.logging({
+				event: "provider_request",
+				phase: "failed",
+				errorCode: "request_failed",
+				accountLabel
+			});
 			throw new LlmError("OpenAI Hub request failed", "PI_AI_ERROR");
 		}
 	}
@@ -14450,498 +14577,177 @@ var HubAdapter = class extends LlmAdapter {
 		yield* (await this.prepareCall(options.provider, options.model, options.signal)).stream(options);
 	}
 };
-// node_modules/.cache/host-build/host/logging.js
-var MAX_LOG_ENTRIES = 1e3;
-var MAX_LOG_BYTES = 1048576;
-var LOG_FILE = "openai-hub.jsonl";
-var loggingQueue = Promise.resolve();
-function inside(parent, candidate) {
-	const relative = path.relative(parent, candidate);
-	return relative === "" || !relative.startsWith(`..${path.sep}`) && relative !== ".." && !path.isAbsolute(relative);
+// src/host/logging.ts
+function createHubLogger(logger) {
+	const facade = createHostLogger(logger);
+	return (event) => recordHubEvent(facade, event);
 }
-function isMissing(error) {
-	return "code" in error && error.code === "ENOENT";
+function recordHubEvent(logger, event) {
+	const context = {};
+	for (const [key, value] of Object.entries(event)) if (value !== void 0) context[key] = value;
+	logger.info(event.event, context);
+	return Promise.resolve(true);
 }
-var OpenAIHubLogging = class {
-	onError;
-	home;
-	base;
-	logs;
-	constructor(onError, dshHome = process.env.DSH_HOME || path.join(os.homedir(), ".dsh")) {
-		this.onError = onError;
-		this.home = path.resolve(dshHome);
-		this.base = path.join(this.home, "openai-hub");
-		this.logs = path.join(this.base, "logs");
-	}
-	async loadSettings() {
-		const base = await this.baseDirectory(false);
-		if (!base) return OpenAIHubLogSettingsSchema.parse({});
-		const file = path.join(base, "settings.json");
-		try {
-			const info = await lstat(file);
-			if (!info.isFile() || info.nlink !== 1) throw new Error("OpenAI Hub settings path is not a private regular file");
-			return OpenAIHubLoggingSettingsFileSchema.parse(JSON.parse(await readFile(file, "utf8"))).settings;
-		} catch (error) {
-			if (error instanceof Error && isMissing(error)) return OpenAIHubLogSettingsSchema.parse({});
-			throw error;
-		}
-	}
-	async saveSettings(input) {
-		const settings = OpenAIHubLogSettingsSchema.parse(input);
-		return this.serial(async () => {
-			const directories = await this.directories(true);
-			if (!directories) throw new Error("OpenAI Hub settings directory is unavailable");
-			await this.writePrivateFile(path.join(directories.base, "settings.json"), JSON.stringify({
-				version: 1,
-				settings
-			}));
-			if (!settings.enabled) await this.deleteLogs(directories.logs);
-			return settings;
-		});
-	}
-	recordHost(event) {
-		return this.append("host", event);
-	}
-	recordClient(input) {
-		return this.append("client", OpenAIHubClientLogEventSchema.parse(input));
-	}
-	getLogPath() {
-		return path.join(this.logs, LOG_FILE);
-	}
-	async append(source, event) {
-		try {
-			return await this.serial(async () => {
-				if (!(await this.loadSettings()).enabled) return false;
-				const record = OpenAIHubLogRecordSchema.parse({
-					...event,
-					source,
-					timestamp: (/* @__PURE__ */ new Date()).toISOString()
-				});
-				const directories = await this.directories(true);
-				if (!directories) return false;
-				const file = path.join(directories.logs, LOG_FILE);
-				let current = "";
-				try {
-					const info = await lstat(file);
-					if (!info.isFile() || info.nlink !== 1) throw new Error("OpenAI Hub log path is not a private regular file");
-					current = await readFile(file, "utf8");
-				} catch (error) {
-					if (!(error instanceof Error && isMissing(error))) throw error;
-				}
-				const lines = current.split(/\r?\n/).filter(Boolean);
-				lines.push(JSON.stringify(record));
-				while (lines.length > MAX_LOG_ENTRIES || Buffer.byteLength(lines.join("\n"), "utf8") > MAX_LOG_BYTES) {
-					if (lines.length <= 1) break;
-					lines.shift();
-				}
-				await this.writePrivateFile(file, `${lines.join("\n")}\n`);
-				return true;
-			});
-		} catch {
-			this.onError("OpenAI Hub diagnostic log could not be written");
-			return false;
-		}
-	}
-	async baseDirectory(create) {
-		if (create) await mkdir(this.home, {
-			recursive: true,
-			mode: 448
-		});
-		let safeHome;
-		try {
-			safeHome = await realpath(this.home);
-		} catch (error) {
-			if (error instanceof Error && isMissing(error) && !create) return void 0;
-			throw error;
-		}
-		if (create) await mkdir(this.base, {
-			recursive: true,
-			mode: 448
-		});
-		let safeBase;
-		try {
-			safeBase = await realpath(this.base);
-		} catch (error) {
-			if (error instanceof Error && isMissing(error) && !create) return void 0;
-			throw error;
-		}
-		const baseInfo = await lstat(this.base);
-		if (!baseInfo.isDirectory() || baseInfo.isSymbolicLink() || !inside(safeHome, safeBase)) throw new Error("OpenAI Hub storage resolves outside DSH home");
-		return safeBase;
-	}
-	async directories(create) {
-		const safeBase = await this.baseDirectory(create);
-		if (!safeBase) return void 0;
-		if (create) await mkdir(this.logs, {
-			recursive: true,
-			mode: 448
-		});
-		let safeLogs;
-		try {
-			safeLogs = await realpath(this.logs);
-		} catch (error) {
-			if (error instanceof Error && isMissing(error) && !create) return void 0;
-			throw error;
-		}
-		const logsInfo = await lstat(this.logs);
-		if (!logsInfo.isDirectory() || logsInfo.isSymbolicLink() || !inside(safeBase, safeLogs)) throw new Error("OpenAI Hub log directory resolves outside DSH home");
-		return {
-			base: safeBase,
-			logs: safeLogs
-		};
-	}
-	async deleteLogs(directory) {
-		const names = await readdir(directory);
-		for (const name of names) {
-			if (name !== LOG_FILE && !name.startsWith(`${LOG_FILE}.`)) continue;
-			const file = path.join(directory, name);
-			const info = await lstat(file);
-			if (!info.isFile() || info.nlink !== 1) throw new Error("OpenAI Hub log path is not a private regular file");
-			await unlink(file);
-		}
-	}
-	async writePrivateFile(file, text) {
-		const temporary = `${file}.${randomUUID()}.tmp`;
-		try {
-			await writeFile(temporary, text, {
-				encoding: "utf8",
-				flag: "wx",
-				mode: 384
-			});
-			await rename(temporary, file);
-		} catch (error) {
-			try {
-				await unlink(temporary);
-			} catch (cleanupError) {
-				if (!(cleanupError instanceof Error && isMissing(cleanupError))) throw cleanupError;
-			}
-			throw error;
-		}
-	}
-	serial(action) {
-		const result = loggingQueue.then(action);
-		loggingQueue = result.then(() => void 0, () => void 0);
-		return result;
-	}
+// src/host/remote-service.ts
+var __create = Object.create;
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __knownSymbol = (name, symbol) => (symbol = Symbol[name]) ? symbol : /* @__PURE__ */ Symbol.for("Symbol." + name);
+var __typeError = (msg) => {
+	throw TypeError(msg);
 };
-// node_modules/.cache/host-build/host/remote-service.js
-var __runInitializers = function(thisArg, initializers, value) {
-	var useValue = arguments.length > 2;
-	for (var i = 0; i < initializers.length; i++) value = useValue ? initializers[i].call(thisArg, value) : initializers[i].call(thisArg);
-	return useValue ? value : void 0;
+var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, {
+	enumerable: true,
+	configurable: true,
+	writable: true,
+	value
+}) : obj[key] = value;
+var __name = (target, value) => __defProp(target, "name", {
+	value,
+	configurable: true
+});
+var __decoratorStart = (base) => [
+	,
+	,
+	,
+	__create(base?.[__knownSymbol("metadata")] ?? null)
+];
+var __decoratorStrings = [
+	"class",
+	"method",
+	"getter",
+	"setter",
+	"accessor",
+	"field",
+	"value",
+	"get",
+	"set"
+];
+var __expectFn = (fn) => fn !== void 0 && typeof fn !== "function" ? __typeError("Function expected") : fn;
+var __decoratorContext = (kind, name, done, metadata, fns) => ({
+	kind: __decoratorStrings[kind],
+	name,
+	metadata,
+	addInitializer: (fn) => done._ ? __typeError("Already initialized") : fns.push(__expectFn(fn || null))
+});
+var __decoratorMetadata = (array, target) => __defNormalProp(target, __knownSymbol("metadata"), array[3]);
+var __runInitializers = (array, flags, self, value) => {
+	for (var i = 0, fns = array[flags >> 1], n = fns && fns.length; i < n; i++) flags & 1 ? fns[i].call(self) : value = fns[i].call(self, value);
+	return value;
 };
-var __esDecorate = function(ctor, descriptorIn, decorators, contextIn, initializers, extraInitializers) {
-	function accept(f) {
-		if (f !== void 0 && typeof f !== "function") throw new TypeError("Function expected");
-		return f;
-	}
-	var kind = contextIn.kind, key = kind === "getter" ? "get" : kind === "setter" ? "set" : "value";
-	var target = !descriptorIn && ctor ? contextIn["static"] ? ctor : ctor.prototype : null;
-	var descriptor = descriptorIn || (target ? Object.getOwnPropertyDescriptor(target, contextIn.name) : {});
-	var _, done = false;
+var __decorateElement = (array, flags, name, decorators, target, extra) => {
+	var fn, it, done, ctx, access, k = flags & 7, s = !!(flags & 8), p = !!(flags & 16);
+	var j = k > 3 ? array.length + 1 : k ? s ? 1 : 2 : 0, key = __decoratorStrings[k + 5];
+	var initializers = k > 3 && (array[j - 1] = []), extraInitializers = array[j] || (array[j] = []);
+	var desc = k && (!p && !s && (target = target.prototype), k < 5 && (k > 3 || !p) && __getOwnPropDesc(k < 4 ? target : {
+		get [name]() {
+			return __privateGet(this, extra);
+		},
+		set [name](x) {
+			return __privateSet(this, extra, x);
+		}
+	}, name));
+	k ? p && k < 4 && __name(extra, (k > 2 ? "set " : k > 1 ? "get " : "") + name) : __name(target, name);
 	for (var i = decorators.length - 1; i >= 0; i--) {
-		var context = {};
-		for (var p in contextIn) context[p] = p === "access" ? {} : contextIn[p];
-		for (var p in contextIn.access) context.access[p] = contextIn.access[p];
-		context.addInitializer = function(f) {
-			if (done) throw new TypeError("Cannot add initializers after decoration has completed");
-			extraInitializers.push(accept(f || null));
-		};
-		var result = (0, decorators[i])(kind === "accessor" ? {
-			get: descriptor.get,
-			set: descriptor.set
-		} : descriptor[key], context);
-		if (kind === "accessor") {
-			if (result === void 0) continue;
-			if (result === null || typeof result !== "object") throw new TypeError("Object expected");
-			if (_ = accept(result.get)) descriptor.get = _;
-			if (_ = accept(result.set)) descriptor.set = _;
-			if (_ = accept(result.init)) initializers.unshift(_);
-		} else if (_ = accept(result)) {
-			if (kind === "field") initializers.unshift(_);
-			else descriptor[key] = _;
+		ctx = __decoratorContext(k, name, done = {}, array[3], extraInitializers);
+		if (k) {
+			ctx.static = s, ctx.private = p, access = ctx.access = { has: p ? (x) => __privateIn(target, x) : (x) => name in x };
+			if (k ^ 3) access.get = p ? (x) => (k ^ 1 ? __privateGet : __privateMethod)(x, target, k ^ 4 ? extra : desc.get) : (x) => x[name];
+			if (k > 2) access.set = p ? (x, y) => __privateSet(x, target, y, k ^ 4 ? extra : desc.set) : (x, y) => x[name] = y;
 		}
+		it = (0, decorators[i])(k ? k < 4 ? p ? extra : desc[key] : k > 4 ? void 0 : {
+			get: desc.get,
+			set: desc.set
+		} : target, ctx), done._ = 1;
+		if (k ^ 4 || it === void 0) __expectFn(it) && (k > 4 ? initializers.unshift(it) : k ? p ? extra = it : desc[key] = it : target = it);
+		else if (typeof it !== "object" || it === null) __typeError("Object expected");
+		else __expectFn(fn = it.get) && (desc.get = fn), __expectFn(fn = it.set) && (desc.set = fn), __expectFn(fn = it.init) && initializers.unshift(fn);
 	}
-	if (target) Object.defineProperty(target, contextIn.name, descriptor);
-	done = true;
+	return k || __decoratorMetadata(array, target), desc && __defProp(target, name, desc), p ? k ^ 4 ? extra : desc : target;
 };
-var OpenAICodexRemoteService = (() => {
-	let _classSuper = TypertRemoteService;
-	let _instanceExtraInitializers = [];
-	let _snapshot_decorators;
-	let _loadLoggingSettings_decorators;
-	let _saveLoggingSettings_decorators;
-	let _recordClientLog_decorators;
-	let _startLogin_decorators;
-	let _cancelLogin_decorators;
-	let _retryLogin_decorators;
-	let _submitCallbackUrl_decorators;
-	let _updateAccount_decorators;
-	let _deleteAccount_decorators;
-	let _refreshCatalog_decorators;
-	let _refreshUsage_decorators;
-	let _saveModels_decorators;
-	let _consumeReset_decorators;
-	let _reportUiError_decorators;
-	let _reportUiReady_decorators;
-	return class OpenAICodexRemoteService extends _classSuper {
-		static {
-			const _metadata = typeof Symbol === "function" && Symbol.metadata ? Object.create(_classSuper[Symbol.metadata] ?? null) : void 0;
-			_snapshot_decorators = [Remote];
-			_loadLoggingSettings_decorators = [Remote];
-			_saveLoggingSettings_decorators = [Remote];
-			_recordClientLog_decorators = [Remote];
-			_startLogin_decorators = [Remote];
-			_cancelLogin_decorators = [Remote];
-			_retryLogin_decorators = [Remote];
-			_submitCallbackUrl_decorators = [Remote];
-			_updateAccount_decorators = [Remote];
-			_deleteAccount_decorators = [Remote];
-			_refreshCatalog_decorators = [Remote];
-			_refreshUsage_decorators = [Remote];
-			_saveModels_decorators = [Remote];
-			_consumeReset_decorators = [Remote];
-			_reportUiError_decorators = [Remote];
-			_reportUiReady_decorators = [Remote];
-			__esDecorate(this, null, _snapshot_decorators, {
-				kind: "method",
-				name: "snapshot",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "snapshot" in obj,
-					get: (obj) => obj.snapshot
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _loadLoggingSettings_decorators, {
-				kind: "method",
-				name: "loadLoggingSettings",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "loadLoggingSettings" in obj,
-					get: (obj) => obj.loadLoggingSettings
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _saveLoggingSettings_decorators, {
-				kind: "method",
-				name: "saveLoggingSettings",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "saveLoggingSettings" in obj,
-					get: (obj) => obj.saveLoggingSettings
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _recordClientLog_decorators, {
-				kind: "method",
-				name: "recordClientLog",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "recordClientLog" in obj,
-					get: (obj) => obj.recordClientLog
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _startLogin_decorators, {
-				kind: "method",
-				name: "startLogin",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "startLogin" in obj,
-					get: (obj) => obj.startLogin
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _cancelLogin_decorators, {
-				kind: "method",
-				name: "cancelLogin",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "cancelLogin" in obj,
-					get: (obj) => obj.cancelLogin
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _retryLogin_decorators, {
-				kind: "method",
-				name: "retryLogin",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "retryLogin" in obj,
-					get: (obj) => obj.retryLogin
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _submitCallbackUrl_decorators, {
-				kind: "method",
-				name: "submitCallbackUrl",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "submitCallbackUrl" in obj,
-					get: (obj) => obj.submitCallbackUrl
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _updateAccount_decorators, {
-				kind: "method",
-				name: "updateAccount",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "updateAccount" in obj,
-					get: (obj) => obj.updateAccount
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _deleteAccount_decorators, {
-				kind: "method",
-				name: "deleteAccount",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "deleteAccount" in obj,
-					get: (obj) => obj.deleteAccount
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _refreshCatalog_decorators, {
-				kind: "method",
-				name: "refreshCatalog",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "refreshCatalog" in obj,
-					get: (obj) => obj.refreshCatalog
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _refreshUsage_decorators, {
-				kind: "method",
-				name: "refreshUsage",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "refreshUsage" in obj,
-					get: (obj) => obj.refreshUsage
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _saveModels_decorators, {
-				kind: "method",
-				name: "saveModels",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "saveModels" in obj,
-					get: (obj) => obj.saveModels
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _consumeReset_decorators, {
-				kind: "method",
-				name: "consumeReset",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "consumeReset" in obj,
-					get: (obj) => obj.consumeReset
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _reportUiError_decorators, {
-				kind: "method",
-				name: "reportUiError",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "reportUiError" in obj,
-					get: (obj) => obj.reportUiError
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			__esDecorate(this, null, _reportUiReady_decorators, {
-				kind: "method",
-				name: "reportUiReady",
-				static: false,
-				private: false,
-				access: {
-					has: (obj) => "reportUiReady" in obj,
-					get: (obj) => obj.reportUiReady
-				},
-				metadata: _metadata
-			}, null, _instanceExtraInitializers);
-			if (_metadata) Object.defineProperty(this, Symbol.metadata, {
-				enumerable: true,
-				configurable: true,
-				writable: true,
-				value: _metadata
-			});
-		}
-		handlers = __runInitializers(this, _instanceExtraInitializers);
-		constructor(ctx, handlers) {
-			super(ctx, ServiceKey, { namespace: RemoteNamespace });
-			this.handlers = handlers;
-		}
-		snapshot() {
-			return this.handlers.snapshot();
-		}
-		loadLoggingSettings() {
-			return this.handlers.loadLoggingSettings();
-		}
-		saveLoggingSettings(input) {
-			return this.handlers.saveLoggingSettings(input);
-		}
-		recordClientLog(input) {
-			return this.handlers.recordClientLog(input);
-		}
-		startLogin(input) {
-			return this.handlers.startLogin(input);
-		}
-		cancelLogin() {
-			return this.handlers.cancelLogin();
-		}
-		retryLogin() {
-			return this.handlers.retryLogin();
-		}
-		submitCallbackUrl(input) {
-			return this.handlers.submitCallbackUrl(input);
-		}
-		updateAccount(input) {
-			return this.handlers.updateAccount(input);
-		}
-		deleteAccount(input) {
-			return this.handlers.deleteAccount(input);
-		}
-		refreshCatalog(input) {
-			return this.handlers.refreshCatalog(input);
-		}
-		refreshUsage(input) {
-			return this.handlers.refreshUsage(input);
-		}
-		saveModels(input) {
-			return this.handlers.saveModels(input);
-		}
-		consumeReset(input) {
-			return this.handlers.consumeReset(input);
-		}
-		reportUiError(error) {
-			return this.handlers.reportUiError(error);
-		}
-		reportUiReady(componentId) {
-			return this.handlers.reportUiReady(componentId);
-		}
-	};
-})();
-// node_modules/.cache/host-build/host/index.js
+var __accessCheck = (obj, member, msg) => member.has(obj) || __typeError("Cannot " + msg);
+var __privateIn = (member, obj) => Object(obj) !== obj ? __typeError("Cannot use the \"in\" operator on this value") : member.has(obj);
+var __privateGet = (obj, member, getter) => (__accessCheck(obj, member, "read from private field"), getter ? getter.call(obj) : member.get(obj));
+var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
+var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
+var _reportUiReady_dec;
+var _reportUiError_dec;
+var _consumeReset_dec;
+var _saveModels_dec;
+var _refreshUsage_dec;
+var _refreshCatalog_dec;
+var _deleteAccount_dec;
+var _updateAccount_dec;
+var _submitCallbackUrl_dec;
+var _retryLogin_dec;
+var _cancelLogin_dec;
+var _startLogin_dec;
+var _snapshot_dec;
+var _a;
+var _init;
+var OpenAICodexRemoteService = class extends (_a = TypertRemoteService, _snapshot_dec = [Remote], _startLogin_dec = [Remote], _cancelLogin_dec = [Remote], _retryLogin_dec = [Remote], _submitCallbackUrl_dec = [Remote], _updateAccount_dec = [Remote], _deleteAccount_dec = [Remote], _refreshCatalog_dec = [Remote], _refreshUsage_dec = [Remote], _saveModels_dec = [Remote], _consumeReset_dec = [Remote], _reportUiError_dec = [Remote], _reportUiReady_dec = [Remote], _a) {
+	constructor(ctx, handlers) {
+		super(ctx, ServiceKey, { namespace: RemoteNamespace });
+		this.handlers = handlers;
+		__runInitializers(_init, 5, this);
+	}
+	handlers;
+	snapshot() {
+		return this.handlers.snapshot();
+	}
+	startLogin(input) {
+		return this.handlers.startLogin(input);
+	}
+	cancelLogin() {
+		return this.handlers.cancelLogin();
+	}
+	retryLogin() {
+		return this.handlers.retryLogin();
+	}
+	submitCallbackUrl(input) {
+		return this.handlers.submitCallbackUrl(input);
+	}
+	updateAccount(input) {
+		return this.handlers.updateAccount(input);
+	}
+	deleteAccount(input) {
+		return this.handlers.deleteAccount(input);
+	}
+	refreshCatalog(input) {
+		return this.handlers.refreshCatalog(input);
+	}
+	refreshUsage(input) {
+		return this.handlers.refreshUsage(input);
+	}
+	saveModels(input) {
+		return this.handlers.saveModels(input);
+	}
+	consumeReset(input) {
+		return this.handlers.consumeReset(input);
+	}
+	reportUiError(error) {
+		return this.handlers.reportUiError(error);
+	}
+	reportUiReady(componentId) {
+		return this.handlers.reportUiReady(componentId);
+	}
+};
+_init = __decoratorStart(_a);
+__decorateElement(_init, 1, "snapshot", _snapshot_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "startLogin", _startLogin_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "cancelLogin", _cancelLogin_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "retryLogin", _retryLogin_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "submitCallbackUrl", _submitCallbackUrl_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "updateAccount", _updateAccount_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "deleteAccount", _deleteAccount_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "refreshCatalog", _refreshCatalog_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "refreshUsage", _refreshUsage_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "saveModels", _saveModels_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "consumeReset", _consumeReset_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "reportUiError", _reportUiError_dec, OpenAICodexRemoteService);
+__decorateElement(_init, 1, "reportUiReady", _reportUiReady_dec, OpenAICodexRemoteService);
+__decoratorMetadata(_init, OpenAICodexRemoteService);
+// src/host/index.ts
 var OpenAICodexAuthService = class {
 	static inject = [
 		"llm",
@@ -14951,18 +14757,9 @@ var OpenAICodexAuthService = class {
 	static Config = Config;
 	static name = PackageId;
 	constructor(ctx, config = Config.parse({})) {
-		const logger = createHostLogger({ write: (level, message, context) => {
-			const payload = context === void 0 ? message : `${message} ${JSON.stringify(context)}`;
-			if (level === "error") ctx.logger.error(`[${PackageId}] ${payload}`);
-			else if (level === "warn") ctx.logger.warn(`[${PackageId}] ${payload}`);
-			else ctx.logger.info(`[${PackageId}] ${payload}`);
-		} });
-		const logging = new OpenAIHubLogging((message) => {
-			logger.error(message, {
-				event: "diagnostic_log",
-				operation: "write"
-			});
-		});
+		const scopedLogger = createOptionalLogger(ctx, PackageId);
+		const logger = createHostLogger(scopedLogger);
+		const logging = createHubLogger(scopedLogger);
 		const runtime = new AccountsRuntime(ctx, config, logging);
 		ctx.llm.registerAdapter([ProviderRoute], new HubAdapter(ctx, runtime, logging));
 		const guard = async (operation) => {
@@ -14979,7 +14776,7 @@ var OpenAICodexAuthService = class {
 		};
 		const track = async (event, operation, action, details = {}, stateFor) => {
 			const startedAt = Date.now();
-			if (operation !== "snapshot") logging.recordHost({
+			if (operation !== "snapshot") logging({
 				event,
 				phase: "started",
 				operation,
@@ -14987,7 +14784,7 @@ var OpenAICodexAuthService = class {
 			});
 			try {
 				const result = await guard(action);
-				if (operation !== "snapshot") logging.recordHost({
+				if (operation !== "snapshot") logging({
 					event,
 					phase: "completed",
 					operation,
@@ -14997,7 +14794,7 @@ var OpenAICodexAuthService = class {
 				});
 				return result;
 			} catch {
-				logging.recordHost({
+				logging({
 					event,
 					phase: "failed",
 					operation,
@@ -15010,23 +14807,6 @@ var OpenAICodexAuthService = class {
 		};
 		new OpenAICodexRemoteService(ctx, {
 			snapshot: () => track("snapshot", "snapshot", () => runtime.snapshot(), {}, (snapshot) => snapshot.status),
-			loadLoggingSettings: () => track("settings", "loadLoggingSettings", () => logging.loadSettings()),
-			saveLoggingSettings: (input) => track("settings", "setLoggingEnabled", async () => {
-				const settings = await logging.saveSettings(input);
-				logging.recordHost({
-					event: "settings",
-					phase: settings.enabled ? "enabled" : "disabled",
-					operation: "setLoggingEnabled"
-				});
-				return settings;
-			}, {}, (settings) => settings.enabled ? "done" : "idle"),
-			async recordClientLog(input) {
-				await guard(async () => {
-					await logging.recordClient(input);
-					return true;
-				});
-				return true;
-			},
 			startLogin: (input) => track("login", "startLogin", () => runtime.startLogin(input), {
 				accountLabel: input.accountLabel,
 				authMethod: input.authMethod
@@ -15045,7 +14825,7 @@ var OpenAICodexAuthService = class {
 					event: "ui_render",
 					operation: "reportUiError"
 				});
-				await logging.recordHost({
+				await logging({
 					event: "ui_render",
 					phase: "failed",
 					errorCode: "unknown"
@@ -15053,7 +14833,7 @@ var OpenAICodexAuthService = class {
 				return true;
 			},
 			async reportUiReady() {
-				await logging.recordHost({
+				await logging({
 					event: "plugin",
 					phase: "ready"
 				});
@@ -15061,8 +14841,7 @@ var OpenAICodexAuthService = class {
 			}
 		});
 		for (const account of runtime.accounts) if (!account.config.catalogLoaded) runtime.refreshCatalog({ accountLabel: account.config.accountLabel }).catch(() => void 0);
-		ctx.logger.info(`[${PackageId}] Host initialized`);
-		logging.recordHost({
+		logging({
 			event: "plugin",
 			phase: "started",
 			diagnosticVersion: 3

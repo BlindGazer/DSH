@@ -1,18 +1,21 @@
+import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { Context } from '@deepseek-ai/cordis';
 import type { CredentialRef } from '@deepseek-ai/dsh-credentials';
 import { credentialRef } from '@deepseek-ai/dsh-credentials';
 import type { LlmAdapter, StreamChunk } from '@deepseek-ai/dsh-llm';
 import type { AssistantMessage, AuthInteraction, Provider } from '@earendil-works/pi-ai';
 import { createAssistantMessageEventStream } from '@earendil-works/pi-ai';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { BrowserLoginError } from '../src/host/browser-login-error.js';
-import type * as CatalogModule from '../src/host/catalog.js';
-import type { OAuthCredential } from '../src/host/credentials.js';
-import type { CodexModel } from '../src/host/provider.js';
-import type { AccountConfig } from '../src/shared/accounts.js';
-import { credentialRefForAccount, PackageId, ProviderRoute, ServiceKey } from '../src/shared/constants/runtime.js';
-import type { OpenAIHubLogEvent } from '../src/shared/logging.js';
-import type { OpenAIHubRemote } from '../src/shared/remote.js';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { BrowserLoginError } from '../src/host/browser-login-error.ts';
+import type * as CatalogModule from '../src/host/catalog.ts';
+import type { OAuthCredential } from '../src/host/credentials.ts';
+import type { CodexModel } from '../src/host/provider.ts';
+import type { AccountConfig } from '../src/shared/accounts.ts';
+import { credentialRefForAccount, PackageId, ProviderRoute, ServiceKey } from '../src/shared/constants/runtime.ts';
+import type { OpenAIHubLogEvent } from '../src/shared/logging.ts';
+import type { OpenAIHubRemote } from '../src/shared/remote.ts';
 
 const mocks = vi.hoisted(() => ({
     oauthLogin: vi.fn(),
@@ -46,37 +49,23 @@ vi.mock('@earendil-works/pi-ai/providers/openai-codex', () => ({
         streamSimple: mocks.providerStream
     })
 }));
-vi.mock('../src/host/browser-login.js', () => ({ loginBrowser: mocks.oauthLogin }));
-vi.mock('../src/host/usage.js', () => ({ requestCodexUsage: mocks.usage }));
-vi.mock('../src/host/reset-credits.js', () => ({
+vi.mock('../src/host/browser-login.ts', () => ({ loginBrowser: mocks.oauthLogin }));
+vi.mock('../src/host/usage.ts', () => ({ requestCodexUsage: mocks.usage }));
+vi.mock('../src/host/reset-credits.ts', () => ({
     createResetRedeemer: () => vi.fn(async () => 'reset'),
     requestResetCredits: mocks.resetCards
 }));
-vi.mock('../src/host/catalog.js', async importOriginal => {
+vi.mock('../src/host/catalog.ts', async importOriginal => {
     const original = await importOriginal<typeof CatalogModule>();
     return { ...original, requestCatalog: mocks.catalog };
 });
-vi.mock('../src/host/logging.js', () => ({
-    OpenAIHubLogging: class {
-        async loadSettings() {
-            return { enabled: false };
-        }
-
-        async saveSettings(input: { enabled: boolean }) {
-            return input;
-        }
-
-        async recordHost(event: OpenAIHubLogEvent) {
-            mocks.hostLog(event);
-            return false;
-        }
-
-        async recordClient() {
-            return false;
-        }
+vi.mock('../src/host/logging.ts', () => ({
+    createHubLogger: () => async (event: OpenAIHubLogEvent) => {
+        mocks.hostLog(event);
+        return false;
     }
 }));
-vi.mock('../src/host/remote-service.js', () => ({
+vi.mock('../src/host/remote-service.ts', () => ({
     OpenAICodexRemoteService: class {
         readonly handlers: OpenAIHubRemote;
 
@@ -234,6 +223,8 @@ function registeredAdapter(host: TestHost): LlmAdapter {
     return adapter;
 }
 beforeEach(() => {
+    vi.stubEnv('DSH_PROFILE_DIR', '');
+    vi.stubEnv('DSH_PROFILE_PATH', '');
     vi.clearAllMocks();
     mocks.remote.current = undefined;
     mocks.providerStream.mockImplementation(() => {
@@ -248,7 +239,23 @@ beforeEach(() => {
     mocks.catalog.mockResolvedValue([model('gpt-alpha'), model('gpt-beta')]);
 });
 
+afterEach(() => vi.unstubAllEnvs());
+
 describe('OpenAI Hub host integration', () => {
+    it('starts without dsh-logger and never reads the uninjected property', async () => {
+        const host = harness();
+        Object.defineProperty(host.ctx, 'dshLogger', {
+            get() {
+                throw new Error('cannot get property "dshLogger" without inject');
+            }
+        });
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
+        expect(() => new OpenAICodexAuthService(host.ctx, { accounts: [] })).not.toThrow();
+        expect(OpenAICodexAuthService.inject).not.toContain('dshLogger');
+        await expect(remote().snapshot()).resolves.toMatchObject({ accounts: [] });
+        host.dispose();
+    });
+
     it('rolls back deletion with the refreshed credential rather than a stale rotating token', async () => {
         const account = config('work', 'account-work');
         const expired: OAuthCredential = {
@@ -262,7 +269,7 @@ describe('OpenAI Hub host integration', () => {
         const host = harness({ [account.credentialKey]: JSON.stringify(expired) });
         const refresh = deferred<OAuthCredential>();
         mocks.oauthRefresh.mockReturnValueOnce(refresh.promise);
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         const usage = remote().refreshUsage({ accountLabel: 'work' });
         await vi.waitFor(() => expect(mocks.oauthRefresh).toHaveBeenCalledOnce());
@@ -279,7 +286,7 @@ describe('OpenAI Hub host integration', () => {
         const neighbor = config('other', 'account-other');
         const credential = oauth('account-work');
         const host = harness({ [account.credentialKey]: credential, [neighbor.credentialKey]: oauth('account-other') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account, neighbor] });
         host.rejectNextConfigEdit();
         await expect(remote().deleteAccount({ accountLabel: 'work' })).rejects.toThrow('OpenAI Hub operation failed');
@@ -292,7 +299,7 @@ describe('OpenAI Hub host integration', () => {
     });
     it('registers exactly one static route and parses empty account config', async () => {
         const host = harness();
-        const { OpenAICodexAuthService, Config } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService, Config } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         expect(Config.parse(undefined)).toEqual({ accounts: [] });
         expect(host.adapters).toHaveLength(1);
@@ -305,7 +312,7 @@ describe('OpenAI Hub host integration', () => {
         const work = config('work', 'account-work');
         const personal = config('personal', 'account-personal', 'browser-oauth', [choice('gpt-beta', 'Personal beta')]);
         const host = harness({ [work.credentialKey]: oauth('account-work'), [personal.credentialKey]: oauth('account-personal') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [work, personal] });
         const snapshot = await remote().snapshot();
         expect(snapshot.accounts.map(account => [account.accountLabel, account.loggedIn])).toEqual([
@@ -345,7 +352,7 @@ describe('OpenAI Hub host integration', () => {
         const first = config('work', 'account-work');
         const neighbor = config('other', 'account-other');
         const host = harness({ [first.credentialKey]: oauth('account-work'), [neighbor.credentialKey]: oauth('account-other') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [first, neighbor] });
         await remote().updateAccount({ accountLabel: 'work', newLabel: 'renamed', autoRefreshLimits: true });
         const renamed = host.updates.at(-1)?.accounts[0];
@@ -361,7 +368,7 @@ describe('OpenAI Hub host integration', () => {
         const first = config('work', 'account-work');
         const neighbor = config('neighbor', 'neighbor-account');
         const host = harness({ [first.credentialKey]: oauth('account-work'), [neighbor.credentialKey]: oauth('neighbor-account') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [first, neighbor] });
         host.remountAfterConfigEdit(nextConfig => {
             host.dispose();
@@ -381,7 +388,7 @@ describe('OpenAI Hub host integration', () => {
         const account = config('work', 'account-work', 'device-code', [choice('gpt-alpha', 'Friendly')]);
         const host = harness({ [account.credentialKey]: oauth('account-work') });
         mocks.catalog.mockResolvedValueOnce([model('gpt-beta')]);
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         host.remountAfterConfigEdit(nextConfig => {
             host.dispose();
@@ -397,7 +404,7 @@ describe('OpenAI Hub host integration', () => {
 
     it('returns the newly saved account from OAuth login across config remount', async () => {
         const host = harness();
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         host.remountAfterConfigEdit(nextConfig => {
             host.dispose();
@@ -432,7 +439,7 @@ describe('OpenAI Hub host integration', () => {
         account.catalogMetadata = [{ id: 'gpt-alpha', contextWindow: 128000, maxTokens: 8192 }];
         mocks.catalog.mockRejectedValue(new Error('synthetic catalog failure'));
         const host = harness({ [account.credentialKey]: oauth('old-account') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         await expect(remote().startLogin({ accountLabel: 'work', authMethod: 'device-code' })).rejects.toThrow(
             'OpenAI Hub operation failed'
@@ -477,7 +484,7 @@ describe('OpenAI Hub host integration', () => {
             interaction.notify({ type: 'device_code', userCode: 'TEST-CODE', verificationUri: 'https://auth.openai.com/codex/device' });
             return pendingGrant.promise;
         });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
 
         const waiting = await remote().startLogin({ accountLabel: 'work', authMethod: 'device-code', reauthenticate: true });
@@ -508,7 +515,7 @@ describe('OpenAI Hub host integration', () => {
         const host = harness({ [account.credentialKey]: oldCredential, [targetKey]: targetCredential });
         const persistGate = deferred<void>();
         let editCount = 0;
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         host.remountAfterConfigEdit(async nextConfig => {
             host.dispose();
@@ -544,7 +551,7 @@ describe('OpenAI Hub host integration', () => {
         const host = harness({ [account.credentialKey]: oldCredential, [targetKey]: targetCredential });
         const persistGate = deferred<void>();
         let editCount = 0;
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         host.remountAfterConfigEdit(async nextConfig => {
             host.dispose();
@@ -585,7 +592,7 @@ describe('OpenAI Hub host integration', () => {
         mocks.catalog
             .mockRejectedValueOnce(new Error('private catalog response secret'))
             .mockResolvedValueOnce([model('gpt-alpha'), model('gpt-beta')]);
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         const initial = await remote().snapshot();
         expect(initial.accounts[0]?.catalogStatus).toBe('fallback');
@@ -604,7 +611,7 @@ describe('OpenAI Hub host integration', () => {
     it('saves only complete catalogs and rejects stale or disabled model requests', async () => {
         const account = config('work', 'account-work', 'device-code', [choice('gpt-alpha'), choice('gpt-beta')]);
         const host = harness({ [account.credentialKey]: oauth('account-work') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         await expect(remote().saveModels({ accountLabel: 'work', models: [choice('gpt-alpha')] })).rejects.toThrow(
             'OpenAI Hub operation failed'
@@ -621,7 +628,7 @@ describe('OpenAI Hub host integration', () => {
     it('allows deleting the final account and drops all stale route models', async () => {
         const account = config('last', 'last-account');
         const host = harness({ [account.credentialKey]: oauth('last-account') });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         expect(await registeredAdapter(host).listModels(ProviderRoute)).toHaveLength(2);
         const empty = await remote().deleteAccount({ accountLabel: 'last' });
@@ -636,7 +643,7 @@ describe('OpenAI Hub host integration', () => {
         const host = harness({ [account.credentialKey]: oauth('account-work'), [neighbor.credentialKey]: oauth('neighbor-account') });
         const pendingCatalog = deferred<CodexModel[]>();
         mocks.catalog.mockReturnValueOnce(pendingCatalog.promise);
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account, neighbor] });
         const loading = remote().refreshCatalog({ accountLabel: 'work' });
         await tick();
@@ -654,7 +661,7 @@ describe('OpenAI Hub host integration', () => {
         const host = harness({ [account.credentialKey]: oauth('account-work') });
         const pendingCatalog = deferred<CodexModel[]>();
         mocks.catalog.mockReturnValueOnce(pendingCatalog.promise);
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
         const oldRefresh = remote().refreshCatalog({ accountLabel: 'work' });
         await tick();
@@ -674,7 +681,7 @@ describe('OpenAI Hub host integration', () => {
             interaction.notify({ type: 'device_code', userCode: 'TEST-CODE', verificationUri: 'https://auth.openai.com/codex/device' });
             return new Promise(() => undefined);
         });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         const waiting = await remote().startLogin({ accountLabel: 'pending', authMethod: 'device-code' });
         expect(waiting).toMatchObject({ status: 'waiting', deviceCode: 'TEST-CODE' });
@@ -702,7 +709,7 @@ describe('OpenAI Hub host integration', () => {
                 accountId: 'unused-account'
             };
         });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         const waiting = await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' });
         expect(waiting).toMatchObject({ status: 'waiting', verificationUri: 'https://auth.openai.com/oauth/authorize' });
@@ -729,7 +736,7 @@ describe('OpenAI Hub host integration', () => {
                 accountId: 'unused-account'
             };
         });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         let settled = false;
         const started = remote()
@@ -763,7 +770,7 @@ describe('OpenAI Hub host integration', () => {
                 accountId: 'synthetic-account'
             };
         });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' });
         expect(await remote().submitCallbackUrl({ url: 'http://localhost:1455/auth/callback?code=test&state=test' })).toMatchObject({
@@ -805,7 +812,7 @@ describe('OpenAI Hub host integration', () => {
                 };
             }
         );
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         const waiting = await remote().startLogin({ accountLabel: 'browser-retry', authMethod: 'browser-oauth' });
         expect(waiting).toMatchObject({ status: 'waiting', callbackUrlRequested: true });
@@ -836,7 +843,7 @@ describe('OpenAI Hub host integration', () => {
                     accountId: 'synthetic-account'
                 };
             });
-            const { OpenAICodexAuthService } = await import('../src/host/index.js');
+            const { OpenAICodexAuthService } = await import('../src/host/index.ts');
             void new OpenAICodexAuthService(host.ctx);
             const waiting = await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' });
             expect(waiting).toMatchObject({ status: 'waiting', callbackUrlRequested: true });
@@ -886,7 +893,7 @@ describe('OpenAI Hub host integration', () => {
             code: 'UND_ERR_CONNECT_TIMEOUT'
         });
         mocks.oauthLogin.mockRejectedValueOnce(new TypeError('private-callback-code', { cause }));
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         expect(await remote().startLogin({ accountLabel: 'network-failure', authMethod })).toMatchObject({ status: 'error' });
         expect(mocks.hostLog).toHaveBeenCalledWith(
@@ -908,7 +915,7 @@ describe('OpenAI Hub host integration', () => {
         const host = harness();
         const message = 'OpenAI Hub connection to auth.openai.com timed out. Check network and proxy settings.';
         mocks.oauthLogin.mockRejectedValueOnce(new BrowserLoginError(message));
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         expect(await remote().startLogin({ accountLabel: 'browser', authMethod: 'browser-oauth' })).toMatchObject({
             status: 'error',
@@ -938,7 +945,7 @@ describe('OpenAI Hub host integration', () => {
             expires: Date.now() + 3_600_000,
             accountId: 'work-id'
         });
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx, { accounts: [work, neighbor] });
         const result = await remote().refreshUsage({ accountLabel: 'work' });
         expect(mocks.oauthRefresh).toHaveBeenCalledTimes(1);
@@ -948,10 +955,59 @@ describe('OpenAI Hub host integration', () => {
         expect(JSON.stringify(result)).not.toContain('new-refresh-secret');
     });
 
+    it('restores only the last successful quota after a Host restart and rename', async () => {
+        const profile = mkdtempSync(join(tmpdir(), 'dsh-quota-'));
+        vi.stubEnv('DSH_PROFILE_DIR', profile);
+        try {
+            const work = config('work', 'quota-work');
+            const neighbor = config('neighbor', 'quota-neighbor');
+            const seed = { [work.credentialKey]: oauth('quota-work'), [neighbor.credentialKey]: oauth('quota-neighbor') };
+            const { OpenAICodexAuthService } = await import('../src/host/index.ts');
+            const first = harness(seed);
+            void new OpenAICodexAuthService(first.ctx, { accounts: [work, neighbor] });
+            const limits = [{ name: 'Codex', usedPercent: 42, windowSeconds: 18000, resetAt: Date.now() + 1000 }];
+            mocks.usage.mockResolvedValueOnce({ limited: false, limits, credits: { hasCredits: true, unlimited: false, balance: '7' } });
+            mocks.resetCards.mockResolvedValueOnce({ availableCount: 1, cards: [{ id: 'action-card-id' }] });
+            const success = await remote().refreshUsage({ accountLabel: 'work' });
+            mocks.usage.mockRejectedValueOnce(new Error('Usage unavailable'));
+            const failure = await remote().refreshUsage({ accountLabel: 'work' });
+            expect(failure.accounts[0]).toMatchObject({ usageStatus: 'error', usageLimits: limits });
+            const empty = await remote().refreshUsage({ accountLabel: 'work' });
+            expect(empty.accounts[0]).toMatchObject({ usageStatus: 'ready', usageLimits: limits });
+            first.dispose();
+
+            const second = harness(seed);
+            void new OpenAICodexAuthService(second.ctx, { accounts: [{ ...work, accountLabel: 'renamed' }, neighbor] });
+            const restored = await remote().snapshot();
+            expect(restored.accounts).toMatchObject([
+                {
+                    accountLabel: 'renamed',
+                    autoRefreshLimits: false,
+                    usageStatus: 'ready',
+                    usageLimits: limits,
+                    usageCredits: '7',
+                    usageResetCredits: 1,
+                    resetCards: [],
+                    usageUpdatedAt: success.accounts[0]?.usageUpdatedAt
+                },
+                { accountLabel: 'neighbor', usageStatus: 'idle', usageLimits: [], usageUpdatedAt: 0 }
+            ]);
+            expect(mocks.usage).toHaveBeenCalledTimes(3);
+            const contents = readdirSync(profile).map(file => readFileSync(join(profile, file), 'utf8'));
+            expect(contents).toHaveLength(1);
+            expect(contents.join()).not.toMatch(/quota-work|action-card-id|credentialKey/);
+            await remote().deleteAccount({ accountLabel: 'renamed' });
+            expect(readdirSync(profile)).toStrictEqual([]);
+            second.dispose();
+        } finally {
+            rmSync(profile, { recursive: true, force: true });
+        }
+    });
+
     it('stores a successful OAuth grant privately and sanitizes provider failures', async () => {
         const host = harness();
         const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
-        const { OpenAICodexAuthService } = await import('../src/host/index.js');
+        const { OpenAICodexAuthService } = await import('../src/host/index.ts');
         void new OpenAICodexAuthService(host.ctx);
         mocks.oauthLogin.mockResolvedValueOnce({
             type: 'oauth',

@@ -14,4 +14,4 @@ export type {
     SanitizedProxyConfig,
     SanitizedProxyProfile,
     TestConnectionResult
-} from './ProxyModels.js';
+} from './ProxyModels.ts';

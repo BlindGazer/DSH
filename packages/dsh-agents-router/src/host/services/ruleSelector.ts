@@ -1,7 +1,7 @@
-import type { AreaDefinition, DiscoveredRule, ProjectDiscoverySnapshot } from '../../shared/models/RouterModels.js';
-import { parentsAvailable } from './areaHierarchy.js';
-import { compare } from './discoveryFs.js';
-import { explainPathMatch, matchesPath, matchesRule } from './pathMatch.js';
+import type { AreaDefinition, DiscoveredRule, ProjectDiscoverySnapshot } from '../../shared/models/RouterModels.ts';
+import { parentsAvailable } from './areaHierarchy.ts';
+import { compare } from './discoveryFs.ts';
+import { explainPathMatch, matchesPath, matchesRule } from './pathMatch.ts';
 
 interface SelectedRule extends DiscoveredRule {
     readonly appliesTo: readonly string[];

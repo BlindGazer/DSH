@@ -4,9 +4,9 @@ import type { ToolCallId } from '@deepseek-ai/dsh-llm'
 import { mkdirSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { createAddTool, createListTool, createRemoveTool } from '../src/host/tools/workspaceDirectoryTools.js'
-import { WorkspaceDirectoriesServiceImpl } from '../src/host/services/WorkspaceDirectoriesService.js'
-import { resolveConfig } from '../src/host/config.js'
+import { createAddTool, createListTool, createRemoveTool } from '../src/host/tools/workspaceDirectoryTools.ts'
+import { WorkspaceDirectoriesServiceImpl } from '../src/host/services/WorkspaceDirectoriesService.ts'
+import { resolveConfig } from '../src/host/config.ts'
 
 type ToolJsonValue = string | number | boolean | ToolJsonValue[] | { readonly [key: string]: ToolJsonValue }
 

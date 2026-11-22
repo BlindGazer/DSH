@@ -1,4 +1,4 @@
-import { readUsageJson } from './usage.js';
+import { readUsageJson } from './usage.ts';
 
 export const RESET_CREDITS_URL = 'https://chatgpt.com/backend-api/wham/rate-limit-reset-credits';
 export const RESET_CODES = ['reset', 'already_redeemed', 'no_credit', 'nothing_to_reset'] as const;

@@ -1,8 +1,8 @@
 import path from 'node:path';
 import { assert, test } from 'vitest';
-import { normalizeRulePatterns } from '../src/host/services/globNormalizer.js';
-import { explainPathMatch, matchesPath, matchesRule, projectRelativePath } from '../src/host/services/pathMatch.js';
-import type { NormalizedRuleMetadata } from '../src/shared/models/RouterModels.js';
+import { normalizeRulePatterns } from '../src/host/services/globNormalizer.ts';
+import { explainPathMatch, matchesPath, matchesRule, projectRelativePath } from '../src/host/services/pathMatch.ts';
+import type { NormalizedRuleMetadata } from '../src/shared/models/RouterModels.ts';
 
 test('matches exact paths, directories and basic globs case-insensitively', () => {
     assert.equal(matchesPath('src/Client.ts', 'SRC/Client.ts'), true);

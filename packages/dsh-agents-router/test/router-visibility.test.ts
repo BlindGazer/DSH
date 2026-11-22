@@ -1,6 +1,6 @@
 import { expect, test } from 'vitest';
-import type { EventListenerPort } from '../src/client/features/router/services/routerVisibility.js';
-import { subscribeToRouterVisibility } from '../src/client/features/router/services/routerVisibility.js';
+import type { EventListenerPort } from '../src/client/features/router/services/routerVisibility.ts';
+import { subscribeToRouterVisibility } from '../src/client/features/router/services/routerVisibility.ts';
 
 test('subscribes to visibility events and removes every listener on cleanup', () => {
     const documentListeners = new Set<() => void>();

@@ -1,5 +1,5 @@
 import { afterEach, expect, test, vi } from 'vitest';
-import { startRouterPolling } from '../src/client/features/router/services/routerPolling.js';
+import { startRouterPolling } from '../src/client/features/router/services/routerPolling.ts';
 
 afterEach(() => {
     vi.useRealTimers();

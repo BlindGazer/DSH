@@ -3,17 +3,17 @@ import type { GenerateOptions, LlmModelInfo, LlmResolvedModelInfo, PreparedAdapt
 import { LlmAdapter, LlmError, resolveRetryPolicy } from '@deepseek-ai/dsh-llm';
 import type { ResolvedPiAiProviderProfile } from '@deepseek-ai/dsh-llm-pi-ai';
 import { PiAiAdapter } from '@deepseek-ai/dsh-llm-pi-ai';
-import { splitModelId } from '../shared/accounts.js';
-import { ProviderRoute } from '../shared/constants/runtime.js';
-import type { AccountsRuntime } from './accounts-runtime.js';
-import type { OpenAIHubLogging } from './logging.js';
-import { createCodexProvider } from './provider.js';
+import { splitModelId } from '../shared/accounts.ts';
+import { ProviderRoute } from '../shared/constants/runtime.ts';
+import type { AccountsRuntime } from './accounts-runtime.ts';
+import type { HubLogger } from './logging.ts';
+import { createCodexProvider } from './provider.ts';
 
 export class HubAdapter extends LlmAdapter {
     constructor(
         private readonly ctx: Context,
         private readonly runtime: AccountsRuntime,
-        private readonly logging: OpenAIHubLogging
+        private readonly logging: HubLogger
     ) {
         super();
     }
@@ -125,13 +125,13 @@ export class HubAdapter extends LlmAdapter {
     private async *safeStream(stream: AsyncIterable<StreamChunk>, accountLabel: string): AsyncIterable<StreamChunk> {
         const startedAt = Date.now();
         let failed = false;
-        await this.logging.recordHost({ event: 'provider_request', phase: 'started', accountLabel });
+        await this.logging({ event: 'provider_request', phase: 'started', accountLabel });
         try {
             for await (const chunk of stream) {
                 if (chunk.type === 'finish' && (chunk.reason.kind === 'error' || chunk.reason.kind === 'aborted')) {
                     failed = true;
                     const failure = chunk.reason.failure;
-                    await this.logging.recordHost({
+                    await this.logging({
                         event: 'provider_request',
                         phase: 'failed',
                         errorCode: 'request_failed',
@@ -156,22 +156,26 @@ export class HubAdapter extends LlmAdapter {
                 } else yield chunk;
             }
             if (!failed)
-                await this.logging.recordHost({
+                await this.logging({
                     event: 'provider_request',
                     phase: 'completed',
                     durationMs: Date.now() - startedAt,
                     accountLabel
                 });
         } catch {
-            await this.logging.recordHost({
+            await this.logging({
                 event: 'provider_request',
                 phase: 'failed',
                 errorCode: 'request_failed',
                 durationMs: Date.now() - startedAt,
                 accountLabel
             });
-            console.error('[openai-hub] Model request failed');
-            this.ctx.logger.error('[openai-hub] Model request failed');
+            void this.logging({
+                event: 'provider_request',
+                phase: 'failed',
+                errorCode: 'request_failed',
+                accountLabel
+            });
             throw new LlmError('OpenAI Hub request failed', 'PI_AI_ERROR');
         }
     }

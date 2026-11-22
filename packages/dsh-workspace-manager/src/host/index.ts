@@ -7,21 +7,30 @@
 
 import { type Context, Service } from '@deepseek-ai/cordis';
 import type { PreStepDecision } from '@deepseek-ai/dsh-agent';
-import type { AddDirectoryOptions, AddirService } from '../shared/models/WorkspaceDirectories.js';
-import { registerAddirRoutes } from './api/httpRoutes.js';
-import { Config, type ConfigSchema, resolveConfig } from './config.js';
-import { createWorkspaceDirectoriesMessage, isWorkspaceDirectoriesMessage } from './context/workspaceDirectoriesContext.js';
-import { WorkspaceDirectoriesServiceImpl } from './services/WorkspaceDirectoriesService.js';
-import { createAddTool, createListTool, createRemoveTool } from './tools/workspaceDirectoryTools.js';
+import type { DshLogger } from '@kalex/dsh-logger-core';
+import type { AddDirectoryOptions, AddirService } from '../shared/models/WorkspaceDirectories.ts';
+import { registerAddirRoutes } from './api/httpRoutes.ts';
+import { Config, type ConfigSchema, resolveConfig } from './config.ts';
+import {
+    createWorkspaceDirectoriesMessage,
+    getWorkspaceDirectoriesFingerprint,
+    isWorkspaceDirectoriesMessage
+} from './context/workspaceDirectoriesContext.ts';
+import { WorkspaceDirectoriesServiceImpl } from './services/WorkspaceDirectoriesService.ts';
+import { createAddTool, createListTool, createRemoveTool } from './tools/workspaceDirectoryTools.ts';
 
-export type * from '../shared/models/WorkspaceDirectories.js';
-export * from './config.js';
-export * from './context/workspaceDirectoriesContext.js';
-export * from './security/workspaceAccessGuard.js';
-export * from './services/WorkspaceDirectoriesService.js';
-export * from './tools/workspaceDirectoryTools.js';
+export type * from '../shared/models/WorkspaceDirectories.ts';
+export * from './config.ts';
+export * from './context/workspaceDirectoriesContext.ts';
+export * from './security/workspaceAccessGuard.ts';
+export * from './services/WorkspaceDirectoriesService.ts';
+export * from './tools/workspaceDirectoryTools.ts';
 
 export const name = 'dsh-workspace-manager';
+
+export function createWorkspaceLogger(logger: DshLogger | undefined): DshLogger {
+    return logger ?? { record: () => undefined };
+}
 
 /**
  * Service Provider wrapping WorkspaceDirectoriesServiceImpl for Cordis.
@@ -32,12 +41,12 @@ export class AddirProvider extends Service implements AddirService {
     static Config: ConfigSchema = Config;
 
     private readonly impl: WorkspaceDirectoriesServiceImpl;
+    private readonly contextState = new Map<string, { turn: number; fingerprint: string }>();
 
     constructor(ctx: Context, config: Config = {}) {
         super(ctx, 'dsh-workspace-manager');
         const resolved = resolveConfig(config);
         this.impl = new WorkspaceDirectoriesServiceImpl(resolved);
-
         if (resolved.enableTools) {
             ctx.inject(['tools'], toolsCtx => {
                 toolsCtx.effect(() => toolsCtx.tools.register(createListTool(this, 'addir_list')));
@@ -48,7 +57,7 @@ export class AddirProvider extends Service implements AddirService {
 
         // Context injection: inject Active Workspace Directories into agent turns
         if (resolved.enableContextInjection) {
-            ctx.on('agent/pre-step', async ({ agent }, next): Promise<PreStepDecision> => {
+            ctx.on('agent/pre-step', async ({ agent, turn }, next): Promise<PreStepDecision> => {
                 const decision = await next();
                 if (decision.kind === 'reject') {
                     return decision;
@@ -62,21 +71,28 @@ export class AddirProvider extends Service implements AddirService {
 
                 const dirs = this.list(sessionId);
                 const contextMsg = createWorkspaceDirectoriesMessage(dirs);
+                if (!contextMsg) return decision;
 
-                if (!contextMsg) {
-                    return decision;
-                }
+                const fingerprint = getWorkspaceDirectoriesFingerprint(dirs);
+                const previous = this.contextState.get(sessionId);
+                // Сообщение шага не является надежным признаком отсутствия контекста:
+                // Host может передавать базовый массив, не включая ранее внедренный блок.
+                const shouldInject = previous === undefined || previous.turn !== turn || previous.fingerprint !== fingerprint;
 
-                // Check if an existing workspace-directories message is already in decision.messages
+                if (!shouldInject) return decision;
+
+                this.contextState.set(sessionId, { turn, fingerprint });
                 const filteredMessages = decision.messages.filter(m => !isWorkspaceDirectoriesMessage(m));
-
-                // Prepend context message right before turn messages
                 return {
                     ...decision,
                     messages: [contextMsg, ...filteredMessages]
                 };
             });
         }
+
+        ctx.on('agent/disposed', ({ agent }) => {
+            this.contextState.delete(agent.session.id);
+        });
 
         // Protection guard: intercept write attempts on read-only directories
         if (resolved.enforceReadOnly) {

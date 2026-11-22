@@ -1,17 +1,17 @@
 import type { DshClientContext } from '@kalex/dsh-core';
-import { en, ru } from '../shared/constants/localizations/WorkspaceManagerLocalization.js';
-import { AddirSettingsSection } from './features/manage-workspaces/components/SettingsSection.js';
-import { WorkspaceEditOverlay } from './features/manage-workspaces/components/WorkspaceEditOverlay.js';
-import type { WorkspaceEditTarget } from './features/manage-workspaces/models/WorkspaceEditTarget.js';
-import { createSnapshotStore } from './features/manage-workspaces/services/snapshotStore.js';
-import { getWorkspaceDisplayTitle } from './features/manage-workspaces/services/workspaceLabels.js';
-import { installWorkspaceMenu } from './features/manage-workspaces/services/workspaceMenuAdapter.js';
-import { ensureWorkspaceManagerStyles } from './features/manage-workspaces/workspaceManagerStyles.js';
-import type { UseWorkspaceSnapshot, WorkspaceManagerClientContext, WorkspaceSnapshot } from './models/WorkspaceManagerClientContext.js';
+import { en, ru } from '../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import { AddirSettingsSection } from './features/manage-workspaces/components/SettingsSection.tsx';
+import { WorkspaceEditOverlay } from './features/manage-workspaces/components/WorkspaceEditOverlay.tsx';
+import type { WorkspaceEditTarget } from './features/manage-workspaces/models/WorkspaceEditTarget.ts';
+import { createSnapshotStore } from './features/manage-workspaces/services/snapshotStore.ts';
+import { getWorkspaceDisplayTitle } from './features/manage-workspaces/services/workspaceLabels.ts';
+import { installWorkspaceMenu } from './features/manage-workspaces/services/workspaceMenuAdapter.ts';
+import { ensureWorkspaceManagerStyles } from './features/manage-workspaces/workspaceManagerStyles.ts';
+import type { UseWorkspaceSnapshot, WorkspaceManagerClientContext, WorkspaceSnapshot } from './models/WorkspaceManagerClientContext.ts';
 
-export * from './features/manage-workspaces/components/SettingsSection.js';
-export * from './features/manage-workspaces/components/WorkspaceAddirModal.js';
-export * from './features/manage-workspaces/services/addirApi.js';
+export * from './features/manage-workspaces/components/SettingsSection.tsx';
+export * from './features/manage-workspaces/components/WorkspaceAddirModal.tsx';
+export * from './features/manage-workspaces/services/addirApi.ts';
 
 function resolveWorkspace(snapshot: WorkspaceSnapshot, workspaceId: string): WorkspaceEditTarget | undefined {
     const workspace = snapshot.items.find(item => item.workspaceId === workspaceId);

@@ -1,4 +1,4 @@
-import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
+import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 
 export function formatQuotaReset(resetAt: number, text: (key: OpenAICodexText) => string, now = Date.now()): string {
     if (!Number.isFinite(resetAt) || resetAt <= 0) return text('usageUnavailable');

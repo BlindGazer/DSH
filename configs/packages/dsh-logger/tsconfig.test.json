@@ -1,0 +1,11 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "types": ["node", "vitest/globals", "vite/client"]
+    },
+    "include": [
+        "../../../packages/dsh-logger/test/**/*",
+        "../../../packages/dsh-logger/src/client/LoggerManagementPanel.module.css.d.ts",
+        "../../../packages/dsh-core/src/scss.d.ts"
+    ]
+}

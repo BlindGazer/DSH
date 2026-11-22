@@ -1,9 +1,9 @@
 import { fileURLToPath } from 'node:url';
 import { assert, test } from 'vitest';
-import { discoverProject } from '../src/host/services/discovery.js';
-import { selectRules } from '../src/host/services/ruleSelector.js';
-import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.js';
-import type { DiscoveredRule, ProjectDiscoverySnapshot } from '../src/shared/models/RouterModels.js';
+import { discoverProject } from '../src/host/services/discovery.ts';
+import { selectRules } from '../src/host/services/ruleSelector.ts';
+import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.ts';
+import type { DiscoveredRule, ProjectDiscoverySnapshot } from '../src/shared/models/RouterModels.ts';
 
 const selectRulesForPaths = selectRules as (snapshot: ProjectDiscoverySnapshot, activePaths?: string[]) => DiscoveredRule[];
 

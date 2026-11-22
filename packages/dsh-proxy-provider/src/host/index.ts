@@ -1,26 +1,26 @@
-import { BUILTIN_PROVIDER_ENDPOINTS } from '../shared/constants/endpoints.js';
-import type { KalexProviderProxyConfig } from '../shared/models/ProxyModels.js';
-import { extractHost, resolveProviderHosts, sanitizeHostInput } from '../shared/utils/hostUtils.js';
-import { registerHttpRoutes, type WebServerHostContext } from './api/httpRoutes.js';
-import { normalizeProfile, normalizeProxyConfig, sanitizeConfigForClient } from './services/configNormalizer.js';
-import { checkTcpReachability, dispatchWithUndiciFetch, testProxyConnection } from './services/connectionTest.js';
-import { type ControllerOptions, createProviderProxyController, type ProviderProxyController } from './services/controller.js';
+import { createHostLogger, createOptionalLogger } from '@kalex/dsh-logger-core';
+import { BUILTIN_PROVIDER_ENDPOINTS } from '../shared/constants/endpoints.ts';
+import type { KalexProviderProxyConfig } from '../shared/models/ProxyModels.ts';
+import { extractHost, resolveProviderHosts, sanitizeHostInput } from '../shared/utils/hostUtils.ts';
+import { registerHttpRoutes, type WebServerHostContext } from './api/httpRoutes.ts';
+import { normalizeProfile, normalizeProxyConfig, sanitizeConfigForClient } from './services/configNormalizer.ts';
+import { checkTcpReachability, dispatchWithUndiciFetch, testProxyConnection } from './services/connectionTest.ts';
+import { type ControllerOptions, createProviderProxyController, type ProviderProxyController } from './services/controller.ts';
 import {
     decryptAuthSecret,
     decryptWithPassphrase,
     encryptAuthSecret,
     encryptWithPassphrase,
     maskUsername
-} from './services/cryptoStore.js';
-import { createProfileDispatcher, DispatcherManager } from './services/profileDispatcher.js';
-import { discoverProviders, type HostDiscoveryContext } from './services/providerDiscovery.js';
-import { compileRoutingTable } from './services/providerRouting.js';
-import { establishSocks5Tunnel } from './services/socks5.js';
+} from './services/cryptoStore.ts';
+import { createProfileDispatcher, DispatcherManager } from './services/profileDispatcher.ts';
+import { discoverProviders, type HostDiscoveryContext } from './services/providerDiscovery.ts';
+import { compileRoutingTable } from './services/providerRouting.ts';
+import { establishSocks5Tunnel } from './services/socks5.ts';
 
 export const name = 'dsh-proxy-provider';
 
 export interface CordisHostPluginContext extends HostDiscoveryContext, WebServerHostContext {
-    readonly logger?: { warn?(msg: string): void };
     on?(eventName: string, listener: () => void): void;
     effect?(fn: () => () => void): void;
 }
@@ -34,8 +34,13 @@ export function apply(ctx: CordisHostPluginContext, config: Partial<KalexProvide
         initialConfig: config
     });
     controller.installFetchInterceptor();
+    const logger = createHostLogger(createOptionalLogger(ctx, '@kalex/dsh-proxy-provider'));
     controller.refreshRouting().catch((error: Error) => {
-        ctx.logger?.warn?.(`[${name}] Initial routing refresh failed: ${error?.message || error}`);
+        logger.warn(`[${name}] Initial routing refresh failed`, {
+            event: 'routing_refresh_failed',
+            operation: 'initial_refresh',
+            errorCode: error.message
+        });
     });
 
     if (typeof ctx.on === 'function') {

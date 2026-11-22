@@ -1,5 +1,5 @@
-import type { RouterAgent, RouterHostContext, RouterState } from './sessionController.js';
-import type { RouterStore } from './store.js';
+import type { RouterAgent, RouterHostContext, RouterState } from './sessionController.ts';
+import type { RouterStore } from './store.ts';
 
 interface PathToolArguments {
     readonly action: 'add' | 'release';
@@ -23,8 +23,8 @@ interface PathToolDefinition {
     readonly execute: (args: PathToolArguments, exec: { readonly agent?: RouterAgent }) => Promise<PathToolOutput>;
 }
 
-import { recordAudit } from './auditLogger.js';
-import { projectPaths } from './preflight.js';
+import { recordAudit } from './auditLogger.ts';
+import { projectPaths } from './preflight.ts';
 
 export function createPathTool(
     ctx: RouterHostContext,

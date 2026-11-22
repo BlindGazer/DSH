@@ -1,5 +1,5 @@
 import { Spinner } from '@kalex/dsh-core';
-import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
+import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import styles from './codexStyles.module.scss';
 
 export interface CodexLoginProgressProps {
@@ -8,9 +8,9 @@ export interface CodexLoginProgressProps {
 
 export function CodexLoginProgress({ text }: CodexLoginProgressProps) {
     return (
-        <div className={styles.card} aria-busy="true">
+        <div className={styles.card}>
             <div className={styles.header}>
-                <Spinner label={text('signingIn')} />
+                <Spinner />
                 <h3>{text('signingIn')}</h3>
             </div>
             <p>{text('signingInHint')}</p>

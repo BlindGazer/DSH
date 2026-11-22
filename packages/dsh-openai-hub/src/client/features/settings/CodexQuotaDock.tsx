@@ -1,11 +1,11 @@
 import { CircularProgress, LinearProgress, Popover, Tooltip, useEffectiveTheme } from '@kalex/dsh-core';
-import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import { TestId } from '../../../shared/constants/testId.js';
+import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import { TestId } from '../../../shared/constants/testId.ts';
 import styles from './codexFooterStyles.module.scss';
-import { formatQuotaReset } from './formatQuotaReset.js';
-import { useCodexQuotaDock } from './hooks/useCodexQuotaDock.js';
-import type { ModelDirectories } from './modelSelectionSource.js';
-import type { OpenAICodexController } from './openAICodexRuntime.js';
+import { formatQuotaReset } from './formatQuotaReset.ts';
+import { useCodexQuotaDock } from './hooks/useCodexQuotaDock.ts';
+import type { ModelDirectories } from './modelSelectionSource.ts';
+import type { OpenAICodexController } from './openAICodexRuntime.ts';
 
 function remainingPercent(usedPercent: number): number {
     return Math.max(0, Math.min(100, Math.round(100 - usedPercent)));
@@ -25,54 +25,35 @@ export function CodexQuotaDock({ controller, directories, sessionId, text }: Cod
     if (!primaryLimit) return undefined;
     const limitLabel = (windowSeconds: number, name: string) =>
         windowSeconds === 18_000 ? text('fiveHourLimit') : windowSeconds === 604_800 ? text('weeklyLimit') : name;
-    const primaryLabel = `${limitLabel(primaryLimit.windowSeconds, primaryLimit.name)}: ${remainingPercent(primaryLimit.usedPercent)}%`;
+    const primaryRemaining = remainingPercent(primaryLimit.usedPercent);
+    const primaryLabel = `${limitLabel(primaryLimit.windowSeconds, primaryLimit.name)}: ${primaryRemaining}%`;
     return (
-        <span
-            className={`dsh-core-root ${styles.modelsUsageIndicators}`}
-            data-theme={theme}
-            data-testid={TestId.OpenAIHub.QuotaDock}
-            role="status">
-            <Tooltip
-                triggerLabel={primaryLabel}
-                triggerElement="span"
-                content={`${limitLabel(primaryLimit.windowSeconds, primaryLimit.name)}: ${remainingPercent(primaryLimit.usedPercent)}%`}>
-                <span className={styles.quotaDockValue}>
-                    <Popover
-                        triggerLabel={primaryLabel}
-                        content={
-                            <div className={styles.quotaTooltip}>
-                                {account.usageLimits.map(limit => {
-                                    const remaining = remainingPercent(limit.usedPercent);
-                                    const label = `${limitLabel(limit.windowSeconds, limit.name)}: ${remaining}%`;
-                                    return (
-                                        <div key={`${limit.name}-${limit.windowSeconds}`} className={styles.quotaTooltipItem}>
-                                            <div className={styles.quotaTooltipLabel}>
-                                                <span>{limitLabel(limit.windowSeconds, limit.name)}</span>
-                                                <span>{remaining}%</span>
-                                            </div>
-                                            {limit.resetAt > 0 ? (
-                                                <div className={styles.quotaTooltipReset}>{formatQuotaReset(limit.resetAt, text)}</div>
-                                            ) : undefined}
-                                            <LinearProgress value={remaining} label={label} size="small" color="accent" />
+        <span className={`dsh-core-root ${styles.modelsUsageIndicators}`} data-theme={theme} data-testid={TestId.OpenAIHub.QuotaDock}>
+            <Tooltip triggerElement="span" side="top" portal="body" content={primaryLabel}>
+                <Popover
+                    {...(styles.quotaDockTrigger ? { triggerClassName: styles.quotaDockTrigger } : {})}
+                    content={
+                        <div className={styles.quotaTooltip}>
+                            {account.usageLimits.map(limit => {
+                                const remaining = remainingPercent(limit.usedPercent);
+                                return (
+                                    <div key={`${limit.name}-${limit.windowSeconds}`} className={styles.quotaTooltipItem}>
+                                        <div className={styles.quotaTooltipLabel}>
+                                            <span>{limitLabel(limit.windowSeconds, limit.name)}</span>
+                                            <span>{remaining}%</span>
                                         </div>
-                                    );
-                                })}
-                            </div>
-                        }
-                        theme={theme}
-                        triggerElement="span"
-                        {...(styles.quotaDockTrigger ? { triggerClassName: styles.quotaDockTrigger } : {})}>
-                        <span className={styles.quotaDockValue}>
-                            <CircularProgress
-                                value={remainingPercent(primaryLimit.usedPercent)}
-                                label={primaryLabel}
-                                title={primaryLabel}
-                                size="small"
-                            />
-                            <span>{remainingPercent(primaryLimit.usedPercent)}%</span>
-                        </span>
-                    </Popover>
-                </span>
+                                        {limit.resetAt > 0 ? (
+                                            <div className={styles.quotaTooltipReset}>{formatQuotaReset(limit.resetAt, text)}</div>
+                                        ) : undefined}
+                                        <LinearProgress value={remaining} size="small" color="accent" />
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    }>
+                    <CircularProgress value={primaryRemaining} size="small" />
+                    <span>{primaryRemaining}%</span>
+                </Popover>
             </Tooltip>
         </span>
     );

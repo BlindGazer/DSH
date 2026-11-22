@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import type { DshThemeId, DshThemeMode, DshThemePreference } from '../models/DshContext.js';
-import { getDshTheme } from '../theme/palettes.js';
+import type { DshThemeId, DshThemeMode, DshThemePreference } from '../models/DshContext.ts';
+import { getDshTheme } from '../theme/palettes.ts';
 
 interface RgbColor {
     readonly r: number;

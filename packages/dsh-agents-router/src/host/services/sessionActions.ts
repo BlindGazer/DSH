@@ -1,9 +1,9 @@
-import { recordAudit } from './auditLogger.js';
-import { projectPaths } from './preflight.js';
-import { diagnosePath } from './ruleSelector.js';
-import type { RouterHostContext, RouterState } from './sessionController.js';
-import { currentDirectory, findLiveState, isTrulyIdle, refreshState } from './sessionController.js';
-import type { RouterStore } from './store.js';
+import { recordAudit } from './auditLogger.ts';
+import { projectPaths } from './preflight.ts';
+import { diagnosePath } from './ruleSelector.ts';
+import type { RouterHostContext, RouterState } from './sessionController.ts';
+import { currentDirectory, findLiveState, isTrulyIdle, refreshState } from './sessionController.ts';
+import type { RouterStore } from './store.ts';
 
 export async function readAuditLog(
     ctx: RouterHostContext,

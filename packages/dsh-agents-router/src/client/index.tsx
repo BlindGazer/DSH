@@ -1,11 +1,11 @@
 import type React from 'react';
-import { CLIENT_PLUGIN_ID, PACKAGE_ID } from '../shared/constants/constants.js';
-import type { RouterViewProps } from './app/RouterView.js';
-import { RouterViewBoundary } from './app/RouterViewBoundary.js';
-import { GlobalSettingsCard, type GlobalSettingsCardProps } from './features/global-settings/GlobalSettingsCard.js';
-import { PluginSettingsAction, type PluginSettingsActionProps } from './features/global-settings/PluginSettings.js';
-import { locales, resolveLocale } from './locales/index.js';
-import { getHostLocale, setHostLocale } from './utils/locale-context.js';
+import { CLIENT_PLUGIN_ID, PACKAGE_ID } from '../shared/constants/constants.ts';
+import type { RouterViewProps } from './app/RouterView.tsx';
+import { RouterViewBoundary } from './app/RouterViewBoundary.tsx';
+import { GlobalSettingsCard, type GlobalSettingsCardProps } from './features/global-settings/GlobalSettingsCard.tsx';
+import { PluginSettingsAction, type PluginSettingsActionProps } from './features/global-settings/PluginSettings.tsx';
+import { locales, resolveLocale } from './locales/index.ts';
+import { getHostLocale, setHostLocale } from './utils/locale-context.ts';
 
 export const name = CLIENT_PLUGIN_ID;
 export const inject = ['slots', 'locale'] as const;

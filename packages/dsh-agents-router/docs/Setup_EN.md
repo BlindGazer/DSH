@@ -13,7 +13,7 @@ Run from the DSH Desktop profile directory:
 
 ```powershell
 Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm install github:BlindGazer/DSH#path:packages/dsh-agents-router
+pnpm add github:BlindGazer/DSH#path:packages/dsh-agents-router
 ```
 
 ## Install from a local folder
@@ -53,4 +53,4 @@ pnpm run verify
 ## Requirements
 
 - Node.js and pnpm.
-- DSH version `0.2.2-rc.1` or newer (see `engines.dsh` in `package.json`).
+- DSH version `0.2.2-rc.5` or newer (see `engines.dsh` in `package.json`).

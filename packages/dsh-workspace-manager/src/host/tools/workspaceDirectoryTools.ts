@@ -1,5 +1,5 @@
 import { defineTool } from '@deepseek-ai/dsh-tools';
-import type { AddDirectoryOptions, LinkedDirectory, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.js';
+import type { AddDirectoryOptions, LinkedDirectory, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.ts';
 
 const directorySchema = {
     type: 'object',

@@ -1,0 +1,7 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "types": ["node", "vitest/globals"]
+    },
+    "include": ["../../../packages/dsh-logger-core/test/**/*"]
+}

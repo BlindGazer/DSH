@@ -24,12 +24,11 @@ import {
     TextField,
     ThemedSelect,
     Tooltip
-} from '../../src/index.js';
-import dshGithubStyles from './dsh-github-styles.css';
+} from '../../src/index.ts';
+import dshGithubStyles from './dsh-github-styles.css?inline';
 import galleryStyles from './style.module.css';
 
-void dshGithubStyles;
-ensureCoreStyles();
+ensureCoreStyles('kalex-dsh-core-demo-styles', dshGithubStyles);
 
 const options: SelectOption[] = [
     { value: 'one', label: 'Первый вариант' },
@@ -72,7 +71,7 @@ function ComponentGallery() {
                 <Button onClick={() => setDark(!dark)}>{dark ? 'Светлая тема' : 'Темная тема'}</Button>
             </header>
             <div className="gallery-summary">{listDshThemes().length} тем зарегистрировано в Core</div>
-            <Tabs items={tabs} activeValue={tab} onChange={setTab} ariaLabel="Раздел галереи" />
+            <Tabs items={tabs} activeValue={tab} onChange={setTab} />
             <section className="gallery-grid">
                 {tab === 'components' ? (
                     <>
@@ -98,19 +97,19 @@ function ComponentGallery() {
                             />
                             <h2>IconButton</h2>
                             <div className="row">
-                                <IconButton size="standard" ariaLabel="Информация">
+                                <IconButton size="standard" tooltip="Информация">
                                     <InfoIcon />
                                 </IconButton>
-                                <IconButton size="small" ariaLabel="Информация">
+                                <IconButton size="small" tooltip="Информация">
                                     <InfoIcon />
                                 </IconButton>
-                                <IconButton size="standard" ariaLabel="Настройки">
+                                <IconButton size="standard" tooltip="Настройки">
                                     <SettingsIcon />
                                 </IconButton>
                             </div>
                             <CodeDisclosure
                                 code={
-                                    '<IconButton size="standard" ariaLabel="Информация"><InfoIcon /></IconButton>\n<IconButton size="small" ariaLabel="Информация"><InfoIcon /></IconButton>'
+                                    '<IconButton size="standard" tooltip="Информация"><InfoIcon /></IconButton>\n<IconButton size="small" tooltip="Информация"><InfoIcon /></IconButton>'
                                 }
                             />
                         </article>
@@ -128,38 +127,26 @@ function ComponentGallery() {
                                 }
                             />
                             <div className="stack">
-                                <TextField size="standard" ariaLabel="Стандартное поле" value="Standard" onChange={() => undefined} />
-                                <TextField size="small" ariaLabel="Компактное поле" value="Small" onChange={() => undefined} />
-                                <ThemedSelect
-                                    size="standard"
-                                    options={options}
-                                    value={selected}
-                                    onChange={setSelected}
-                                    ariaLabel="Стандартный список"
-                                />
-                                <ThemedSelect
-                                    size="small"
-                                    options={options}
-                                    value={selected}
-                                    onChange={setSelected}
-                                    ariaLabel="Компактный список"
-                                />
+                                <TextField size="standard" value="Standard" onChange={() => undefined} />
+                                <TextField size="small" value="Small" onChange={() => undefined} />
+                                <ThemedSelect size="standard" options={options} value={selected} onChange={setSelected} />
+                                <ThemedSelect size="small" options={options} value={selected} onChange={setSelected} />
                                 <label className="field-label" htmlFor="demo-name">
                                     Название
                                 </label>
-                                <TextField id="demo-name" ariaLabel="Название" value="Пример значения" onChange={() => undefined} />
-                                <ThemedSelect options={options} value={selected} onChange={setSelected} ariaLabel="Выбор варианта" />
+                                <TextField id="demo-name" value="Пример значения" onChange={() => undefined} />
+                                <ThemedSelect options={options} value={selected} onChange={setSelected} />
                             </div>
                         </article>
                         <article className="sample">
                             <h2>Checkbox</h2>
                             <div className="row">
-                                <Checkbox checked={checked} onChange={setChecked} ariaLabel="Флажок" />
+                                <Checkbox checked={checked} onChange={setChecked} />
                             </div>
                             <CodeDisclosure code={'<Checkbox checked={checked} onChange={setChecked} />'} />
                             <h2>SwitchControl</h2>
                             <div className="row">
-                                <SwitchControl checked={checked} onChange={setChecked} ariaLabel="Переключатель" />
+                                <SwitchControl checked={checked} onChange={setChecked} />
                             </div>
                             <CodeDisclosure code={'<SwitchControl checked={enabled} onChange={setEnabled} />'} />
                             <h2>RadioCardGroup</h2>
@@ -174,8 +161,8 @@ function ComponentGallery() {
                             </div>
                             <CodeDisclosure code={'<RadioCardGroup name="choice" label="Выбор" options={options} />'} />
                             <div className="row">
-                                <Checkbox checked={checked} onChange={setChecked} ariaLabel="Флажок" />
-                                <SwitchControl checked={checked} onChange={setChecked} ariaLabel="Переключатель" />
+                                <Checkbox checked={checked} onChange={setChecked} />
+                                <SwitchControl checked={checked} onChange={setChecked} />
                                 <RadioCardGroup
                                     name="demo-choice"
                                     label="Выберите вариант"
@@ -187,18 +174,14 @@ function ComponentGallery() {
                         </article>
                         <article className="sample">
                             <h2>Tooltip</h2>
-                            <CodeDisclosure
-                                code={'<Tooltip triggerLabel="Помощь" content="Подсказка">\n  <Button>Навести</Button>\n</Tooltip>'}
-                            />
+                            <CodeDisclosure code={'<Tooltip content="Подсказка">\n  <Button>Навести</Button>\n</Tooltip>'} />
                             <h2>Popover</h2>
-                            <CodeDisclosure
-                                code={'<Popover triggerLabel="Детали" content="Текст">\n  <Button>Открыть</Button>\n</Popover>'}
-                            />
+                            <CodeDisclosure code={'<Popover content="Текст">\n  <Button>Открыть</Button>\n</Popover>'} />
                             <div className="row">
-                                <Tooltip triggerLabel="Tooltip" content="Стандартная подсказка DSH">
+                                <Tooltip content="Стандартная подсказка DSH">
                                     <Button variant="secondary">Tooltip</Button>
                                 </Tooltip>
-                                <Popover triggerLabel="Popover" content="Текст можно выделить мышью" contentLabel="Popover">
+                                <Popover content="Текст можно выделить мышью">
                                     <Button variant="secondary">Popover</Button>
                                 </Popover>
                                 <Button onClick={() => setModalOpen(true)}>Открыть окно</Button>
@@ -206,25 +189,21 @@ function ComponentGallery() {
                         </article>
                         <article className="sample">
                             <h2>Spinner</h2>
-                            <CodeDisclosure
-                                code={
-                                    '<Spinner size="standard" aria-label="Загрузка" />\n<Spinner size="small" aria-label="Компактная загрузка" />'
-                                }
-                            />
+                            <CodeDisclosure code={'<Spinner size="standard" />\n<Spinner size="small" />'} />
                             <h2>ProgressBar</h2>
-                            <CodeDisclosure code={'<ProgressBar label="Загрузка страницы" />'} />
+                            <CodeDisclosure code={'<ProgressBar />'} />
                             <h2>CircularProgress и LinearProgress</h2>
                             <CodeDisclosure
                                 code={
-                                    '<CircularProgress value={64} size="standard" label="Прогресс" />\n<CircularProgress value={64} size="small" label="Компактный прогресс" />\n<LinearProgress value={64} size="standard" label="Прогресс" />\n<LinearProgress value={64} size="small" label="Компактный прогресс" />'
+                                    '<CircularProgress value={64} size="standard" />\n<CircularProgress value={64} size="small" />\n<LinearProgress value={64} size="standard" />\n<LinearProgress value={64} size="small" />'
                                 }
                             />
                             <div className="stack">
                                 <div className="row">
                                     <Spinner />
-                                    <CircularProgress value={64} label="Прогресс 64%" />
-                                    <LinearProgress value={64} label="Загрузка" />
-                                    <ProgressBar label="Загрузка страницы" />
+                                    <CircularProgress value={64} />
+                                    <LinearProgress value={64} />
+                                    <ProgressBar />
                                 </div>
                                 <Skeleton height={14} />
                             </div>
@@ -236,16 +215,10 @@ function ComponentGallery() {
                             <h2>Отключенные элементы</h2>
                             <div className="row">
                                 <Button disabled>Кнопка</Button>
-                                <Checkbox checked={false} onChange={() => undefined} ariaLabel="Отключенный флажок" disabled />
-                                <SwitchControl checked={false} onChange={() => undefined} ariaLabel="Отключенный переключатель" disabled />
-                                <ThemedSelect
-                                    options={options}
-                                    value={selected}
-                                    onChange={setSelected}
-                                    ariaLabel="Отключенный список"
-                                    disabled
-                                />
-                                <TextField ariaLabel="Отключенное поле" value="Недоступно" onChange={() => undefined} disabled />
+                                <Checkbox checked={false} onChange={() => undefined} disabled />
+                                <SwitchControl checked={false} onChange={() => undefined} disabled />
+                                <ThemedSelect options={options} value={selected} onChange={setSelected} disabled />
+                                <TextField value="Недоступно" onChange={() => undefined} disabled />
                             </div>
                         </article>
                         <article className="sample">
@@ -258,12 +231,7 @@ function ComponentGallery() {
                     </>
                 )}
             </section>
-            <Modal
-                open={modalOpen}
-                onClose={() => setModalOpen(false)}
-                title="Демо модального окна"
-                theme={dark ? 'dark' : 'light'}
-                closeLabel="Закрыть">
+            <Modal open={modalOpen} onClose={() => setModalOpen(false)} title="Демо модального окна" closeLabel="Закрыть">
                 <p className="modal-copy">Окно использует тему, выбранную в галерее.</p>
             </Modal>
         </main>

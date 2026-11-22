@@ -1,6 +1,6 @@
 ---
-description: Forbid reading or changing secrets anywhere in the repository, do not expore secrets in logs/tests/examples
+description: Protect secrets and credentials in repository work.
 ---
 
-- Dot not read or change secrets or credintials with user approvel
-- Do not expose, secrets or credentials in logs, tests, or examples
+- Do not read or change secrets or credentials without explicit user approval.
+- Never expose secrets or credentials in source code, logs, tests, examples, or reports.

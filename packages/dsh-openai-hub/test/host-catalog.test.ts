@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { CATALOG_URL, localCatalog, requestCatalog } from '../src/host/catalog.js';
+import { CATALOG_URL, localCatalog, requestCatalog } from '../src/host/catalog.ts';
 
 describe('authenticated Codex catalog', () => {
     it('loads synthetic Sol/Astra 6.2 entries and uses protected headers only on the upstream request', async () => {

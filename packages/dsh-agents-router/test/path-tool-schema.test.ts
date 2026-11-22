@@ -1,5 +1,5 @@
 import { assert, expect, test } from 'vitest';
-import { createPathTool } from '../src/host/services/pathTool.js';
+import { createPathTool } from '../src/host/services/pathTool.ts';
 
 interface PathToolProperty {
     readonly enum?: readonly string[];

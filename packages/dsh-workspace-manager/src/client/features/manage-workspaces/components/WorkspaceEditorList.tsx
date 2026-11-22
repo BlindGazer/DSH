@@ -1,8 +1,8 @@
 import { Button } from '@kalex/dsh-core';
-import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.js';
-import { TestId } from '../../../../shared/constants/testId.js';
-import type { UseWorkspaceSnapshot } from '../../../models/WorkspaceManagerClientContext.js';
-import { getWorkspaceDisplayTitle } from '../services/workspaceLabels.js';
+import type { Translate } from '../../../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import { TestId } from '../../../../shared/constants/testId.ts';
+import type { UseWorkspaceSnapshot } from '../../../models/WorkspaceManagerClientContext.ts';
+import { getWorkspaceDisplayTitle } from '../services/workspaceLabels.ts';
 
 interface WorkspaceEditorListProps {
     readonly useWorkspaces: UseWorkspaceSnapshot;

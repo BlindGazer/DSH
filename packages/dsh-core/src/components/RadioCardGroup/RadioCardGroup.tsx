@@ -1,4 +1,4 @@
-import { cx } from '../../utils/classNames.js';
+import { cx } from '../../utils/classNames.ts';
 
 export interface RadioCardGroupProps<T extends string> {
     readonly name: string;
@@ -34,8 +34,6 @@ export function RadioCardGroup<T extends string>({
                             name={name}
                             value={option.value}
                             checked={value === option.value}
-                            aria-label={option.label}
-                            aria-describedby={`${name}-${option.value}-description`}
                             onChange={() => onChange(option.value)}
                         />
                         <span className="dsh-radio-card-content">

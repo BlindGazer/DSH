@@ -1,1 +1,1 @@
-export { CodeDisclosure, type CodeDisclosureProps } from './CodeDisclosure.js';
+export { CodeDisclosure, type CodeDisclosureProps } from './CodeDisclosure.tsx';

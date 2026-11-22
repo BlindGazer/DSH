@@ -1,12 +1,11 @@
-import { useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect, useState } from 'react';
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
-import { ImportExportSection } from '../../import-export/components/ImportExportSection.js';
-import { useImportExportHandlers } from '../../import-export/hooks/useImportExportHandlers.js';
-import { ProfilesSection } from '../../profiles/components/ProfilesSection.js';
-import { useProfileActions } from '../../profiles/hooks/useProfileActions.js';
-import { RoutingSection } from '../../routing/components/RoutingSection.js';
+import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
+import { ImportExportSection } from '../../import-export/components/ImportExportSection.tsx';
+import { useImportExportHandlers } from '../../import-export/hooks/useImportExportHandlers.ts';
+import { ProfilesSection } from '../../profiles/components/ProfilesSection.tsx';
+import { useProfileActions } from '../../profiles/hooks/useProfileActions.ts';
+import { RoutingSection } from '../../routing/components/RoutingSection.tsx';
 
 export interface ProxySettingsModalProps {
     readonly open: boolean;
@@ -17,7 +16,6 @@ export interface ProxySettingsModalProps {
  * Модальное окно управления профилями прокси, маршрутизацией провайдеров и экспортом/импортом.
  */
 export function ProxySettingsModal({ open, onClose }: ProxySettingsModalProps) {
-    const effectiveTheme = useEffectiveTheme();
     const snap = useProxyStore();
     const { resetForOpen: resetProfileForOpen, ...profileActions } = useProfileActions(snap);
     const { resetForOpen: resetImportExportForOpen, ...importExport } = useImportExportHandlers({
@@ -35,8 +33,8 @@ export function ProxySettingsModal({ open, onClose }: ProxySettingsModalProps) {
     if (!open) return undefined;
 
     return (
-        <div className={`dsh-core-root ${proxyClasses('modalBackdrop')}`} data-theme={effectiveTheme}>
-            <div className={proxyClasses('modal')} role="dialog" aria-modal="true" aria-label={tProxy('Proxy settings')}>
+        <div className={proxyClasses('modalBackdrop')}>
+            <div className={proxyClasses('modal')}>
                 <div className={proxyClasses('modalHeader')}>
                     <h2 className={proxyClasses('modalTitle')}>{tProxy('Proxy settings')}</h2>
                     <ImportExportSection placement="header" {...importExport} />

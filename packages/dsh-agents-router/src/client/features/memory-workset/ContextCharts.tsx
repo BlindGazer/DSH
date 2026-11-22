@@ -1,5 +1,6 @@
+import { Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
-import type { RouterStateResponse } from '../../../shared/models/RouterModels.js';
+import type { RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 
 export interface ContextBarProps {
     data: RouterStateResponse;
@@ -18,18 +19,15 @@ export function ContextBar({ data, t }: ContextBarProps): React.JSX.Element {
         [t('skillCatalogMetric'), skillsCount, 'ar-amber'],
         [t('invokedSkills'), loadedCount, 'ar-green']
     ];
-    const total = values.reduce((sum, item) => sum + item[1], 0);
+    const stackColumns = values.map(([, count]) => `${count}fr`).join(' ');
 
     return (
         <>
-            <div className="ar-stack">
+            <div className="ar-stack" style={{ gridTemplateColumns: stackColumns }}>
                 {values.map(([name, count, color]) => (
-                    <span
-                        key={name}
-                        className={color}
-                        style={{ width: `${total ? (count / total) * 100 : 0}%` }}
-                        title={`${name}: ${count}`}
-                    />
+                    <Tooltip key={name} className={color} content={`${name}: ${count}`} triggerElement="span">
+                        {null}
+                    </Tooltip>
                 ))}
             </div>
             <div className="ar-grid ar-legend">
@@ -76,7 +74,7 @@ export function TokenChart({ points, budget }: TokenChartProps): React.JSX.Eleme
 
     return (
         <div className="ar-chart">
-            <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label="Token usage history">
+            <svg viewBox={`0 0 ${width} ${height}`}>
                 <path d={area} className="ar-chart-area" />
                 <path d={line} className="ar-chart-line" />
                 <line x1="0" x2={width} y1={budgetY} y2={budgetY} className="ar-chart-budget" />

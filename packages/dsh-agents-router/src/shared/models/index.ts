@@ -6,4 +6,4 @@ export type {
     ProjectDiscoverySnapshot,
     ProjectSettings,
     RouterDiagnostic
-} from './RouterModels.js';
+} from './RouterModels.ts';

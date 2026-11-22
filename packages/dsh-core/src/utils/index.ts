@@ -1,3 +1,3 @@
-export { cx } from './classNames.js';
-export { formatMessage } from './formatMessage.js';
-export { extractHost, sanitizeHostInput } from './hostSanitizer.js';
+export { cx } from './classNames.ts';
+export { formatMessage } from './formatMessage.ts';
+export { extractHost, sanitizeHostInput } from './hostSanitizer.ts';

@@ -1,1 +1,1 @@
-export { apply, inject, name } from './services/plugin.js';
+export { apply, inject, name } from './services/plugin.ts';

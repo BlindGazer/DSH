@@ -5,27 +5,27 @@ import type {
     ProxyStateSnapshot,
     SanitizedProxyConfig,
     TestConnectionResult
-} from '../../shared/models/ProxyModels.js';
+} from '../../shared/models/ProxyModels.ts';
 import type {
     MasterKeyProvider,
     ProfileDispatcherLifecycle,
     ProxyConfigStorage,
     RawConfigCandidate,
     RawProfileCandidate
-} from '../models/ProxyServiceContracts.js';
+} from '../models/ProxyServiceContracts.ts';
 import {
     exportConfig as exportConfigData,
     importConfig as importConfigData,
     normalizeProfile,
     normalizeProxyConfig,
     sanitizeConfigForClient
-} from './configNormalizer.js';
-import { dispatchWithUndiciFetch, type RequestLikeInput, testProxyConnection } from './connectionTest.js';
-import { fileMasterKeyProvider } from './cryptoStore.js';
-import { DispatcherManager } from './profileDispatcher.js';
-import { discoverProviders, type HostDiscoveryContext, type ProviderInfoCandidate } from './providerDiscovery.js';
-import { compileRoutingTable } from './providerRouting.js';
-import { fileProxyConfigStorage, resolveStoragePath } from './storage.js';
+} from './configNormalizer.ts';
+import { dispatchWithUndiciFetch, type RequestLikeInput, testProxyConnection } from './connectionTest.ts';
+import { fileMasterKeyProvider } from './cryptoStore.ts';
+import { DispatcherManager } from './profileDispatcher.ts';
+import { discoverProviders, type HostDiscoveryContext, type ProviderInfoCandidate } from './providerDiscovery.ts';
+import { compileRoutingTable } from './providerRouting.ts';
+import { fileProxyConfigStorage, resolveStoragePath } from './storage.ts';
 
 function extractTargetUrlString(input: string | URL | { readonly url?: string } | undefined | null): string | null {
     if (typeof input === 'string') return input;

@@ -1,4 +1,4 @@
-export { ChildrenLazy, type ChildrenLazyProps } from './ChildrenLazy.js';
-export { ProgressBar, type ProgressBarProps } from './ProgressBar.js';
-export { Skeleton, type SkeletonProps } from './Skeleton.js';
-export { Spinner, type SpinnerProps } from './Spinner.js';
+export { ChildrenLazy, type ChildrenLazyProps } from './ChildrenLazy.tsx';
+export { ProgressBar, type ProgressBarProps } from './ProgressBar.tsx';
+export { Skeleton, type SkeletonProps } from './Skeleton.tsx';
+export { Spinner, type SpinnerProps } from './Spinner.tsx';

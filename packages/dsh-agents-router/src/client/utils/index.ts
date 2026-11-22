@@ -1,3 +1,3 @@
-export * from './api.js';
-export * from './locale-context.js';
-export * from './name-list.js';
+export * from './api.ts';
+export * from './locale-context.ts';
+export * from './name-list.ts';

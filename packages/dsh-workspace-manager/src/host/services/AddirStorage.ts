@@ -8,7 +8,7 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
-import { canonicalizePath } from './pathUtils.js';
+import { canonicalizePath } from './pathUtils.ts';
 
 export interface StoredDirectoryEntry {
     path: string;

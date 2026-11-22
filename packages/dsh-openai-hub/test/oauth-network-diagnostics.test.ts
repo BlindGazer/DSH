@@ -1,8 +1,8 @@
 import { channel } from 'node:diagnostics_channel';
 import { describe, expect, it, vi } from 'vitest';
-import { withOAuthNetworkDiagnostics } from '../src/host/oauth-network-diagnostics.js';
-import { oauthNetworkFailure } from '../src/host/oauth-network-error.js';
-import { OpenAIHubClientLogEventSchema, type OpenAIHubLogEvent } from '../src/shared/logging.js';
+import { withOAuthNetworkDiagnostics } from '../src/host/oauth-network-diagnostics.ts';
+import { oauthNetworkFailure } from '../src/host/oauth-network-error.ts';
+import { OpenAIHubClientLogEventSchema, type OpenAIHubLogEvent } from '../src/shared/logging.ts';
 
 const request = {
     request: { origin: 'https://auth.openai.com', path: '/oauth/token', method: 'POST', headers: 'private-header', body: 'private-code' }

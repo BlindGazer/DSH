@@ -2,9 +2,10 @@ import { describe, expect, it } from 'vitest'
 import {
   createWorkspaceDirectoriesMessage,
   formatWorkspaceDirectoriesPrompt,
+  getWorkspaceDirectoriesFingerprint,
   isWorkspaceDirectoriesMessage,
-} from '../src/host/context/workspaceDirectoriesContext.js'
-import type { LinkedDirectory } from '../src/shared/models/WorkspaceDirectories.js'
+} from '../src/host/context/workspaceDirectoriesContext.ts'
+import type { LinkedDirectory } from '../src/shared/models/WorkspaceDirectories.ts'
 
 describe('context injection', () => {
   const primaryDir: LinkedDirectory = {
@@ -48,6 +49,16 @@ describe('context injection', () => {
     expect(prompt).toContain('- [docs] `/workspace/docs` [Read-Only] - Architecture documentation')
     expect(prompt).toContain('All file reading, searching, and execution tools accept paths located inside any of these directories.')
   })
+
+  it('fingerprint ignores addedAt and directory ordering', () => {
+    const first = getWorkspaceDirectoriesFingerprint([primaryDir, secondaryDir]);
+    const second = getWorkspaceDirectoriesFingerprint([
+      { ...secondaryDir, addedAt: 9999 },
+      { ...primaryDir, addedAt: 8888 },
+    ]);
+    expect(second).toBe(first);
+    expect(getWorkspaceDirectoriesFingerprint([{ ...secondaryDir, readOnly: true }, primaryDir])).not.toBe(first);
+  });
 
   it('creates and identifies user message', () => {
     const message = createWorkspaceDirectoriesMessage([primaryDir, secondaryDir])

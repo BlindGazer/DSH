@@ -1,4 +1,4 @@
-import type { KalexProviderProxyConfig, ProxyProfile } from '../../shared/models/ProxyModels.js';
+import type { KalexProviderProxyConfig, ProxyProfile } from '../../shared/models/ProxyModels.ts';
 
 export interface RawProfileCandidate {
     readonly id?: string;

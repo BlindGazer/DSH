@@ -1,3 +1,3 @@
-export { Delay } from './delay.js';
-export { CoreLocalization, type CoreMessages } from './localizations/CoreLocalization.js';
-export { TestId } from './testId.js';
+export { Delay } from './delay.ts';
+export { CoreLocalization, type CoreMessages } from './localizations/CoreLocalization.ts';
+export { TestId } from './testId.ts';

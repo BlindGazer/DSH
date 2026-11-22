@@ -1,6 +1,6 @@
 import { realpath, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { inside } from './discoveryFs.js';
+import { inside } from './discoveryFs.ts';
 
 interface RedirectSettings {
     redirectRootInstructionFiles: boolean;

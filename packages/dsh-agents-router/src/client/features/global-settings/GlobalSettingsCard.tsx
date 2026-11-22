@@ -1,10 +1,11 @@
 import { buildCoreThemeStyles, Spinner, SwitchControl, ThemedSelect, useDshThemeRevision } from '@kalex/dsh-core';
 import type React from 'react';
 import { useRef } from 'react';
-import { locales, resolveLocale } from '../../locales/index.js';
-import { useEffectiveTheme } from '../../theme/useEffectiveTheme.js';
-import { getHostLocale } from '../../utils/locale-context.js';
-import { useGlobalSettings } from './hooks/useGlobalSettings.js';
+import type { GlobalSettings } from '../../../shared/models/RouterModels.ts';
+import { locales, resolveLocale } from '../../locales/index.ts';
+import { useEffectiveTheme } from '../../theme/useEffectiveTheme.ts';
+import { getHostLocale } from '../../utils/locale-context.ts';
+import { useGlobalSettings } from './hooks/useGlobalSettings.ts';
 import styles from './settingsStyles.module.scss';
 import settingsStyleText from './settingsStyles.module.scss?inline';
 
@@ -14,20 +15,35 @@ export interface GlobalSettingsCardProps {
 }
 
 export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsCardProps): React.JSX.Element {
+    const state = useGlobalSettings();
+    const content = <GlobalSettingsContent state={state} isModal={isModal} {...(onClose ? { onClose } : {})} />;
+    return isModal ? content : <SettingsRoot preference={state.settings?.theme ?? 'auto'}>{content}</SettingsRoot>;
+}
+
+export function SettingsRoot({ preference, children }: { preference: GlobalSettings['theme']; children: React.ReactNode }) {
     const rootRef = useRef<HTMLDivElement | null>(null);
-    const { settings, notice, error, busy, update, resetDefaults, save } = useGlobalSettings();
-    const effectiveTheme = useEffectiveTheme(settings?.theme ?? 'auto', rootRef);
+    const effectiveTheme = useEffectiveTheme(preference, rootRef);
     const themeRevision = useDshThemeRevision();
+    return (
+        <div ref={rootRef} className={`ar-settings-root ${styles.scope}`} data-theme={effectiveTheme}>
+            <style data-theme-revision={themeRevision}>{`${buildCoreThemeStyles()}\n${settingsStyleText}`}</style>
+            {children}
+        </div>
+    );
+}
+
+function GlobalSettingsContent({ state, isModal, onClose }: GlobalSettingsCardProps & { state: ReturnType<typeof useGlobalSettings> }) {
+    const { settings, notice, error, busy, update, resetDefaults, save } = state;
     const locale = resolveLocale(settings?.locale, getHostLocale());
     const t = (key: string): string => (locales[locale] as Record<string, string>)[key] ?? key;
 
     if (!settings) {
         return (
-            <div ref={rootRef} className={`ar-settings-root ${styles.scope}`} data-theme={effectiveTheme}>
-                <style data-theme-revision={themeRevision}>{`${buildCoreThemeStyles()}\n${settingsStyleText}`}</style>
+            <div className="ar-settings-layout">
+                {isModal ? <style>{settingsStyleText}</style> : undefined}
                 <section id="agents-router-global-settings" className="ar-settings-card">
                     <h2>{t('router')}</h2>
-                    {error ? <p role="alert">{error}</p> : <Spinner />}
+                    {error ? <p>{error}</p> : <Spinner />}
                 </section>
             </div>
         );
@@ -39,9 +55,9 @@ export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsC
     };
 
     return (
-        <div ref={rootRef} className={`ar-settings-root ${styles.scope}`} data-theme={effectiveTheme}>
-            <style data-theme-revision={themeRevision}>{`${buildCoreThemeStyles()}\n${settingsStyleText}`}</style>
-            <section id="agents-router-global-settings" className="ar-settings-card" aria-label={t('globalSettings')}>
+        <div className="ar-settings-layout">
+            {isModal ? <style>{settingsStyleText}</style> : undefined}
+            <section id="agents-router-global-settings" className="ar-settings-card">
                 <div className="ar-settings-heading">
                     <div>
                         <h2>{t('globalSettings')}</h2>
@@ -63,7 +79,6 @@ export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsC
                             <small>{t('localeHint')}</small>
                         </span>
                         <ThemedSelect
-                            ariaLabel={t('locale')}
                             value={settings.locale}
                             disabled={busy}
                             onChange={value => update('locale', value)}
@@ -80,7 +95,6 @@ export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsC
                             <small>{t('themeHint')}</small>
                         </span>
                         <ThemedSelect
-                            ariaLabel={t('theme')}
                             value={settings.theme}
                             disabled={busy}
                             onChange={value => update('theme', value)}
@@ -97,7 +111,6 @@ export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsC
                             <small>{t('pollingHint')}</small>
                         </span>
                         <ThemedSelect
-                            ariaLabel={t('polling')}
                             value={String(settings.pollingIntervalMs)}
                             disabled={busy}
                             onChange={value => {
@@ -120,18 +133,15 @@ export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsC
                             <small>{t('loggingHint')}</small>
                         </span>
                         <SwitchControl
-                            labelledBy="ar-global-logging-label"
                             checked={settings.globalLogging}
                             disabled={busy}
                             onChange={checked => update('globalLogging', checked)}
                         />
                     </div>
                     <div className="ar-settings-footer">
-                        <div aria-live="polite">
+                        <div>
                             {error ? (
-                                <span className="ar-settings-error" role="alert">
-                                    {error}
-                                </span>
+                                <span className="ar-settings-error">{error}</span>
                             ) : notice ? (
                                 <span className="ar-settings-success">{notice}</span>
                             ) : null}

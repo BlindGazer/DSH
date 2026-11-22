@@ -1,6 +1,6 @@
 import { assert, test } from 'vitest';
 import { parse as parseYaml } from 'yaml';
-import { normalizeRulePatterns, sanitizeFrontmatterYaml, splitGlobString } from '../src/host/services/globNormalizer.js';
+import { normalizeRulePatterns, sanitizeFrontmatterYaml, splitGlobString } from '../src/host/services/globNormalizer.ts';
 
 test('quotes unquoted glob values so YAML accepts wildcard and brace syntax', () => {
     const sanitized = sanitizeFrontmatterYaml('globs: *.ts, *.tsx\nglob: src/**/*.{ts,tsx}\npaths: src/"quoted".ts');

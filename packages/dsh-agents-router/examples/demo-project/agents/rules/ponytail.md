@@ -26,4 +26,4 @@ Take the first option that fully works:
 - Keep the structure the codebase already has: its layers, interfaces and conventions.
 - Comment only the why the code cannot show, in one line.
 
-Never cut: validation at trust boundaries, error handling that prevents data loss, security, accessibility.
+Never cut: validation at trust boundaries, error handling that prevents data loss, security, keyboard operation, focus, contrast, visible labels, and native functionality. Screenreader support is out of scope; preserve external host DOM contracts and functional attribute consumers.

@@ -47,6 +47,10 @@ const asElement = (value: RuntimeValue): RenderedElement => {
     ) {
         return value as RenderedElement;
     }
+    if (value && typeof value === 'object' && !Array.isArray(value) && typeof value.tag === 'function') {
+        const render = value.tag as (props: RuntimeObject) => RuntimeValue;
+        return asElement(render(value.props as RuntimeObject));
+    }
     throw new Error('expected a rendered element');
 };
 
@@ -74,8 +78,8 @@ test('client bundle registers under the package name expected by the host', asyn
     assert.match(styles, /\.ar-tabs\{[^}]*padding:5px 6px/);
     assert.match(styles, /\.ar-tabs button\.selected,[^}]*border-color:var\(--ar-border\)/);
     assert.ok(source.includes('`ar-tabs`'));
-    assert.ok(source.includes('`tablist`'));
-    assert.ok(source.includes('"aria-selected"'));
+    assert.ok(source.includes('ar-tab-btn'));
+    assert.ok(!source.includes('"aria-selected"'));
     assert.ok(source.includes('rootInstructionFileNames'));
     assert.ok(source.includes('instructionDirectoryNames'));
     assert.ok(source.includes('AGENTS.md'));
@@ -87,7 +91,11 @@ test('client bundle registers under the package name expected by the host', asyn
     assert.ok(pkg.dsh.client.inject.includes('@deepseek-ai/dsh-client-ui-slots'));
     const registrations: ModuleRegistration[] = [];
     runInNewContext(source, {
-        window: { __ModuleLoader__: { load: (entry: ModuleRegistration) => registrations.push(entry) } },
+        window: {
+            __ModuleLoader__: { load: (entry: ModuleRegistration) => registrations.push(entry) },
+            addEventListener: () => undefined,
+            removeEventListener: () => undefined
+        },
         process: { env: { NODE_ENV: 'production' } }
     });
     assert.equal(registrations.length, 1);
@@ -117,6 +125,7 @@ test('client bundle registers under the package name expected by the host', asyn
         return {
             __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED: reactInternals,
             Component: mockReactComponent,
+            createContext: (value: RuntimeValue) => ({ Provider: 'context-provider', value }),
             useState: (initial?: RuntimeValue) => [initial === undefined ? stateValues[stateIndex++] : initial, () => {}],
             useEffect: () => {},
             useCallback: <Callback extends (...args: never[]) => RuntimeValue>(callback: Callback) => callback,
@@ -182,7 +191,9 @@ test('client bundle registers under the package name expected by the host', asyn
     assert.match(String(view.props.className), /\bar-settings-root\b/);
     const [styleValue, cardValue] = view.props.children as RuntimeValue[];
     const style = asElement(styleValue);
-    const card = asElement(cardValue);
+    const layout = asElement(cardValue);
+    assert.isUndefined(layout.props['data-theme']);
+    const card = asElement((layout.props.children as RuntimeValue[])[1]);
     assert.equal(style.tag, 'style');
     assert.match(style.props.children as string, /\.ar-settings-row\{/);
     assert.match(style.props.children as string, /\.ar-settings-jump\{[^}]*height:28px/);

@@ -1,7 +1,7 @@
 import { readFile, realpath, stat } from 'node:fs/promises';
 import path from 'node:path';
-import { DEFAULT_PROJECT_SETTINGS, type ProjectSettings, parseAreasConfig } from '../../shared/index.js';
-import type { AreaDefinition, DiscoveredRule, DiscoveredSkill, RouterDiagnostic } from '../../shared/models/RouterModels.js';
+import { DEFAULT_PROJECT_SETTINGS, type ProjectSettings, parseAreasConfig } from '../../shared/index.ts';
+import type { AreaDefinition, DiscoveredRule, DiscoveredSkill, RouterDiagnostic } from '../../shared/models/RouterModels.ts';
 import {
     addRuleFile,
     areaOrder,
@@ -16,8 +16,8 @@ import {
     inside,
     posixRelative,
     safeDirectory
-} from './discoveryFs.js';
-import { parseInstruction } from './frontmatter.js';
+} from './discoveryFs.ts';
+import { parseInstruction } from './frontmatter.ts';
 
 interface ProjectDiscoverySnapshot {
     projectRoot?: string;
@@ -248,4 +248,4 @@ export async function loadSkillDefinition(
     }
 }
 
-export { diagnosePath, renderRules, selectRules } from './ruleSelector.js';
+export { diagnosePath, renderRules, selectRules } from './ruleSelector.ts';

@@ -1,6 +1,6 @@
 import { assert, expect, test } from 'vitest';
-import { recordAudit, shouldSkipBatchAudit } from '../src/host/services/auditLogger.js';
-import type { DiscoveredRule } from '../src/shared/models/RouterModels.js';
+import { recordAudit, shouldSkipBatchAudit } from '../src/host/services/auditLogger.ts';
+import type { DiscoveredRule } from '../src/shared/models/RouterModels.ts';
 
 const state = () => ({
     lastLoggedBatchKey: '',

@@ -96,6 +96,10 @@
     margin-left: auto;
 }
 
+.confirmationActions {
+    justify-content: flex-end;
+}
+
 .confirmationBody {
     display: grid;
     gap: 10px;
@@ -149,17 +153,21 @@
     white-space: nowrap;
 }
 
-.quotaDockTrigger,
-.quotaDockValue {
-    display: inline-flex;
-    align-items: center;
+.modelsUsageIndicators .quotaDockTrigger {
     gap: 6px;
-    color: var(--dsw-alias-label-primary);
+    padding: 4px 8px;
+    border-radius: var(--dsw-radius-sm, 6px);
+    color: var(--dsw-alias-label-tertiary, var(--dsh-ui-tertiary));
     font-size: var(--dsh-content-font-size-secondary, 13px);
     font-weight: 400;
     line-height: 18px;
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
+}
+
+.quotaDockTrigger:hover,
+.quotaDockTrigger:focus-visible {
+    background: var(--dsw-alias-interactive-bg-hover, var(--dsh-ui-hover));
 }
 
 .quotaTooltip {

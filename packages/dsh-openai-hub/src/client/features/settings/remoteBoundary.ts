@@ -1,8 +1,6 @@
 import type { RemoteResult } from '@deepseek-ai/dsh-typert-protocol';
-import type { OpenAIHubClientLogEvent, OpenAIHubLogSettings } from '../../../shared/logging.js';
-import { OpenAIHubLogSettingsSchema } from '../../../shared/logging.js';
-import type { OpenAICodexSnapshot, OpenAIHubRemote } from '../../../shared/remote.js';
-import { SnapshotSchema } from '../../../shared/remote.js';
+import type { OpenAICodexSnapshot, OpenAIHubRemote } from '../../../shared/remote.ts';
+import { SnapshotSchema } from '../../../shared/remote.ts';
 
 export type OpenAIHubWireRemote = {
     [Method in keyof OpenAIHubRemote]: (
@@ -14,11 +12,6 @@ async function snapshot(operation: Promise<RemoteResult<OpenAICodexSnapshot>>): 
     if (!result.ok) throw new Error('OpenAI Hub request failed');
     return SnapshotSchema.parse(result.value);
 }
-async function loggingSettings(operation: Promise<RemoteResult<OpenAIHubLogSettings>>): Promise<OpenAIHubLogSettings> {
-    const result = await operation;
-    if (!result.ok) throw new Error('OpenAI Hub logging settings request failed');
-    return OpenAIHubLogSettingsSchema.parse(result.value);
-}
 async function accepted(operation: Promise<RemoteResult<true>>): Promise<true> {
     const result = await operation;
     if (!result.ok || result.value !== true) throw new Error('OpenAI Hub diagnostic request failed');
@@ -28,9 +21,6 @@ export function createOpenAIHubRemote(wire: OpenAIHubWireRemote): OpenAIHubRemot
     // Carrier возвращает RemoteResult; модель состояния получает только проверенный DTO, без transport envelope.
     return {
         snapshot: () => snapshot(wire.snapshot()),
-        loadLoggingSettings: () => loggingSettings(wire.loadLoggingSettings()),
-        saveLoggingSettings: input => loggingSettings(wire.saveLoggingSettings(input)),
-        recordClientLog: (input: OpenAIHubClientLogEvent) => accepted(wire.recordClientLog(input)),
         startLogin: input => snapshot(wire.startLogin(input)),
         cancelLogin: () => snapshot(wire.cancelLogin()),
         retryLogin: () => snapshot(wire.retryLogin()),

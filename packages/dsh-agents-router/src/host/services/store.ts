@@ -2,10 +2,10 @@ import { createHash, randomUUID } from 'node:crypto';
 import { lstat, mkdir, readFile, realpath, rename, unlink, writeFile } from 'node:fs/promises';
 import os from 'node:os';
 import path from 'node:path';
-import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS, validateGlobalSettings, validateProjectSettings } from '../../shared/index.js';
-import type { GlobalSettings, ProjectSettings, RouterDiagnostic } from '../../shared/models/RouterModels.js';
-import { AuditStorage } from './auditStorage.js';
-import { inside } from './discoveryFs.js';
+import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS, validateGlobalSettings, validateProjectSettings } from '../../shared/index.ts';
+import type { GlobalSettings, ProjectSettings, RouterDiagnostic } from '../../shared/models/RouterModels.ts';
+import { AuditStorage } from './auditStorage.ts';
+import { inside } from './discoveryFs.ts';
 
 const VERSION = 1;
 

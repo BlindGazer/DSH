@@ -9,9 +9,9 @@ import type {
     ProjectSettings,
     RouterDiagnostic,
     SourceVendor
-} from '../../shared/models/RouterModels.js';
-import { parentsAvailable } from './areaHierarchy.js';
-import { parseInstruction, type RuleParseContext, readSkillMetadata } from './frontmatter.js';
+} from '../../shared/models/RouterModels.ts';
+import { parentsAvailable } from './areaHierarchy.ts';
+import { parseInstruction, type RuleParseContext, readSkillMetadata } from './frontmatter.ts';
 
 export const compare = (a: string, b: string): number => (a < b ? -1 : a > b ? 1 : 0);
 

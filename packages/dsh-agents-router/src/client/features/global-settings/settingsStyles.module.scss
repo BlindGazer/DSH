@@ -26,7 +26,8 @@
             line-height: 1;
         }
     }
-    .ar-settings-root {
+    .ar-settings-root,
+    .ar-settings-layout {
         --settings-surface: var(--dsh-ui-surface);
         --settings-elevated: var(--dsh-ui-elevated);
         --settings-hover: var(--dsh-ui-hover);
@@ -41,7 +42,8 @@
         font: inherit;
         font-size: 13px;
     }
-    .ar-settings-root * {
+    .ar-settings-root *,
+    .ar-settings-layout * {
         box-sizing: border-box;
     }
     .ar-settings-card {
@@ -132,7 +134,7 @@
         cursor: pointer;
         transition: background 0.15s;
     }
-    .ar-settings-switch[aria-checked="true"] {
+    .ar-settings-switch[data-checked="true"] {
         background: var(--dsh-ui-switch-on);
     }
     .ar-settings-switch span {
@@ -145,7 +147,7 @@
         background: var(--dsh-ui-switch-thumb-off);
         transition: transform 0.15s;
     }
-    .ar-settings-switch[aria-checked="true"] span {
+    .ar-settings-switch[data-checked="true"] span {
         background: var(--dsh-ui-switch-thumb-on);
         transform: translateX(16px);
     }
@@ -209,7 +211,8 @@
         overflow: auto;
         background: var(--dsh-ui-backdrop);
     }
-    .ar-settings-modal-backdrop > .ar-settings-root {
+    .ar-settings-modal-backdrop > .ar-settings-root,
+    .ar-settings-layout {
         width: min(100%, 760px);
         max-height: 90vh;
         overflow: auto;

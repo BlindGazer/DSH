@@ -4,9 +4,9 @@ import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, expect, test } from 'vitest';
-import { matchInstructionRedirect, resolveInstructionDestination } from '../src/host/services/instructionRedirection.js';
-import { extractFileOperation, fileBatch, projectPaths } from '../src/host/services/preflight.js';
-import type { RouterAgent, RouterMessage } from '../src/host/services/sessionController.js';
+import { matchInstructionRedirect, resolveInstructionDestination } from '../src/host/services/instructionRedirection.ts';
+import { extractFileOperation, fileBatch, projectPaths } from '../src/host/services/preflight.ts';
+import type { RouterAgent, RouterMessage } from '../src/host/services/sessionController.ts';
 
 const root = fileURLToPath(new URL('../examples/demo-project', import.meta.url));
 

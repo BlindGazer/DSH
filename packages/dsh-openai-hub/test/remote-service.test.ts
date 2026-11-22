@@ -1,22 +1,16 @@
 import { Context } from '@deepseek-ai/cordis';
-import { OpenAICodexRemoteService } from '../src/host/remote-service.js';
-import { ServiceKey } from '../src/shared/constants/runtime.js';
-import type { OpenAICodexSnapshot, UiRenderError } from '../src/shared/remote.js';
+import { OpenAICodexRemoteService } from '../src/host/remote-service.ts';
+import { ServiceKey } from '../src/shared/constants/runtime.ts';
+import type { OpenAICodexSnapshot, UiRenderError } from '../src/shared/remote.ts';
 
 const snapshot: OpenAICodexSnapshot = { accounts: [], status: 'idle', deviceCode: '', verificationUri: '', error: '' };
 
-test('registers the OpenAI Hub remote and forwards the complete account-oriented contract', async () => {
+test('registers the OpenAI Hub remote and forwards the account-oriented contract', async () => {
     const ctx = new Context();
     const calls: string[] = [];
     let reportedError: UiRenderError | undefined;
     const service = new OpenAICodexRemoteService(ctx, {
         snapshot: async () => snapshot,
-        loadLoggingSettings: async () => ({ enabled: false }),
-        saveLoggingSettings: async input => input,
-        recordClientLog: async input => {
-            calls.push(`client-log:${input.event}:${input.phase}`);
-            return true;
-        },
         startLogin: async input => {
             calls.push(`login:${input.accountLabel}:${input.authMethod}`);
             return snapshot;
@@ -66,12 +60,8 @@ test('registers the OpenAI Hub remote and forwards the complete account-oriented
             return true;
         }
     });
-
     expect(ctx.get(ServiceKey)).toMatchObject({ name: ServiceKey });
     await expect(service.snapshot()).resolves.toBe(snapshot);
-    await expect(service.loadLoggingSettings()).resolves.toEqual({ enabled: false });
-    await expect(service.saveLoggingSettings({ enabled: true })).resolves.toEqual({ enabled: true });
-    await expect(service.recordClientLog({ event: 'settings', phase: 'opened' })).resolves.toBe(true);
     await expect(service.startLogin({ accountLabel: 'work', authMethod: 'browser-oauth' })).resolves.toBe(snapshot);
     await expect(service.cancelLogin()).resolves.toBe(snapshot);
     await expect(service.submitCallbackUrl({ url: 'synthetic' })).resolves.toBe(snapshot);
@@ -80,19 +70,17 @@ test('registers the OpenAI Hub remote and forwards the complete account-oriented
     await service.refreshCatalog({ accountLabel: 'renamed' });
     await service.refreshUsage({ accountLabel: 'renamed' });
     await service.saveModels({ accountLabel: 'renamed', models: [] });
-    const reset = {
+    await service.consumeReset({
         accountLabel: 'renamed',
         creditId: 'credit',
         idempotencyKey: '123e4567-e89b-42d3-a456-426614174000',
-        confirmed: true as const
-    };
-    await service.consumeReset(reset);
+        confirmed: true
+    });
     const uiError: UiRenderError = { name: 'Error', message: 'sanitized failure', stack: '', componentStack: '' };
     await expect(service.reportUiError(uiError)).resolves.toBe(true);
     await expect(service.reportUiReady('openai-hub-account-list')).resolves.toBe(true);
     expect(reportedError).toEqual(uiError);
     expect(calls).toEqual([
-        'client-log:settings:opened',
         'login:work:browser-oauth',
         'cancel-login',
         'callback-url',

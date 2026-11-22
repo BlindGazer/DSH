@@ -1,7 +1,6 @@
 import type { Context } from '@deepseek-ai/cordis';
 import { Remote, TypertRemoteService } from '@deepseek-ai/dsh-typert-protocol';
-import { RemoteNamespace, ServiceKey } from '../shared/constants/runtime.js';
-import type { OpenAIHubClientLogEvent, OpenAIHubLogSettings } from '../shared/logging.js';
+import { RemoteNamespace, ServiceKey } from '../shared/constants/runtime.ts';
 import type {
     AccountRequest,
     LoginRequest,
@@ -13,7 +12,7 @@ import type {
     UiComponentId,
     UiRenderError,
     UpdateAccountRequest
-} from '../shared/remote.js';
+} from '../shared/remote.ts';
 export interface OpenAICodexRemoteHandlers extends OpenAIHubRemote {}
 export class OpenAICodexRemoteService extends TypertRemoteService {
     constructor(
@@ -24,15 +23,6 @@ export class OpenAICodexRemoteService extends TypertRemoteService {
     }
     @Remote snapshot(): Promise<OpenAICodexSnapshot> {
         return this.handlers.snapshot();
-    }
-    @Remote loadLoggingSettings(): Promise<OpenAIHubLogSettings> {
-        return this.handlers.loadLoggingSettings();
-    }
-    @Remote saveLoggingSettings(input: OpenAIHubLogSettings): Promise<OpenAIHubLogSettings> {
-        return this.handlers.saveLoggingSettings(input);
-    }
-    @Remote recordClientLog(input: OpenAIHubClientLogEvent): Promise<true> {
-        return this.handlers.recordClientLog(input);
     }
     @Remote startLogin(input: LoginRequest): Promise<OpenAICodexSnapshot> {
         return this.handlers.startLogin(input);

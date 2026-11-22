@@ -23,6 +23,9 @@ interface ModuleLoader {
 
 interface TestWindow {
     readonly __ModuleLoader__: ModuleLoader;
+    readonly addEventListener: EventTarget['addEventListener'];
+    readonly removeEventListener: EventTarget['removeEventListener'];
+    readonly dispatchEvent: EventTarget['dispatchEvent'];
 }
 
 interface TestSandbox {
@@ -31,8 +34,12 @@ interface TestSandbox {
 
 const source = readFileSync(new URL('../lib/client.js', import.meta.url), 'utf8');
 const registrations: PluginRegistration[] = [];
+const windowEvents = new EventTarget();
 const sandbox: TestSandbox = {
     window: {
+        addEventListener: windowEvents.addEventListener.bind(windowEvents),
+        removeEventListener: windowEvents.removeEventListener.bind(windowEvents),
+        dispatchEvent: windowEvents.dispatchEvent.bind(windowEvents),
         __ModuleLoader__: {
             load: registration => registrations.push(registration)
         }

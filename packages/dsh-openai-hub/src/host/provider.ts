@@ -1,7 +1,7 @@
 import type { Model, Provider } from '@earendil-works/pi-ai';
 import { openaiCodexProvider } from '@earendil-works/pi-ai/providers/openai-codex';
-import type { ModelChoice } from '../shared/accounts.js';
-import { ProviderRoute } from '../shared/constants/runtime.js';
+import type { ModelChoice } from '../shared/accounts.ts';
+import { ProviderRoute } from '../shared/constants/runtime.ts';
 
 export type CodexModel = Model<'openai-codex-responses'>;
 export const DEFAULT_CODEX_REASONING_LEVEL = 'medium';

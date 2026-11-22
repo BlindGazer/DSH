@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { accessibleButtonLabel } from './AccessibleButton';
+import { accessibleButtonLabel } from './AccessibleButton.tsx';
 
 describe('accessibleButtonLabel', () => {
     test.each([

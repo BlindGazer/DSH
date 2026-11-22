@@ -2,13 +2,13 @@ import { randomBytes } from 'node:crypto';
 import http from 'node:http';
 import net from 'node:net';
 import { describe, expect, it } from 'vitest';
-import type { MasterKeyProvider, ProfileDispatcherLifecycle, ProxyConfigStorage } from '../src/host/models/ProxyServiceContracts.js';
-import { normalizeProxyConfig, sanitizeConfigForClient, serializeConfigForDisk } from '../src/host/services/configNormalizer.js';
-import { testProxyConnection } from '../src/host/services/connectionTest.js';
-import { createProviderProxyController } from '../src/host/services/controller.js';
-import { decryptAuthSecret, encryptAuthSecret } from '../src/host/services/cryptoStore.js';
-import { establishSocks5Tunnel } from '../src/host/services/socks5.js';
-import type { ProxyProfile } from '../src/shared/models/ProxyModels.js';
+import type { MasterKeyProvider, ProfileDispatcherLifecycle, ProxyConfigStorage } from '../src/host/models/ProxyServiceContracts.ts';
+import { normalizeProxyConfig, sanitizeConfigForClient, serializeConfigForDisk } from '../src/host/services/configNormalizer.ts';
+import { testProxyConnection } from '../src/host/services/connectionTest.ts';
+import { createProviderProxyController } from '../src/host/services/controller.ts';
+import { decryptAuthSecret, encryptAuthSecret } from '../src/host/services/cryptoStore.ts';
+import { establishSocks5Tunnel } from '../src/host/services/socks5.ts';
+import type { ProxyProfile } from '../src/shared/models/ProxyModels.ts';
 
 function listen(server: http.Server | net.Server): Promise<number> {
     return new Promise((resolve, reject) => {

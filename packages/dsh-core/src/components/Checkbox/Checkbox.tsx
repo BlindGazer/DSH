@@ -1,18 +1,17 @@
 import type { ChangeEvent } from 'react';
 
-import { TestId } from '../../constants/testId.js';
-import { cx } from '../../utils/classNames.js';
+import { TestId } from '../../constants/testId.ts';
+import { cx } from '../../utils/classNames.ts';
 
 export interface CheckboxProps {
     readonly checked: boolean;
     readonly onChange: (checked: boolean) => void;
     readonly disabled?: boolean;
-    readonly ariaLabel?: string;
     readonly id?: string;
     readonly className?: string;
 }
 
-export function Checkbox({ checked, onChange, disabled = false, ariaLabel, id, className }: CheckboxProps) {
+export function Checkbox({ checked, onChange, disabled = false, id, className }: CheckboxProps) {
     const handleChange = (event: ChangeEvent<HTMLInputElement>): void => {
         onChange(event.currentTarget.checked);
     };
@@ -24,7 +23,6 @@ export function Checkbox({ checked, onChange, disabled = false, ariaLabel, id, c
             data-testid={TestId.Common.Checkbox}
             checked={checked}
             disabled={disabled}
-            aria-label={ariaLabel}
             id={id}
             onChange={handleChange}
         />

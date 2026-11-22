@@ -1,4 +1,4 @@
-import type { DshThemeMode } from './DshContext.js';
+import type { DshThemeMode } from './DshContext.ts';
 
 /**
  * Набор дизайн-токенов цветовой палитры, объединяющий стилистику DSH и Google Material Design 3.

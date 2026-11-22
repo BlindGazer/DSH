@@ -5,4 +5,4 @@ export {
     profileFromDraft,
     resolveProviderHosts,
     sanitizeHostInput
-} from './hostUtils.js';
+} from './hostUtils.ts';

@@ -1,7 +1,7 @@
 import type { ErrorInfo, ReactNode } from 'react';
 import { Component } from 'react';
-import type { UiComponentId, UiRenderError } from '../../../shared/remote.js';
-import { sanitizeUiRenderError } from '../../../shared/remote.js';
+import type { UiComponentId, UiRenderError } from '../../../shared/remote.ts';
+import { sanitizeUiRenderError } from '../../../shared/remote.ts';
 
 interface CodexRenderErrorBoundaryProps {
     readonly children?: ReactNode;
@@ -25,7 +25,7 @@ export class CodexRenderErrorBoundary extends Component<CodexRenderErrorBoundary
     override componentDidMount(): void {
         if (this.state.hasError) return;
         void this.props.onReady(this.props.componentId).catch(() => {
-            console.error('[@kalex/dsh-openai-hub] Could not send UI readiness to Host logger');
+            void 0;
         });
     }
 
@@ -36,7 +36,7 @@ export class CodexRenderErrorBoundary extends Component<CodexRenderErrorBoundary
             stack: error.stack ?? '',
             componentStack: info.componentStack ?? ''
         });
-        console.error('[@kalex/dsh-openai-hub] UI render error', diagnostic);
+        void diagnostic;
         void this.props
             .onError(
                 sanitizeUiRenderError({
@@ -47,11 +47,11 @@ export class CodexRenderErrorBoundary extends Component<CodexRenderErrorBoundary
                 })
             )
             .catch(() => {
-                console.error('[@kalex/dsh-openai-hub] Could not send UI diagnostic to Host logger');
+                void 0;
             });
     }
 
     override render(): ReactNode {
-        return this.state.hasError ? <p role="alert">{this.props.fallbackText}</p> : this.props.children;
+        return this.state.hasError ? <p>{this.props.fallbackText}</p> : this.props.children;
     }
 }

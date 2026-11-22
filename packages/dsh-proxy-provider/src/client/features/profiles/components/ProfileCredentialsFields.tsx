@@ -1,7 +1,7 @@
-import type { ProfileDraft } from '../../../../shared/models/ProxyModels.js';
+import type { ProfileDraft } from '../../../../shared/models/ProxyModels.ts';
 
-import { tProxy } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
+import { tProxy } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
 
 export interface ProfileCredentialsFieldsProps {
     readonly editingDraft: ProfileDraft;

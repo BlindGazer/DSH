@@ -1,3 +1,3 @@
 # Host Plugin Area Instructions
 
-Правила этой области действуют для серверной части плагинов DSH (`packages/*/src/host/`, `packages/*/src/shared/`) и скриптов сборки.
+These rules apply to the DSH plugin server side (`packages/*/src/host/`, `packages/*/src/shared/`) and build scripts.

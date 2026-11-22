@@ -1,9 +1,9 @@
 import { useEffect, useId, useState, useSyncExternalStore } from 'react';
-import type { AuthMethod } from '../../../../shared/accounts.js';
-import { AccountLabelSchema } from '../../../../shared/accounts.js';
-import type { OpenAICodexText } from '../../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import type { AccountSnapshot } from '../../../../shared/remote.js';
-import type { OpenAICodexController } from '../openAICodexRuntime.js';
+import type { AuthMethod } from '../../../../shared/accounts.ts';
+import { AccountLabelSchema } from '../../../../shared/accounts.ts';
+import type { OpenAICodexText } from '../../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import type { AccountSnapshot } from '../../../../shared/remote.ts';
+import type { OpenAICodexController } from '../openAICodexRuntime.ts';
 export function useCodexSettingsPanel(
     controller: OpenAICodexController,
     text: (key: OpenAICodexText) => string,
@@ -59,13 +59,30 @@ export function useCodexSettingsPanel(
                 setError(current.error || text('loginFailed'));
             }
         };
-        void poll();
         const timer = window.setInterval(() => void poll(), 1000);
+        void poll();
         return () => {
             active = false;
             window.clearInterval(timer);
         };
     }, [controller, isReauthentication, loginOpen, loginPending, onReauthenticationClose, text]);
+    useEffect(() => {
+        if (!loginOpen || !loginPending || (snapshot?.status !== 'done' && snapshot?.status !== 'error')) return;
+        const timer = window.setTimeout(() => {
+            if (snapshot.status === 'done') {
+                setLoginPending(false);
+                setLoginStarted(false);
+                setCallbackUrl('');
+                setLabel('');
+                setAddLoginOpen(false);
+                if (isReauthentication) onReauthenticationClose?.();
+            } else {
+                setLoginPending(false);
+                setError(snapshot.error || text('loginFailed'));
+            }
+        }, 0);
+        return () => window.clearTimeout(timer);
+    }, [isReauthentication, loginOpen, loginPending, onReauthenticationClose, snapshot, text]);
     const openLogin = () => {
         const pending = snapshot?.status === 'starting' || snapshot?.status === 'waiting';
         setLoginPending(pending);

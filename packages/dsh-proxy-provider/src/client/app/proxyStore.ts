@@ -1,12 +1,12 @@
 import type { DshLocaleCode, KeyValueStorage } from '@kalex/dsh-core';
 import { useEffect, useState } from 'react';
-import { API_BASE, DEFAULT_TEST_URL } from '../../shared/constants/endpoints.js';
+import { API_BASE, DEFAULT_TEST_URL } from '../../shared/constants/endpoints.ts';
 import {
     persistProxyLocale,
     readSavedProxyLocale,
     resolveProxyLocale,
     translateProxyText
-} from '../../shared/constants/localizations/ProxyLocalization.js';
+} from '../../shared/constants/localizations/ProxyLocalization.ts';
 import type {
     DiscoveredProvider,
     ExportedProxyConfigPayload,
@@ -14,7 +14,7 @@ import type {
     ProxyProfile,
     SanitizedProxyConfig,
     TestConnectionResult
-} from '../../shared/models/ProxyModels.js';
+} from '../../shared/models/ProxyModels.ts';
 
 export interface ProxyClientSnapshot {
     readonly loading: boolean;

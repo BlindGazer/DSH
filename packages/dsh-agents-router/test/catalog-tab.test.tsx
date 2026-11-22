@@ -1,8 +1,8 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { CatalogTab } from '../src/client/features/catalog/CatalogTab.js';
-import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS } from '../src/shared/constants/constants.js';
-import type { RouterStateResponse } from '../src/shared/models/RouterModels.js';
+import { CatalogTab } from '../src/client/features/catalog/CatalogTab.tsx';
+import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS } from '../src/shared/constants/constants.ts';
+import type { RouterStateResponse } from '../src/shared/models/RouterModels.ts';
 
 const data: RouterStateResponse = {
     sessionId: 'catalog-session',
@@ -50,7 +50,6 @@ describe('catalog tab', () => {
         expect(markup).toContain('all (2)');
         expect(markup).toContain('active (1)');
         expect(markup).toContain('skipped (1)');
-        expect(markup).toContain('aria-label="filterRules"');
         expect(markup).toContain('placeholder="filterRules"');
     });
 });

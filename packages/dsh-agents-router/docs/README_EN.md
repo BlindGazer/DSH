@@ -9,6 +9,8 @@
 
 A **DeepSeek Harness (DSH)** plugin that selects and loads only the project rules, skills, and instructions relevant to the current task into the agent context.
 
+No public `.d.ts` files are generated: this package is installed as a DSH plugin, not used as a library.
+
 ## 🎯 Purpose
 
 Prevents context overload: instead of all project rules, the agent receives only those relevant to the active files and the session's working set. Supports responsibility areas (front, back, openspec), a soft token budget, and instruction isolation.
@@ -25,8 +27,8 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-
 | ---------------------- | ----------------------- |
 | TypeScript             | >= 7.0.2, strict typing |
 | React + React Compiler | 19.3                    |
-| Vite (Oxc)             | 8.3.5                   |
-| Vitest                 | 3.2.0                   |
+| Vite (Oxc)             | 8                   |
+| Vitest                 | 5                   |
 
 ## 📸 Examples in DSH
 

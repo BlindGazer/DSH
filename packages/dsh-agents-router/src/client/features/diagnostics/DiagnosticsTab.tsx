@@ -1,6 +1,6 @@
 import { Button } from '@kalex/dsh-core';
 import type React from 'react';
-import type { DiagnosisData, RouterStateResponse } from '../../../shared/models/RouterModels.js';
+import type { DiagnosisData, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 
 export interface DiagnosticsTabProps {
     data: RouterStateResponse;
@@ -37,7 +37,6 @@ export function DiagnosticsTab({ data, t, inspect, inspectPath, setInspectPath, 
                 <h2>{t('inspect')}</h2>
                 <form className="ar-inline" onSubmit={inspect}>
                     <input
-                        aria-label={t('path')}
                         placeholder={t('inspectPlaceholder')}
                         value={inspectPath}
                         onChange={event => setInspectPath(event.target.value)}

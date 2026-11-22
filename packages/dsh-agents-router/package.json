@@ -21,7 +21,6 @@
   },
   "files": [
     "lib",
-    "src",
     "cordis.patch.yml",
     "locale",
     "README.md",
@@ -57,15 +56,15 @@
     }
   },
   "engines": {
-    "dsh": ">=0.2.2-rc.1"
+    "dsh": ">=0.2.2-rc.5"
   },
   "scripts": {
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build.ts",
     "build:client": "vite build --config ../../configs/packages/dsh-agents-router/vite.config.ts",
     "build:host": "vite build --config ../../configs/packages/dsh-agents-router/vite.config.host.ts",
     "test": "vitest run --config ../../configs/packages/dsh-agents-router/vitest.config.ts",
     "test:watch": "vitest --config ../../configs/packages/dsh-agents-router/vitest.config.ts",
-    "verify": "node scripts/verify-release.mjs",
+    "verify": "node scripts/verify-release.ts",
     "check": "pnpm run build && pnpm run test && pnpm run verify"
   },
   "keywords": [
@@ -78,7 +77,7 @@
   "license": "ISC",
   "packageManager": "pnpm@12.16.1",
   "dependencies": {
-    "yaml": "^2.8.2",
+    "yaml": "^2.9.1",
     "react": "^18.0.0 || ^19.0.0",
     "react-compiler-runtime": "^1.0.0"
   }

@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
-import { DEFAULT_TEST_URL } from '../../../../shared/constants/endpoints.js';
+import { DEFAULT_TEST_URL } from '../../../../shared/constants/endpoints.ts';
 import type {
     DiscoveredProvider,
     HostConflict,
     ProfileDraft,
     SanitizedProxyProfile,
     TestConnectionResult
-} from '../../../../shared/models/ProxyModels.js';
-import { createEmptyDraft, draftFromProfile, profileFromDraft } from '../../../../shared/utils/hostUtils.js';
-import { type ProxyClientSnapshot, proxyStore } from '../../../app/proxyStore.js';
+} from '../../../../shared/models/ProxyModels.ts';
+import { createEmptyDraft, draftFromProfile, profileFromDraft } from '../../../../shared/utils/hostUtils.ts';
+import { type ProxyClientSnapshot, proxyStore } from '../../../app/proxyStore.ts';
 
 export interface DeleteConfirmState {
     readonly profile: SanitizedProxyProfile;

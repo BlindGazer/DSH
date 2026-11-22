@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import type { GlobalSettings } from '../../../../shared/models/RouterModels.js';
-import { globalSettingsApi } from '../globalSettingsApi.js';
+import type { GlobalSettings } from '../../../../shared/models/RouterModels.ts';
+import { globalSettingsApi } from '../globalSettingsApi.ts';
 
 const DEFAULT_SETTINGS: GlobalSettings = {
     locale: 'auto',

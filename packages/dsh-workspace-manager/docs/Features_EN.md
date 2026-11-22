@@ -32,8 +32,8 @@ Canonical paths (`realpath`) are validated against directory traversal and symli
 | ---------- | ---------------------- |
 | TypeScript | >= 7.0.2, strict typing |
 | React      | 19                     |
-| Vite (Oxc) | 8.3.5                  |
-| Vitest     | 3.2.0                  |
+| Vite (Oxc) | 8                  |
+| Vitest     | 5                  |
 | Cordis     | DSH plugin environment |
 
 ## Architecture

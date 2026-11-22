@@ -3,8 +3,8 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assert, test } from 'vitest';
 
-import { MetadataError, parseInstruction } from '../src/host/services/frontmatter.js';
-import { parseAreasConfig, validateGlobalSettings, validateProjectSettings } from '../src/shared/index.js';
+import { MetadataError, parseInstruction } from '../src/host/services/frontmatter.ts';
+import { parseAreasConfig, validateGlobalSettings, validateProjectSettings } from '../src/shared/index.ts';
 
 const cursorRulesDirectory = fileURLToPath(new URL('../examples/demo-cursor/.cursor/rules/', import.meta.url));
 

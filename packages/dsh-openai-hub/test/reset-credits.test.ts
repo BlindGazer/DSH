@@ -5,7 +5,7 @@ import {
     parseResetCredits,
     RESET_CREDITS_URL,
     requestResetCredits
-} from '../src/host/reset-credits.js';
+} from '../src/host/reset-credits.ts';
 
 const credential = { access: 'mock-access', accountId: 'mock-account' };
 const input = { idempotencyKey: '12345678-1234-4234-8234-123456789abc', confirmed: true, creditId: 'private-id' };

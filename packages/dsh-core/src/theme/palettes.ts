@@ -1,4 +1,4 @@
-import type { DshThemeDefinition, DshThemeTokens } from '../models/ThemePalette.js';
+import type { DshThemeDefinition, DshThemeTokens } from '../models/ThemePalette.ts';
 
 /**
  * Стандартная темная палитра DSH с расширенными токенами состояний Google Material 3.

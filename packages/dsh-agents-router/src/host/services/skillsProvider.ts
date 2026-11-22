@@ -1,7 +1,7 @@
 import path from 'node:path';
-import type { DiscoveredSkill, RouterDiagnostic } from '../../shared/models/RouterModels.js';
-import { discoverProject, loadSkillDefinition } from './discovery.js';
-import type { RouterStore } from './store.js';
+import type { DiscoveredSkill, RouterDiagnostic } from '../../shared/models/RouterModels.ts';
+import { discoverProject, loadSkillDefinition } from './discovery.ts';
+import type { RouterStore } from './store.ts';
 
 const PROVIDER_NAME = 'agents-router-project';
 const PROJECT_AGENTS_RANK = 200;

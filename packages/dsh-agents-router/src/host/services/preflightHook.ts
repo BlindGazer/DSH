@@ -1,5 +1,5 @@
 import path from 'node:path';
-import { FILE_ERROR } from '../../shared/constants/index.js';
+import { FILE_ERROR } from '../../shared/constants/index.ts';
 
 type HookContext = Parameters<typeof currentDirectory>[0];
 type HookState = Parameters<typeof refreshState>[2];
@@ -18,12 +18,12 @@ interface HookExec {
 type HookNext<TResult> = () => Promise<TResult>;
 type HookDenyResult = Awaited<ReturnType<typeof denyCalls>> | { kind: 'deny'; reason: string };
 
-import { recordAudit, shouldSkipBatchAudit } from './auditLogger.js';
-import { matchInstructionRedirect, resolveInstructionDestination } from './instructionRedirection.js';
-import { fileBatch, isFileTool, projectPaths } from './preflight.js';
-import { renderRules, selectRules } from './ruleSelector.js';
-import type { PendingFeedback } from './sessionController.js';
-import { currentDirectory, denyCalls, historyHasRule, preflightEvent, refreshState } from './sessionController.js';
+import { recordAudit, shouldSkipBatchAudit } from './auditLogger.ts';
+import { matchInstructionRedirect, resolveInstructionDestination } from './instructionRedirection.ts';
+import { fileBatch, isFileTool, projectPaths } from './preflight.ts';
+import { renderRules, selectRules } from './ruleSelector.ts';
+import type { PendingFeedback } from './sessionController.ts';
+import { currentDirectory, denyCalls, historyHasRule, preflightEvent, refreshState } from './sessionController.ts';
 
 export function createPreflightHook<TResult>(
     ctx: HookContext,

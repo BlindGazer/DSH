@@ -1,7 +1,7 @@
 import type React from 'react';
 import { useState } from 'react';
-import type { DiagnosisData, ProjectSettings, RouterPostBody } from '../../../../shared/models/RouterModels.js';
-import { cleanNameList } from '../../../utils/name-list.js';
+import type { DiagnosisData, ProjectSettings, RouterPostBody } from '../../../../shared/models/RouterModels.ts';
+import { cleanNameList } from '../../../utils/name-list.ts';
 
 interface RouterActionOptions {
     settings: ProjectSettings | undefined;

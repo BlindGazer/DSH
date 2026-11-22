@@ -7,7 +7,9 @@
 
 > [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
 
-Плагин **DeepSeek Harness (DSH)** для подключения нескольких каталогов к рабочему пространству. Форк [keatsyh/dsh-workspace-manager](https://github.com/keatsyh/dsh-workspace-manager).
+Плагин **DeepSeek Harness (DSH)** для подключения нескольких каталогов к рабочему пространству. Форк [keatsyh/dsh-plugin-addir](https://github.com/keatsyh/dsh-plugin-addir).
+
+Публичные декларации `.d.ts` не генерируются: пакет устанавливается как плагин DSH, а не используется как библиотека.
 
 ## 🎯 Назначение
 
@@ -25,8 +27,8 @@ dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspa
 | ---------- | --------------------------- |
 | TypeScript | >= 7.0.2, строгая типизация |
 | React      | 19                          |
-| Vite (Oxc) | 8.3.5                       |
-| Vitest     | 3.2.0                       |
+| Vite (Oxc) | 8                       |
+| Vitest     | 5                       |
 
 ## 📸 Примеры в DSH
 

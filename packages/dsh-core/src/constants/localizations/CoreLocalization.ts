@@ -1,4 +1,4 @@
-import type { DshLocaleCode } from '../../models/DshContext.js';
+import type { DshLocaleCode } from '../../models/DshContext.ts';
 
 /**
  * Словарь базовых локализованных подписей общих компонентов ядра.

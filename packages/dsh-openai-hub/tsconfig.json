@@ -1,8 +1,3 @@
 {
-    "extends": "../../configs/packages/dsh-openai-hub/tsconfig.json",
-    "compilerOptions": {
-        "composite": false,
-        "noEmit": true,
-        "rootDir": "../.."
-    }
+    "extends": "../../configs/packages/dsh-openai-hub/tsconfig.json"
 }

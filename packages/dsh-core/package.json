@@ -6,23 +6,23 @@
 	"main": "./lib/index.js",
 	"exports": {
 		".": {
+			"types": "./lib/index.d.ts",
 			"default": "./lib/index.js"
 		},
 		"./package.json": "./package.json"
 	},
 	"files": [
 		"lib",
-		"src",
 		"README.md",
 		"docs",
 		"package.json"
 	],
 	"scripts": {
-		"build": "vite build --config ../../configs/packages/dsh-core/vite.config.ts",
-		"demo": "node scripts/demo.mjs",
+		"build": "vite build --config ../../configs/packages/dsh-core/vite.config.ts && tsc -p ../../configs/packages/dsh-core/tsconfig.build.json",
+		"demo": "node scripts/demo.ts",
 		"test": "vitest run --config ../../configs/packages/dsh-core/vitest.config.ts",
 		"test:watch": "vitest --config ../../configs/packages/dsh-core/vitest.config.ts",
-		"verify": "node scripts/verify-release.mjs",
+		"verify": "node scripts/verify-release.ts",
 		"check": "pnpm run build && pnpm run test && pnpm run verify"
 	},
 	"keywords": [
@@ -38,5 +38,6 @@
 		"react": "^18.0.0 || ^19.0.0",
 		"react-dom": "^18.0.0 || ^19.0.0",
 		"react-compiler-runtime": "^1.0.0"
-	}
+	},
+	"types": "./lib/index.d.ts"
 }

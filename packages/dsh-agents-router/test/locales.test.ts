@@ -1,6 +1,6 @@
 import { assert, test } from 'vitest';
 
-import { locales, resolveLocale } from '../src/client/locales/index.js';
+import { locales, resolveLocale } from '../src/client/locales/index.ts';
 
 test('locale selection honors explicit language and detects host Russian preference', () => {
     assert.equal(resolveLocale('ru', 'en'), 'ru');

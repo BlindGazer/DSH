@@ -1,6 +1,6 @@
 import type { DshLocaleCode, DshLocalePreference } from '@kalex/dsh-core';
-import { type KeyValueStorage, persistLocale, readSavedLocale, resolveDshLocale } from '@kalex/dsh-core/hooks/useLocalePreference.js';
-import { PROXY_LOCALE_KEY } from '../endpoints.js';
+import { type KeyValueStorage, persistLocale, readSavedLocale, resolveDshLocale } from '@kalex/dsh-core/hooks/useLocalePreference.ts';
+import { PROXY_LOCALE_KEY } from '../endpoints.ts';
 
 export const ProxyRussianDictionary: Readonly<Record<string, string>> = {
     Direct: 'Напрямую',

@@ -1,6 +1,6 @@
 import type { DshClientContext } from '@kalex/dsh-core';
 import type { ComponentType } from 'react';
-import type { CopyKey, Translate } from '../../shared/constants/localizations/WorkspaceManagerLocalization.js';
+import type { CopyKey, Translate } from '../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
 
 export interface WorkspaceView {
     readonly workspaceId: string;

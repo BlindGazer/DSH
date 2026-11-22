@@ -1,8 +1,9 @@
 import { resolve } from 'node:path';
 import react from '@vitejs/plugin-react';
-import MagicString from 'magic-string';
+import { MagicString } from 'magic-string';
 import { defineConfig, type Plugin, type UserConfig } from 'vite';
-import { getDshClientExternals } from './vite.externals.mjs';
+import { getInternalSourceAliases } from './source-aliases.ts';
+import { getDshClientExternals } from './vite.externals.ts';
 
 /**
  * Плагин оборачивания клиентского бандла в формат загрузчика модулей DSH (window.__ModuleLoader__.load).
@@ -30,19 +31,16 @@ export function createDshClientViteConfig(options: {
     readonly packageName: string;
     readonly entry?: string;
     readonly outFile?: string;
-    readonly external?: readonly string[];
+    readonly external?: readonly (string | RegExp)[];
 }): UserConfig {
     const monorepoRoot = resolve(options.packageRoot, '../..');
-    const coreSrcPath = resolve(monorepoRoot, 'packages/dsh-core/src');
 
     return defineConfig({
         root: options.packageRoot,
         plugins: [react({ compiler: { target: '18' } }), dshModuleLoaderPlugin(options.packageName)],
         define: { 'process.env.NODE_ENV': JSON.stringify('production') },
         resolve: {
-            alias: {
-                '@kalex/dsh-core': coreSrcPath
-            }
+            alias: getInternalSourceAliases(monorepoRoot)
         },
         build: {
             outDir: resolve(options.packageRoot, 'lib'),
@@ -69,17 +67,14 @@ export function createDshHostViteConfig(options: {
     readonly packageRoot: string;
     readonly entry?: string;
     readonly outFile?: string;
-    readonly external?: readonly string[];
+    readonly external?: readonly (string | RegExp)[];
 }): UserConfig {
     const monorepoRoot = resolve(options.packageRoot, '../..');
-    const coreSrcPath = resolve(monorepoRoot, 'packages/dsh-core/src');
 
     return defineConfig({
         root: options.packageRoot,
         resolve: {
-            alias: {
-                '@kalex/dsh-core': coreSrcPath
-            }
+            alias: getInternalSourceAliases(monorepoRoot)
         },
         build: {
             outDir: resolve(options.packageRoot, 'lib'),

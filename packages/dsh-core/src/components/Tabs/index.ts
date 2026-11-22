@@ -1,1 +1,1 @@
-export { Tabs, type TabsProps } from './Tabs.js';
+export { Tabs, type TabsProps } from './Tabs.tsx';

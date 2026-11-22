@@ -1,11 +1,11 @@
 import { ThemedSelect } from '@kalex/dsh-core';
 
-import { DEFAULT_TEST_URL } from '../../../../shared/constants/endpoints.js';
-import type { ProfileDraft, ProxyProtocol, TestConnectionResult } from '../../../../shared/models/ProxyModels.js';
-import { sanitizeHostInput } from '../../../../shared/utils/hostUtils.js';
-import { tProxy } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
-import { ProfileCredentialsFields } from './ProfileCredentialsFields.js';
+import { DEFAULT_TEST_URL } from '../../../../shared/constants/endpoints.ts';
+import type { ProfileDraft, ProxyProtocol, TestConnectionResult } from '../../../../shared/models/ProxyModels.ts';
+import { sanitizeHostInput } from '../../../../shared/utils/hostUtils.ts';
+import { tProxy } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
+import { ProfileCredentialsFields } from './ProfileCredentialsFields.tsx';
 
 export interface ProfileEditorProps {
     readonly editingDraft: ProfileDraft;
@@ -63,7 +63,6 @@ export function ProfileEditor({
                 <div className={proxyClasses('field')}>
                     <span className={proxyClasses('label')}>{tProxy('Protocol')}</span>
                     <ThemedSelect<ProxyProtocol>
-                        ariaLabel={tProxy('Protocol')}
                         fullWidth={true}
                         value={editingDraft.protocol}
                         options={[

@@ -1,9 +1,9 @@
 import { useEffect, useSyncExternalStore } from 'react';
-import { ProviderRoute } from '../../../../shared/constants/runtime.js';
-import type { AccountSnapshot } from '../../../../shared/remote.js';
-import { selectedModels } from '../modelSelectionSource.js';
-import type { OpenAICodexController } from '../openAICodexRuntime.js';
-import { retainQuotaPolling } from '../quotaPolling.js';
+import { ProviderRoute } from '../../../../shared/constants/runtime.ts';
+import type { AccountSnapshot } from '../../../../shared/remote.ts';
+import { selectedModels } from '../modelSelectionSource.ts';
+import type { OpenAICodexController } from '../openAICodexRuntime.ts';
+import { retainQuotaPolling } from '../quotaPolling.ts';
 
 export function usageRefreshInterval(account: AccountSnapshot, selectedModel?: string): number {
     if (!selectedModel) return 300000;

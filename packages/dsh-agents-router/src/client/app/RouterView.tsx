@@ -1,21 +1,21 @@
 import { buildCoreThemeStyles, Spinner, useDshThemeRevision } from '@kalex/dsh-core';
 import type React from 'react';
 import { useRef, useState } from 'react';
-import { AuditProjectTab } from '../features/audit-project/AuditProjectTab.js';
-import { CatalogTab } from '../features/catalog/CatalogTab.js';
-import { DiagnosticsTab } from '../features/diagnostics/DiagnosticsTab.js';
-import { GlobalSettingsCard } from '../features/global-settings/GlobalSettingsCard.js';
-import { RouterHeader } from '../features/header/RouterHeader.js';
-import { KpiStrip } from '../features/memory-workset/KpiStrip.js';
-import { MemoryWorksetTab } from '../features/memory-workset/MemoryWorksetTab.js';
-import { useRouterActions } from '../features/router/hooks/useRouterActions.js';
-import { useRouterAuditLog } from '../features/router/hooks/useRouterAuditLog.js';
-import { useRouterData } from '../features/router/hooks/useRouterData.js';
-import { useRouterPolling } from '../features/router/hooks/useRouterPolling.js';
-import { useRouterVisibility } from '../features/router/hooks/useRouterVisibility.js';
-import { locales, resolveLocale } from '../locales/index.js';
-import { useEffectiveTheme } from '../theme/useEffectiveTheme.js';
-import { getHostLocale } from '../utils/locale-context.js';
+import { AuditProjectTab } from '../features/audit-project/AuditProjectTab.tsx';
+import { CatalogTab } from '../features/catalog/CatalogTab.tsx';
+import { DiagnosticsTab } from '../features/diagnostics/DiagnosticsTab.tsx';
+import { GlobalSettingsCard } from '../features/global-settings/GlobalSettingsCard.tsx';
+import { RouterHeader } from '../features/header/RouterHeader.tsx';
+import { KpiStrip } from '../features/memory-workset/KpiStrip.tsx';
+import { MemoryWorksetTab } from '../features/memory-workset/MemoryWorksetTab.tsx';
+import { useRouterActions } from '../features/router/hooks/useRouterActions.ts';
+import { useRouterAuditLog } from '../features/router/hooks/useRouterAuditLog.ts';
+import { useRouterData } from '../features/router/hooks/useRouterData.ts';
+import { useRouterPolling } from '../features/router/hooks/useRouterPolling.ts';
+import { useRouterVisibility } from '../features/router/hooks/useRouterVisibility.ts';
+import { locales, resolveLocale } from '../locales/index.ts';
+import { useEffectiveTheme } from '../theme/useEffectiveTheme.ts';
+import { getHostLocale } from '../utils/locale-context.ts';
 import styles from './routerStyles.module.scss';
 import routerStyleText from './routerStyles.module.scss?inline';
 
@@ -51,7 +51,7 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
                 <h2>{t('router')}</h2>
                 {error ? (
                     <>
-                        <p role="alert">{inactiveSession ? t('inactiveSession') : error}</p>
+                        <p>{inactiveSession ? t('inactiveSession') : error}</p>
                         {inactiveSession ? (
                             <button
                                 type="button"
@@ -93,26 +93,12 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
                 post={post}
                 onSettings={() => setShowGlobalSettings(true)}
             />
-            {error ? (
-                <p className="ar-error" role="alert">
-                    {error}
-                </p>
-            ) : null}
-            {data.auditWarning ? (
-                <p className="ar-warning" role="status">
-                    {data.auditWarning}
-                </p>
-            ) : null}
+            {error ? <p className="ar-error">{error}</p> : null}
+            {data.auditWarning ? <p className="ar-warning">{data.auditWarning}</p> : null}
             <KpiStrip data={data} t={t} lastPoint={lastPoint} percent={percent} />
-            <div className="ar-tabs" role="tablist" aria-label={t('router')}>
+            <div className="ar-tabs">
                 {TAB_KEYS.map((key, index) => (
-                    <button
-                        key={key}
-                        type="button"
-                        role="tab"
-                        aria-selected={tab === key}
-                        className={`ar-tab-btn${tab === key ? ' selected' : ''}`}
-                        onClick={() => setTab(key)}>
+                    <button key={key} type="button" className={`ar-tab-btn${tab === key ? ' selected' : ''}`} onClick={() => setTab(key)}>
                         {t(key)}
                         {index === 1 ? ` (${data.rules.length})` : index === 2 ? ` (${data.diagnostics.length})` : ''}
                     </button>
@@ -168,7 +154,7 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
             ) : null}
 
             {showGlobalSettings ? (
-                <div className="ar-modal" role="dialog" aria-modal="true" aria-label={t('globalSettings')}>
+                <div className="ar-modal">
                     <GlobalSettingsCard isModal onClose={() => setShowGlobalSettings(false)} />
                 </div>
             ) : null}

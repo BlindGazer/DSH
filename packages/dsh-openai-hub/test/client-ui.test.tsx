@@ -4,13 +4,12 @@ import { resolve } from 'node:path';
 import { buildCoreThemeStyles, getDshTheme } from '@kalex/dsh-core';
 import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { CodexModelsFooterEntry } from '../src/client/features/settings/CodexModelsFooterEntry.js';
-import { CodexSettingsPanel } from '../src/client/features/settings/CodexSettingsPanel.js';
-import { OpenAIHubLoggingSettings } from '../src/client/features/settings/OpenAIHubLoggingSettings.js';
-import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.js';
-import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.js';
-import { translateOpenAICodex } from '../src/shared/constants/localizations/OpenAICodexLocalization.js';
-import type { AccountSnapshot, OpenAICodexSnapshot } from '../src/shared/remote.js';
+import { CodexModelsFooterEntry } from '../src/client/features/settings/CodexModelsFooterEntry.tsx';
+import { CodexSettingsPanel } from '../src/client/features/settings/CodexSettingsPanel.tsx';
+import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { translateOpenAICodex } from '../src/shared/constants/localizations/OpenAICodexLocalization.ts';
+import type { AccountSnapshot, OpenAICodexSnapshot } from '../src/shared/remote.ts';
 
 const account = (accountLabel: string): AccountSnapshot => ({
     accountLabel,
@@ -41,9 +40,6 @@ const snapshot: OpenAICodexSnapshot = {
 function makeRemote(value: OpenAICodexSnapshot): OpenAICodexRemote {
     return {
         snapshot: vi.fn(async () => value),
-        loadLoggingSettings: vi.fn(async () => ({ enabled: false })),
-        saveLoggingSettings: vi.fn(async input => input),
-        recordClientLog: vi.fn(async () => true as const),
         startLogin: vi.fn(async () => value),
         cancelLogin: vi.fn(async () => value),
         retryLogin: vi.fn(async () => value),
@@ -59,6 +55,11 @@ function makeRemote(value: OpenAICodexSnapshot): OpenAICodexRemote {
     };
 }
 const text = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex('en', key);
+function settingsButton(container: HTMLElement): HTMLButtonElement {
+    const button = [...container.querySelectorAll('button')].find(item => !item.hasAttribute('data-checked') && !item.textContent?.trim());
+    if (!button) throw new Error('Account settings button missing');
+    return button;
+}
 const clipboardDescriptor = Object.getOwnPropertyDescriptor(navigator, 'clipboard');
 afterEach(() => {
     if (clipboardDescriptor) Object.defineProperty(navigator, 'clipboard', clipboardDescriptor);
@@ -80,12 +81,12 @@ describe('OpenAI Hub account settings', () => {
         render(<CodexSettingsPanel controller={controller} locale={locale} text={t} />);
         fireEvent.click(await screen.findByRole('button', { name: t('addAccount') }));
         const group = screen.getByRole('group', { name: t('authMethod') });
-        const device = within(group).getByRole<HTMLInputElement>('radio', { name: t('deviceCode') });
-        const browser = within(group).getByRole<HTMLInputElement>('radio', { name: t('browserOAuth') });
+        const device = within(group).getByDisplayValue<HTMLInputElement>('device-code');
+        const browser = within(group).getByDisplayValue<HTMLInputElement>('browser-oauth');
         expect(device.checked).toBe(true);
         expect(browser.checked).toBe(false);
         expect(group.closest('[data-theme]')?.getAttribute('data-theme')).toBe(theme);
-        expect(document.getElementById(browser.getAttribute('aria-describedby') ?? '')?.textContent).toBe(t('browserOAuthDescription'));
+        expect(within(group).getByText(t('browserOAuthDescription'))).toBeTruthy();
         expect(screen.queryByRole('combobox', { name: t('authMethod') })).toBeNull();
         fireEvent.click(within(group).getByText(t('browserOAuthDescription')));
         expect(browser.checked).toBe(true);
@@ -119,14 +120,14 @@ describe('OpenAI Hub account settings', () => {
         render(<CodexSettingsPanel controller={controller} locale={locale} text={t} />);
         fireEvent.click(await screen.findByRole('button', { name: t('addFirstAccount') }));
         fireEvent.change(screen.getByLabelText(t('accountLabel')), { target: { value: 'work' } });
-        fireEvent.click(screen.getByRole('radio', { name: t('browserOAuth') }));
+        fireEvent.click(screen.getByDisplayValue('browser-oauth'));
         fireEvent.click(screen.getByRole('button', { name: t('login') }));
         const input = await screen.findByLabelText(t('manualCallbackLabel'));
         fireEvent.change(input, { target: { value: 'http://localhost:1455/auth/callback?code=test-code&state=test-state' } });
         expect(api.submitCallbackUrl).not.toHaveBeenCalled();
         fireEvent.click(screen.getByRole('button', { name: t('submitCallback') }));
-        const dialog = screen.getByRole('dialog');
-        expect(await within(dialog).findByRole('status', { name: t('signingIn') })).toBeTruthy();
+        const dialog = screen.getByTestId('dsh-modal-card');
+        expect(await within(dialog).findByText(t('signingIn'))).toBeTruthy();
         expect(within(dialog).getByText(t('signingInHint'))).toBeTruthy();
         expect(within(dialog).queryByText(t('waiting'))).toBeNull();
         expect(within(dialog).queryByRole('link')).toBeNull();
@@ -135,12 +136,12 @@ describe('OpenAI Hub account settings', () => {
         expect(within(dialog).getByRole('button', { name: t('cancel') })).toBeTruthy();
         current = { ...empty, status: 'starting', callbackUrlRequested: false };
         await act(async () => pending.resolve(current));
-        expect(within(dialog).getByRole('status', { name: t('signingIn') })).toBeTruthy();
+        expect(within(dialog).getByText(t('signingIn'))).toBeTruthy();
         current = { ...empty, status: 'done', accounts: [account('work')] };
         await act(async () => {
             await controller.load(true);
         });
-        await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull(), { timeout: 2500 });
+        await waitFor(() => expect(screen.queryByTestId('dsh-modal-card')).toBeNull(), { timeout: 2500 });
     });
 
     it('offers a manual retry after token-exchange timeout without asking for the callback again', async () => {
@@ -152,17 +153,22 @@ describe('OpenAI Hub account settings', () => {
             error: 'Connection timed out.'
         };
         const api = makeRemote(timedOut);
-        vi.mocked(api.retryLogin).mockResolvedValueOnce({ ...timedOut, status: 'starting', retryAvailable: false, error: '' });
+        let current = timedOut;
+        vi.mocked(api.snapshot).mockImplementation(async () => current);
+        vi.mocked(api.retryLogin).mockImplementationOnce(async () => {
+            current = { ...timedOut, status: 'starting', retryAvailable: false, error: '' };
+            return current;
+        });
         const controller = new OpenAICodexController(api);
         render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
-        const dialog = screen.getByRole('dialog');
+        const dialog = screen.getByTestId('dsh-modal-card');
         expect(within(dialog).getByText('Connection timed out.')).toBeTruthy();
         expect(within(dialog).getByRole('button', { name: text('retry') })).toBeTruthy();
         expect(within(dialog).queryByLabelText(text('manualCallbackLabel'))).toBeNull();
         fireEvent.click(within(dialog).getByRole('button', { name: text('retry') }));
         await waitFor(() => expect(api.retryLogin).toHaveBeenCalledOnce());
-        expect(await within(dialog).findByRole('status', { name: text('signingIn') })).toBeTruthy();
+        expect(await within(dialog).findByText(text('signingIn'))).toBeTruthy();
         expect(api.submitCallbackUrl).not.toHaveBeenCalled();
     });
 
@@ -182,8 +188,8 @@ describe('OpenAI Hub account settings', () => {
         const callback = 'http://localhost:1455/auth/callback?code=test-code&state=test-state';
         fireEvent.change(await screen.findByLabelText(text('manualCallbackLabel')), { target: { value: callback } });
         fireEvent.click(screen.getByRole('button', { name: text('submitCallback') }));
-        expect(await screen.findByRole('alert')).toBeTruthy();
-        expect(screen.queryByRole('status', { name: text('signingIn') })).toBeNull();
+        expect(await screen.findByText(text('callbackFailed'))).toBeTruthy();
+        expect(screen.queryByText(text('signingIn'))).toBeNull();
         expect(screen.getByDisplayValue(callback)).toBeTruthy();
         expect(screen.getByRole('button', { name: text('submitCallback') }).hasAttribute('disabled')).toBe(false);
     });
@@ -196,7 +202,7 @@ describe('OpenAI Hub account settings', () => {
         render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
         fireEvent.change(screen.getByRole('textbox', { name: text('accountLabel') }), { target: { value: 'work' } });
-        fireEvent.click(screen.getByRole('radio', { name: text(authMethod === 'device-code' ? 'deviceCode' : 'browserOAuth') }));
+        fireEvent.click(screen.getByDisplayValue(authMethod));
         fireEvent.click(screen.getByRole('button', { name: text('login') }));
         await waitFor(() => expect(api.startLogin).toHaveBeenCalledWith({ accountLabel: 'work', authMethod }));
         expect(screen.getByRole('group', { name: text('authMethod') }).hasAttribute('disabled')).toBe(true);
@@ -205,13 +211,13 @@ describe('OpenAI Hub account settings', () => {
     it.each(['light', 'dark'] as const)('uses the Core collection add action in the %s theme', async theme => {
         document.documentElement.setAttribute('data-theme', theme);
         const controller = new OpenAICodexController(makeRemote(snapshot));
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
         const button = await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' });
         expect(button.classList.contains('dsh-collection-add-btn')).toBe(true);
-        expect(button.querySelector('svg[aria-hidden="true"]')).toBeTruthy();
+        expect(button.querySelector('svg.dsh-collection-add-icon')).toBeTruthy();
         expect(button.closest('.dsh-core-root')?.getAttribute('data-theme')).toBe(theme);
         fireEvent.click(button);
-        expect(await screen.findByRole('dialog')).toBeTruthy();
+        expect(await screen.findByTestId('dsh-modal-card')).toBeTruthy();
     });
     it('does not show a catalog failure in the account information panel', async () => {
         const failedCatalog = { ...account('alpha'), catalogStatus: 'error' as const };
@@ -221,7 +227,7 @@ describe('OpenAI Hub account settings', () => {
         const panel = await screen.findByTestId('openai-hub-models-footer-alpha');
 
         expect(within(panel).queryByText('Catalog refresh failed; showing saved models.')).toBeNull();
-        fireEvent.click(within(panel).getByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(panel));
         const dialog = await screen.findByTestId('dsh-modal-card');
         expect(within(dialog).queryByText('Catalog refresh failed; showing saved models.')).toBeNull();
     });
@@ -233,7 +239,10 @@ describe('OpenAI Hub account settings', () => {
         const controller = new OpenAICodexController(makeRemote(waiting));
         render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
 
-        const copyButton = await screen.findByRole('button', { name: 'Copy verification link' });
+        const copyButton = await screen.findByTestId('dsh-icon-button');
+        expect(copyButton.hasAttribute('title')).toBe(false);
+        fireEvent.pointerEnter(copyButton);
+        expect(await screen.findByText('Copy verification link')).toBeTruthy();
         fireEvent.click(copyButton);
 
         await waitFor(() => expect(writeText).toHaveBeenCalledWith(verificationUri));
@@ -243,8 +252,8 @@ describe('OpenAI Hub account settings', () => {
         expect(await screen.findByText('Could not copy verification link')).toBeTruthy();
 
         fireEvent.click(screen.getByRole('button', { name: 'Add an account to OpenAI Hub' }));
-        const dialog = await screen.findByRole('dialog');
-        fireEvent.click(within(dialog).getByRole('button', { name: 'Copy verification link' }));
+        const dialog = await screen.findByTestId('dsh-modal-card');
+        fireEvent.click(within(dialog).getByTestId('dsh-icon-button'));
         await waitFor(() => expect(writeText).toHaveBeenCalledTimes(3));
         expect(within(dialog).getByText('Verification link copied')).toBeTruthy();
     });
@@ -272,11 +281,19 @@ describe('OpenAI Hub account settings', () => {
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [localized] }));
         render(<CodexModelsFooterEntry controller={controller} locale="ru" text={key => translateOpenAICodex('ru', key)} />);
 
-        const fiveHourChart = await screen.findByRole('progressbar', { name: 'Лимит на 5 часов: 92%' });
-        const weeklyChart = screen.getByRole('progressbar', { name: 'Недельный лимит: 93%' });
+        const footer = await screen.findByTestId('openai-hub-models-footer-alpha');
+        const charts = [...footer.querySelectorAll('.dsh-circular-progress')];
 
-        expect(fiveHourChart.querySelector('title')?.textContent).toBe('Лимит на 5 часов: 92%');
-        expect(weeklyChart.querySelector('title')?.textContent).toBe('Недельный лимит: 93%');
+        expect(charts).toHaveLength(2);
+        for (const [index, label] of ['Лимит на 5 часов: 92%', 'Недельный лимит: 93%'].entries()) {
+            const chart = charts[index];
+            if (!chart) throw new Error('Quota chart missing');
+            expect(chart.matches('[title]')).toBe(false);
+            expect(chart.querySelector('title')).toBeNull();
+            fireEvent.pointerEnter(chart);
+            expect(await screen.findByText(label)).toBeTruthy();
+            fireEvent.pointerLeave(chart);
+        }
     });
     it('hides the five-hour chart when only the weekly limit is available', async () => {
         const localized = {
@@ -286,8 +303,9 @@ describe('OpenAI Hub account settings', () => {
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [localized] }));
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
 
-        expect(await screen.findByRole('progressbar', { name: 'Weekly limit: 93%' })).toBeTruthy();
-        expect(screen.queryByRole('progressbar', { name: '5-hour limit: 100%' })).toBeNull();
+        const footer = await screen.findByTestId('openai-hub-models-footer-alpha');
+        expect(footer.querySelectorAll('.dsh-circular-progress')).toHaveLength(1);
+        expect(within(footer).getByText('93%')).toBeTruthy();
     });
     it('keeps the latest quota data when automatic refresh is disabled', async () => {
         const current = {
@@ -320,8 +338,14 @@ describe('OpenAI Hub account settings', () => {
         vi.mocked(api.updateAccount).mockResolvedValueOnce({ ...snapshot, accounts: [account('renamed')] });
         const controller = new OpenAICodexController(api);
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
-        fireEvent.click(await screen.findByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-alpha')));
         fireEvent.click(await screen.findByRole('button', { name: 'Rename' }));
+        const footer = screen.getByTestId('openai-hub-modal-footer');
+        expect(
+            within(footer)
+                .getAllByRole('button')
+                .map(button => button.textContent)
+        ).toEqual(['Cancel', 'Save']);
         fireEvent.change(screen.getByRole('textbox', { name: 'Account label' }), { target: { value: 'renamed' } });
         fireEvent.click(screen.getByRole('button', { name: 'Save' }));
         expect(await screen.findByTestId('openai-hub-models-footer-renamed')).toBeTruthy();
@@ -331,21 +355,22 @@ describe('OpenAI Hub account settings', () => {
         expect(sessionStorage.getItem(`${prefix}-request:renamed`)).toBe(idempotencyKey);
         expect(api.consumeReset).not.toHaveBeenCalled();
     });
-    it.each(['light', 'dark'])('owns the actual modal theme root and background token in %s mode', async theme => {
+    it.each(['light', 'dark'])('inherits the footer theme and background token in %s mode', async theme => {
         document.documentElement.dataset.theme = theme;
         const controller = new OpenAICodexController(makeRemote(snapshot));
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
         const alphaPanel = await screen.findByTestId('openai-hub-models-footer-alpha');
-        fireEvent.click(within(alphaPanel).getByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(alphaPanel));
         const card = await screen.findByTestId('openai-hub-account-alpha');
         fireEvent.click(within(card).getByRole('button', { name: 'Edit models' }));
         await screen.findByText('Available models - alpha');
-        const dialog = screen.getByText('Available models - alpha').closest('[role="dialog"]');
+        const dialog = screen.getByText('Available models - alpha').closest('.dsh-modal-card');
         expect(dialog?.classList.contains('dsh-modal-card')).toBe(true);
-        expect(dialog?.closest('.ar-modal')?.getAttribute('data-theme')).toBe(theme);
+        expect(dialog?.closest('.dsh-core-root')?.getAttribute('data-theme')).toBe(theme);
         const css = readFileSync(resolve(import.meta.dirname, '../src/client/features/settings/codexStyles.module.scss'), 'utf8');
         expect(css).toMatch(/\.modalCard\s*\{[^}]*background:\s*var\(--dsh-ui-bg-modal\)/);
-        expect(dialog?.closest('.ar-modal')?.classList.contains('dsh-core-root')).toBe(true);
+        expect(dialog?.closest('.dsh-core-root')).toBe(screen.getByTestId('openai-hub-models-footer'));
+        expect(card.hasAttribute('data-theme')).toBe(false);
         expect(buildCoreThemeStyles()).toContain(`--dsh-ui-bg-modal:${getDshTheme(theme).tokens.bgModal}`);
     });
     it('shows account authorization errors and supports reauthentication or deletion', async () => {
@@ -365,10 +390,16 @@ describe('OpenAI Hub account settings', () => {
         const panel = await screen.findByTestId('openai-hub-models-footer-failed');
         expect(within(panel).getByText('Authorization required.')).toBeTruthy();
         fireEvent.click(within(panel).getByRole('button', { name: 'Sign in' }));
-        const dialog = await screen.findByRole('dialog');
+        const dialog = await screen.findByTestId('dsh-modal-card');
         expect(within(dialog).getByText('Sign in: failed')).toBeTruthy();
         expect(within(dialog).getByText('Sign in to the existing account failed. Its settings will be kept.')).toBeTruthy();
         expect(within(dialog).queryByLabelText('Account label')).toBeNull();
+        expect(
+            within(dialog)
+                .getAllByRole('button')
+                .slice(-2)
+                .map(button => button.textContent)
+        ).toEqual(['Cancel', 'Sign in']);
         fireEvent.click(within(dialog).getByRole('button', { name: 'Sign in' }));
         await waitFor(() =>
             expect(api.startLogin).toHaveBeenCalledWith({ accountLabel: 'failed', authMethod: 'device-code', reauthenticate: true })
@@ -378,11 +409,19 @@ describe('OpenAI Hub account settings', () => {
         const emptySnapshot = { ...snapshot, accounts: [] };
         vi.mocked(api.snapshot).mockResolvedValue(emptySnapshot);
         vi.mocked(api.deleteAccount).mockResolvedValueOnce(emptySnapshot);
-        const deleteButton = within(panel).getByRole('button', { name: 'Delete account' });
+        const deleteButton = within(panel).getByTestId('dsh-icon-button');
         expect(deleteButton.querySelector('svg')).toBeTruthy();
+        fireEvent.pointerEnter(deleteButton);
+        expect(await screen.findByText('Delete account')).toBeTruthy();
         fireEvent.click(deleteButton);
-        const deleteDialog = await screen.findByRole('dialog');
+        const deleteDialog = await screen.findByTestId('dsh-modal-card');
         expect(within(deleteDialog).getByText('Delete this account and its settings?')).toBeTruthy();
+        expect(
+            within(deleteDialog)
+                .getAllByRole('button')
+                .slice(-2)
+                .map(button => button.textContent)
+        ).toEqual(['Cancel', 'Delete account']);
         fireEvent.click(within(deleteDialog).getByRole('button', { name: 'Delete account' }));
         await waitFor(() => expect(api.deleteAccount).toHaveBeenCalledWith({ accountLabel: 'failed' }));
         await waitFor(() => expect(screen.queryByTestId('openai-hub-models-footer-failed')).toBeNull());
@@ -397,7 +436,7 @@ describe('OpenAI Hub account settings', () => {
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
         const panel = await screen.findByTestId('openai-hub-models-footer-failed');
         fireEvent.click(within(panel).getByRole('button', { name: 'Sign in' }));
-        const dialog = await screen.findByRole('dialog');
+        const dialog = await screen.findByTestId('dsh-modal-card');
         fireEvent.click(within(dialog).getByRole('button', { name: 'Sign in' }));
         await waitFor(() => expect(api.startLogin).toHaveBeenCalledOnce());
         const cancelButton = within(dialog).getByRole('button', { name: 'Cancel' });
@@ -405,7 +444,7 @@ describe('OpenAI Hub account settings', () => {
         fireEvent.click(cancelButton);
         await waitFor(() => expect(api.cancelLogin).toHaveBeenCalledOnce());
         await act(async () => pendingStart.resolve(failedSnapshot));
-        expect(screen.queryByRole('dialog')).toBeNull();
+        expect(screen.queryByTestId('dsh-modal-card')).toBeNull();
     });
 
     it('shows one information panel per account and opens only that account settings modal', async () => {
@@ -415,30 +454,82 @@ describe('OpenAI Hub account settings', () => {
         expect(await screen.findByTestId('openai-hub-models-footer-alpha')).toBeTruthy();
         expect(screen.getByTestId('openai-hub-models-footer-beta')).toBeTruthy();
         const alphaPanel = screen.getByTestId('openai-hub-models-footer-alpha');
-        fireEvent.click(within(alphaPanel).getByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(alphaPanel));
         const accountDialog = await screen.findByTestId('dsh-modal-card');
         expect(within(accountDialog).getByText('OpenAI Hub: alpha (Device code)')).toBeTruthy();
         expect(within(accountDialog).getByTestId('openai-hub-account-alpha')).toBeTruthy();
         expect(within(accountDialog).queryByTestId('openai-hub-account-beta')).toBeNull();
         fireEvent.click(within(accountDialog).getByRole('button', { name: 'Edit models' }));
         await screen.findByText('Available models - alpha');
-        fireEvent.click(screen.getByRole('button', { name: 'Save' }));
+        const modelDialog = screen.getAllByTestId('dsh-modal-card').at(-1);
+        if (!modelDialog) throw new Error('Model editor missing');
+        expect(
+            within(modelDialog)
+                .getAllByRole('button')
+                .slice(-2)
+                .map(button => button.textContent)
+        ).toEqual(['Cancel', 'Save']);
+        fireEvent.click(within(modelDialog).getByRole('button', { name: 'Save' }));
         await waitFor(() => expect(api.saveModels).toHaveBeenCalledWith({ accountLabel: 'alpha', models: account('alpha').models }));
         expect(api.refreshCatalog).not.toHaveBeenCalled();
         expect(api.refreshUsage).not.toHaveBeenCalled();
     });
-    it('shows zero usage charts without data or after a usage error', async () => {
+    it.each([
+        ['en', 'Weekly limit', 'No data', 'No data is available for the weekly limit.'],
+        ['ru', 'Недельный лимит', 'Нет данных', 'Данные о недельном лимите недоступны.']
+    ] as const)('shows a weekly no-data tooltip in %s when only the five-hour limit is known', async (locale, label, noData, tooltip) => {
+        const partial: AccountSnapshot = {
+            ...account('partial'),
+            usageLimits: [{ name: 'Codex', usedPercent: 8, windowSeconds: 18_000, resetAt: 0 }]
+        };
+        const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [partial] }));
+        render(<CodexModelsFooterEntry controller={controller} locale={locale} text={key => translateOpenAICodex(locale, key)} />);
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-partial')));
+
+        const dialog = await screen.findByTestId('dsh-modal-card');
+        expect(within(dialog).getByText(label)).toBeTruthy();
+        expect(within(dialog).getByText('92%')).toBeTruthy();
+        expect(within(dialog).queryByText('0%')).toBeNull();
+        const tooltipTrigger = within(dialog).getByRole('button', { name: noData });
+        expect(tooltipTrigger.hasAttribute('title')).toBe(false);
+        fireEvent.focus(tooltipTrigger);
+        expect(await screen.findByText(tooltip)).toBeTruthy();
+    });
+    it.each(['idle', 'error'] as const)('shows missing weekly data without fabricating a quota in %s state', async usageStatus => {
+        const empty: AccountSnapshot = { ...account('empty'), usageStatus };
+        const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [empty] }));
+        render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-empty')));
+
+        const dialog = await screen.findByTestId('dsh-modal-card');
+        expect(within(dialog).getByText('Weekly limit')).toBeTruthy();
+        expect(within(dialog).getByText('No data')).toBeTruthy();
+        expect(within(dialog).queryByText('0%')).toBeNull();
+        expect(dialog.querySelectorAll('.dsh-linear-progress')).toHaveLength(0);
+    });
+    it('keeps a known exhausted weekly limit at 0%', async () => {
+        const exhausted: AccountSnapshot = {
+            ...account('exhausted'),
+            usageLimits: [{ name: 'Codex', usedPercent: 100, windowSeconds: 604_800, resetAt: 0 }]
+        };
+        const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [exhausted] }));
+        render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-exhausted')));
+
+        const dialog = await screen.findByTestId('dsh-modal-card');
+        expect(within(dialog).getByText('Weekly limit')).toBeTruthy();
+        expect(within(dialog).getByText('0%')).toBeTruthy();
+        expect(within(dialog).queryByText('No data')).toBeNull();
+        expect(dialog.querySelectorAll('.dsh-linear-progress')).toHaveLength(1);
+    });
+    it('shows zero footer charts without data or after a usage error and keeps cached modal charts', async () => {
         const noData = { ...account('empty'), usageStatus: 'idle' as const };
         const emptyController = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [noData] }));
         render(<CodexModelsFooterEntry controller={emptyController} locale="en" text={text} />);
-        expect(await screen.findByRole('progressbar', { name: 'Weekly limit: 0%' })).toBeTruthy();
-        expect(screen.queryByRole('progressbar', { name: '5-hour limit: 0%' })).toBeNull();
+        const emptyFooter = await screen.findByTestId('openai-hub-models-footer-empty');
+        expect(emptyFooter.querySelectorAll('.dsh-circular-progress')).toHaveLength(1);
+        expect(within(emptyFooter).getByText('0%')).toBeTruthy();
         expect(screen.queryByText('Loading usage...')).toBeNull();
-        fireEvent.click(screen.getByRole('button', { name: 'OpenAI Codex' }));
-        const accountDialog = await screen.findByTestId('dsh-modal-card');
-        expect(within(accountDialog).getByRole('progressbar', { name: 'Weekly limit: 0%' })).toBeTruthy();
-        expect(within(accountDialog).queryByRole('progressbar', { name: '5-hour limit: 0%' })).toBeNull();
-        expect(within(accountDialog).queryByText('Usage details are unavailable.')).toBeNull();
         cleanup();
 
         const previous = {
@@ -451,16 +542,19 @@ describe('OpenAI Hub account settings', () => {
         };
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [previous] }));
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
-        const fiveHourChart = await screen.findByRole('progressbar', { name: '5-hour limit: 0%' });
-        const weeklyChart = screen.getByRole('progressbar', { name: 'Weekly limit: 0%' });
-        expect(fiveHourChart.getAttribute('aria-valuenow')).toBe('0');
-        expect(weeklyChart.getAttribute('aria-valuenow')).toBe('0');
-        fireEvent.click(screen.getByRole('button', { name: 'OpenAI Codex' }));
+        const cachedFooter = await screen.findByTestId('openai-hub-models-footer-cached');
+        const chartFills = cachedFooter.querySelectorAll('.dsh-circular-progress-fill');
+        expect([...chartFills].map(fill => fill.getAttribute('stroke-dasharray'))).toEqual([
+            expect.stringMatching(/^0 /),
+            expect.stringMatching(/^0 /)
+        ]);
+        fireEvent.click(settingsButton(cachedFooter));
         const accountErrorDialog = await screen.findByTestId('dsh-modal-card');
-        const fiveHourLinear = within(accountErrorDialog).getByRole('progressbar', { name: '5-hour limit: 0%' });
-        const weeklyLinear = within(accountErrorDialog).getByRole('progressbar', { name: 'Weekly limit: 0%' });
-        expect(fiveHourLinear.getAttribute('aria-valuenow')).toBe('0');
-        expect(weeklyLinear.getAttribute('aria-valuenow')).toBe('0');
+        const charts = accountErrorDialog.querySelectorAll('.dsh-linear-progress');
+        expect([...charts].map(chart => chart.getAttribute('style'))).toEqual([
+            expect.stringContaining('--dsh-progress-value: 100%'),
+            expect.stringContaining('--dsh-progress-value: 93%')
+        ]);
         expect(screen.queryByText('Loading usage...')).toBeNull();
     });
     it('reorders model rows without refreshing an already loaded catalog', async () => {
@@ -474,10 +568,10 @@ describe('OpenAI Hub account settings', () => {
         const api = makeRemote({ ...snapshot, accounts: [alpha] });
         const controller = new OpenAICodexController(api);
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
-        fireEvent.click(await screen.findByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-alpha')));
         const accountDialog = await screen.findByTestId('dsh-modal-card');
         fireEvent.click(within(accountDialog).getByRole('button', { name: 'Edit models' }));
-        const modelList = await screen.findByRole('region', { name: 'Available models' });
+        const modelList = await screen.findByTestId('openai-hub-modal-scroll-body-alpha');
         const rows = within(modelList).getAllByRole('listitem');
         const listStyles = readFileSync(resolve(import.meta.dirname, '../src/client/features/settings/codexStyles.module.scss'), 'utf8');
         expect(modelList.querySelector('table')).toBeNull();
@@ -486,7 +580,9 @@ describe('OpenAI Hub account settings', () => {
         expect(rows).toHaveLength(2);
         expect(within(modelList).getByText('model-one')).toBeTruthy();
         expect(within(modelList).getByText('model-two')).toBeTruthy();
-        fireEvent.keyDown(within(modelList).getByRole('button', { name: 'Move down: First' }), { key: 'ArrowDown' });
+        const grip = rows[0]?.querySelector('button[draggable]');
+        if (!grip) throw new Error('Model drag grip missing');
+        fireEvent.keyDown(grip, { key: 'ArrowDown' });
         fireEvent.click(screen.getByRole('button', { name: 'Save' }));
         await waitFor(() =>
             expect(api.saveModels).toHaveBeenCalledWith({
@@ -534,36 +630,64 @@ describe('OpenAI Hub account settings', () => {
         const controller = new OpenAICodexController(api);
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
         expect(await screen.findByText('Models: 3/7 enabled')).toBeTruthy();
-        const toggle = screen.getByRole('switch', { name: /Automatically refresh usage limits/ });
-        expect(toggle.getAttribute('aria-checked')).toBe('false');
-        expect(screen.getByRole('progressbar', { name: '5-hour limit: 99%' })).toBeTruthy();
-        fireEvent.focus(screen.getByRole('button', { name: 'Auto-refresh details' }));
-        expect((await screen.findByRole('tooltip')).textContent).toContain(
+        const toggle = document.querySelector('button[data-checked]');
+        if (!toggle) throw new Error('Auto-refresh toggle missing');
+        expect(toggle.getAttribute('data-checked')).toBe('false');
+        expect(screen.getByText('99%')).toBeTruthy();
+        fireEvent.pointerEnter(toggle);
+        expect((await screen.findByText(text('autoRefreshTooltip'))).textContent).toContain(
             'Turning this off stops automatic usage updates. When enabled, limits refresh every 5 minutes, or every minute when less than 25% remains.'
         );
         fireEvent.click(toggle);
         await waitFor(() =>
             expect(api.updateAccount).toHaveBeenCalledWith({ accountLabel: 'alpha', newLabel: 'alpha', autoRefreshLimits: true })
         );
-        fireEvent.click(screen.getByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(screen.getAllByTestId(/^openai-hub-models-footer-/)[0] ?? document.body));
         const accountDialog = await screen.findByTestId('dsh-modal-card');
-        expect(within(accountDialog).getByRole('progressbar', { name: 'Codex: 99%' })).toBeTruthy();
+        const chart = accountDialog.querySelector('.dsh-linear-progress');
+        if (!chart) throw new Error('Quota chart missing');
+        fireEvent.pointerEnter(chart);
+        expect(await screen.findByText('Codex: 99%')).toBeTruthy();
+        fireEvent.pointerLeave(chart);
+        const reset = within(accountDialog).getByRole('button', { name: /Resets in/ });
+        fireEvent.pointerEnter(reset);
+        expect(await screen.findByText(new Date(alpha.usageLimits[0]?.resetAt ?? 0).toLocaleString())).toBeTruthy();
+        fireEvent.pointerLeave(reset);
         const footer = within(accountDialog).getByTestId('openai-hub-modal-footer');
-        expect(
-            within(footer)
-                .getAllByRole('button')
-                .map(button => button.textContent)
-        ).toEqual(['Edit models', 'Refresh models', 'Delete account', 'Rename']);
+        expect(within(footer).getAllByRole('button')).toEqual([
+            within(footer).getByRole('button', { name: 'Delete account' }),
+            within(footer).getByRole('button', { name: 'Rename' }),
+            within(footer).getByTestId('dsh-icon-button'),
+            within(footer).getByRole('button', { name: 'Edit models' })
+        ]);
+    });
+    it('refreshes the model catalog from the icon button with a tooltip', async () => {
+        const api = makeRemote({ ...snapshot, accounts: [account('alpha')] });
+        const controller = new OpenAICodexController(api);
+        render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-alpha')));
+        const footer = within(await screen.findByTestId('dsh-modal-card')).getByTestId('openai-hub-modal-footer');
+        const refresh = within(footer).getByTestId('dsh-icon-button');
+
+        expect(refresh.hasAttribute('title')).toBe(false);
+        expect(refresh.textContent).toBe('');
+        fireEvent.focus(refresh);
+        expect(await screen.findByText('Refresh models')).toBeTruthy();
+        fireEvent.click(refresh);
+
+        await waitFor(() => expect(api.refreshCatalog).toHaveBeenCalledWith({ accountLabel: 'alpha' }));
     });
     it('confirms reset cards with a per-account idempotency request', async () => {
         const alpha = { ...account('alpha'), resetCards: [{ id: 'credit-1' }], resetCardsStatus: 'ready' as const };
         const api = makeRemote({ ...snapshot, accounts: [alpha] }),
             controller = new OpenAICodexController(api);
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
-        fireEvent.click(await screen.findByRole('button', { name: 'OpenAI Codex' }));
+        fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-alpha')));
         const accountDialog = await screen.findByTestId('dsh-modal-card');
         fireEvent.click(within(accountDialog).getByRole('button', { name: 'Reset limit' }));
-        fireEvent.click(await screen.findByRole('button', { name: 'Confirm reset' }));
+        const confirm = await screen.findByRole('button', { name: 'Confirm reset' });
+        expect(confirm.previousElementSibling?.textContent).toBe('Cancel');
+        fireEvent.click(confirm);
         await waitFor(() => expect(api.consumeReset).toHaveBeenCalledOnce());
         expect(api.consumeReset).toHaveBeenCalledWith(
             expect.objectContaining({ accountLabel: 'alpha', creditId: 'credit-1', confirmed: true })
@@ -582,16 +706,11 @@ describe('OpenAI Hub account settings', () => {
         const callbackUrl = 'http://localhost:1455/auth/callback?code=synthetic-code&state=synthetic-state';
         render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
-        const dialog = await screen.findByRole('dialog');
+        const dialog = await screen.findByTestId('dsh-modal-card');
         fireEvent.change(within(dialog).getByLabelText('Paste the full redirect URL'), { target: { value: callbackUrl } });
         fireEvent.click(within(dialog).getByRole('button', { name: 'Complete sign-in' }));
         await waitFor(() => expect(api.submitCallbackUrl).toHaveBeenCalledWith({ url: callbackUrl }));
         expect(api.startLogin).not.toHaveBeenCalled();
-        await waitFor(() => expect(api.recordClientLog).toHaveBeenCalled());
-        const clientLogCalls = JSON.stringify(vi.mocked(api.recordClientLog).mock.calls);
-        expect(clientLogCalls).not.toContain('synthetic-code');
-        expect(clientLogCalls).not.toContain('synthetic-state');
-        expect(clientLogCalls).not.toContain(callbackUrl);
     });
     it('keeps the login dialog open through the device challenge and displays a later failure', async () => {
         const empty = { ...snapshot, accounts: [], status: 'idle' as const },
@@ -619,13 +738,13 @@ describe('OpenAI Hub account settings', () => {
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
         fireEvent.change(screen.getByLabelText('Account label'), { target: { value: 'work' } });
         fireEvent.click(screen.getByRole('button', { name: 'Sign in with ChatGPT' }));
-        const dialog = await screen.findByRole('dialog');
+        const dialog = await screen.findByTestId('dsh-modal-card');
         expect(within(dialog).getByText('TEST-CODE')).toBeTruthy();
         expect(within(dialog).getByRole('link').getAttribute('href')).toBe('https://auth.openai.com/codex/device');
         expect(within(dialog).queryByRole('button', { name: 'Sign in with ChatGPT' })).toBeNull();
         finished = true;
-        expect((await screen.findByRole('alert', {}, { timeout: 3000 })).textContent).toContain('OpenAI Hub sign-in failed');
-        expect(screen.getByRole('dialog')).toBeTruthy();
+        expect(await screen.findByText('OpenAI Hub sign-in failed', {}, { timeout: 3000 })).toBeTruthy();
+        expect(screen.getByTestId('dsh-modal-card')).toBeTruthy();
         expect(screen.getByDisplayValue('work')).toBeTruthy();
     });
     it('closes the login dialog after authorization succeeds', async () => {
@@ -652,18 +771,10 @@ describe('OpenAI Hub account settings', () => {
         fireEvent.change(screen.getByLabelText('Account label'), { target: { value: 'work' } });
         fireEvent.click(screen.getByRole('button', { name: 'Sign in with ChatGPT' }));
         await screen.findByText('TEST-CODE');
-        expect(screen.getByRole('dialog')).toBeTruthy();
+        expect(screen.getByTestId('dsh-modal-card')).toBeTruthy();
         finished = true;
-        await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull(), { timeout: 3000 });
+        await waitFor(() => expect(screen.queryByTestId('dsh-modal-card')).toBeNull(), { timeout: 3000 });
         expect(controller.getSnapshot().snapshot?.accounts).toEqual([account('work')]);
-    });
-    it('saves the global diagnostic logging preference', async () => {
-        const api = makeRemote(snapshot);
-        render(<OpenAIHubLoggingSettings remote={api} text={text} />);
-        fireEvent.click(await screen.findByRole('switch', { name: 'Enable diagnostic logging' }));
-        fireEvent.click(screen.getByRole('button', { name: 'Save' }));
-        await waitFor(() => expect(api.saveLoggingSettings).toHaveBeenCalledWith({ enabled: true }));
-        expect(await screen.findByText('Logging settings saved.')).toBeTruthy();
     });
     it('requires a lowercase account label before beginning OAuth', async () => {
         const api = makeRemote({ ...snapshot, accounts: [] }),
@@ -672,7 +783,7 @@ describe('OpenAI Hub account settings', () => {
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
         fireEvent.change(screen.getByLabelText('Account label'), { target: { value: 'Bad Label' } });
         fireEvent.click(screen.getByRole('button', { name: 'Sign in with ChatGPT' }));
-        expect(await screen.findByRole('alert')).toBeTruthy();
+        expect(await screen.findByText(text('labelInvalid'))).toBeTruthy();
         expect(api.startLogin).not.toHaveBeenCalled();
     });
 });

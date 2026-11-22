@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import type { EventListenerPort } from '../services/routerVisibility.js';
-import { subscribeToRouterVisibility } from '../services/routerVisibility.js';
+import type { EventListenerPort } from '../services/routerVisibility.ts';
+import { subscribeToRouterVisibility } from '../services/routerVisibility.ts';
 
 interface RootElementRef {
     current: HTMLElement | null;

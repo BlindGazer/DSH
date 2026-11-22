@@ -1,17 +1,8 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "composite": true,
-        "rootDir": "../../../packages/dsh-proxy-provider/src",
-        "outDir": "../../../packages/dsh-proxy-provider/lib",
-        "declarationDir": "../../../node_modules/.cache/dsh-proxy-provider/types",
-        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-proxy-provider/tsconfig.tsbuildinfo",
+        "noEmit": true,
         "types": ["node"]
     },
-    "include": ["../../../packages/dsh-proxy-provider/src/**/*"],
-    "references": [
-        {
-            "path": "../dsh-core/tsconfig.json"
-        }
-    ]
+    "include": ["../../../packages/dsh-proxy-provider/src/**/*", "../../../packages/dsh-core/src/scss.d.ts"]
 }

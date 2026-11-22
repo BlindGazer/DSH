@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from 'react';
-import type { ProfileDraft } from '../../../../shared/models/ProxyModels.js';
-import { proxyStore } from '../../../app/proxyStore.js';
+import type { ProfileDraft } from '../../../../shared/models/ProxyModels.ts';
+import { proxyStore } from '../../../app/proxyStore.ts';
 
 export interface IoNotice {
     readonly ok: boolean;

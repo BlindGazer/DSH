@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildCoreThemeStyles, darkThemeTokens, getDshThemeRevision, registerDshTheme, subscribeDshThemeChanges } from '../src/index.js';
+import { buildCoreThemeStyles, darkThemeTokens, getDshThemeRevision, registerDshTheme, subscribeDshThemeChanges } from '../src/index.ts';
 
 describe('@kalex/dsh-core theme registry', () => {
     it('notifies subscribers and rebuilds styles when a registered theme is replaced', () => {

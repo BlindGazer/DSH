@@ -1,8 +1,8 @@
 import { TestId } from '@kalex/dsh-core';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { proxyStore } from '../src/client/app/proxyStore.js';
-import { ProviderCardProxyEntry } from '../src/client/features/provider-card/components/ProviderCardProxyEntry.js';
+import { proxyStore } from '../src/client/app/proxyStore.ts';
+import { ProviderCardProxyEntry } from '../src/client/features/provider-card/components/ProviderCardProxyEntry.tsx';
 
 describe('provider card loading state', () => {
     it('shows the shared loading indicator while proxy settings are loading', () => {

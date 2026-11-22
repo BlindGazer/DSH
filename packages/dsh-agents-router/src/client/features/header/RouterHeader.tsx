@@ -1,5 +1,6 @@
+import { Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
-import type { RouterPostBody, RouterStateResponse } from '../../../shared/models/RouterModels.js';
+import type { RouterPostBody, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 
 export interface RouterHeaderProps {
     data: RouterStateResponse;
@@ -27,9 +28,9 @@ export function RouterHeader({
     return (
         <header className="ar-header">
             <div className="ar-header-title">
-                <div className="ar-muted" title={data.projectRoot}>
+                <Tooltip className="ar-muted ar-header-project" content={data.projectRoot} triggerElement="span">
                     {data.projectRoot}
-                </div>
+                </Tooltip>
                 <h1>
                     {t('router')} <span className="ar-muted">{data.sessionId}</span>
                 </h1>

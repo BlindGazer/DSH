@@ -1,8 +1,8 @@
 import { type ReactNode, Suspense } from 'react';
 
-import { ProgressBar } from './ProgressBar.js';
-import { Skeleton } from './Skeleton.js';
-import { Spinner } from './Spinner.js';
+import { ProgressBar } from './ProgressBar.tsx';
+import { Skeleton } from './Skeleton.tsx';
+import { Spinner } from './Spinner.tsx';
 
 /**
  * Свойства обертки отложенной загрузки ChildrenLazy.

@@ -1,14 +1,8 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "composite": true,
-        "rootDir": "../../../packages/dsh-workspace-manager/src",
-        "outDir": "../../../packages/dsh-workspace-manager/lib",
-        "declarationDir": "../../../node_modules/.cache/dsh-workspace-manager/types",
-        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-workspace-manager/tsconfig.tsbuildinfo",
-        "types": ["node"],
-        "strict": true
+        "noEmit": true,
+        "types": ["node"]
     },
-    "include": ["../../../packages/dsh-workspace-manager/src/**/*"],
-    "references": [{ "path": "../dsh-core/tsconfig.json" }]
+    "include": ["../../../packages/dsh-workspace-manager/src/**/*", "../../../packages/dsh-core/src/scss.d.ts"]
 }

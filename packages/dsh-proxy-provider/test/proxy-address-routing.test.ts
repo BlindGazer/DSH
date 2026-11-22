@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
-import { normalizeProxyConfig } from '../src/host/services/configNormalizer.js';
-import { compileRoutingTable } from '../src/host/services/providerRouting.js';
-import type { DiscoveredProvider } from '../src/shared/models/ProxyModels.js';
-import { extractHost, resolveProviderHosts, sanitizeHostInput } from '../src/shared/utils/hostUtils.js';
+import { normalizeProxyConfig } from '../src/host/services/configNormalizer.ts';
+import { compileRoutingTable } from '../src/host/services/providerRouting.ts';
+import type { DiscoveredProvider } from '../src/shared/models/ProxyModels.ts';
+import { extractHost, resolveProviderHosts, sanitizeHostInput } from '../src/shared/utils/hostUtils.ts';
 
 describe('proxy address routing', () => {
     it('preserves nonstandard ports and IPv6 host notation during normalization', () => {

@@ -92,8 +92,8 @@ Managed in the plugin settings (Plugins page):
 
 - **TypeScript >= 7.0.2** with strict typing (no `any`, `unknown`, or `null`).
 - **React 19.3** + **React Compiler** (Vite 8 + Oxc).
-- **Vite 8.3.5** (`minify: 'oxc'`).
-- **Vitest 3.2.0** for tests.
+- **Vite 8** (`minify: 'oxc'`).
+- **Vitest 5** for tests.
 - **Biome** and **Oxlint** for linting and formatting.
 - **Cordis** (`@deepseek-ai/cordis`) - the DSH plugin environment.
 - **YAML** - parses frontmatter and area configuration.

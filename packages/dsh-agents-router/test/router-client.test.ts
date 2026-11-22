@@ -1,7 +1,7 @@
 import { afterEach, expect, test, vi } from 'vitest';
-import { globalSettingsApi } from '../src/client/features/global-settings/globalSettingsApi.js';
-import { routerApi } from '../src/client/features/router/services/routerApi.js';
-import type { GlobalSettings, RouterStateResponse } from '../src/shared/models/RouterModels.js';
+import { globalSettingsApi } from '../src/client/features/global-settings/globalSettingsApi.ts';
+import { routerApi } from '../src/client/features/router/services/routerApi.ts';
+import type { GlobalSettings, RouterStateResponse } from '../src/shared/models/RouterModels.ts';
 
 const globalSettings: GlobalSettings = {
     locale: 'ru',

@@ -6,7 +6,7 @@ import {
     RemoteNamespace,
     ResetStorageKey,
     ServiceKey
-} from '../src/shared/constants/runtime.js';
+} from '../src/shared/constants/runtime.ts';
 import {
     AccountRequestSchema,
     LoginRequestSchema,
@@ -16,7 +16,7 @@ import {
     sanitizeUiRenderError,
     TYPERT_REMOTE,
     UpdateAccountRequestSchema
-} from '../src/shared/remote.js';
+} from '../src/shared/remote.ts';
 
 const account = {
     accountLabel: 'work-account',
@@ -90,9 +90,6 @@ describe('OpenAI Hub shared remote contract', () => {
         expect(TYPERT_REMOTE.package).toBe(PackageId);
         expect(TYPERT_REMOTE.descriptors.map(({ method }) => method)).toEqual([
             'snapshot',
-            'loadLoggingSettings',
-            'saveLoggingSettings',
-            'recordClientLog',
             'startLogin',
             'cancelLogin',
             'retryLogin',

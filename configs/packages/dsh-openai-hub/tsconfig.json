@@ -1,13 +1,8 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "composite": true,
-        "rootDir": "../../../packages/dsh-openai-hub/src",
-        "outDir": "../../../packages/dsh-openai-hub/lib",
-        "declarationDir": "../../../node_modules/.cache/dsh-openai-hub/types",
-        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-openai-hub/tsconfig.tsbuildinfo",
+        "noEmit": true,
         "types": ["node"]
     },
-    "include": ["../../../packages/dsh-openai-hub/src/**/*"],
-    "references": [{ "path": "../dsh-core/tsconfig.json" }]
+    "include": ["../../../packages/dsh-openai-hub/src/**/*", "../../../packages/dsh-core/src/scss.d.ts"]
 }

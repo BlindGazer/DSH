@@ -1,8 +1,8 @@
 import { randomBytes } from 'node:crypto';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Readable } from 'node:stream';
-import type { RawConfigCandidate, RawProfileCandidate } from '../services/configNormalizer.js';
-import type { ProviderProxyController } from '../services/controller.js';
+import type { RawConfigCandidate, RawProfileCandidate } from '../services/configNormalizer.ts';
+import type { ProviderProxyController } from '../services/controller.ts';
 
 /**
  * Записывает JSON-ответ с заголовками запрета кэширования.

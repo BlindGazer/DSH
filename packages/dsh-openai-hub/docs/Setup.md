@@ -2,7 +2,7 @@
 
 ## Требования
 
-- DeepSeek Harness `>=0.2.2-rc.1` с совместимыми host-зависимостями пакета.
+- DeepSeek Harness `>=0.2.2-rc.5` с совместимыми host-зависимостями пакета.
 - Node.js `>=22.19.0` для установки через CLI.
 - Аккаунт ChatGPT с доступом к Codex и поддерживаемым способом OAuth.
 
@@ -13,12 +13,14 @@
 Для профиля Web:
 
 ```sh
-dsh plugin --profile web add @kalex/dsh-openai-hub
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
-До публикации нового имени в registry используйте собранный локальный каталог (из корня репозитория):
+Для локальной разработки выполните из корня репозитория:
 
 ```powershell
+pnpm install
+pnpm --filter @kalex/dsh-openai-hub build
 dsh plugin --profile desktop add ./packages/dsh-openai-hub
 ```
 
@@ -33,7 +35,7 @@ dsh plugin --profile desktop add ./packages/dsh-openai-hub
 3. Установите новый пакет:
 
    ```sh
-   dsh plugin --profile web add @kalex/dsh-openai-hub
+   dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-openai-hub
    ```
 4. При необходимости перезапустите DSH. Откройте Settings -> Models, задайте каждому аккаунту уникальную метку из строчных ASCII-букв/цифр/дефисов до OAuth и выполните вход заново.
 5. Проверьте каталог и лимиты по списку ниже. Не рассчитывайте на перенос старых учетных данных или настроек аккаунта.

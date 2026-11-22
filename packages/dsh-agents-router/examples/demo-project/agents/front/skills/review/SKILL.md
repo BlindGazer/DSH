@@ -1,5 +1,5 @@
 ---
-description: Review frontend changes for accessibility and component conventions
+description: Review frontend changes for keyboard usability and component conventions
 disable-model-invocation: false
 user-invocable: true
 ---

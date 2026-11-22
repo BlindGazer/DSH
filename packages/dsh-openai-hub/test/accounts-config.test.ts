@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
-import { Config, reconcileModels, splitModelId } from '../src/shared/accounts.js';
-import { credentialRefForAccount } from '../src/shared/constants/runtime.js';
-import { AccountSnapshotSchema, SnapshotSchema } from '../src/shared/remote.js';
+import { Config, reconcileModels, splitModelId } from '../src/shared/accounts.ts';
+import { credentialRefForAccount } from '../src/shared/constants/runtime.ts';
+import { AccountSnapshotSchema, SnapshotSchema } from '../src/shared/remote.ts';
 
 const account = (overrides: Record<string, unknown> = {}) => ({
     accountLabel: 'work-account',

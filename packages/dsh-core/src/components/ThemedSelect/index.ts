@@ -1,1 +1,1 @@
-export { ThemedSelect, type ThemedSelectProps } from './ThemedSelect.js';
+export { ThemedSelect, type ThemedSelectProps } from './ThemedSelect.tsx';

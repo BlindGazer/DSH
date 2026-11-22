@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { lstat, mkdir, readdir, readFile, realpath, rename, unlink, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { inside } from './discoveryFs.js';
+import { inside } from './discoveryFs.ts';
 
 interface AuditStorageStore {
     loadGlobalSettings(): Promise<{ settings: { globalLogging?: boolean } }>;

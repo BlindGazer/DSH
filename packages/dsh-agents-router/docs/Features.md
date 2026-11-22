@@ -92,8 +92,8 @@
 
 - **TypeScript >= 7.0.2** со строгой типизацией (запрещены `any`, `unknown`, `null`).
 - **React 19.3** + **React Compiler** (Vite 8 + Oxc).
-- **Vite 8.3.5** (`minify: 'oxc'`).
-- **Vitest 3.2.0** для тестов.
+- **Vite 8** (`minify: 'oxc'`).
+- **Vitest 5** для тестов.
 - **Biome** и **Oxlint** для линтинга и форматирования.
 - **Cordis** (`@deepseek-ai/cordis`) - среда плагинов DSH.
 - **YAML** - парсинг frontmatter и конфигурации зон.

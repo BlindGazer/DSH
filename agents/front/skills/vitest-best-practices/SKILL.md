@@ -1,114 +1,114 @@
 ---
 name: vitest-best-practices
-description: Comprehensive vitest testing patterns covering test structure, AAA pattern, parameterized tests, assertions, mocking, test doubles, error handling, async testing, and performance optimization. Use when writing, reviewing, or refactoring vitest tests, or when user mentions vitest, testing, TDD, test coverage, mocking, assertions, or test files (*.test.ts, *.spec.ts).
-compatibility: Requires vitest testing framework
+description: Comprehensive Vitest testing patterns covering test structure, AAA, parameterized tests, assertions, mocks, test doubles, error handling, async testing, and performance. Use when writing, reviewing, or refactoring Vitest tests, or when the user mentions testing, TDD, coverage, mocking, assertions, or test files (*.test.ts, *.spec.ts).
+compatibility: Requires the Vitest testing framework
 ---
 
-## When to Apply This Skill
+## When to apply
 
-Use this skill when you encounter any of these scenarios:
+Use this skill in these situations:
 
-### File Patterns
+### File patterns
 
-- Creating new test files for TypeScript/JavaScript modules
-- Reviewing existing vitest test suites
+- Creating test files for TypeScript or JavaScript modules
+- Reviewing existing Vitest suites
 
-### User Intent Keywords
+### User intent
 
-- User mentions: vitest, testing, TDD, BDD, unit tests, integration tests
-- User asks to: write tests, add test coverage, fix failing tests, refactor tests
-- User discusses: mocking, stubbing, assertions, test performance, test organization
+- The user mentions Vitest, testing, TDD, BDD, unit tests, or integration tests
+- The user asks to write tests, add coverage, fix failing tests, or refactor tests
+- The user discusses mocks, stubs, assertions, test performance, or test organization
 
-### Code Context
+### Code context
 
-- Files importing from `vitest` (`describe`, `test`, `expect`, `vi`)
-- Test setup/teardown code (`beforeEach`, `afterEach`, `beforeAll`, `afterAll`)
-- Mock/spy implementations using `vi.mock()`, `vi.spyOn()`, `vi.fn()`
-- Assertion chains (`expect(...).toEqual()`, `.toBe()`, `.toThrow()`, etc.)
+- Files importing `describe`, `test`, `expect`, or `vi` from `vitest`
+- Setup and teardown code: `beforeEach`, `afterEach`, `beforeAll`, `afterAll`
+- Mock and spy implementations using `vi.mock()`, `vi.spyOn()`, or `vi.fn()`
+- Assertion chains such as `expect(...).toEqual()`, `.toBe()`, or `.toThrow()`
 
-### Common Tasks
+### Common tasks
 
-- Writing new test cases for existing functionality
-- Refactoring tests for better clarity or performance
-- Debugging flaky or failing tests
-- Improving test coverage or maintainability
-- Reviewing test code for best practices compliance
+- Write test cases for existing functionality
+- Refactor tests for clarity or performance
+- Debug flaky or failing tests
+- Improve coverage or maintainability
+- Review test code for best practices
 
-## Do NOT Use This Skill When
+## Do not use this skill when
 
-- Writing end-to-end tests with Playwright/Cypress (different scope)
-- The task is purely about implementation code, not tests
+- Writing end-to-end tests with Playwright or Cypress
+- The task is purely implementation code, not tests
 
-## What This Skill Covers
+## Coverage
 
-This skill provides comprehensive guidance on:
+This skill covers:
 
-1. **Test Organization**: File placement, naming conventions, grouping strategies
-2. **AAA Pattern**: Arrange, Act, Assert structure for clarity
-3. **Parameterized Tests**: Using `test.each()` for testing variations
-4. **Error Handling**: Testing exceptions, edge cases, and fault injection
-5. **Assertions**: Choosing strict assertions (`toEqual`, `toStrictEqual`, `toThrow`)
-6. **Test Doubles**: Fakes, stubs, mocks, spies - when to use each
-7. **Async Testing**: Promises, async/await, timers, and concurrent tests
-8. **Performance**: Fast tests, avoiding expensive operations, cleanup patterns
-9. **Vitest-Specific Features**: Coverage, watch mode, benchmarking, type testing, setup files
-10. **Snapshot Testing**: When and how to use snapshots effectively
+1. Test organization: file placement, naming, and grouping
+2. AAA pattern: Arrange, Act, Assert
+3. Parameterized tests: `test.each()` for variations
+4. Error handling: exceptions, edge cases, and fault injection
+5. Assertions: strict assertions such as `toEqual`, `toStrictEqual`, and `toThrow`
+6. Test doubles: fakes, stubs, mocks, and spies
+7. Async testing: promises, async/await, timers, and concurrent tests
+8. Performance: fast tests, efficient operations, and cleanup
+9. Vitest features: coverage, watch mode, benchmarking, type testing, and setup files
+10. Snapshot testing: when and how to use snapshots
 
-## How to Use
+## How to use
 
-This skill uses a **progressive disclosure** structure to minimize context usage:
+This skill uses progressive disclosure to minimize context:
 
-### 1. Start with the Overview (AGENTS.md)
+### 1. Start with the overview
 
-Read [AGENTS.md](AGENTS.md) for a concise overview of all rules with one-line summaries.
+Read [AGENTS.md](AGENTS.md) for a concise overview of all rules.
 
-### 2. Load Specific Rules as Needed
+### 2. Load specific rules as needed
 
-When you identify a relevant optimization, load the corresponding reference file for detailed implementation guidance:
+When a relevant pattern is identified, load its reference file:
 
-**Core Patterns:**
-- [organization.md](agents/skills/vitest-best-practices/references/organization.md)
-- [aaa-pattern.md](agents/skills/vitest-best-practices/references/aaa-pattern.md)
-- [parameterized-tests.md](agents/skills/vitest-best-practices/references/parameterized-tests.md)
-- [error-handling.md](agents/skills/vitest-best-practices/references/error-handling.md)
-- [assertions.md](agents/skills/vitest-best-practices/references/assertions.md)
-- [test-doubles.md](agents/skills/vitest-best-practices/references/test-doubles.md)
+**Core patterns:**
+- [organization.md](references/organization.md)
+- [aaa-pattern.md](references/aaa-pattern.md)
+- [parameterized-tests.md](references/parameterized-tests.md)
+- [error-handling.md](references/error-handling.md)
+- [assertions.md](references/assertions.md)
+- [test-doubles.md](references/test-doubles.md)
 
-**Advanced Topics:**
-- [async-testing.md](agents/skills/vitest-best-practices/references/async-testing.md)
-- [performance.md](agents/skills/vitest-best-practices/references/performance.md)
-- [vitest-features.md](agents/skills/vitest-best-practices/references/vitest-features.md)
-- [snapshot-testing.md](agents/skills/vitest-best-practices/references/snapshot-testing.md)
+**Advanced topics:**
+- [async-testing.md](references/async-testing.md)
+- [performance.md](references/performance.md)
+- [vitest-features.md](references/vitest-features.md)
+- [snapshot-testing.md](references/snapshot-testing.md)
 
-### 3. Apply the Pattern
+### 3. Apply the pattern
 
 Each reference file contains:
-- ❌ Incorrect examples showing the anti-pattern
-- ✅ Correct examples showing the optimal implementation
-- Explanations of why the pattern matters
+- Incorrect examples showing the anti-pattern
+- Correct examples showing the preferred implementation
+- Why the pattern matters
 
-## Quick Example
+## Quick example
 
-This skill helps you transform unclear tests into clear, maintainable ones:
+This skill transforms unclear tests into clear, maintainable tests:
 
 **Before (unclear):**
 ```ts
 test('product test', () => {
-  const p = new ProductService().add({name: 'Widget'});
+  const p = new ProductService().add({ name: 'Widget' });
   expect(p.status).toBe('pendingApproval');
 });
 ```
 
-**After (optimized with this skill):**
+**After:**
 ```ts
 describe('ProductService', () => {
   describe('Add new product', () => {
-    test('should have status "pending approval" when no price is specified', () => {
+    test('has status "pending approval" when no price is specified', () => {
       // Arrange
       const productService = new ProductService();
 
       // Act
-      const newProduct = productService.add({name: 'Widget'});
+      const newProduct = productService.add({ name: 'Widget' });
 
       // Assert
       expect(newProduct.status).toEqual('pendingApproval');
@@ -117,11 +117,11 @@ describe('ProductService', () => {
 });
 ```
 
-## Key Principles
+## Key principles
 
-- **Clarity over cleverness**: Tests should be instantly understandable
-- **Flat structure**: Avoid deep nesting in describe blocks
-- **One assertion per concept**: Focus tests on single behaviors
-- **Strict assertions**: Prefer `toEqual` over `toBe`, `toStrictEqual` when needed
-- **Minimal mocking**: Use real implementations when practical
-- **Fast execution**: Keep tests quick through efficient setup/teardown
+- Clarity over cleverness: tests should be instantly understandable
+- Flat structure: keep `describe` nesting to at most two levels
+- One assertion per concept: focus each test on one behavior
+- Strict assertions: prefer structural equality for objects; use `toBe` for primitive identity and exact reference checks, and `toStrictEqual` when needed
+- Minimal mocking: use real implementations when practical
+- Fast execution: keep tests quick through efficient setup and teardown

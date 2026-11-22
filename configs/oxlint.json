@@ -27,5 +27,23 @@
         "eqeqeq": "error",
         "no-await-in-loop": "off"
     },
+    "overrides": [
+        {
+            "files": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts"],
+            "rules": {
+                "no-restricted-imports": [
+                    "error",
+                    {
+                        "patterns": [
+                            {
+                                "regex": "^(\\.{1,2}/|@kalex/dsh-[^/]+/)(?:[^?#]*/)?[^/?#]+\\.(?:[cm]?js|jsx)(?:[?#].*)?$",
+                                "message": "Import the TypeScript source rather than a JavaScript module path."
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    ],
     "ignorePatterns": ["**/lib/**", "**/dist/**", "**/node_modules/**"]
 }

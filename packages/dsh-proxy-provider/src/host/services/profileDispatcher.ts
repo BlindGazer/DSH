@@ -1,9 +1,9 @@
 import net from 'node:net';
 import tls from 'node:tls';
-import type { ProxyProfile } from '../../shared/models/ProxyModels.js';
-import type { ProfileDispatcherLifecycle } from '../models/ProxyServiceContracts.js';
-import { establishSocks5Tunnel } from './socks5.js';
-import { loadUndici, type UndiciDispatcherLike, type UndiciLoader } from './undiciLoader.js';
+import type { ProxyProfile } from '../../shared/models/ProxyModels.ts';
+import type { ProfileDispatcherLifecycle } from '../models/ProxyServiceContracts.ts';
+import { establishSocks5Tunnel } from './socks5.ts';
+import { loadUndici, type UndiciDispatcherLike, type UndiciLoader } from './undiciLoader.ts';
 
 interface ConnectOptionsLike {
     readonly hostname?: string;

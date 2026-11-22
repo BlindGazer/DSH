@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { TestId } from '../../constants/testId.js';
-import type { SelectOption } from '../../models/SelectOption.js';
-import { coreStyleScopeClass } from '../../theme/styles.js';
-import { cx } from '../../utils/classNames.js';
+import { TestId } from '../../constants/testId.ts';
+import type { SelectOption } from '../../models/SelectOption.ts';
+import { coreStyleScopeClass } from '../../theme/styles.ts';
+import { cx } from '../../utils/classNames.ts';
+import { FieldError } from '../FieldError/FieldError.tsx';
 
 /**
  * Свойства выпадающего списка ThemedSelect.
@@ -13,7 +14,6 @@ export interface ThemedSelectProps<TValue extends string = string> {
     readonly size?: 'small' | 'standard';
     readonly options: ReadonlyArray<SelectOption<TValue>>;
     readonly onChange: (nextValue: TValue) => void;
-    readonly ariaLabel?: string;
     readonly disabled?: boolean;
     readonly fullWidth?: boolean;
     readonly showCheckmark?: boolean;
@@ -21,6 +21,8 @@ export interface ThemedSelectProps<TValue extends string = string> {
     readonly triggerClassName?: string;
     readonly menuClassName?: string;
     readonly optionClassName?: string;
+    readonly id?: string;
+    readonly error?: string | undefined;
 }
 
 /**
@@ -32,14 +34,15 @@ export function ThemedSelect<TValue extends string = string>({
     size = 'standard',
     options,
     onChange,
-    ariaLabel,
     disabled = false,
     fullWidth = false,
     showCheckmark = false,
     className,
     triggerClassName,
     menuClassName,
-    optionClassName
+    optionClassName,
+    id,
+    error
 }: ThemedSelectProps<TValue>) {
     const rootRef = useRef<HTMLDivElement | undefined>(undefined);
     const [open, setOpen] = useState(false);
@@ -112,11 +115,10 @@ export function ThemedSelect<TValue extends string = string>({
             data-size={size}>
             <button
                 type="button"
+                id={id}
+                data-invalid={error ? true : undefined}
                 data-testid={TestId.Common.SelectTrigger}
                 className={cx('dsh-select-trigger', 'ar-themed-select-trigger', triggerClassName)}
-                aria-label={ariaLabel}
-                aria-haspopup="listbox"
-                aria-expanded={open}
                 disabled={disabled}
                 onKeyDown={handleKeyDown}
                 onClick={() => {
@@ -134,17 +136,12 @@ export function ThemedSelect<TValue extends string = string>({
                     stroke="currentColor"
                     strokeWidth={2}
                     strokeLinecap="round"
-                    strokeLinejoin="round"
-                    aria-hidden="true">
+                    strokeLinejoin="round">
                     <path d={open ? 'm6 15 6-6 6 6' : 'm6 9 6 6 6-6'} />
                 </svg>
             </button>
             {open ? (
-                <div
-                    role="listbox"
-                    aria-label={ariaLabel}
-                    data-testid={TestId.Common.SelectMenu}
-                    className={cx('dsh-select-menu', 'ar-themed-select-menu', menuClassName)}>
+                <div data-testid={TestId.Common.SelectMenu} className={cx('dsh-select-menu', 'ar-themed-select-menu', menuClassName)}>
                     {options.map((option, index) => {
                         const isSelected = index === selectedIndex;
                         const isActive = index === activeIndex;
@@ -152,9 +149,7 @@ export function ThemedSelect<TValue extends string = string>({
                             <button
                                 key={option.value}
                                 type="button"
-                                role="option"
                                 data-testid={TestId.Common.SelectOption}
-                                aria-selected={isSelected}
                                 disabled={option.disabled}
                                 className={cx('dsh-select-option', (isActive || isSelected) && 'active', optionClassName)}
                                 onMouseEnter={() => setActiveIndex(index)}
@@ -165,12 +160,13 @@ export function ThemedSelect<TValue extends string = string>({
                                     }
                                 }}>
                                 <span>{option.label}</span>
-                                {showCheckmark && isSelected ? <span aria-hidden="true">✓</span> : undefined}
+                                {showCheckmark && isSelected ? <span>✓</span> : undefined}
                             </button>
                         );
                     })}
                 </div>
             ) : undefined}
+            <FieldError error={error} />
         </div>
     );
 }

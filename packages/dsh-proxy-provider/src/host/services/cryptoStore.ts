@@ -2,7 +2,7 @@ import { createCipheriv, createDecipheriv, randomBytes, scryptSync } from 'node:
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { dirname, join } from 'node:path';
-import type { MasterKeyProvider } from '../models/ProxyServiceContracts.js';
+import type { MasterKeyProvider } from '../models/ProxyServiceContracts.ts';
 
 /**
  * Определяет путь к файлу мастер-ключа шифрования учетных данных прокси.

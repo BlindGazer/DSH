@@ -1,18 +1,13 @@
-import { type CSSProperties, type PointerEvent, type ReactNode, useEffect, useId, useRef, useState } from 'react';
+import { type CSSProperties, type PointerEvent, type ReactNode, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useEffectiveTheme } from '../../hooks/useEffectiveTheme.js';
-import type { DshThemeId } from '../../models/DshContext.js';
-import { cx } from '../../utils/classNames.js';
-import { pointerModality } from './input-modality.js';
-import { placeTooltip, type TooltipSide } from './tooltip-placement.js';
+import { cx } from '../../utils/classNames.ts';
+import { pointerModality } from './input-modality.ts';
+import { placeTooltip, type TooltipSide } from './tooltip-placement.ts';
 
 export interface TooltipProps {
     readonly children: ReactNode;
     readonly content: ReactNode;
-    readonly triggerLabel: string;
-    readonly theme?: DshThemeId;
     readonly triggerMode?: 'hover' | 'click';
-    readonly contentLabel?: string;
     readonly delayMs?: number;
     readonly className?: string;
     readonly triggerClassName?: string;
@@ -20,17 +15,14 @@ export interface TooltipProps {
     readonly triggerElement?: 'span' | 'div';
     readonly side?: TooltipSide;
     readonly align?: 'center' | 'end';
-    readonly portal?: boolean;
+    readonly portal?: boolean | 'body';
     readonly 'data-testid'?: string;
 }
 
 export function Tooltip({
     children,
     content,
-    triggerLabel,
-    theme,
     triggerMode = 'hover',
-    contentLabel = triggerLabel,
     delayMs = 0,
     className,
     triggerClassName,
@@ -41,11 +33,9 @@ export function Tooltip({
     portal = true,
     'data-testid': testId
 }: TooltipProps) {
-    const effectiveTheme = useEffectiveTheme(theme ?? 'auto');
-    const id = useId();
     const anchor = useRef<HTMLElement | undefined>(undefined);
     const bubble = useRef<HTMLSpanElement | undefined>(undefined);
-    const [open, setOpen] = useState(false);
+    const [portalTarget, setPortalTarget] = useState<Element>();
     const [placement, setPlacement] = useState<{ anchor: DOMRect; width: number; height: number } | undefined>(undefined);
     const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
     const cancel = (): void => {
@@ -55,12 +45,12 @@ export function Tooltip({
     const show = (): void => {
         if (anchor.current) {
             setPlacement({ anchor: anchor.current.getBoundingClientRect(), width: 0, height: 0 });
-            setOpen(true);
+            setPortalTarget(anchor.current.closest('[data-theme]:not(html)') ?? document.body);
         }
     };
     const hide = (): void => {
         cancel();
-        setOpen(false);
+        setPortalTarget(undefined);
         setPlacement(undefined);
     };
     const delayedShow = (): void => {
@@ -76,7 +66,7 @@ export function Tooltip({
         };
     }, []);
     useEffect(() => {
-        if (!open || !bubble.current || !placement) return undefined;
+        if (!portalTarget || !bubble.current) return undefined;
         const update = (): void => {
             if (anchor.current && bubble.current) {
                 const box = bubble.current.getBoundingClientRect();
@@ -91,7 +81,7 @@ export function Tooltip({
             observer?.disconnect();
             window.removeEventListener('resize', update);
         };
-    }, [open, placement]);
+    }, [portalTarget]);
     const positioned =
         placement && placement.width > 0
             ? placeTooltip({
@@ -106,8 +96,6 @@ export function Tooltip({
               })
             : undefined;
     const triggerProps = {
-        'aria-label': triggerLabel,
-        'aria-describedby': open ? id : undefined,
         onPointerEnter: (event: PointerEvent) => {
             if (triggerMode === 'hover' && event.pointerType !== 'touch') delayedShow();
         },
@@ -121,10 +109,10 @@ export function Tooltip({
         onClick:
             triggerMode === 'click'
                 ? () => {
-                      if (open) hide();
+                      if (portalTarget) hide();
                       else show();
                   }
-                : undefined
+                : hide
     };
     const trigger =
         triggerElement === 'span' || triggerMode === 'click' ? (
@@ -134,16 +122,13 @@ export function Tooltip({
                 {children}
             </button>
         );
-    const panel = open ? (
+    const panel = portalTarget ? (
         <span
             ref={element => {
                 bubble.current = element ?? undefined;
             }}
-            id={id}
-            className={cx('dsh-tooltip-content', contentClassName)}
-            data-theme={theme ?? effectiveTheme}
-            role="tooltip"
-            aria-label={contentLabel}
+            className={cx('dsh-tooltip-content', portal === 'body' ? 'dsh-core-root' : undefined, contentClassName)}
+            data-theme={portal === 'body' ? (portalTarget.getAttribute('data-theme') ?? undefined) : undefined}
             style={
                 { left: positioned?.left ?? 0, top: positioned?.top ?? 0, visibility: positioned ? 'visible' : 'hidden' } as CSSProperties
             }>
@@ -158,7 +143,7 @@ export function Tooltip({
             className={cx('dsh-tooltip', className)}
             data-testid={testId}>
             {trigger}
-            {portal && panel ? createPortal(panel, document.body) : panel}
+            {portal && portalTarget ? createPortal(panel, portal === 'body' ? document.body : portalTarget) : panel}
         </span>
     );
 }

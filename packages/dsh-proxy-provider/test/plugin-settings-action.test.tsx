@@ -1,6 +1,6 @@
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { ProxyPluginSettingsAction } from '../src/client/features/locale-settings/components/ProxyPluginSettingsAction.js';
+import { ProxyPluginSettingsAction } from '../src/client/features/locale-settings/components/ProxyPluginSettingsAction.tsx';
 
 describe('Proxy Plugin Manager settings action', () => {
     it('shows language and full settings controls only on the Proxy package detail', () => {

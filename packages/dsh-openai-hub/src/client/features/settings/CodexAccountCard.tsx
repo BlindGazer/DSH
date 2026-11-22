@@ -1,43 +1,21 @@
-import { Button, Checkbox, LinearProgress, Modal, TextField, useEffectiveTheme } from '@kalex/dsh-core';
-import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import { TestId } from '../../../shared/constants/testId.js';
-import type { AccountSnapshot } from '../../../shared/remote.js';
+import { Button, Checkbox, IconButton, LinearProgress, Modal, RefreshIcon, TextField, Tooltip } from '@kalex/dsh-core';
+import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import { TestId } from '../../../shared/constants/testId.ts';
+import type { AccountSnapshot } from '../../../shared/remote.ts';
 import styles from './codexStyles.module.scss';
-import { formatQuotaReset } from './formatQuotaReset.js';
-import { useCodexAccountCard } from './hooks/useCodexAccountCard.js';
-import type { OpenAICodexController } from './openAICodexRuntime.js';
+import { formatQuotaReset } from './formatQuotaReset.ts';
+import { useCodexAccountCard } from './hooks/useCodexAccountCard.ts';
+import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexAccountCardProps {
     readonly account: AccountSnapshot;
     readonly controller: OpenAICodexController;
     readonly text: (key: OpenAICodexText) => string;
 }
 export function CodexAccountCard({ account, controller, text }: CodexAccountCardProps) {
-    const theme = useEffectiveTheme();
     const panel = useCodexAccountCard(account, controller, text);
-    const chartLimits =
-        account.usageStatus === 'error'
-            ? account.usageLimits.length
-                ? account.usageLimits
-                : [
-                      {
-                          name: text('fiveHourLimit'),
-                          usedPercent: 100,
-                          windowSeconds: 18_000,
-                          resetAt: 0
-                      },
-                      {
-                          name: text('weeklyLimit'),
-                          usedPercent: 100,
-                          windowSeconds: 604_800,
-                          resetAt: 0
-                      }
-                  ]
-            : account.usageLimits;
+    const weeklyLimit = account.usageLimits.find(limit => limit.windowSeconds === 604_800);
     return (
-        <section
-            className={`dsh-core-root ${styles.panel} ${styles.modalLayout}`}
-            data-testid={`${TestId.OpenAIHub.Account}-${account.accountLabel}`}
-            data-theme={theme}>
+        <section className={`${styles.panel} ${styles.modalLayout}`} data-testid={`${TestId.OpenAIHub.Account}-${account.accountLabel}`}>
             <div className={styles.modalBody}>
                 {panel.editingLabel ? (
                     <div className={styles.renameEditor}>
@@ -45,38 +23,47 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                         <TextField id={panel.labelId} value={panel.label} onChange={panel.setLabel} maxLength={32} />
                     </div>
                 ) : undefined}
-                <section
-                    className={styles.card}
-                    aria-labelledby={`${panel.labelId}-usage`}
-                    data-testid={`${TestId.OpenAIHub.Usage}-${account.accountLabel}`}>
+                <section className={styles.card} data-testid={`${TestId.OpenAIHub.Usage}-${account.accountLabel}`}>
                     <h3 id={`${panel.labelId}-usage`}>{text('usage')}</h3>
                     <div className={styles.quotaList}>
-                        {chartLimits.map(limit => {
+                        {account.usageLimits.map(limit => {
                             const remainingPercent = Math.max(0, Math.min(100, Math.round(100 - limit.usedPercent)));
+                            const label = limit === weeklyLimit ? text('weeklyLimit') : limit.name;
                             return (
                                 <div className={styles.quotaItem} key={`${limit.name}-${limit.windowSeconds}`}>
                                     <div className={styles.quotaLabel}>
-                                        <span>{limit.name}</span>
+                                        <span>{label}</span>
                                         <span className={styles.linearUsageValue}>{remainingPercent}%</span>
                                     </div>
-                                    <LinearProgress
+                                    <Tooltip
                                         className={styles.quotaBar ?? ''}
-                                        value={remainingPercent}
-                                        label={`${limit.name}: ${remainingPercent}%`}
-                                        title={`${limit.name}: ${remainingPercent}%`}
-                                        size="standard"
-                                        color="accent"
-                                    />
+                                        content={`${label}: ${remainingPercent}%`}
+                                        triggerElement="span">
+                                        <LinearProgress value={remainingPercent} size="standard" color="accent" />
+                                    </Tooltip>
                                     {limit.resetAt > 0 ? (
-                                        <p className={styles.quotaReset} title={new Date(limit.resetAt).toLocaleString()}>
-                                            {formatQuotaReset(limit.resetAt, text)}
+                                        <p className={styles.quotaReset}>
+                                            <Tooltip content={new Date(limit.resetAt).toLocaleString()}>
+                                                {formatQuotaReset(limit.resetAt, text)}
+                                            </Tooltip>
                                         </p>
                                     ) : undefined}
                                 </div>
                             );
                         })}
+                        {!weeklyLimit ? (
+                            <div className={styles.quotaItem}>
+                                <div className={styles.quotaLabel}>
+                                    <span>{text('weeklyLimit')}</span>
+                                    <Tooltip className={styles.quotaUnavailable ?? ''} content={text('weeklyLimitUnavailable')} side="top">
+                                        {text('quotaNoData')}
+                                    </Tooltip>
+                                </div>
+                                <span className={styles.quotaEmptyTrack} />
+                            </div>
+                        ) : undefined}
                     </div>
-                    {account.usageLimited ? <p role="status">{text('usageLimited')}</p> : undefined}
+                    {account.usageLimited ? <p>{text('usageLimited')}</p> : undefined}
                     {account.usageCredits ? (
                         <p>
                             {text('credits')}: {account.usageCreditsUnlimited ? text('unlimited') : account.usageCredits}
@@ -88,12 +75,12 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                         </Button>
                     </div>
                 </section>
-                <section className={styles.card} aria-labelledby={`${panel.labelId}-reset-cards`}>
+                <section className={styles.card}>
                     <h3 id={`${panel.labelId}-reset-cards`}>{text('resetCards')}</h3>
                     <p>
                         {text('resetAvailable')}: {account.usageResetCredits ?? text('usageUnavailable')}
                     </p>
-                    {account.resetCardsStatus === 'error' ? <p role="status">{text('resetDetailsUnavailable')}</p> : undefined}
+                    {account.resetCardsStatus === 'error' ? <p>{text('resetDetailsUnavailable')}</p> : undefined}
                     {account.resetCards.map(card => (
                         <div className={styles.usageRow} key={card.id}>
                             <span>
@@ -115,30 +102,30 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                             </Button>
                         </div>
                     ) : undefined}
-                    {panel.resetResult ? <p role="status">{panel.resetResult}</p> : undefined}
+                    {panel.resetResult ? <p>{panel.resetResult}</p> : undefined}
                 </section>
             </div>
             <footer className={styles.modalFooter} data-testid={TestId.OpenAIHub.ModalFooter}>
-                {panel.error ? <p role="alert">{panel.error}</p> : undefined}
+                {panel.error ? <p>{panel.error}</p> : undefined}
                 <div className={styles.modalActionGroups}>
-                    <div className={styles.actionsLeft}>
-                        {!panel.editingLabel ? (
-                            <>
-                                <Button variant="primary" disabled={panel.busy} onClick={() => void panel.openModels()}>
-                                    {text('editModels')}
-                                </Button>
-                                <Button disabled={panel.busy} onClick={() => void panel.refreshCatalog()}>
-                                    {text('refreshCatalog')}
-                                </Button>
-                            </>
-                        ) : undefined}
-                    </div>
+                    {!panel.editingLabel ? (
+                        <div className={styles.actionsLeft}>
+                            <Button variant="danger" disabled={panel.busy} onClick={() => panel.setDeleteModalOpen(true)}>
+                                {text('deleteAccount')}
+                            </Button>
+                            <Button
+                                disabled={panel.busy}
+                                onClick={() => {
+                                    panel.setLabel(account.accountLabel);
+                                    panel.setEditingLabel(true);
+                                }}>
+                                {text('rename')}
+                            </Button>
+                        </div>
+                    ) : undefined}
                     <div className={styles.actionsRight}>
                         {panel.editingLabel ? (
                             <>
-                                <Button variant="primary" disabled={panel.busy} onClick={() => void panel.saveLabel()}>
-                                    {text('save')}
-                                </Button>
                                 <Button
                                     disabled={panel.busy}
                                     onClick={() => {
@@ -147,19 +134,19 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                                     }}>
                                     {text('cancel')}
                                 </Button>
+                                <Button variant="primary" disabled={panel.busy} onClick={() => void panel.saveLabel()}>
+                                    {text('save')}
+                                </Button>
                             </>
                         ) : (
                             <>
-                                <Button variant="danger" disabled={panel.busy} onClick={() => panel.setDeleteModalOpen(true)}>
-                                    {text('deleteAccount')}
-                                </Button>
-                                <Button
-                                    disabled={panel.busy}
-                                    onClick={() => {
-                                        panel.setLabel(account.accountLabel);
-                                        panel.setEditingLabel(true);
-                                    }}>
-                                    {text('rename')}
+                                <Tooltip content={text('refreshCatalog')} triggerElement="span" side="top">
+                                    <IconButton variant="neutral" disabled={panel.busy} onClick={() => void panel.refreshCatalog()}>
+                                        <RefreshIcon />
+                                    </IconButton>
+                                </Tooltip>
+                                <Button variant="primary" disabled={panel.busy} onClick={() => void panel.openModels()}>
+                                    {text('editModels')}
                                 </Button>
                             </>
                         )}
@@ -171,11 +158,9 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                 onClose={() => panel.setModelModalOpen(false)}
                 title={`${text('models')} - ${account.accountLabel}`}
                 closeLabel={text('close')}
-                theme={theme}
-                backdropClassName="dsh-core-root"
                 {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
                 <div data-testid={`${TestId.OpenAIHub.ModalScrollBody}-${account.accountLabel}`} className={styles.modalBody}>
-                    <section className={styles.modelList} aria-label={text('models')}>
+                    <section className={styles.modelList}>
                         <div className={styles.modelHeader}>
                             <span className={`${styles.modelCell} ${styles.modelGripColumn}`} />
                             <span className={`${styles.modelCell} ${styles.modelIdColumn}`}>{text('modelId')}</span>
@@ -200,8 +185,6 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                                         <button
                                             type="button"
                                             className={styles.modelGrip}
-                                            aria-label={`${text(index > 0 ? 'moveUp' : 'moveDown')}: ${model.name}`}
-                                            aria-keyshortcuts="ArrowUp ArrowDown"
                                             draggable
                                             onDragStart={event => {
                                                 event.dataTransfer.effectAllowed = 'move';
@@ -216,22 +199,17 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                                                     panel.moveModel(index, index + 1);
                                                 }
                                             }}>
-                                            <span aria-hidden="true" />
+                                            <span />
                                         </button>
                                     </div>
                                     <div className={`${styles.modelCell} ${styles.modelIdColumn} ${styles.modelId}`}>{model.id}</div>
                                     <div className={`${styles.modelCell} ${styles.modelNameColumn}`}>
-                                        <TextField
-                                            ariaLabel={`${text('modelName')}: ${model.id}`}
-                                            value={model.name}
-                                            onChange={value => panel.updateModel(index, { name: value })}
-                                        />
+                                        <TextField value={model.name} onChange={value => panel.updateModel(index, { name: value })} />
                                     </div>
                                     <div className={`${styles.modelCell} ${styles.modelEnabledColumn}`}>
                                         <label className={styles.checkLabel} htmlFor={`model-enabled-${model.id}`}>
                                             <Checkbox
                                                 checked={model.enabled}
-                                                ariaLabel={`${text('enabled')}: ${model.id}`}
                                                 onChange={checked => panel.updateModel(index, { enabled: checked })}
                                             />
                                             {text('enabled')}
@@ -243,15 +221,15 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                     </section>
                 </div>
                 <div className={styles.modalFooter} data-core-modal-footer>
-                    {panel.error ? <p role="alert">{panel.error}</p> : undefined}
+                    {panel.error ? <p>{panel.error}</p> : undefined}
                     <div className={styles.actionsRight}>
+                        <Button onClick={() => panel.setModelModalOpen(false)}>{text('cancel')}</Button>
                         <Button
                             variant="primary"
                             disabled={panel.busy || !panel.draft.some(model => model.enabled)}
                             onClick={() => void panel.saveModels()}>
                             {text('save')}
                         </Button>
-                        <Button onClick={() => panel.setModelModalOpen(false)}>{text('cancel')}</Button>
                     </div>
                 </div>
             </Modal>
@@ -260,20 +238,18 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                 onClose={() => panel.setResetCard('')}
                 title={text('resetConfirmTitle')}
                 closeLabel={text('close')}
-                theme={theme}
-                backdropClassName="dsh-core-root"
                 {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
                 <div className={styles.modalBody}>
                     <p>{text('resetConfirm')}</p>
-                    {panel.error ? <p role="alert">{panel.error}</p> : undefined}
+                    {panel.error ? <p>{panel.error}</p> : undefined}
                 </div>
                 <div className={styles.modalFooter} data-core-modal-footer>
                     <div className={styles.actionsRight}>
-                        <Button variant="danger" disabled={panel.busy} onClick={() => void panel.confirmReset()}>
-                            {text('confirm')}
-                        </Button>
                         <Button disabled={panel.busy} onClick={() => panel.setResetCard('')}>
                             {text('cancel')}
+                        </Button>
+                        <Button variant="danger" disabled={panel.busy} onClick={() => void panel.confirmReset()}>
+                            {text('confirm')}
                         </Button>
                     </div>
                 </div>
@@ -283,20 +259,18 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                 onClose={() => panel.setDeleteModalOpen(false)}
                 title={text('deleteAccount')}
                 closeLabel={text('close')}
-                theme={theme}
-                backdropClassName="dsh-core-root"
                 {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
                 <div className={styles.modalBody}>
                     <p>{text('deleteAccountConfirm')}</p>
-                    {panel.error ? <p role="alert">{panel.error}</p> : undefined}
+                    {panel.error ? <p>{panel.error}</p> : undefined}
                 </div>
                 <div className={styles.modalFooter} data-core-modal-footer>
                     <div className={styles.actionsRight}>
-                        <Button variant="danger" disabled={panel.busy} onClick={() => void panel.deleteAccount()}>
-                            {text('deleteAccount')}
-                        </Button>
                         <Button disabled={panel.busy} onClick={() => panel.setDeleteModalOpen(false)}>
                             {text('cancel')}
+                        </Button>
+                        <Button variant="danger" disabled={panel.busy} onClick={() => void panel.deleteAccount()}>
+                            {text('deleteAccount')}
                         </Button>
                     </div>
                 </div>

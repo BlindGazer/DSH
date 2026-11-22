@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { RuleRow } from '../src/client/components/common/RuleRow.js';
-import type { DiscoveredRuleWithState } from '../src/shared/models/RouterModels.js';
+import { RuleRow } from '../src/client/components/common/RuleRow.tsx';
+import type { DiscoveredRuleWithState } from '../src/shared/models/RouterModels.ts';
 
 describe('rule row', () => {
     it('renders the rule path, description, and applies-to footer in their intended sections', () => {
@@ -23,16 +23,14 @@ describe('rule row', () => {
         );
 
         expect(markup).toContain('<svg class="ar-rule-chevron"');
-        expect(markup).toContain('class="ar-rule-path-title" title="agents/front/rules/design-system.md"');
+        expect(markup).toContain('class="dsh-tooltip ar-rule-path-title"');
         expect(markup).toContain(
             '<span class="ar-rule-directory">agents/front/rules/</span><strong class="ar-rule-title">design-system.md</strong>'
         );
-        expect(markup).toContain(
-            '<span class="ar-rule-description-preview" title="Design system requirements">| Design system requirements</span>'
-        );
+        expect(markup).toContain('<span class="dsh-tooltip ar-rule-description-preview"><span>| Design system requirements</span>');
         expect(markup).toContain('href="dsh-resource://file/session/session%2Fid/agents/front/rules/design-system.md"');
-        expect(markup).toContain('aria-label="copyPath"');
-        expect(markup).toContain('title="D:\\repo with spaces\\agents\\front\\rules\\design-system.md"');
+        expect(markup).toContain('<button class="ar-rule-copy" type="button">copyPath</button>');
+        expect(markup).not.toContain(' title=');
         expect(markup).toContain('<span class="ar-rule-path-label">path:</span>');
         expect(markup).toContain('<pre>Design system requirements</pre>');
         expect(markup).toContain('appliesTo:</span><div class="ar-rule-conditions"><code>packages/example/src/client/Widget.tsx</code>');

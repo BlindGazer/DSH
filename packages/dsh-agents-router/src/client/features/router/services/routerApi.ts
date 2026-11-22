@@ -1,5 +1,5 @@
-import type { RouterPostBody, RouterStateResponse } from '../../../../shared/models/RouterModels.js';
-import { request } from '../../../utils/api.js';
+import type { RouterPostBody, RouterStateResponse } from '../../../../shared/models/RouterModels.ts';
+import { request } from '../../../utils/api.ts';
 
 interface AuditResponse {
     text: string;

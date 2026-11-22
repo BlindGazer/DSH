@@ -38,246 +38,6 @@ z.object({ accounts: z.array(AccountConfigSchema).max(100).default([]) }).strict
 var PackageId = "@kalex/dsh-openai-hub";
 var ServiceKey = "openai-hub";
 var RemoteNamespace = "openaiHub";
-// src/shared/constants/oauth-errors.ts
-var OAuthFailureMessages = {
-	oauth_connect_timeout: "Establishing a connection for the OAuth request timed out; that connection returned no HTTP response.",
-	oauth_dns_failed: "DNS resolution failed for the OAuth connection to auth.openai.com.",
-	oauth_connection_refused: "The OAuth connection was refused.",
-	oauth_connection_reset: "The OAuth connection was reset.",
-	oauth_tls_failed: "TLS certificate verification failed for the OAuth connection.",
-	oauth_headers_timeout: "The OAuth connection did not return HTTP response headers in time.",
-	oauth_body_timeout: "Reading the OAuth response body timed out.",
-	oauth_network_failed: "The OAuth request to auth.openai.com failed; inspect the recorded exception types and codes.",
-	oauth_http_failed: "The OAuth endpoint returned an unsuccessful HTTP status.",
-	oauth_response_invalid: "The OAuth endpoint returned an invalid token response.",
-	oauth_claim_invalid: "The OAuth token contains no valid ChatGPT account claim.",
-	oauth_callback_invalid: "The callback does not match the current OAuth sign-in attempt.",
-	oauth_internal_failed: "OAuth sign-in failed outside the observed token exchange; no network cause was established."
-};
-// src/shared/logging.ts
-var OAuthFailureCodeSchema = z.enum([
-	"oauth_connect_timeout",
-	"oauth_dns_failed",
-	"oauth_connection_refused",
-	"oauth_connection_reset",
-	"oauth_tls_failed",
-	"oauth_headers_timeout",
-	"oauth_body_timeout",
-	"oauth_network_failed",
-	"oauth_http_failed",
-	"oauth_response_invalid",
-	"oauth_claim_invalid",
-	"oauth_callback_invalid",
-	"oauth_internal_failed"
-]);
-var OpenAIHubOAuthServerErrorSchema = z.enum([
-	"invalid_grant",
-	"invalid_request",
-	"invalid_client",
-	"unauthorized_client",
-	"unsupported_grant_type",
-	"access_denied",
-	"temporarily_unavailable",
-	"server_error",
-	"invalid_scope",
-	"expired_token",
-	"other"
-]);
-var OAuthExceptionNameSchema = z.enum([
-	"Error",
-	"TypeError",
-	"AbortError",
-	"TimeoutError",
-	"AggregateError",
-	"ConnectTimeoutError",
-	"HeadersTimeoutError",
-	"BodyTimeoutError",
-	"SocketError",
-	"RequestAbortedError",
-	"other"
-]);
-var OpenAIHubLogSettingsSchema = z.object({ enabled: z.boolean().default(false) }).strict().prefault({});
-var OpenAIHubLogEventSchema = z.enum([
-	"plugin",
-	"settings",
-	"snapshot",
-	"login",
-	"account_update",
-	"account_delete",
-	"catalog_refresh",
-	"usage_refresh",
-	"models_save",
-	"reset",
-	"provider_request",
-	"ui_render"
-]);
-var OpenAIHubLogPhaseSchema = z.enum([
-	"started",
-	"completed",
-	"failed",
-	"waiting",
-	"device_code_received",
-	"authorization_url_received",
-	"callback_received",
-	"opened",
-	"saved",
-	"enabled",
-	"disabled",
-	"stopped",
-	"ready"
-]);
-var OpenAIHubLogOperationSchema = z.enum([
-	"snapshot",
-	"startLogin",
-	"cancelLogin",
-	"retryLogin",
-	"submitCallbackUrl",
-	"updateAccount",
-	"deleteAccount",
-	"refreshCatalog",
-	"refreshUsage",
-	"saveModels",
-	"consumeReset",
-	"providerRequest",
-	"loadLoggingSettings",
-	"setLoggingEnabled"
-]);
-var OpenAIHubLogErrorCodeSchema = z.enum([
-	"request_failed",
-	"oauth_failed",
-	"catalog_failed",
-	"usage_failed",
-	"storage_failed",
-	"validation_failed",
-	"unknown"
-]);
-var OpenAIHubLogRequestJsonSchema = z.object({
-	endpoint: z.enum([
-		"codex_models",
-		"codex_usage",
-		"oauth_token",
-		"oauth_device_code",
-		"oauth_device_poll"
-	]),
-	method: z.enum(["GET", "POST"]),
-	body: z.enum(["none", "redacted"])
-}).strict();
-var OpenAIHubLogResponseJsonSchema = z.object({
-	status: z.number().int().min(100).max(599),
-	contentType: z.enum([
-		"application/json",
-		"other",
-		"missing"
-	]),
-	shape: z.enum([
-		"models",
-		"data",
-		"usage",
-		"invalid",
-		"empty"
-	]),
-	fields: z.array(z.enum([
-		"models",
-		"data",
-		"rate_limit",
-		"additional_rate_limits",
-		"credits",
-		"rate_limit_reset_credits"
-	])).max(8),
-	itemCount: z.number().int().nonnegative().max(1e5).optional()
-}).strict();
-var OpenAIHubNetworkErrorSchema = z.enum([
-	"UND_ERR_CONNECT_TIMEOUT",
-	"UND_ERR_HEADERS_TIMEOUT",
-	"UND_ERR_BODY_TIMEOUT",
-	"ENOTFOUND",
-	"EAI_AGAIN",
-	"ECONNREFUSED",
-	"ECONNRESET",
-	"ETIMEDOUT",
-	"CERT_HAS_EXPIRED",
-	"UNABLE_TO_VERIFY_LEAF_SIGNATURE",
-	"DEPTH_ZERO_SELF_SIGNED_CERT",
-	"other"
-]);
-var OpenAIHubLogFieldsSchema = z.object({
-	event: OpenAIHubLogEventSchema,
-	phase: OpenAIHubLogPhaseSchema,
-	operation: OpenAIHubLogOperationSchema.optional(),
-	accountLabel: AccountLabelSchema.optional(),
-	authMethod: AuthMethodSchema.optional(),
-	state: z.enum([
-		"idle",
-		"starting",
-		"waiting",
-		"done",
-		"error"
-	]).optional(),
-	durationMs: z.number().int().nonnegative().max(864e5).optional(),
-	count: z.number().int().nonnegative().max(1e5).optional(),
-	endpoint: z.enum([
-		"codex_models",
-		"oauth_token",
-		"oauth_device_code",
-		"oauth_device_poll"
-	]).optional(),
-	httpStatus: z.number().int().min(100).max(599).optional(),
-	responseShape: z.enum([
-		"models",
-		"data",
-		"invalid"
-	]).optional(),
-	requestJson: OpenAIHubLogRequestJsonSchema.optional(),
-	responseJson: OpenAIHubLogResponseJsonSchema.optional(),
-	errorCode: OpenAIHubLogErrorCodeSchema.or(OAuthFailureCodeSchema).optional(),
-	errorMessage: z.enum(Object.values(OAuthFailureMessages)).optional(),
-	errorCauses: z.array(z.object({
-		name: OAuthExceptionNameSchema,
-		code: OpenAIHubNetworkErrorSchema
-	}).strict()).max(8).optional(),
-	networkTimeoutMs: z.number().int().positive().max(6e5).optional(),
-	loginAttemptId: z.string().uuid().optional(),
-	transport: z.literal("undici").optional(),
-	transportEvent: z.enum([
-		"request_created",
-		"response_headers",
-		"before_connect",
-		"connected",
-		"connect_error",
-		"request_error"
-	]).optional(),
-	connectionHost: z.enum(["auth.openai.com", "other"]).optional(),
-	connectionPort: z.number().int().min(1).max(65535).optional(),
-	diagnosticVersion: z.union([z.literal(2), z.literal(3)]).optional(),
-	loginStage: z.enum([
-		"callback_validation",
-		"token_exchange",
-		"token_response",
-		"account_claim",
-		"http_request",
-		"network_connect"
-	]).optional(),
-	networkError: OpenAIHubNetworkErrorSchema.optional(),
-	oauthServerError: OpenAIHubOAuthServerErrorSchema.optional(),
-	callbackError: z.enum([
-		"invalid_url",
-		"invalid_endpoint",
-		"missing_code",
-		"missing_state",
-		"duplicate_code",
-		"duplicate_state",
-		"inactive_prompt"
-	]).optional()
-}).strict();
-var OpenAIHubClientLogEventSchema = OpenAIHubLogFieldsSchema;
-OpenAIHubLogFieldsSchema.extend({
-	timestamp: z.string().datetime(),
-	source: z.enum(["client", "host"])
-}).strict();
-z.object({
-	version: z.literal(1),
-	settings: OpenAIHubLogSettingsSchema
-});
 // src/shared/remote.ts
 var UiComponentIdSchema = z.string().min(1).max(200);
 var UiRenderErrorSchema = z.object({
@@ -376,7 +136,6 @@ var SaveModelsRequestSchema = z.object({
 	accountLabel: AccountLabelSchema,
 	models: ModelSettingsSchema
 }).strict();
-var SaveLoggingSettingsRequestSchema = OpenAIHubLogSettingsSchema;
 var codec = (symbol, schema) => ({
 	mode: "strict",
 	typeSymbol: `${PackageId}/remote#${symbol}`,
@@ -384,9 +143,6 @@ var codec = (symbol, schema) => ({
 });
 var inputs = {
 	snapshot: void 0,
-	loadLoggingSettings: void 0,
-	saveLoggingSettings: codec("OpenAIHubLogSettings", SaveLoggingSettingsRequestSchema),
-	recordClientLog: codec("OpenAIHubClientLogEvent", OpenAIHubClientLogEventSchema),
 	startLogin: codec("LoginRequest", LoginRequestSchema),
 	cancelLogin: void 0,
 	retryLogin: void 0,
@@ -402,9 +158,6 @@ var inputs = {
 };
 var descriptors = Object.freeze([
 	"snapshot",
-	"loadLoggingSettings",
-	"saveLoggingSettings",
-	"recordClientLog",
 	"startLogin",
 	"cancelLogin",
 	"retryLogin",
@@ -429,7 +182,7 @@ var descriptors = Object.freeze([
 		source: "json",
 		codec: inputs[method]
 	}] : [],
-	result: method === "reportUiError" || method === "reportUiReady" || method === "recordClientLog" ? codec("RemoteActionAccepted", z.literal(true)) : method === "loadLoggingSettings" || method === "saveLoggingSettings" ? codec("OpenAIHubLogSettings", OpenAIHubLogSettingsSchema) : codec("OpenAICodexSnapshot", SnapshotSchema)
+	result: method === "reportUiError" || method === "reportUiReady" ? codec("RemoteActionAccepted", z.literal(true)) : codec("OpenAICodexSnapshot", SnapshotSchema)
 })));
 var TYPERT_REMOTE = Object.freeze({
 	package: PackageId,

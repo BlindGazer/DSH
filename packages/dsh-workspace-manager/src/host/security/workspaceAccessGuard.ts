@@ -5,7 +5,7 @@
  * @module dsh-plugin-workspace-directories/guard
  */
 
-import type { WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.js';
+import type { WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.ts';
 
 export interface PathAccessCheckResult {
     allowed: boolean;

@@ -1,8 +1,8 @@
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { channel } from 'node:diagnostics_channel';
 import { z } from 'zod';
-import type { OpenAIHubLogEvent } from '../shared/logging.js';
-import { oauthNetworkFailure } from './oauth-network-error.js';
+import type { OpenAIHubLogEvent } from '../shared/logging.ts';
+import { oauthNetworkFailure } from './oauth-network-error.ts';
 
 const activeReport = new AsyncLocalStorage<(event: OpenAIHubLogEvent) => void>();
 const endpoints = {

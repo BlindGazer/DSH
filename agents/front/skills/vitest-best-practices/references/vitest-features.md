@@ -4,7 +4,7 @@ Vitest provides powerful features beyond basic testing. Use them to write better
 
 ## Test Filtering
 
-Use `.only`, `.skip`, and `.todo` to control test execution during development.
+Use `.only`, `.skip`, and `.todo` only during local development; never commit `.only` or unexplained `.skip`, and link `.todo` to a tracked task.
 
 **✅ Correct: focusing on specific tests**
 ```ts

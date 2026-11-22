@@ -1,14 +1,14 @@
 // @vitest-environment jsdom
 import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { startAccountPolling } from '../src/client/features/settings/accountPollingLifetime.js';
-import { CodexQuotaDock } from '../src/client/features/settings/CodexQuotaDock.js';
-import { usageRefreshInterval } from '../src/client/features/settings/hooks/useCodexAccountPolling.js';
-import type { ModelDirectories, ModelSelectionState } from '../src/client/features/settings/modelSelectionSource.js';
-import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.js';
-import { retainQuotaPolling } from '../src/client/features/settings/quotaPolling.js';
-import { translateOpenAICodex } from '../src/shared/constants/localizations/OpenAICodexLocalization.js';
-import { AccountSnapshotSchema, SnapshotSchema } from '../src/shared/remote.js';
+import { startAccountPolling } from '../src/client/features/settings/accountPollingLifetime.ts';
+import { CodexQuotaDock } from '../src/client/features/settings/CodexQuotaDock.tsx';
+import { usageRefreshInterval } from '../src/client/features/settings/hooks/useCodexAccountPolling.ts';
+import type { ModelDirectories, ModelSelectionState } from '../src/client/features/settings/modelSelectionSource.ts';
+import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { retainQuotaPolling } from '../src/client/features/settings/quotaPolling.ts';
+import { translateOpenAICodex } from '../src/shared/constants/localizations/OpenAICodexLocalization.ts';
+import { AccountSnapshotSchema, SnapshotSchema } from '../src/shared/remote.ts';
 
 const text = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex('en', key);
 function account(label: string, usedPercent = 90) {
@@ -37,9 +37,6 @@ function harness(accounts = [account('work'), account('personal', 10)]) {
     const reply = async () => snapshot;
     const remote = {
         snapshot: vi.fn(reply),
-        loadLoggingSettings: async () => ({ enabled: false }),
-        saveLoggingSettings: async (input: { enabled: boolean }) => input,
-        recordClientLog: async () => true as const,
         startLogin: reply,
         cancelLogin: reply,
         retryLogin: reply,
@@ -99,19 +96,33 @@ describe('selected OpenAI Hub account', () => {
     it('follows the selected account, shows only its circular status, and hides for other or stale selections', async () => {
         const h = harness();
         render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
-        const status = await screen.findByRole('status');
-        const workIndicator = await within(status).findByRole('progressbar', { name: 'Codex: 10%' });
-        expect(workIndicator.getAttribute('aria-valuenow')).toBe('10');
+        const status = await screen.findByTestId('openai-hub-quota-dock');
+        expect(within(status).getByRole('button', { name: '10%' })).toBeTruthy();
         expect(status.textContent).not.toContain('work');
         expect(status.textContent).not.toContain('personal');
         act(() => h.select({ current: { provider: 'openai-hub', model: 'personal/gpt-6.2-sol' }, routable: true }));
-        expect(within(status).getByRole('progressbar', { name: 'Codex: 90%' }).getAttribute('aria-valuenow')).toBe('90');
+        expect(within(status).getByRole('button', { name: '90%' })).toBeTruthy();
         act(() => h.select({ current: { provider: 'other', model: 'work/gpt-6.2-sol' }, routable: true }));
-        expect(screen.queryByRole('status')).toBeFalsy();
+        expect(screen.queryByTestId('openai-hub-quota-dock')).toBeFalsy();
         act(() => h.select({ current: { provider: 'openai-hub', model: 'deleted/gpt-6.2-sol' }, routable: false }));
-        expect(screen.queryByRole('status')).toBeFalsy();
+        expect(screen.queryByTestId('openai-hub-quota-dock')).toBeFalsy();
     });
-    it('shows available quota percentages on the ring and linear charts in its tooltip', async () => {
+    it('previews the primary quota on hover without a native title', async () => {
+        const h = harness();
+        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
+        const status = await screen.findByTestId('openai-hub-quota-dock');
+        const trigger = within(status).getByRole('button', { name: '10%' });
+
+        expect(status.querySelector('[title], title')).toBeNull();
+        fireEvent.pointerOver(trigger);
+        const tooltip = screen.getByText('Codex: 10%');
+        expect(tooltip.parentElement).toBe(document.body);
+        expect(tooltip.getAttribute('data-theme')).toBe(status.getAttribute('data-theme'));
+        expect(screen.queryByRole('dialog')).toBeNull();
+        fireEvent.pointerOut(trigger);
+        expect(screen.queryByText('Codex: 10%')).toBeNull();
+    });
+    it('opens available quota percentages, linear charts, and reset times on click', async () => {
         const selected = {
             ...account('work'),
             usageLimits: [
@@ -122,24 +133,32 @@ describe('selected OpenAI Hub account', () => {
         const h = harness([selected]);
         render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
 
-        const ring = await screen.findByRole('progressbar', { name: '5-hour limit: 72%' });
-        expect(ring.getAttribute('aria-valuenow')).toBe('72');
-        fireEvent.focus(screen.getByRole('button', { name: '5-hour limit: 72%' }));
-        const tooltip = await screen.findByRole('tooltip');
-        expect(within(tooltip).getByRole('progressbar', { name: '5-hour limit: 72%' }).getAttribute('aria-valuenow')).toBe('72');
-        expect(within(tooltip).getByRole('progressbar', { name: 'Weekly limit: 48%' }).getAttribute('aria-valuenow')).toBe('48');
-        expect(within(tooltip).getAllByText(/Resets in/)).toHaveLength(2);
+        const trigger = await screen.findByRole('button', { name: '72%' });
+        fireEvent.pointerOver(trigger);
+        expect(screen.getByText('5-hour limit: 72%')).toBeTruthy();
+        fireEvent.click(trigger);
+
+        expect(screen.queryByText('5-hour limit: 72%')).toBeNull();
+        const popover = screen.getByRole('dialog');
+        expect(within(popover).getByText('72%')).toBeTruthy();
+        expect(within(popover).getByText('48%')).toBeTruthy();
+        expect([...popover.querySelectorAll('.dsh-linear-progress')].map(chart => chart.getAttribute('style'))).toEqual([
+            expect.stringContaining('--dsh-progress-value: 72%'),
+            expect.stringContaining('--dsh-progress-value: 48%')
+        ]);
+        expect(within(popover).getAllByText(/Resets in/)).toHaveLength(2);
     });
-    it('does not display stale quota data', async () => {
+    it.each([true, false])('expires old quota only when automatic refresh is enabled (%s)', async autoRefreshLimits => {
         vi.useFakeTimers();
-        const stale = { ...account('work'), usageUpdatedAt: Date.now() - 600001 };
+        const stale = { ...account('work'), autoRefreshLimits, usageUpdatedAt: Date.now() - 600001 };
         const h = harness([stale]);
         await h.controller.load();
         await act(async () => {
             render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
             await vi.advanceTimersByTimeAsync(0);
         });
-        expect(screen.queryByRole('status')).toBeFalsy();
+        expect(Boolean(screen.queryByTestId('openai-hub-quota-dock'))).toBe(!autoRefreshLimits);
+        if (!autoRefreshLimits) expect(h.remote.refreshUsage).not.toHaveBeenCalled();
     });
     it('accelerates only a selected model and honors hourly before five-hour and daily windows', () => {
         const value = account('work');

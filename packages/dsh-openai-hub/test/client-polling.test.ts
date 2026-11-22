@@ -1,17 +1,14 @@
 // @vitest-environment jsdom
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.js';
-import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.js';
-import { retainQuotaPolling } from '../src/client/features/settings/quotaPolling.js';
-import type { OpenAICodexSnapshot } from '../src/shared/remote.js';
+import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { retainQuotaPolling } from '../src/client/features/settings/quotaPolling.ts';
+import type { OpenAICodexSnapshot } from '../src/shared/remote.ts';
 
 const snapshot: OpenAICodexSnapshot = { accounts: [], status: 'done', deviceCode: '', verificationUri: '', error: '' };
 function makeController() {
     const api: OpenAICodexRemote = {
         snapshot: vi.fn(async () => snapshot),
-        loadLoggingSettings: vi.fn(async () => ({ enabled: false })),
-        saveLoggingSettings: vi.fn(async input => input),
-        recordClientLog: vi.fn(async () => true as const),
         startLogin: vi.fn(async () => snapshot),
         cancelLogin: vi.fn(async () => snapshot),
         retryLogin: vi.fn(async () => snapshot),

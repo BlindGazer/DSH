@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { CODEX_USAGE_URL, parseCodexUsage, requestCodexUsage } from '../src/host/usage.js';
+import { CODEX_USAGE_URL, parseCodexUsage, requestCodexUsage } from '../src/host/usage.ts';
 
 const privateBodyFetch: typeof fetch = async () => new Response('private body', { status: 403 });
 

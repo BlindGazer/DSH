@@ -1,6 +1,6 @@
 import { createServer } from 'node:http';
 import { assert, test } from 'vitest';
-import { createRouterHandler } from '../src/host/api/httpRoutes.js';
+import { createRouterHandler } from '../src/host/api/httpRoutes.ts';
 
 interface ResponseBody {
     error?: string;

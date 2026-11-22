@@ -1,11 +1,11 @@
 import { createHash, randomBytes } from 'node:crypto';
 import type { AuthInteraction } from '@earendil-works/pi-ai';
 import { z } from 'zod';
-import { type OpenAIHubLogEvent, OpenAIHubOAuthServerErrorSchema } from '../shared/logging.js';
-import { SubmitCallbackUrlRequestSchema } from '../shared/remote.js';
-import { BrowserLoginError } from './browser-login-error.js';
-import { type OAuthCredential, OAuthCredentialSchema } from './credentials.js';
-import { type OAuthFailureDiagnostic, oauthNetworkFailure } from './oauth-network-error.js';
+import { type OpenAIHubLogEvent, OpenAIHubOAuthServerErrorSchema } from '../shared/logging.ts';
+import { SubmitCallbackUrlRequestSchema } from '../shared/remote.ts';
+import { BrowserLoginError } from './browser-login-error.ts';
+import { type OAuthCredential, OAuthCredentialSchema } from './credentials.ts';
+import { type OAuthFailureDiagnostic, oauthNetworkFailure } from './oauth-network-error.ts';
 
 const clientId = 'app_EMoamEEZ73f0CkXaXp7hrann';
 const redirectUri = 'http://localhost:1455/auth/callback';

@@ -1,4 +1,4 @@
-import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.js';
+import type { WorkspaceEditTarget } from '../models/WorkspaceEditTarget.ts';
 
 export interface WorkspaceMenuActions {
     readonly label: () => string;

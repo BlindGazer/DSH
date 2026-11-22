@@ -1,4 +1,4 @@
-import type { BuiltinProviderEndpoint } from '../models/ProxyModels.js';
+import type { BuiltinProviderEndpoint } from '../models/ProxyModels.ts';
 
 /**
  * Базовый URL HTTP API плагина внутри веб-сервера DSH.

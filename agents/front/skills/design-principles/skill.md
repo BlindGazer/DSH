@@ -1,6 +1,6 @@
 ---
 name: design-principles
-description: Standardized DSH frontend design and layout practices for styles, containers, typography, responsive behavior, accessibility, and visual verification. Use when building or reviewing UI, CSS, layout, or visual components.
+description: Standardized DSH frontend design and layout practices for styles, containers, typography, responsive behavior, keyboard usability, and visual verification. Use when building or reviewing UI, CSS, layout, or visual components.
 ---
 
 # DSH Frontend Design Principles
@@ -18,7 +18,7 @@ Use this skill for frontend UI work in DSH plugins and `dsh-core`. Follow the ex
 
 - A child must never visually escape its containing card, panel, dialog, or viewport. A container must never exceed the available viewport width.
 - For grid and flex children that contain variable or user-provided content, set `min-width: 0` on the shrinkable child and use `minmax(0, 1fr)` for flexible grid tracks.
-- Constrain long paths, identifiers, and unbroken strings with `overflow-wrap: anywhere` or a deliberate single-line ellipsis. Provide the full value through a title, accessible label, or a copy action when truncating it.
+- Constrain long paths, identifiers, and unbroken strings with `overflow-wrap: anywhere` or a deliberate single-line ellipsis. Provide the full value through a title, visible detail, or a copy action when truncating it.
 - Apply `max-width: 100%` to wide UI regions. Allow a region to scroll internally only when that is the intended interaction; do not rely on page-level horizontal overflow to hide a broken layout.
 - In flex rows, give essential labels and controls stable sizing. Let descriptions and secondary metadata shrink before filenames, paths, or primary actions.
 - For action rows, allow wrapping or stack controls at narrow widths. Controls must remain inside their card and usable without horizontal scrolling.
@@ -34,12 +34,14 @@ Use this skill for frontend UI work in DSH plugins and `dsh-core`. Follow the ex
 - Use monospace for code, paths, and machine identifiers, not for ordinary prose.
 - Long content must wrap or scroll within its own intended region and must not widen its ancestor.
 
-## Interaction and accessibility
+## Interaction and usability
 
-- Use semantic elements and native controls where practical. Every control needs an accessible name and correct disabled/expanded/selected state.
+- Screenreader support is out of scope repository-wide. Do not require or add screenreader-only names, roles, live regions, or informational ARIA.
+- Preserve external host DOM contracts and functional attribute consumers; migrate owned behavioral state to `data-*` only together with its CSS, JS, and tests. Do not blanket-disable accessibility lint rules.
+- Use semantic elements and native controls where practical. Preserve native labels, `tabIndex`, disabled behavior, keyboard operation, focus, contrast, and visible labels and states.
 - Provide visible `:focus-visible` treatment using the theme accent token. Do not remove keyboard focus outlines without an equivalent.
 - Hover must not be the only way to discover or use an action. Ensure adequate hit areas and preserve keyboard operation.
-- Use status and alert semantics for notices, warnings, and errors. Put the affected file or resource path next to its diagnostic message when available.
+- Show visible notices, warnings, and errors. Put the affected file or resource path next to its diagnostic message when available.
 - Do not hide host-level controls through broad global selectors. Change host chrome only through a supported DSH extension point or an explicitly scoped and verified integration.
 
 ## Responsive layout

@@ -1,5 +1,6 @@
+import { Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
-import type { RouterStateResponse } from '../../../shared/models/RouterModels.js';
+import type { RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 
 export interface KpiStripProps {
     data: RouterStateResponse;
@@ -32,9 +33,9 @@ export function KpiStrip({ data, t, lastPoint, percent }: KpiStripProps): React.
                 title={
                     <span className="ar-kpi-title">
                         {t('memoryBudget')}
-                        <span className="ar-help" title={t('memoryBudgetHint')}>
-                            ?
-                        </span>
+                        <Tooltip content={t('memoryBudgetHint')} triggerElement="span">
+                            <span className="ar-help">?</span>
+                        </Tooltip>
                     </span>
                 }
                 value={`${lastPoint.toLocaleString()} / ${data.metrics.tokenBudget.toLocaleString()}`}

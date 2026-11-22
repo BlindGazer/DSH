@@ -1,11 +1,11 @@
 import { useEffectiveTheme } from '@kalex/dsh-core';
-import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.js';
-import { TestId } from '../../../shared/constants/testId.js';
-import { CodexModelsAccountEntry } from './CodexModelsAccountEntry.js';
-import { CodexSettingsPanel } from './CodexSettingsPanel.js';
+import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import { TestId } from '../../../shared/constants/testId.ts';
+import { CodexModelsAccountEntry } from './CodexModelsAccountEntry.tsx';
+import { CodexSettingsPanel } from './CodexSettingsPanel.tsx';
 import styles from './codexFooterStyles.module.scss';
-import { useCodexModelsFooterEntry } from './hooks/useCodexModelsFooterEntry.js';
-import type { OpenAICodexController } from './openAICodexRuntime.js';
+import { useCodexModelsFooterEntry } from './hooks/useCodexModelsFooterEntry.ts';
+import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexModelsFooterEntryProps {
     readonly controller: OpenAICodexController;
     readonly locale: 'en' | 'ru';

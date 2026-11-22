@@ -1,6 +1,6 @@
-export { Button, type ButtonProps } from './Button.js';
+export { Button, type ButtonProps } from './Button.tsx';
 export {
     CollectionAddButton,
     type CollectionAddButtonProps
-} from './CollectionAddButton.js';
-export { IconButton, type IconButtonProps } from './IconButton.js';
+} from './CollectionAddButton.tsx';
+export { IconButton, type IconButtonProps } from './IconButton.tsx';

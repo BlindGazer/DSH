@@ -1,4 +1,4 @@
-import type { WorkspaceView } from '../../../models/WorkspaceManagerClientContext.js';
+import type { WorkspaceView } from '../../../models/WorkspaceManagerClientContext.ts';
 
 export function getPathBasename(path: string): string {
     return path.split(/[\\/]/).findLast(Boolean) || path;

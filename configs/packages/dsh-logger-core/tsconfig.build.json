@@ -1,0 +1,13 @@
+{
+    "extends": "./tsconfig.json",
+    "compilerOptions": {
+        "noEmit": false,
+        "declaration": true,
+        "emitDeclarationOnly": true,
+        "noEmitOnError": true,
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
+        "rootDir": "../../../packages/dsh-logger-core/src",
+        "outDir": "../../../packages/dsh-logger-core/lib"
+    }
+}

@@ -1,10 +1,9 @@
 import { createElement, Fragment, type ReactNode, useEffect, useRef } from 'react';
 
-import { TestId } from '../../constants/testId.js';
-import { useEffectiveTheme } from '../../hooks/useEffectiveTheme.js';
-import type { DshThemeId } from '../../models/DshContext.js';
-import { cx } from '../../utils/classNames.js';
-import CloseIcon from '../icons/CloseIcon.js';
+import { TestId } from '../../constants/testId.ts';
+import { cx } from '../../utils/classNames.ts';
+import CloseIcon from '../icons/CloseIcon.tsx';
+import { Tooltip } from '../Tooltip/Tooltip.tsx';
 
 /**
  * Свойства модального окна Modal дизайн-системы @kalex/dsh-core.
@@ -17,7 +16,6 @@ export interface ModalProps {
     readonly footer?: ReactNode;
     readonly description?: ReactNode;
     readonly closeLabel?: string;
-    readonly theme?: DshThemeId;
     readonly backdropClassName?: string;
     readonly cardClassName?: string;
     readonly children: ReactNode;
@@ -34,12 +32,10 @@ export function Modal({
     footer,
     description,
     closeLabel = 'Close',
-    theme,
     backdropClassName,
     cardClassName,
     children
 }: ModalProps) {
-    const effectiveTheme = useEffectiveTheme(theme ?? 'auto');
     const dialogRef = useRef<HTMLDivElement | undefined>(undefined);
     const onCloseRef = useRef(onClose);
 
@@ -89,17 +85,12 @@ export function Modal({
     if (!open) return createElement(Fragment);
 
     return (
-        <div
-            data-theme={effectiveTheme}
-            data-testid={TestId.Common.ModalBackdrop}
-            className={cx('dsh-modal-backdrop', 'ar-modal', backdropClassName)}>
-            <button type="button" className="dsh-modal-backdrop-control" aria-hidden="true" tabIndex={-1} onClick={onClose} />
+        <div data-testid={TestId.Common.ModalBackdrop} className={cx('dsh-modal-backdrop', 'ar-modal', backdropClassName)}>
+            <button type="button" className="dsh-modal-backdrop-control" tabIndex={-1} onClick={onClose} />
             <div
                 ref={element => {
                     dialogRef.current = element ?? undefined;
                 }}
-                role="dialog"
-                aria-modal="true"
                 tabIndex={-1}
                 data-testid={TestId.Common.ModalCard}
                 className={cx('dsh-modal-card', 'ar-modal-card', cardClassName)}>
@@ -108,14 +99,16 @@ export function Modal({
                         <div className="dsh-modal-title">{title}</div>
                         <div className="dsh-modal-actions ar-settings-header-right">
                             {headerExtra}
-                            <button
-                                type="button"
-                                data-testid={TestId.Common.ModalClose}
-                                className="dsh-modal-close"
-                                aria-label={closeLabel}
-                                onClick={onClose}>
-                                <CloseIcon size={16} />
-                            </button>
+                            <Tooltip content={closeLabel} triggerElement="span" side="bottom">
+                                <button
+                                    type="button"
+                                    data-testid={TestId.Common.ModalClose}
+                                    className="dsh-modal-close"
+                                    aria-label={closeLabel}
+                                    onClick={onClose}>
+                                    <CloseIcon size={16} />
+                                </button>
+                            </Tooltip>
                         </div>
                     </div>
                 ) : undefined}

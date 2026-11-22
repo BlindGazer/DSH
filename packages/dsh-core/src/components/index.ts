@@ -5,13 +5,13 @@ export {
     type CollectionAddButtonProps,
     IconButton,
     type IconButtonProps
-} from './Button/index.js';
-export { Checkbox, type CheckboxProps } from './Checkbox/index.js';
+} from './Button/index.ts';
+export { Checkbox, type CheckboxProps } from './Checkbox/index.ts';
 export {
     CodeDisclosure,
     type CodeDisclosureProps
-} from './CodeDisclosure/index.js';
-export { CloseIcon, InfoIcon, SettingsIcon } from './icons/index.js';
+} from './CodeDisclosure/index.ts';
+export { CloseIcon, InfoIcon, RefreshIcon, SettingsIcon, TrashIcon } from './icons/index.ts';
 export {
     ChildrenLazy,
     type ChildrenLazyProps,
@@ -21,9 +21,10 @@ export {
     type SkeletonProps,
     Spinner,
     type SpinnerProps
-} from './Loader/index.js';
-export { Modal, type ModalProps } from './Modal/index.js';
-export { Popover, type PopoverProps } from './Popover/index.js';
+} from './Loader/index.ts';
+export { Modal, type ModalProps } from './Modal/index.ts';
+export { Notification, type NotificationProps } from './Notification/Notification.tsx';
+export { Popover, type PopoverProps } from './Popover/index.ts';
 export {
     CircularProgress,
     type CircularProgressProps,
@@ -31,16 +32,16 @@ export {
     type DshProgressSize,
     LinearProgress,
     type LinearProgressProps
-} from './Progress/index.js';
+} from './Progress/index.ts';
 export {
     RadioCardGroup,
     type RadioCardGroupProps
-} from './RadioCardGroup/index.js';
+} from './RadioCardGroup/index.ts';
 export {
     SwitchControl,
     type SwitchControlProps
-} from './SwitchControl/index.js';
-export { Tabs, type TabsProps } from './Tabs/index.js';
-export { TextField, type TextFieldProps } from './TextField/index.js';
-export { ThemedSelect, type ThemedSelectProps } from './ThemedSelect/index.js';
-export { Tooltip, type TooltipProps } from './Tooltip/index.js';
+} from './SwitchControl/index.ts';
+export { Tabs, type TabsProps } from './Tabs/index.ts';
+export { TextField, type TextFieldProps } from './TextField/index.ts';
+export { ThemedSelect, type ThemedSelectProps } from './ThemedSelect/index.ts';
+export { Tooltip, type TooltipProps } from './Tooltip/index.ts';

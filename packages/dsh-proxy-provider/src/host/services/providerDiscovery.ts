@@ -1,10 +1,10 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
-import { BUILTIN_PROVIDER_ENDPOINTS } from '../../shared/constants/endpoints.js';
-import type { DiscoveredProvider } from '../../shared/models/ProxyModels.js';
-import { resolveProviderHosts } from '../../shared/utils/hostUtils.js';
-import { parseProvidersFromPatchYaml } from './providerYaml.js';
+import { BUILTIN_PROVIDER_ENDPOINTS } from '../../shared/constants/endpoints.ts';
+import type { DiscoveredProvider } from '../../shared/models/ProxyModels.ts';
+import { resolveProviderHosts } from '../../shared/utils/hostUtils.ts';
+import { parseProvidersFromPatchYaml } from './providerYaml.ts';
 
 export interface ProviderInfoCandidate {
     readonly id?: string;

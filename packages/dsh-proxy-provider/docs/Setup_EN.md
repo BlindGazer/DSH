@@ -17,7 +17,7 @@ Run from the DSH Desktop profile directory:
 
 ```powershell
 Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm install github:BlindGazer/DSH#path:packages/dsh-proxy-provider
+pnpm add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
 ## Install from a local folder (recommended for development)

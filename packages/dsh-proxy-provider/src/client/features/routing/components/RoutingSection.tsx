@@ -1,13 +1,13 @@
-import { ThemedSelect } from '@kalex/dsh-core';
+import { ThemedSelect, Tooltip } from '@kalex/dsh-core';
 
 import type {
     DiscoveredProvider,
     HostConflict,
     HostConflictProviderEntry,
     SanitizedProxyProfile
-} from '../../../../shared/models/ProxyModels.js';
-import { proxyStore, tProxy } from '../../../app/proxyStore.js';
-import { proxyClasses } from '../../../app/proxyStyles.js';
+} from '../../../../shared/models/ProxyModels.ts';
+import { proxyStore, tProxy } from '../../../app/proxyStore.ts';
+import { proxyClasses } from '../../../app/proxyStyles.ts';
 
 export interface RoutingSectionProps {
     readonly providers: readonly DiscoveredProvider[];
@@ -62,18 +62,15 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                         type="text"
                         className={proxyClasses('input')}
                         placeholder={tProxy('Search provider by name or host...')}
-                        aria-label={tProxy('Search provider by name or host')}
                         value={providerSearch}
                         onChange={e => setProviderSearch(e.target.value)}
                     />
                     {providerSearch ? (
-                        <button
-                            type="button"
-                            className={proxyClasses('button', 'buttonSmall')}
-                            title={tProxy('Clear search')}
-                            onClick={() => setProviderSearch('')}>
-                            ✕
-                        </button>
+                        <Tooltip content={tProxy('Clear search')} triggerElement="span">
+                            <button type="button" className={proxyClasses('button', 'buttonSmall')} onClick={() => setProviderSearch('')}>
+                                ✕
+                            </button>
+                        </Tooltip>
                     ) : undefined}
                 </div>
             </div>
@@ -120,7 +117,6 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                                     </div>
                                 </div>
                                 <ThemedSelect
-                                    ariaLabel={tProxy(`Route for ${prov.name}`)}
                                     value={boundId}
                                     options={routingOptions}
                                     onChange={nextVal => {

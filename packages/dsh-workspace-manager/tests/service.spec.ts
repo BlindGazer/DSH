@@ -2,9 +2,9 @@ import { describe, expect, it, onTestFinished } from 'vitest'
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { canonicalizePath, WorkspaceDirectoriesServiceImpl } from '../src/host/services/WorkspaceDirectoriesService.js'
-import { AddirStorage } from '../src/host/services/AddirStorage.js'
-import { resolveConfig } from '../src/host/config.js'
+import { canonicalizePath, WorkspaceDirectoriesServiceImpl } from '../src/host/services/WorkspaceDirectoriesService.ts'
+import { AddirStorage } from '../src/host/services/AddirStorage.ts'
+import { resolveConfig } from '../src/host/config.ts'
 
 describe('WorkspaceDirectoriesService', () => {
   const testRoot = canonicalizePath(join(tmpdir(), `dsh-test-wd-${Date.now()}`))

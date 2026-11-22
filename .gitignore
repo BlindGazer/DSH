@@ -8,6 +8,7 @@ Thumbs.db
 # logs
 *.log
 !openspec/**/*.log
+artifacts/
 
 # environment data
 .devtools_codepilot/
@@ -19,7 +20,3 @@ Thumbs.db
 
 # git workflow
 .worktrees
-
-# private data
-agents/rules/subagents.md
-agents/rules/vision.md

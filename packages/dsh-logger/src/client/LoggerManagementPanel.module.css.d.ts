@@ -1,0 +1,22 @@
+declare const styles: {
+    readonly section: string;
+    readonly fieldset: string;
+    readonly summary: string;
+    readonly panel: string;
+    readonly body: string;
+    readonly muted: string;
+    readonly row: string;
+    readonly grid: string;
+    readonly field: string;
+    readonly levelMenu: string;
+    readonly input: string;
+    readonly rules: string;
+    readonly collection: string;
+    readonly rule: string;
+    readonly actions: string;
+    readonly plugin: string;
+    readonly pluginBody: string;
+    readonly footer: string;
+    readonly pathDialog: string;
+};
+export default styles;

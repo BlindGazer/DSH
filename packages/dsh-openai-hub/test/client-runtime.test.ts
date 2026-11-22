@@ -1,15 +1,12 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.js';
-import { OpenAICodexController, selectLocale } from '../src/client/features/settings/openAICodexRuntime.js';
-import type { OpenAICodexSnapshot } from '../src/shared/remote.js';
+import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { OpenAICodexController, selectLocale } from '../src/client/features/settings/openAICodexRuntime.ts';
+import type { OpenAICodexSnapshot } from '../src/shared/remote.ts';
 
 const snapshot: OpenAICodexSnapshot = { accounts: [], status: 'idle', deviceCode: '', verificationUri: '', error: '' };
 function remote(value: OpenAICodexSnapshot): OpenAICodexRemote {
     return {
         snapshot: vi.fn(async () => value),
-        loadLoggingSettings: vi.fn(async () => ({ enabled: false })),
-        saveLoggingSettings: vi.fn(async input => input),
-        recordClientLog: vi.fn(async () => true as const),
         startLogin: vi.fn(async () => value),
         cancelLogin: vi.fn(async () => value),
         retryLogin: vi.fn(async () => value),

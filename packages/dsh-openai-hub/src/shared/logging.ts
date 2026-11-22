@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { AccountLabelSchema, AuthMethodSchema } from './accounts.js';
-import { OAuthFailureMessages } from './constants/oauth-errors.js';
+import { AccountLabelSchema, AuthMethodSchema } from './accounts.ts';
+import { OAuthFailureMessages } from './constants/oauth-errors.ts';
 
 export const OAuthFailureCodeSchema = z.enum([
     'oauth_connect_timeout',
@@ -90,7 +90,6 @@ export const OpenAIHubLogOperationSchema = z.enum([
     'saveModels',
     'consumeReset',
     'providerRequest',
-    'loadLoggingSettings',
     'setLoggingEnabled'
 ]);
 export const OpenAIHubLogErrorCodeSchema = z.enum([
@@ -185,10 +184,6 @@ export const OpenAIHubLogRecordSchema = OpenAIHubLogFieldsSchema.extend({
     timestamp: z.string().datetime(),
     source: z.enum(['client', 'host'])
 }).strict();
-export const OpenAIHubLoggingSettingsFileSchema = z.object({
-    version: z.literal(1),
-    settings: OpenAIHubLogSettingsSchema
-});
 export type OpenAIHubLogEvent = z.infer<typeof OpenAIHubLogFieldsSchema>;
 export type OpenAIHubClientLogEvent = z.infer<typeof OpenAIHubClientLogEventSchema>;
 export type OpenAIHubLogRecord = z.infer<typeof OpenAIHubLogRecordSchema>;

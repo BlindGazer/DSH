@@ -1,4 +1,4 @@
-import type { OpenAICodexController } from './openAICodexRuntime.js';
+import type { OpenAICodexController } from './openAICodexRuntime.ts';
 
 interface PollingEntry {
     readonly owners: Map<symbol, number>;

@@ -1,8 +1,8 @@
 import { useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect } from 'react';
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.js';
-import { ensureProxyStyles, proxyClasses } from '../../../app/proxyStyles.js';
-import { ProxySettingsModal } from './ProxySettingsModal.js';
+import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { ensureProxyStyles, proxyClasses } from '../../../app/proxyStyles.ts';
+import { ProxySettingsModal } from './ProxySettingsModal.tsx';
 
 /**
  * Нижняя информационная панель и кнопка открытия настроек прокси в разделе моделей DSH.
@@ -21,8 +21,8 @@ export function ModelsFooterProxyEntry() {
     const conflictsCount = snap.conflicts?.length || 0;
 
     return (
-        <>
-            <div className={`dsh-core-root ${proxyClasses('footerRow')}`} data-theme={effectiveTheme}>
+        <div className="dsh-core-root" data-theme={effectiveTheme}>
+            <div className={proxyClasses('footerRow')}>
                 <div
                     style={{
                         display: 'flex',
@@ -42,6 +42,6 @@ export function ModelsFooterProxyEntry() {
                 </div>
             </div>
             <ProxySettingsModal open={snap.modalOpen} onClose={() => proxyStore.publish({ modalOpen: false })} />
-        </>
+        </div>
     );
 }

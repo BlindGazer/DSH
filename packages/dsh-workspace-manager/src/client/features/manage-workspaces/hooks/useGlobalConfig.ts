@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { fetchGlobalConfig, type GlobalConfig, saveGlobalConfig } from '../services/addirApi.js';
+import { fetchGlobalConfig, type GlobalConfig, saveGlobalConfig } from '../services/addirApi.ts';
 
 export function useGlobalConfig() {
     const [config, setConfig] = useState<GlobalConfig>();

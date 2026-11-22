@@ -1,8 +1,8 @@
-import { ProviderRoute } from '../../../shared/constants/runtime.js';
-import { usageRefreshInterval } from './hooks/useCodexAccountPolling.js';
-import { selectedModels } from './modelSelectionSource.js';
-import type { OpenAICodexController } from './openAICodexRuntime.js';
-import { retainQuotaPolling } from './quotaPolling.js';
+import { ProviderRoute } from '../../../shared/constants/runtime.ts';
+import { usageRefreshInterval } from './hooks/useCodexAccountPolling.ts';
+import { selectedModels } from './modelSelectionSource.ts';
+import type { OpenAICodexController } from './openAICodexRuntime.ts';
+import { retainQuotaPolling } from './quotaPolling.ts';
 
 interface RetainedAccount {
     readonly delay: number;

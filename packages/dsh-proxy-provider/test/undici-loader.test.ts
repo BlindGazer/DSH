@@ -1,8 +1,8 @@
 import dns from 'node:dns';
 import { describe, expect, it } from 'vitest';
-import { createProfileDispatcher, DispatcherManager } from '../src/host/services/profileDispatcher.js';
-import { createUndiciLoader, type UndiciDispatcherLike, type UndiciModuleLike } from '../src/host/services/undiciLoader.js';
-import type { ProxyProfile } from '../src/shared/models/ProxyModels.js';
+import { createProfileDispatcher, DispatcherManager } from '../src/host/services/profileDispatcher.ts';
+import { createUndiciLoader, type UndiciDispatcherLike, type UndiciModuleLike } from '../src/host/services/undiciLoader.ts';
+import type { ProxyProfile } from '../src/shared/models/ProxyModels.ts';
 
 type DispatcherOptions = Parameters<NonNullable<UndiciDispatcherLike['dispatch']>>[0];
 

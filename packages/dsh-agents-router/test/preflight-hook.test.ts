@@ -4,20 +4,20 @@ import { mkdir, mkdtemp, readFile, rm, symlink, writeFile } from 'node:fs/promis
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { assert, test } from 'vitest';
-import { discoverProject } from '../src/host/services/discovery.js';
-import { filterRootInstructionMessages } from '../src/host/services/instructionRedirection.js';
-import { createPreflightHook } from '../src/host/services/preflightHook.js';
+import { discoverProject } from '../src/host/services/discovery.ts';
+import { filterRootInstructionMessages } from '../src/host/services/instructionRedirection.ts';
+import { createPreflightHook } from '../src/host/services/preflightHook.ts';
 import type {
     PendingFeedback,
     RouterAgent,
     RouterHostContext,
     RouterMessage,
     RouterState
-} from '../src/host/services/sessionController.js';
-import { claimPendingFeedback, denyCalls } from '../src/host/services/sessionController.js';
-import { RouterStore } from '../src/host/services/store.js';
-import { RULE_CONTEXT } from '../src/shared/constants/index.js';
-import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.js';
+} from '../src/host/services/sessionController.ts';
+import { claimPendingFeedback, denyCalls } from '../src/host/services/sessionController.ts';
+import { RouterStore } from '../src/host/services/store.ts';
+import { RULE_CONTEXT } from '../src/shared/constants/index.ts';
+import { DEFAULT_PROJECT_SETTINGS } from '../src/shared/index.ts';
 
 type FilterInputMessage = Parameters<typeof filterRootInstructionMessages>[0][number];
 
@@ -115,7 +115,7 @@ async function createHarness(options: { settings?: Record<string, boolean | stri
     const ctx: RouterHostContext = {
         agents: { list: () => [agent] },
         workingDirectory: { get: () => projectRoot },
-        logger: { warn() {}, error() {} },
+        scopedLogger: { warn() {}, error() {} },
         skills: { list: async () => [] }
     };
     const state: RouterState = {

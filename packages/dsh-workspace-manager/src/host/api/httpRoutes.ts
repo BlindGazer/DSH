@@ -10,9 +10,9 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Context } from '@deepseek-ai/cordis';
 import type { ConfigEditor } from '@deepseek-ai/dsh-config-editor';
 import type { WebRoute } from '@deepseek-ai/dsh-host-webserver';
-import type { AddDirectoryOptions, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.js';
-import { type ResolvedConfig, resolveConfig } from '../config.js';
-import { canonicalizePath } from '../services/pathUtils.js';
+import type { AddDirectoryOptions, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.ts';
+import { type ResolvedConfig, resolveConfig } from '../config.ts';
+import { canonicalizePath } from '../services/pathUtils.ts';
 
 function writeJson(res: ServerResponse, status: number, body: object): void {
     const json = JSON.stringify(body);

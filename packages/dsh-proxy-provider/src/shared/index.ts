@@ -4,14 +4,14 @@ export {
     DEFAULT_TEST_URL,
     KNOWN_SETTINGS_NS,
     PROXY_LOCALE_KEY
-} from './constants/endpoints.js';
+} from './constants/endpoints.ts';
 export {
     ProxyRussianDictionary,
     persistProxyLocale,
     readSavedProxyLocale,
     resolveProxyLocale,
     translateProxyText
-} from './constants/localizations/ProxyLocalization.js';
-export { ProxyTestId } from './constants/testId.js';
-export * from './models/index.js';
-export * from './utils/index.js';
+} from './constants/localizations/ProxyLocalization.ts';
+export { ProxyTestId } from './constants/testId.ts';
+export * from './models/index.ts';
+export * from './utils/index.ts';

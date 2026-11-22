@@ -16,8 +16,9 @@ import {
     Tabs,
     TestId,
     ThemedSelect,
-    Tooltip
-} from '../src/index.js';
+    Tooltip,
+    TrashIcon
+} from '../src/index.ts';
 
 describe('@kalex/dsh-core UI Components', () => {
     it('renders radio cards as one named native group with descriptions and disabled state', () => {
@@ -39,7 +40,7 @@ describe('@kalex/dsh-core UI Components', () => {
         expect(html.match(/type="radio"/g)).toHaveLength(2);
         expect(html.match(/name="method"/g)).toHaveLength(2);
         expect(html.match(/checked=""/g)).toHaveLength(1);
-        expect(html).toContain('aria-describedby="method-link-description"');
+        expect(html).toContain('Paste the callback URL.');
         expect(html).toContain('id="method-link-description"');
     });
 
@@ -52,17 +53,16 @@ describe('@kalex/dsh-core UI Components', () => {
                     { value: 'ru', label: 'Russian' }
                 ]}
                 onChange={() => undefined}
-                ariaLabel="Language"
             />
         );
         expect(html).toContain('dsh-select');
         expect(html).not.toContain('kpp-');
     });
 
-    it('renders SwitchControl', () => {
-        const html = renderToString(<SwitchControl checked={false} onChange={() => undefined} ariaLabel="Enable proxy" />);
-        expect(html).toContain('role="switch"');
-        expect(html).toContain('aria-checked="false"');
+    it.each([false, true])('renders SwitchControl with checked=%s', checked => {
+        const html = renderToString(<SwitchControl checked={checked} onChange={() => undefined} />);
+        expect(html).toContain('type="button"');
+        expect(html).toContain(`data-checked="${checked}"`);
     });
 
     it('renders Button and IconButton', () => {
@@ -74,22 +74,45 @@ describe('@kalex/dsh-core UI Components', () => {
         expect(btnHtml).toContain('dsh-btn-primary');
         expect(btnHtml).toContain('dsh-btn-sm');
 
-        const iconBtnHtml = renderToString(<IconButton ariaLabel="Proxy settings">gear</IconButton>);
-        expect(iconBtnHtml).toContain('aria-label="Proxy settings"');
-        expect(iconBtnHtml).toContain('dsh-icon-btn');
+        const iconBtnHtml = renderToString(<IconButton tooltip="Proxy settings">gear</IconButton>);
+        expect(iconBtnHtml).not.toContain('title="Proxy settings"');
+        expect(iconBtnHtml).toContain('class="dsh-icon-btn"');
+    });
+
+    it.each(['neutral', 'danger'] as const)('renders the flat %s IconButton as a native button', variant => {
+        const html = renderToString(
+            <IconButton variant={variant} size="small" tooltip="Delete account" disabled className="custom-icon">
+                <TrashIcon />
+            </IconButton>
+        );
+
+        const dangerClass = variant === 'danger' ? ' dsh-icon-btn-danger' : '';
+        expect(html).toContain(`class="dsh-icon-btn dsh-icon-btn-sm dsh-icon-btn-flat${dangerClass} custom-icon"`);
+        expect(html).toContain('type="button"');
+        expect(html).not.toContain('title="Delete account"');
+        expect(html).toContain('disabled=""');
+    });
+
+    it.each([undefined, 18])('renders the outlined TrashIcon at size %s', size => {
+        const html = renderToString(size === undefined ? <TrashIcon /> : <TrashIcon size={size} />);
+
+        expect(html).toContain(`width="${size ?? 14}" height="${size ?? 14}"`);
+        expect(html).toContain('viewBox="0 0 16 16"');
+        expect(html).toContain('stroke="currentColor" stroke-width="1"');
+        expect(html.match(/<path /g)).toHaveLength(5);
     });
 
     it('renders CollectionAddButton with a decorative plus and native button props', () => {
         const html = renderToString(
-            <CollectionAddButton disabled className="custom-add" title="Add an account">
+            <CollectionAddButton disabled className="custom-add" tooltip="Add an account">
                 Add account
             </CollectionAddButton>
         );
         expect(html).toContain('dsh-collection-add-btn custom-add');
         expect(html).toContain('type="button"');
         expect(html).toContain('disabled=""');
-        expect(html).toContain('aria-hidden="true"');
-        expect(html).toContain('title="Add an account"');
+        expect(html).toContain('focusable="false"');
+        expect(html).not.toContain('title="Add an account"');
         expect(html).toContain('<span>Add account</span>');
     });
 
@@ -104,7 +127,7 @@ describe('@kalex/dsh-core UI Components', () => {
                 onChange={() => undefined}
             />
         );
-        expect(html).toContain('role="tablist"');
+        expect(html).toContain(`data-testid="${TestId.Common.TabsList}"`);
         expect(html).toContain('Catalog');
         expect(html).toContain('Audit');
     });
@@ -117,50 +140,49 @@ describe('@kalex/dsh-core UI Components', () => {
         );
         expect(closedHtml).toBe('');
         const openHtml = renderToString(
-            <Modal open onClose={() => undefined} title="Settings" theme="light">
+            <Modal open onClose={() => undefined} title="Settings">
                 Body
             </Modal>
         );
-        expect(openHtml).toContain('data-theme="light"');
+        expect(openHtml).not.toContain('data-theme=');
         expect(openHtml).toContain('class="dsh-modal-backdrop-control"');
         expect(openHtml).toContain('Settings');
         expect(openHtml).toContain('Body');
         expect(openHtml).not.toContain('kpp-');
     });
 
-    it('renders determinate DSH progress indicators with bounded accessible values', () => {
-        const ringHtml = renderToString(<CircularProgress value={120} label="Quota remaining" size="small" color="accent" />);
-        expect(ringHtml).toContain('role="progressbar"');
-        expect(ringHtml).toContain('aria-label="Quota remaining"');
-        expect(ringHtml).toContain('aria-valuenow="100"');
+    it('renders determinate DSH progress indicators with bounded visual values', () => {
+        const ringHtml = renderToString(<CircularProgress value={120} size="small" color="accent" />);
+        expect(ringHtml).not.toContain('<title>');
+        expect(ringHtml).toContain(`stroke-dasharray="${2 * Math.PI * 5.5} ${2 * Math.PI * 5.5}"`);
         expect(ringHtml).toContain('data-size="small"');
         expect(ringHtml).toContain('--dsh-progress-color:var(--dsw-alias-button-info-fill)');
 
-        const lineHtml = renderToString(<LinearProgress value={-5} label="Context usage" color="#ff0088" />);
-        expect(lineHtml).toContain('aria-valuenow="0"');
+        const lineHtml = renderToString(<LinearProgress value={-5} color="#ff0088" />);
+        expect(lineHtml).toContain('--dsh-progress-value:0%');
         expect(lineHtml).toContain('--dsh-progress-color:#ff0088');
     });
 
-    it('renders a DSH tooltip trigger with an accessible description link', () => {
+    it('renders a DSH tooltip trigger with its visible content', () => {
         const html = renderToString(
-            <Tooltip triggerLabel="Usage" content={<div>Usage details</div>} data-testid="usage-tooltip">
+            <Tooltip content={<div>Usage details</div>} data-testid="usage-tooltip">
                 Usage
             </Tooltip>
         );
         expect(html).toContain('class="dsh-tooltip"');
         expect(html).toContain('data-testid="usage-tooltip"');
-        expect(html).toContain('aria-label="Usage"');
+        expect(html).toContain('Usage');
         expect(html).toContain('type="button"');
-        expect(html).not.toContain('role="tooltip"');
+        expect(html).not.toContain('Usage details');
     });
 
     it('supports non-button tooltip triggers for interactive children', () => {
         const html = renderToString(
-            <Tooltip triggerLabel="Usage" content="Usage details" triggerElement="span">
+            <Tooltip content="Usage details" triggerElement="span">
                 <span>Usage</span>
             </Tooltip>
         );
-        expect(html).toContain('<span aria-label="Usage"><span>Usage</span></span>');
+        expect(html).toContain('<span><span>Usage</span></span>');
         expect(html).not.toContain('<button');
     });
 

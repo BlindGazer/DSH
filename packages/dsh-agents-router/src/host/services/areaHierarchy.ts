@@ -1,4 +1,4 @@
-import type { AreaDefinition } from '../../shared/models/RouterModels.js';
+import type { AreaDefinition } from '../../shared/models/RouterModels.ts';
 
 /** Проверяет родительские области без зависимости файлового обхода от селектора правил. */
 export function parentsAvailable(area: AreaDefinition, areas: ReadonlyMap<string, AreaDefinition>): boolean {

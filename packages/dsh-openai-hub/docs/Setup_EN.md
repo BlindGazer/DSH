@@ -2,7 +2,7 @@
 
 ## Requirements
 
-- DeepSeek Harness `>=0.2.2-rc.1` with host dependencies compatible with this package.
+- DeepSeek Harness `>=0.2.2-rc.5` with host dependencies compatible with this package.
 - Node.js `>=22.19.0` for CLI installation.
 - A ChatGPT account with Codex access and a supported OAuth method.
 
@@ -13,12 +13,14 @@ The plugin registers exactly one LLM provider route, `openai-hub`, with provider
 For the Web profile:
 
 ```sh
-dsh plugin --profile web add @kalex/dsh-openai-hub
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
-Until the renamed package is published to your registry, install its built local directory from the repository root:
+For local development, run these commands from the repository root:
 
 ```powershell
+pnpm install
+pnpm --filter @kalex/dsh-openai-hub build
 dsh plugin --profile desktop add ./packages/dsh-openai-hub
 ```
 
@@ -33,7 +35,7 @@ The legacy package/configuration is not guaranteed to migrate automatically. To 
 3. Install the new package:
 
    ```sh
-   dsh plugin --profile web add @kalex/dsh-openai-hub
+   dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-openai-hub
    ```
 4. Restart DSH if needed, open Settings -> Models, choose a unique lowercase label for each account, and sign in again.
 5. Verify the catalog and quota behavior with the checklist below. Do not assume old credentials or account settings were migrated.

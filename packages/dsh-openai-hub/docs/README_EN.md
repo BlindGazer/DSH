@@ -6,6 +6,8 @@
 
 A DeepSeek Harness plugin for signing into ChatGPT and using available OpenAI Codex models without an OpenAI Platform API key. Based on [gooosie/dsh-openai-codex-auth](https://github.com/gooosie/dsh-openai-codex-auth).
 
+No public `.d.ts` files are generated: this package is installed as a DSH plugin, not used as a library.
+
 ## Features
 
 - Multiple accounts behind one static DSH route, `openai-hub`, in the `OpenAI Hub` provider group.
@@ -18,7 +20,7 @@ Choose a unique lowercase ASCII label (letters, digits, hyphens) before signing 
 ## Install
 
 ```sh
-dsh plugin --profile web add @kalex/dsh-openai-hub
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
 Moving from the legacy package requires manual removal and installation; migration of credentials and settings is not guaranteed. See [installation and acceptance](Setup_EN.md) for instructions and a manual checklist.

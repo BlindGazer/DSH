@@ -2,6 +2,42 @@ import { createHash, randomUUID } from "node:crypto";
 import { lstat, mkdir, open, readFile, readdir, realpath, rename, stat, unlink, writeFile } from "node:fs/promises";
 import path, { posix } from "node:path";
 import os from "node:os";
+// ../dsh-logger-core/src/types.ts
+var NOOP_LOGGER = Object.freeze({ record: () => void 0 });
+// ../dsh-logger-core/src/factory.ts
+function createFacade(logger, sink) {
+	const write = (level, message, context) => {
+		sink?.(level, message, context);
+		logger.record(context === void 0 ? {
+			event: message,
+			level
+		} : {
+			event: context.event ?? message,
+			level,
+			data: context
+		});
+	};
+	return {
+		debug: (message, context) => write("debug", message, context),
+		info: (message, context) => write("info", message, context),
+		warn: (message, context) => write("warn", message, context),
+		error: (message, context) => write("error", message, context)
+	};
+}
+/** Ожидаем реальный сервис, а имя пакета передаём явно: имя fiber не является идентификатором пакета. */
+function createOptionalLogger(context, packageName) {
+	let target = NOOP_LOGGER;
+	context.inject?.(["dshLoggerService"], (scope) => {
+		target = scope.dshLoggerService?.getLogger({ packageName }, "host") ?? NOOP_LOGGER;
+		scope.effect(() => () => {
+			target = NOOP_LOGGER;
+		}, "optional dsh-logger binding");
+	});
+	return { record: (record) => target.record(record) };
+}
+function createHostLogger(logger) {
+	return createFacade(logger ?? NOOP_LOGGER);
+}
 // src/shared/constants/constants.ts
 var PLUGIN_ID = "dsh-agents-router";
 var PACKAGE_ID = "@kalex/dsh-agents-router";
@@ -7567,16 +7603,16 @@ async function loadSkillDefinition(projectRoot, settings, locator) {
 	}
 }
 // src/host/services/sessionController.ts
-async function reportDiagnostics(ctx, store, state, items) {
+async function reportDiagnostics(_ctx, store, state, items) {
 	for (const item of items) state.runtimeDiagnostics.set(diagnosticKey(item), item);
 	if (!items.length) return [];
 	try {
 		const fresh = await store.markDiagnostics(state.sessionId, state.projectRoot, items);
-		for (const item of fresh) ctx.logger.warn(`agents-router: ${item.path}: ${item.message}`);
+		for (const item of fresh) _ctx.scopedLogger?.warn(`agents-router: ${item.path}: ${item.message}`);
 		return fresh;
 	} catch (error) {
 		const message = error instanceof Error ? error.message : String(error);
-		ctx.logger.error(`agents-router: could not persist diagnostics for ${state.sessionId}: ${message}`);
+		_ctx.scopedLogger?.error(`agents-router: could not persist diagnostics for ${state.sessionId}: ${message}`);
 		return items;
 	}
 }
@@ -8722,6 +8758,11 @@ function apply(ctx) {
 	const store = new RouterStore();
 	const states = /* @__PURE__ */ new Map();
 	const pendingFeedback = /* @__PURE__ */ new Map();
+	const logger = createHostLogger(createOptionalLogger(ctx, "@kalex/dsh-agents-router"));
+	const scopedContext = {
+		...ctx,
+		scopedLogger: logger
+	};
 	const initializeAgent = async ({ agent, source, signal }) => {
 		try {
 			signal?.throwIfAborted();
@@ -8733,7 +8774,7 @@ function apply(ctx) {
 				if (!(await stat(projectRoot)).isDirectory()) throw new Error("session project path is not a directory");
 			} catch (error) {
 				const message = error instanceof Error ? error.message : String(error);
-				ctx.logger.warn(`agents-router: cannot bind session ${agent.session.id} to its project root: ${message}`);
+				logger.warn(`agents-router: cannot bind session ${agent.session.id} to its project root: ${message}`);
 				return;
 			}
 			const state = {
@@ -8768,7 +8809,7 @@ function apply(ctx) {
 				if (source === "resume" && loaded.missing) state.restoreWarning = "session workset was missing; restored as an empty project workset";
 				state.activePaths = loaded.state.activePaths;
 			}
-			await refreshState(ctx, store, state);
+			await refreshState(scopedContext, store, state);
 			await recordAudit(state, store, {
 				event: source === "clear" ? "reset" : `session_init (source="${source}")`,
 				workset: state.activePaths.length ? `[${state.activePaths.join(", ")}]` : "[] (empty)",
@@ -8797,14 +8838,14 @@ function apply(ctx) {
 				interpolate: false,
 				text: "Project instructions are selected from the session project root and the current router workset. Use built-in file tools for project files; before a terminal or other opaque tool accesses project files, call agents_router_paths(action=\"add\", paths=[...]) first. If a file operation is denied because instructions were refreshed, read the current runtime context and re-plan; do not repeat the same call unchanged."
 			});
-			state.invalidateSkills = await registerSkillsProvider(agent, ctx, projectRoot, store, (items) => reportDiagnostics(ctx, store, state, items));
+			state.invalidateSkills = await registerSkillsProvider(agent, ctx, projectRoot, store, (items) => reportDiagnostics(scopedContext, store, state, items));
 			agent.ctx.tools.register(createPathTool(ctx, store, state, {
 				refreshState,
 				currentDirectory
 			}));
 			agent.ctx.on("system-prompt/assemble", async (_assembly, _context, next) => {
 				state.invalidateSkills();
-				await refreshState(ctx, store, state);
+				await refreshState(scopedContext, store, state);
 				await recordAudit(state, store, {
 					event: "prompt_assemble",
 					workset: `unchanged (${state.activePaths.length} paths)`,
@@ -8857,10 +8898,10 @@ function apply(ctx) {
 				state.runtimeDiagnostics.set(item.key, item);
 				state.text = [state.text, `Router warning: ${message}`].filter(Boolean).join("\n\n");
 				try {
-					await reportDiagnostics(ctx, store, state, [item]);
+					await reportDiagnostics(scopedContext, store, state, [item]);
 				} catch {}
 			}
-			ctx.logger.error(`agents-router: ${message}`);
+			logger.error(`agents-router: ${message}`);
 		}
 	};
 	ctx.on("agent/created", initializeAgent);
@@ -8889,7 +8930,7 @@ function apply(ctx) {
 		};
 		const suppressed = claim.feedback.group.callCount - 1;
 		const batch = createHash("sha256").update(claim.feedback.group.key).digest("hex").slice(0, 12);
-		ctx.logger.warn(`agents-router: replan notice delivered for batch=${batch} calls=${claim.feedback.group.callCount}; suppressed ${suppressed} duplicate notice(s)`);
+		logger.warn(`agents-router: replan notice delivered for batch=${batch} calls=${claim.feedback.group.callCount}; suppressed ${suppressed} duplicate notice(s)`);
 		await recordAudit(state, store, {
 			event: `preflight_replan_notice batch=${batch} calls=${claim.feedback.group.callCount} suppressed=${suppressed}`,
 			preflight: "one uniquely identified context returned; file batch remains denied"

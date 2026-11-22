@@ -3,9 +3,9 @@ import type { Context } from '@deepseek-ai/cordis';
 import type { ConfigEditor } from '@deepseek-ai/dsh-config-editor';
 import type { ProviderAuthInteraction } from '@earendil-works/pi-ai';
 import type { z } from 'zod';
-import { type AccountConfig, type AuthMethod, Config, reconcileModels } from '../shared/accounts.js';
-import { credentialRefForAccount, PackageId } from '../shared/constants/runtime.js';
-import type { OpenAIHubLogEvent } from '../shared/logging.js';
+import { type AccountConfig, type AuthMethod, Config, reconcileModels } from '../shared/accounts.ts';
+import { credentialRefForAccount, PackageId } from '../shared/constants/runtime.ts';
+import type { OpenAIHubLogEvent } from '../shared/logging.ts';
 import type {
     AccountRequest,
     AccountSnapshot,
@@ -15,7 +15,7 @@ import type {
     SaveModelsRequest,
     SubmitCallbackUrlRequest,
     UpdateAccountRequest
-} from '../shared/remote.js';
+} from '../shared/remote.ts';
 import {
     AccountRequestSchema,
     LoginRequestSchema,
@@ -24,17 +24,18 @@ import {
     SnapshotSchema,
     SubmitCallbackUrlRequestSchema,
     UpdateAccountRequestSchema
-} from '../shared/remote.js';
-import { loginBrowser } from './browser-login.js';
-import { BrowserLoginError } from './browser-login-error.js';
-import { catalogForIds, localCatalog, mergeCatalog, requestCatalog } from './catalog.js';
-import { AccountCredentials, type OAuthCredential, OAuthCredentialSchema } from './credentials.js';
-import type { OpenAIHubLogging } from './logging.js';
-import { withOAuthNetworkDiagnostics } from './oauth-network-diagnostics.js';
-import { oauthNetworkFailure } from './oauth-network-error.js';
-import { type CodexModel, createCodexProvider } from './provider.js';
-import { createResetRedeemer, requestResetCredits } from './reset-credits.js';
-import { requestCodexUsage } from './usage.js';
+} from '../shared/remote.ts';
+import { loginBrowser } from './browser-login.ts';
+import { BrowserLoginError } from './browser-login-error.ts';
+import { catalogForIds, localCatalog, mergeCatalog, requestCatalog } from './catalog.ts';
+import { AccountCredentials, type OAuthCredential, OAuthCredentialSchema } from './credentials.ts';
+import type { HubLogger } from './logging.ts';
+import { withOAuthNetworkDiagnostics } from './oauth-network-diagnostics.ts';
+import { oauthNetworkFailure } from './oauth-network-error.ts';
+import { type CodexModel, createCodexProvider } from './provider.ts';
+import { createResetRedeemer, requestResetCredits } from './reset-credits.ts';
+import { requestCodexUsage } from './usage.ts';
+import { UsageCache } from './usage-cache.ts';
 
 interface LoginStatus {
     status: OpenAICodexSnapshot['status'];
@@ -62,7 +63,20 @@ export interface AccountRuntime {
     usageFlight?: Promise<void> | undefined;
     catalogFlight?: Promise<void> | undefined;
 }
-function runtime(config: AccountConfig): AccountRuntime {
+function initialUsage(cache: UsageCache, key: string) {
+    const cached = cache.read(key);
+    return {
+        usageStatus: cached ? ('ready' as const) : ('idle' as const),
+        usageLimited: false,
+        usageLimits: [],
+        usageCredits: '',
+        usageCreditsUnlimited: false,
+        usageUpdatedAt: 0,
+        usageError: '',
+        ...cached
+    };
+}
+function runtime(config: AccountConfig, cache: UsageCache): AccountRuntime {
     const catalog = config.catalogLoaded
         ? catalogForIds([...localCatalog().map(model => model.id), ...config.models.map(model => model.id)]).map(model => ({
               ...model,
@@ -87,15 +101,9 @@ function runtime(config: AccountConfig): AccountRuntime {
             catalogError: '',
             loggedIn: false,
             expiresAt: 0,
-            usageStatus: 'idle',
-            usageLimited: false,
-            usageLimits: [],
-            usageCredits: '',
-            usageCreditsUnlimited: false,
+            ...initialUsage(cache, config.credentialKey),
             resetCards: [],
-            resetCardsStatus: 'idle',
-            usageUpdatedAt: 0,
-            usageError: ''
+            resetCardsStatus: 'idle'
         }
     };
 }
@@ -112,7 +120,8 @@ export class AccountsRuntime {
     constructor(
         private readonly ctx: Context,
         config: z.infer<typeof Config>,
-        private readonly logging: OpenAIHubLogging
+        private readonly logging: HubLogger,
+        private readonly usageCache = new UsageCache()
     ) {
         this.credentials = new AccountCredentials(ctx);
         this.login = loginStatuses.get(ctx) ?? {
@@ -124,7 +133,7 @@ export class AccountsRuntime {
             error: ''
         };
         loginStatuses.set(ctx, this.login);
-        this.accounts = config.accounts.map(runtime);
+        this.accounts = config.accounts.map(account => runtime(account, this.usageCache));
         ctx.effect(
             () => () => {
                 this.disposed = true;
@@ -143,7 +152,7 @@ export class AccountsRuntime {
                         error: ''
                     });
                 }
-                void this.logging.recordHost({ event: 'plugin', phase: 'stopped' });
+                void this.logging({ event: 'plugin', phase: 'stopped' });
             },
             'openai-hub: cancel stale operations'
         );
@@ -171,9 +180,19 @@ export class AccountsRuntime {
         if (!editor || !entry) throw new Error('OpenAI Hub configuration cannot be saved');
         await editor.edit(entry, () => config);
     }
-    private diagnostic(message: string): void {
-        console.error(`[${PackageId}] ${message}`);
-        this.ctx.logger.error(`[${PackageId}] ${message}`);
+    private removeCachedUsage(key: string): void {
+        try {
+            this.usageCache.delete(key);
+        } catch {
+            this.diagnostic('Unable to remove cached usage');
+        }
+    }
+    private diagnostic(_message: string): void {
+        void this.logging({
+            event: 'plugin',
+            phase: 'failed',
+            errorCode: 'request_failed'
+        });
     }
     private waitForOAuthRetry(error: BrowserLoginError, signal?: AbortSignal): Promise<void> {
         return new Promise(resolve => {
@@ -258,7 +277,7 @@ export class AccountsRuntime {
         const report = (event: OpenAIHubLogEvent) => {
             if (event.phase === 'failed') observedFailure = event;
             else if (event.phase === 'started' && event.loginStage === 'token_exchange') observedFailure = undefined;
-            void this.logging.recordHost({ ...event, loginAttemptId, accountLabel: request.accountLabel, authMethod: request.authMethod });
+            void this.logging({ ...event, loginAttemptId, accountLabel: request.accountLabel, authMethod: request.authMethod });
         };
         const invokeLogin =
             request.authMethod === 'browser-oauth'
@@ -288,7 +307,7 @@ export class AccountsRuntime {
                                     deviceCode: info.userCode,
                                     verificationUri: url.toString()
                                 });
-                                void this.logging.recordHost({
+                                void this.logging({
                                     event: 'login',
                                     phase: 'device_code_received',
                                     accountLabel: request.accountLabel,
@@ -300,7 +319,7 @@ export class AccountsRuntime {
                                 if (url.protocol !== 'https:' || url.hostname !== 'auth.openai.com')
                                     throw new Error('Invalid OpenAI authorization URL');
                                 Object.assign(this.login, { status: 'waiting', deviceCode: '', verificationUri: url.toString() });
-                                void this.logging.recordHost({
+                                void this.logging({
                                     event: 'login',
                                     phase: 'authorization_url_received',
                                     accountLabel: request.accountLabel,
@@ -314,7 +333,7 @@ export class AccountsRuntime {
                             if (prompt.type === 'manual_code' && request.authMethod === 'browser-oauth') {
                                 const signal = controller.signal;
                                 Object.assign(this.login, { status: 'waiting', callbackUrlRequested: true });
-                                void this.logging.recordHost({ event: 'login', phase: 'waiting', authMethod: request.authMethod });
+                                void this.logging({ event: 'login', phase: 'waiting', authMethod: request.authMethod });
                                 notifyReady?.();
                                 return new Promise<string>((resolve, reject) => {
                                     const abort = () => {
@@ -429,9 +448,14 @@ export class AccountsRuntime {
                         existingAccount.config = config;
                         existingAccount.view.loggedIn = true;
                         existingAccount.view.expiresAt = credential.expires;
-                        existingAccount.view.usageStatus = 'idle';
-                        existingAccount.view.usageError = '';
                         if (previousConfig && previousConfig.credentialKey !== config.credentialKey) {
+                            delete existingAccount.view.usageResetCredits;
+                            delete existingAccount.view.resetResult;
+                            Object.assign(existingAccount.view, initialUsage(this.usageCache, config.credentialKey), {
+                                resetCards: [],
+                                resetCardsStatus: 'idle'
+                            });
+                            this.removeCachedUsage(previousConfig.credentialKey);
                             try {
                                 await this.credentials.delete(previousConfig);
                             } catch {
@@ -440,7 +464,7 @@ export class AccountsRuntime {
                         }
                     } else {
                         // Успешная запись уже могла remount-нуть Host; ответ обязан отражать сохраненный аккаунт.
-                        const account = runtime(config);
+                        const account = runtime(config, this.usageCache);
                         this.accounts = [...this.accounts, account];
                         account.view.loggedIn = true;
                         account.view.expiresAt = credential.expires;
@@ -453,7 +477,7 @@ export class AccountsRuntime {
                         retryAvailable: false,
                         error: ''
                     });
-                    await this.logging.recordHost({
+                    await this.logging({
                         event: 'login',
                         phase: 'completed',
                         state: 'done',
@@ -479,7 +503,7 @@ export class AccountsRuntime {
                         retryAvailable: false,
                         error: error instanceof BrowserLoginError ? error.message : 'OpenAI Hub sign-in failed'
                     });
-                    await this.logging.recordHost({
+                    await this.logging({
                         ...failure,
                         event: 'login',
                         phase: 'failed',
@@ -539,7 +563,7 @@ export class AccountsRuntime {
     async submitCallbackUrl(input: SubmitCallbackUrlRequest): Promise<OpenAICodexSnapshot> {
         const reject = async (callbackError: NonNullable<OpenAIHubLogEvent['callbackError']>): Promise<never> => {
             // Только фиксированная причина: URL, code и state не должны попадать в журнал.
-            await this.logging.recordHost({
+            await this.logging({
                 event: 'login',
                 phase: 'failed',
                 operation: 'submitCallbackUrl',
@@ -575,7 +599,7 @@ export class AccountsRuntime {
         if (!this.login.callbackUrlRequested || !this.submitManualCode || this.disposed) return reject('inactive_prompt');
         const attempt = loginAttempts.get(this.ctx);
         if (attempt)
-            void this.logging.recordHost({
+            void this.logging({
                 event: 'login',
                 phase: 'callback_received',
                 accountLabel: attempt.accountLabel,
@@ -633,6 +657,7 @@ export class AccountsRuntime {
                 });
                 await this.persist(this.accounts.filter(other => other !== account).map(other => other.config));
                 this.accounts = this.accounts.filter(other => other !== account);
+                this.removeCachedUsage(account.config.credentialKey);
                 Object.assign(this.login, { status: 'idle', deviceCode: '', verificationUri: '', callbackUrlRequested: false, error: '' });
             } catch {
                 account.active = true;
@@ -646,12 +671,12 @@ export class AccountsRuntime {
         const { accountLabel } = AccountRequestSchema.parse(input);
         const account = this.find(accountLabel);
         if (!account.catalogFlight) {
-            void this.logging.recordHost({ event: 'catalog_refresh', phase: 'started', accountLabel });
+            void this.logging({ event: 'catalog_refresh', phase: 'started', accountLabel });
             account.catalogFlight = (async () => {
                 try {
                     const credential = await this.credentials.valid(account.config, () => this.current(account, accountLabel));
                     const remoteCatalog = await requestCatalog(credential, globalThis.fetch, diagnostic => {
-                        void this.logging.recordHost({
+                        void this.logging({
                             event: 'catalog_refresh',
                             phase: 'completed',
                             operation: 'refreshCatalog',
@@ -685,12 +710,12 @@ export class AccountsRuntime {
                         account.view.catalogStatus = 'ready';
                         account.view.catalogError = '';
                     });
-                    await this.logging.recordHost({ event: 'catalog_refresh', phase: 'completed', accountLabel });
+                    await this.logging({ event: 'catalog_refresh', phase: 'completed', accountLabel });
                 } catch {
                     if (this.current(account, accountLabel)) {
                         account.view.catalogStatus = 'error';
                         account.view.catalogError = 'OpenAI Hub catalog refresh failed; retained previous models';
-                        await this.logging.recordHost({
+                        await this.logging({
                             event: 'catalog_refresh',
                             phase: 'failed',
                             errorCode: 'catalog_failed',
@@ -710,14 +735,16 @@ export class AccountsRuntime {
         const { accountLabel } = AccountRequestSchema.parse(input);
         const account = this.find(accountLabel);
         if (!account.usageFlight) {
-            void this.logging.recordHost({ event: 'usage_refresh', phase: 'started', accountLabel });
+            void this.logging({ event: 'usage_refresh', phase: 'started', accountLabel });
             account.usageFlight = (async () => {
+                const key = account.config.credentialKey;
+                const current = () => this.current(account, accountLabel) && account.config.credentialKey === key;
                 account.view.usageStatus = 'loading';
                 try {
-                    const credential = await this.credentials.valid(account.config, () => this.current(account, accountLabel));
+                    const credential = await this.credentials.valid(account.config, current);
                     const [usage, cards] = await Promise.allSettled([
                         requestCodexUsage(credential, globalThis.fetch, Date.now(), diagnostic => {
-                            void this.logging.recordHost({
+                            void this.logging({
                                 event: 'usage_refresh',
                                 phase: 'completed',
                                 operation: 'refreshUsage',
@@ -728,7 +755,7 @@ export class AccountsRuntime {
                         }),
                         requestResetCredits(credential)
                     ]);
-                    if (!this.current(account, accountLabel)) return;
+                    if (!current()) return;
                     if (cards.status === 'fulfilled') {
                         account.view.resetCards = cards.value.cards;
                         account.view.usageResetCredits = cards.value.availableCount;
@@ -738,21 +765,28 @@ export class AccountsRuntime {
                         account.view.resetCardsStatus = 'error';
                     }
                     if (usage.status !== 'fulfilled') throw new Error('Usage unavailable');
-                    Object.assign(account.view, {
-                        usageStatus: 'ready',
-                        usageLimited: usage.value.limited,
-                        usageLimits: usage.value.limits,
-                        usageCredits: usage.value.credits.hasCredits ? usage.value.credits.balance : '',
-                        usageCreditsUnlimited: usage.value.credits.unlimited,
-                        usageUpdatedAt: Date.now(),
-                        usageError: ''
-                    });
-                    await this.logging.recordHost({ event: 'usage_refresh', phase: 'completed', accountLabel });
+                    account.view.usageStatus = 'ready';
+                    account.view.usageError = '';
+                    if (usage.value.limits.length || !account.view.usageLimits.length) {
+                        Object.assign(account.view, {
+                            usageLimited: usage.value.limited,
+                            usageLimits: usage.value.limits,
+                            usageCredits: usage.value.credits.hasCredits ? usage.value.credits.balance : '',
+                            usageCreditsUnlimited: usage.value.credits.unlimited,
+                            usageUpdatedAt: Date.now()
+                        });
+                        try {
+                            this.usageCache.write(key, account.view);
+                        } catch {
+                            this.diagnostic('Unable to save cached usage');
+                        }
+                    }
+                    await this.logging({ event: 'usage_refresh', phase: 'completed', accountLabel });
                 } catch {
-                    if (this.current(account, accountLabel)) {
+                    if (current()) {
                         account.view.usageStatus = 'error';
                         account.view.usageError = 'OpenAI Hub usage refresh failed';
-                        await this.logging.recordHost({ event: 'usage_refresh', phase: 'failed', errorCode: 'usage_failed', accountLabel });
+                        await this.logging({ event: 'usage_refresh', phase: 'failed', errorCode: 'usage_failed', accountLabel });
                         this.diagnostic('Usage refresh failed');
                     }
                 } finally {

@@ -1,12 +1,8 @@
 {
     "extends": "../../tsconfig.base.json",
     "compilerOptions": {
-        "composite": true,
-        "rootDir": "../../../packages/dsh-core/src",
-        "outDir": "../../../packages/dsh-core/lib",
-        "declarationDir": "../../../node_modules/.cache/dsh-core/types",
-        "tsBuildInfoFile": "../../../node_modules/.cache/dsh-core/tsconfig.tsbuildinfo",
+        "noEmit": true,
         "types": ["node"]
     },
-    "include": ["../../../packages/dsh-core/src/**/*"]
+    "include": ["../../../packages/dsh-core/src/**/*", "../../../packages/dsh-core/src/scss.d.ts"]
 }

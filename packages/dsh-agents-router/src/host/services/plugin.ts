@@ -1,7 +1,8 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { realpath, stat } from 'node:fs/promises';
-import type { PendingFeedback, RouterAgent, RouterHostContext, RouterMessage, RouterState } from './sessionController.js';
-import type { ScopedAgent } from './skillsProvider.js';
+import { createHostLogger, createOptionalLogger, type DshLogger } from '@kalex/dsh-logger-core';
+import type { PendingFeedback, RouterAgent, RouterHostContext, RouterMessage, RouterState } from './sessionController.ts';
+import type { ScopedAgent } from './skillsProvider.ts';
 
 interface UserMessageInput {
     readonly content: { readonly type: 'text'; readonly text: string }[];
@@ -30,12 +31,12 @@ import {
     RULE_CONTEXT_ORDER,
     USAGE_SECTION,
     USAGE_SECTION_ORDER
-} from '../../shared/constants/constants.js';
-import { createRouterHandler } from '../api/httpRoutes.js';
-import { recordAudit } from './auditLogger.js';
-import { filterRootInstructionMessages } from './instructionRedirection.js';
-import { createPathTool as makePathTool } from './pathTool.js';
-import { createPreflightHook } from './preflightHook.js';
+} from '../../shared/constants/constants.ts';
+import { createRouterHandler } from '../api/httpRoutes.ts';
+import { recordAudit } from './auditLogger.ts';
+import { filterRootInstructionMessages } from './instructionRedirection.ts';
+import { createPathTool as makePathTool } from './pathTool.ts';
+import { createPreflightHook } from './preflightHook.ts';
 import {
     deleteAuditLog,
     diagnoseRouterPath,
@@ -44,10 +45,10 @@ import {
     resetRouterWorkset,
     saveRouterSettings,
     updateRouterWorkset
-} from './sessionActions.js';
-import { claimPendingFeedback, currentDirectory, readRouterState, refreshState, reportDiagnostics } from './sessionController.js';
-import { registerSkillsProvider } from './skillsProvider.js';
-import { RouterStore } from './store.js';
+} from './sessionActions.ts';
+import { claimPendingFeedback, currentDirectory, readRouterState, refreshState, reportDiagnostics } from './sessionController.ts';
+import { registerSkillsProvider } from './skillsProvider.ts';
+import { RouterStore } from './store.ts';
 
 interface AbortSignalLike {
     readonly aborted: boolean;
@@ -123,6 +124,7 @@ interface WorkspacePathController {
 }
 
 interface WebServerScope {
+    readonly dshLogger?: DshLogger;
     readonly webServer: {
         register(value: { readonly kind: 'prefix'; readonly path: string; readonly handler: ReturnType<typeof createRouterHandler> }): void;
     };
@@ -155,6 +157,8 @@ export function apply(ctx: PluginContext): void {
     const store = new RouterStore();
     const states = new Map<string, RouterState>();
     const pendingFeedback = new Map<string, PendingFeedback>();
+    const logger = createHostLogger(createOptionalLogger(ctx, '@kalex/dsh-agents-router'));
+    const scopedContext: PluginContext = { ...ctx, scopedLogger: logger };
 
     const initializeAgent = async ({ agent, source, signal }: AgentCreatedEvent): Promise<void> => {
         try {
@@ -167,7 +171,7 @@ export function apply(ctx: PluginContext): void {
                 if (!(await stat(projectRoot)).isDirectory()) throw new Error('session project path is not a directory');
             } catch (error) {
                 const message = error instanceof Error ? error.message : String(error);
-                ctx.logger.warn(`agents-router: cannot bind session ${agent.session.id} to its project root: ${message}`);
+                logger.warn(`agents-router: cannot bind session ${agent.session.id} to its project root: ${message}`);
                 return;
             }
 
@@ -209,7 +213,7 @@ export function apply(ctx: PluginContext): void {
                 state.activePaths = loaded.state.activePaths;
             }
 
-            await refreshState(ctx, store, state);
+            await refreshState(scopedContext, store, state);
             await recordAudit(state, store, {
                 event: source === 'clear' ? 'reset' : `session_init (source="${source}")`,
                 workset: state.activePaths.length ? `[${state.activePaths.join(', ')}]` : '[] (empty)',
@@ -237,7 +241,7 @@ export function apply(ctx: PluginContext): void {
             });
 
             state.invalidateSkills = await registerSkillsProvider(agent, ctx, projectRoot, store, items =>
-                reportDiagnostics(ctx, store, state, items)
+                reportDiagnostics(scopedContext, store, state, items)
             );
             agent.ctx.tools.register(makePathTool(ctx, store, state, { refreshState, currentDirectory }));
 
@@ -245,7 +249,7 @@ export function apply(ctx: PluginContext): void {
                 'system-prompt/assemble',
                 async (_assembly, _context, next) => {
                     state.invalidateSkills();
-                    await refreshState(ctx, store, state);
+                    await refreshState(scopedContext, store, state);
                     await recordAudit(state, store, {
                         event: 'prompt_assemble',
                         workset: `unchanged (${state.activePaths.length} paths)`,
@@ -296,10 +300,10 @@ export function apply(ctx: PluginContext): void {
                 state.runtimeDiagnostics.set(item.key, item);
                 state.text = [state.text, `Router warning: ${message}`].filter(Boolean).join('\n\n');
                 try {
-                    await reportDiagnostics(ctx, store, state, [item]);
+                    await reportDiagnostics(scopedContext, store, state, [item]);
                 } catch {}
             }
-            ctx.logger.error(`agents-router: ${message}`);
+            logger.error(`agents-router: ${message}`);
         }
     };
     ctx.on('agent/created', initializeAgent);
@@ -322,7 +326,7 @@ export function apply(ctx: PluginContext): void {
         const notice: RouterMessage = { ...message, id: randomUUID() };
         const suppressed = claim.feedback.group.callCount - 1;
         const batch = createHash('sha256').update(claim.feedback.group.key).digest('hex').slice(0, 12);
-        ctx.logger.warn(
+        logger.warn(
             `agents-router: replan notice delivered for batch=${batch} calls=${claim.feedback.group.callCount}; suppressed ${suppressed} duplicate notice(s)`
         );
         await recordAudit(state, store, {

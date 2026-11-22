@@ -1,8 +1,8 @@
 import { open } from 'node:fs/promises';
 import { parse as parseYaml } from 'yaml';
-import type { NormalizedRuleMetadata, RawRuleFrontmatter, RuleActivationMode, SourceVendor } from '../../shared/models/RouterModels.js';
-import { isRecord, validProjectFilter } from '../../shared/utils/validation.js';
-import { normalizeRulePatterns, sanitizeFrontmatterYaml } from './globNormalizer.js';
+import type { NormalizedRuleMetadata, RawRuleFrontmatter, RuleActivationMode, SourceVendor } from '../../shared/models/RouterModels.ts';
+import { isRecord, validProjectFilter } from '../../shared/utils/validation.ts';
+import { normalizeRulePatterns, sanitizeFrontmatterYaml } from './globNormalizer.ts';
 
 const RULE_FIELDS = new Set(['path', 'paths', 'glob', 'globs', 'alwaysApply', 'description', 'enabled']);
 // Skill fields include Agent Skills standard (name, description, license, compatibility, metadata, allowed-tools)

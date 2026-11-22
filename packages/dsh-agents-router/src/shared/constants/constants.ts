@@ -1,4 +1,4 @@
-import type { GlobalSettings, ProjectSettings } from '../models/RouterModels.js';
+import type { GlobalSettings, ProjectSettings } from '../models/RouterModels.ts';
 
 export const PLUGIN_ID = 'dsh-agents-router';
 export const PACKAGE_ID = '@kalex/dsh-agents-router';

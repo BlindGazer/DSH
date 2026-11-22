@@ -1,8 +1,8 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { assert, test } from 'vitest';
-import { AuditProjectTab } from '../src/client/features/audit-project/AuditProjectTab.js';
-import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS } from '../src/shared/constants/constants.js';
-import type { RouterStateResponse } from '../src/shared/models/RouterModels.js';
+import { AuditProjectTab } from '../src/client/features/audit-project/AuditProjectTab.tsx';
+import { DEFAULT_GLOBAL_SETTINGS, DEFAULT_PROJECT_SETTINGS } from '../src/shared/constants/constants.ts';
+import type { RouterStateResponse } from '../src/shared/models/RouterModels.ts';
 
 const data: RouterStateResponse = {
     sessionId: 'project-settings-session',
@@ -52,7 +52,6 @@ test('shows discovery mode and detected project sources for verification', () =>
     assert.match(markup, /discoveredRules: 1/);
     assert.match(markup, /activeRules: 1/);
     assert.match(markup, /discoveryMode/);
-    assert.match(markup, /aria-label="discoveryMode"/);
-    assert.match(markup, /aria-haspopup="listbox"/);
+    assert.match(markup, /dsh-select-trigger/);
     assert.match(markup, /discoveryMerge/);
 });

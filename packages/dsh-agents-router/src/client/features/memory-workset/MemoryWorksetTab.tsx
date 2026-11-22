@@ -1,7 +1,7 @@
 import type React from 'react';
-import type { DiscoveredRuleWithState, RouterPostBody, RouterStateResponse } from '../../../shared/models/RouterModels.js';
-import { RuleRow } from '../../components/common/RuleRow.js';
-import { ContextBar, TokenChart } from './ContextCharts.js';
+import type { DiscoveredRuleWithState, RouterPostBody, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
+import { RuleRow } from '../../components/common/RuleRow.tsx';
+import { ContextBar, TokenChart } from './ContextCharts.tsx';
 
 export interface MemoryWorksetTabProps {
     data: RouterStateResponse;
@@ -35,7 +35,7 @@ export function MemoryWorksetTab({
     always
 }: MemoryWorksetTabProps): React.JSX.Element {
     return (
-        <section className="ar-panel" role="tabpanel">
+        <section className="ar-panel">
             <div className="ar-grid ar-grid-wide">
                 <article className="ar-card">
                     <div className="ar-card-heading">
@@ -63,12 +63,7 @@ export function MemoryWorksetTab({
                 <article className="ar-card">
                     <h2>{t('workset')}</h2>
                     <form className="ar-inline" onSubmit={addPath}>
-                        <input
-                            aria-label={t('addPath')}
-                            placeholder="src/front/components/File.ts"
-                            value={path}
-                            onChange={event => setPath(event.target.value)}
-                        />
+                        <input placeholder="src/front/components/File.ts" value={path} onChange={event => setPath(event.target.value)} />
                         <button className="ar-btn" disabled={busy || !data.canReset} type="submit">
                             {t('add')}
                         </button>

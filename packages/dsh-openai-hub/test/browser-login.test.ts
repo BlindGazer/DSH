@@ -1,7 +1,7 @@
 import { createHash } from 'node:crypto';
 import type { AuthInteraction } from '@earendil-works/pi-ai';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { loginBrowser } from '../src/host/browser-login.js';
+import { loginBrowser } from '../src/host/browser-login.ts';
 
 function setup(waitForRetry?: Parameters<typeof loginBrowser>[3]) {
     const input = Promise.withResolvers<string>();

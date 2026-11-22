@@ -1,10 +1,10 @@
 import { describe, expect, it, vi } from 'vitest';
-import type { MasterKeyProvider, ProfileDispatcherLifecycle, ProxyConfigStorage } from '../src/host/models/ProxyServiceContracts.js';
-import { normalizeProxyConfig } from '../src/host/services/configNormalizer.js';
-import { createProviderProxyController } from '../src/host/services/controller.js';
-import { DispatcherManager } from '../src/host/services/profileDispatcher.js';
-import type { ProxyProfile } from '../src/shared/models/ProxyModels.js';
-import { createEmptyDraft, draftFromProfile, profileFromDraft, resolveProviderHosts } from '../src/shared/utils/hostUtils.js';
+import type { MasterKeyProvider, ProfileDispatcherLifecycle, ProxyConfigStorage } from '../src/host/models/ProxyServiceContracts.ts';
+import { normalizeProxyConfig } from '../src/host/services/configNormalizer.ts';
+import { createProviderProxyController } from '../src/host/services/controller.ts';
+import { DispatcherManager } from '../src/host/services/profileDispatcher.ts';
+import type { ProxyProfile } from '../src/shared/models/ProxyModels.ts';
+import { createEmptyDraft, draftFromProfile, profileFromDraft, resolveProviderHosts } from '../src/shared/utils/hostUtils.ts';
 
 function makeControllerDependencies() {
     const key = new Uint8Array([1, 2, 3]);

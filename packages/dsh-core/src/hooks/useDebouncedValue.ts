@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Delay } from '../constants/delay.js';
+import { Delay } from '../constants/delay.ts';
 
 /**
  * Возвращает отложенное значение для поисковых полей и фильтров без лишних перерисовок.
