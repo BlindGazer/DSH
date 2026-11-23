@@ -1,22 +1,30 @@
-import type { DshClientContext } from '@kalex/dsh-core';
+import type { DshLocalizedClientContext } from '@kalex/dsh-core';
 import { KNOWN_SETTINGS_NS } from '../../shared/constants/endpoints.ts';
-import { ProxyLocaleSettings } from '../features/locale-settings/components/ProxyLocaleSettings.tsx';
+import { proxyDictionaries } from '../../shared/constants/localizations/ProxyLocalization.ts';
 import { ProxyPluginSettingsAction } from '../features/locale-settings/components/ProxyPluginSettingsAction.tsx';
 import { ProviderCardProxyEntry } from '../features/provider-card/components/ProviderCardProxyEntry.tsx';
 import { ModelsFooterProxyEntry } from '../features/settings-modal/components/ModelsFooterProxyEntry.tsx';
 import { ProxySettingsModal } from '../features/settings-modal/components/ProxySettingsModal.tsx';
-import { loadProxyLocale, proxyStore, tProxy } from './proxyStore.ts';
+import { proxyStore } from './proxyStore.ts';
 import { ensureProxyStyles } from './proxyStyles.ts';
+
+const namespace = 'dsh-proxy-provider';
+
+interface ProxyClientContext extends DshLocalizedClientContext {
+    effect(setup: () => () => void, label: string): void;
+}
 
 export const name = 'dsh-proxy-provider-client';
 export const inject: readonly string[] = ['slots', 'locale'];
 
 /**
  * Точка входа клиентского плагина @kalex/dsh-proxy-provider.
- * Регистрирует элементы управления прокси и выбора языка в слотах оболочки DSH.
+ * Регистрирует элементы управления прокси в слотах оболочки DSH.
  */
-export function apply(ctx: DshClientContext): void {
-    proxyStore.publish({ locale: loadProxyLocale(ctx.locale?.preference) });
+export function apply(ctx: ProxyClientContext): void {
+    ctx.effect(() => ctx.locale.register(namespace, 'en', proxyDictionaries.en), 'proxy: en');
+    ctx.effect(() => ctx.locale.register(namespace, 'ru', proxyDictionaries.ru), 'proxy: ru');
+    const tLabel = ctx.locale.bind(namespace);
     ensureProxyStyles();
     proxyStore.refresh().catch(() => {});
 
@@ -25,9 +33,10 @@ export function apply(ctx: DshClientContext): void {
             {
                 name: 'plugins.detail.actions',
                 id: 'dsh-proxy-provider-settings-action',
+                locale: namespace,
                 order: 50
             },
-            ProxyPluginSettingsAction
+            props => <ProxyPluginSettingsAction {...props} active={ctx.locale.getSnapshot().active} />
         )
     );
 
@@ -36,22 +45,11 @@ export function apply(ctx: DshClientContext): void {
             {
                 name: 'settings.models.footer',
                 id: 'dsh-proxy-provider-footer',
+                locale: namespace,
                 order: 50,
-                label: tProxy('Proxy settings')
+                label: () => tLabel('Proxy settings')
             },
-            ModelsFooterProxyEntry
-        )
-    );
-
-    ctx.slots.inject('plugins.bundle.config', () =>
-        ctx.slots.register(
-            {
-                name: 'plugins.bundle.config',
-                key: '@kalex/dsh-proxy-provider',
-                id: 'dsh-proxy-provider-language',
-                order: 50
-            },
-            ProxyLocaleSettings
+            ({ t }) => <ModelsFooterProxyEntry t={t} active={ctx.locale.getSnapshot().active} />
         )
     );
 
@@ -67,6 +65,7 @@ export function apply(ctx: DshClientContext): void {
                     ctx.slots.register(
                         {
                             name: 'settings.models.provider-card',
+                            locale: namespace,
                             key
                         },
                         ProviderCardProxyEntry
@@ -105,4 +104,4 @@ export function apply(ctx: DshClientContext): void {
     });
 }
 
-export { ModelsFooterProxyEntry, ProviderCardProxyEntry, ProxyLocaleSettings, ProxySettingsModal };
+export { ModelsFooterProxyEntry, ProviderCardProxyEntry, ProxySettingsModal };

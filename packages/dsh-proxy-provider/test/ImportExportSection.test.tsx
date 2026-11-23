@@ -8,6 +8,7 @@ import {
 function renderPrompt(prompt: Pick<ImportExportSectionProps, 'exportPasswordPromptOpen' | 'pendingImportPayload'>): string {
     return renderToStaticMarkup(
         <ImportExportSection
+            t={key => key}
             placement="body"
             ioNotice={null}
             exportWithCreds={true}

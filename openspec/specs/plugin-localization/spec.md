@@ -1,8 +1,9 @@
-## Purpose
+# plugin-localization Specification
 
+## Purpose
 Пользователь управляет языком интерфейсов всех клиентских плагинов в одном месте, в настройках DSH.
 
-## ADDED Requirements
+## Requirements
 
 ### Requirement: Открытые представления следуют языку оболочки
 OpenAI Hub, Agents Router, Proxy Provider, Workspace Manager и Logger MUST обновлять переводы при изменении языка DSH без перезапуска и потери состояния представления.

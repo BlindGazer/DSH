@@ -1,4 +1,4 @@
-import { useEffectiveTheme } from '@kalex/dsh-core';
+import { type DshActiveLocale, type DshTranslate, useEffectiveTheme } from '@kalex/dsh-core';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import { TestId } from '../../../shared/constants/testId.ts';
 import { CodexModelsAccountEntry } from './CodexModelsAccountEntry.tsx';
@@ -8,8 +8,8 @@ import { useCodexModelsFooterEntry } from './hooks/useCodexModelsFooterEntry.ts'
 import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexModelsFooterEntryProps {
     readonly controller: OpenAICodexController;
-    readonly locale: 'en' | 'ru';
-    readonly text: (key: OpenAICodexText) => string;
+    readonly locale: DshActiveLocale;
+    readonly text: DshTranslate<OpenAICodexText>;
 }
 export function CodexModelsFooterEntry({ controller, locale, text }: CodexModelsFooterEntryProps) {
     const theme = useEffectiveTheme();
@@ -21,6 +21,7 @@ export function CodexModelsFooterEntry({ controller, locale, text }: CodexModels
                     key={account.accountLabel}
                     account={account}
                     controller={controller}
+                    locale={locale}
                     text={text}
                     open={panel.openAccountLabel === account.accountLabel}
                     autoRefreshBusy={panel.autoRefreshPendingLabel === account.accountLabel}
@@ -40,7 +41,6 @@ export function CodexModelsFooterEntry({ controller, locale, text }: CodexModels
             ))}
             <CodexSettingsPanel
                 controller={controller}
-                locale={locale}
                 text={text}
                 {...(panel.reauthenticateAccount ? { reauthenticateAccount: panel.reauthenticateAccount } : {})}
                 onReauthenticationClose={panel.clearReauthenticate}

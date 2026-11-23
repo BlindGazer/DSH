@@ -9,7 +9,7 @@ export function useRouterData(sessionId: string) {
     const [busy, setBusy] = useState(false);
     const [notice, setNotice] = useState('');
     const [slowPoll, setSlowPoll] = useState(false);
-    const [points, setPoints] = useState<Array<{ label: string; tokens: number }>>([]);
+    const [points, setPoints] = useState<Array<{ timestamp: number; tokens: number }>>([]);
     const loadRequestRef = useRef<AbortController | undefined>(undefined);
     const postRequestsRef = useRef(new Set<AbortController>());
     const activeRef = useRef(true);
@@ -30,9 +30,7 @@ export function useRouterData(sessionId: string) {
                 setData(body);
                 setSettings(body.settings);
                 setSlowPoll(false);
-                setPoints(current =>
-                    [...current, { label: new Date().toLocaleTimeString(), tokens: body.metrics.estimatedTokens }].slice(-30)
-                );
+                setPoints(current => [...current, { timestamp: Date.now(), tokens: body.metrics.estimatedTokens }].slice(-30));
                 return true;
             } catch (cause) {
                 if (!controller.signal.aborted) {

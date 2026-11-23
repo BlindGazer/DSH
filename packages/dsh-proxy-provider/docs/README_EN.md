@@ -15,6 +15,8 @@ No public `.d.ts` files are generated: this package is installed as a DSH plugin
 
 Enables selective routing of provider requests through HTTP, HTTPS, and SOCKS5 proxies while keeping other requests direct. It also lets you assign different proxy servers to different model providers.
 
+The interface follows the DSH language. The old plugin language preference is ignored; profiles and routes are unchanged.
+
 ## 🚀 Install from GitHub
 
 ```powershell

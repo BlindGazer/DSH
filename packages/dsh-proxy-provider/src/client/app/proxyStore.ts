@@ -1,12 +1,5 @@
-import type { DshLocaleCode, KeyValueStorage } from '@kalex/dsh-core';
 import { useEffect, useState } from 'react';
 import { API_BASE, DEFAULT_TEST_URL } from '../../shared/constants/endpoints.ts';
-import {
-    persistProxyLocale,
-    readSavedProxyLocale,
-    resolveProxyLocale,
-    translateProxyText
-} from '../../shared/constants/localizations/ProxyLocalization.ts';
 import type {
     DiscoveredProvider,
     ExportedProxyConfigPayload,
@@ -19,7 +12,6 @@ import type {
 export interface ProxyClientSnapshot {
     readonly loading: boolean;
     readonly modalOpen: boolean;
-    readonly locale: DshLocaleCode;
     readonly config: SanitizedProxyConfig;
     readonly providers: readonly DiscoveredProvider[];
     readonly conflicts: readonly HostConflict[];
@@ -30,7 +22,6 @@ export interface ProxyClientSnapshot {
 let guiSessionToken: string | null = null;
 let tokenClaimPromise: Promise<string | null> | null = null;
 let heartbeatTimer: ReturnType<typeof setInterval> | null = null;
-let activeProxyLocale: DshLocaleCode = 'en';
 
 function startHeartbeat(): void {
     if (heartbeatTimer || typeof window === 'undefined' || typeof setInterval !== 'function') return;
@@ -112,7 +103,6 @@ export const proxyStore = {
     snapshot: {
         loading: true,
         modalOpen: false,
-        locale: 'en' as DshLocaleCode,
         config: {
             profiles: [],
             providerBindings: {},
@@ -272,33 +262,6 @@ export const proxyStore = {
         });
     }
 };
-
-/**
- * Загружает язык интерфейса прокси с учетом сохраненного выбора и языка DSH.
- */
-export function loadProxyLocale(hostLocale?: string): DshLocaleCode {
-    const storage = typeof localStorage === 'undefined' ? undefined : (localStorage as KeyValueStorage);
-    activeProxyLocale = resolveProxyLocale(readSavedProxyLocale(storage), hostLocale);
-    return activeProxyLocale;
-}
-
-/**
- * Сохраняет выбранный пользователем язык интерфейса прокси и обновляет хранилище.
- */
-export function saveProxyLocale(locale: DshLocaleCode): void {
-    if (locale !== 'ru' && locale !== 'en') return;
-    const storage = typeof localStorage === 'undefined' ? undefined : (localStorage as KeyValueStorage);
-    persistProxyLocale(storage, locale);
-    activeProxyLocale = locale;
-    proxyStore.publish({ locale });
-}
-
-/**
- * Переводит строку с использованием текущего активного языка прокси.
- */
-export function tProxy(text: string): string {
-    return translateProxyText(text, proxyStore.snapshot.locale || activeProxyLocale);
-}
 
 /**
  * Реактивный хук подписки на состояние клиентского хранилища прокси.

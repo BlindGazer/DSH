@@ -1,34 +1,35 @@
-import { useEffectiveTheme } from '@kalex/dsh-core';
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { type DshLocalizedSlotProps, useEffectiveTheme } from '@kalex/dsh-core';
+import { proxyStore, useProxyStore } from '../../../app/proxyStore.ts';
 import { proxyClasses } from '../../../app/proxyStyles.ts';
 import { ProxySettingsModal } from '../../settings-modal/components/ProxySettingsModal.tsx';
-import { ProxyLocaleControl } from './ProxyLocaleSettings.tsx';
 
 const PACKAGE_ID = '@kalex/dsh-proxy-provider';
 
-export interface ProxyPluginSettingsActionProps {
+export interface ProxyPluginSettingsActionProps extends DshLocalizedSlotProps {
+    readonly active?: string;
     readonly subject?: {
         readonly pkg?: { readonly name?: string };
     };
 }
 
-/** Exposes Proxy controls on its Plugin Manager detail row as well as its bundle page. */
-export function ProxyPluginSettingsAction({ subject }: ProxyPluginSettingsActionProps) {
+/** Expose Proxy settings on its Plugin Manager detail row. */
+export function ProxyPluginSettingsAction({ subject, t, active = 'en' }: ProxyPluginSettingsActionProps) {
     if (subject?.pkg?.name !== PACKAGE_ID) return undefined;
-    return <ProxyPluginSettingsActionContent />;
+    return <ProxyPluginSettingsActionContent t={t} active={active} />;
 }
 
-function ProxyPluginSettingsActionContent() {
+function ProxyPluginSettingsActionContent({ t, active }: DshLocalizedSlotProps & { readonly active: string }) {
     const theme = useEffectiveTheme();
     const snap = useProxyStore();
 
     return (
         <div className="dsh-core-root" data-theme={theme} style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
-            <ProxyLocaleControl />
             <button type="button" className={proxyClasses('button')} onClick={() => proxyStore.publish({ modalOpen: true })}>
-                {tProxy('Proxy settings')}
+                {t('Proxy settings')}
             </button>
-            {snap.modalOpen ? <ProxySettingsModal open onClose={() => proxyStore.publish({ modalOpen: false })} /> : null}
+            {snap.modalOpen ? (
+                <ProxySettingsModal active={active} t={t} open onClose={() => proxyStore.publish({ modalOpen: false })} />
+            ) : null}
         </div>
     );
 }

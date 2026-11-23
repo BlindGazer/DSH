@@ -59,6 +59,7 @@ interface SlotRegistration {
     name?: string;
     key?: string;
     label?: () => string;
+    locale?: string;
     component(props: RuntimeObject): RuntimeValue;
 }
 
@@ -103,7 +104,7 @@ test('client bundle registers under the package name expected by the host', asyn
     assert.ok(registration);
     assert.equal(registration.id, pkg.name);
     const moduleRequests = new Set<string>();
-    const stateValues: RuntimeValue[] = [{ locale: 'ru', theme: 'auto', pollingIntervalMs: 3000, globalLogging: false }, '', '', false];
+    const stateValues: RuntimeValue[] = [{ theme: 'auto', pollingIntervalMs: 3000, globalLogging: false }, '', '', false];
     let stateIndex = 0;
     const reactInternals = {
         ReactCurrentDispatcher: {
@@ -140,8 +141,23 @@ test('client bundle registers under the package name expected by the host', asyn
     const slots: string[] = [];
     const tabs: SlotRegistration[] = [];
     // The client runner rejects reading a service that was not declared in inject.
+    const dictionaries = new Map<string, RuntimeObject>();
+    const disposers: Array<() => void> = [];
+    let language = 'en';
+    const translate = (key: string) => dictionaries.get(language)?.[key];
     const proxyTarget: RuntimeObject = {
-        locale: { preference: 'en' },
+        effect: (setup: () => () => void) => {
+            disposers.push(setup());
+        },
+        locale: {
+            register: (_namespace: string, locale: string, dictionary: RuntimeObject) => {
+                dictionaries.set(locale, dictionary);
+                return () => {
+                    dictionaries.delete(locale);
+                };
+            },
+            bind: () => translate
+        },
         slots: {
             inject: (slot: string, callback: () => RuntimeValue) => {
                 slots.push(slot);
@@ -157,7 +173,7 @@ test('client bundle registers under the package name expected by the host', asyn
     };
     const ctx = new Proxy(proxyTarget, {
         get(target, property) {
-            if (typeof property === 'string' && !client.inject.includes(property)) {
+            if (typeof property === 'string' && !client.inject.includes(property) && property !== 'effect') {
                 throw new Error(`cannot get property "${property}" without inject`);
             }
             return typeof property === 'string' ? target[property] : undefined;
@@ -166,6 +182,7 @@ test('client bundle registers under the package name expected by the host', asyn
     client.apply(ctx);
     assert.deepEqual(slots, ['conversation.view', 'plugins.detail.actions', 'plugins.bundle.config']);
     assert.equal(tabs.length, 3);
+    assert.ok(tabs.every(tab => tab.locale === 'dsh-agents-router-client'));
     const mainTab = tabs[0];
     const actionTab = tabs[1];
     const settingsTab = tabs[2];
@@ -175,9 +192,12 @@ test('client bundle registers under the package name expected by the host', asyn
     assert.equal(mainTab.id, 'agents-router');
     assert.ok(mainTab.label);
     assert.equal(mainTab.label(), 'Router');
+    language = 'ru';
+    assert.equal(mainTab.label(), 'Маршрутизатор');
+    language = 'en';
     assert.equal(actionTab.id, 'agents-router-settings-action');
-    assert.equal(Boolean(actionTab.component({ subject: { kind: 'bundle', pkg: { name: '@other/plugin' } } })), false);
-    const rowAction = actionTab.component({ subject: { kind: 'row', pkg: { name: pkg.name } } });
+    assert.equal(Boolean(actionTab.component({ t: translate, subject: { kind: 'bundle', pkg: { name: '@other/plugin' } } })), false);
+    const rowAction = actionTab.component({ t: translate, subject: { kind: 'row', pkg: { name: pkg.name } } });
     assert.ok(rowAction);
     const rowActionChildren = (rowAction as RuntimeObject).props as RuntimeObject;
     const settingsAction = asElement((rowActionChildren.children as RuntimeValue[])[0]);
@@ -186,7 +206,7 @@ test('client bundle registers under the package name expected by the host', asyn
     assert.equal(actionChildren[1], 'Settings');
     assert.equal(settingsTab.id, 'agents-router-global-settings');
     assert.equal(settingsTab.key, pkg.name);
-    const view = asElement(settingsTab.component({ isModal: false, onClose: () => {} }));
+    const view = asElement(settingsTab.component({ t: translate }));
     assert.equal(view.tag, 'div');
     assert.match(String(view.props.className), /\bar-settings-root\b/);
     const [styleValue, cardValue] = view.props.children as RuntimeValue[];
@@ -215,5 +235,7 @@ test('client bundle registers under the package name expected by the host', asyn
         }
     };
     visit(card);
-    assert.equal(nodes.filter(node => node.props.className === 'ar-settings-row').length, 4);
+    assert.equal(nodes.filter(node => node.props.className === 'ar-settings-row').length, 3);
+    for (const dispose of disposers) dispose();
+    assert.equal(dictionaries.size, 0);
 });

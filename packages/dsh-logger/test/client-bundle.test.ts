@@ -43,8 +43,11 @@ afterEach(async () => {
 });
 
 async function mountBundle(locale = 'ru', readState: ReadState = 'ready') {
-    const registrations = new Map<string, React.ComponentType>();
-    let dictionaries: Readonly<Record<string, Readonly<Record<string, string>>>> = {};
+    const registrations = new Map<string, { namespace: string; component: React.ComponentType<{ t: (key: string) => string }> }>();
+    const dictionaries = new Map<string, Readonly<Record<string, string>>>();
+    let activeLocale = locale;
+    const translator = (namespace: string, language: string) => (key: string) =>
+        required(dictionaries.get(`${namespace}:${language}`)?.[key], `Missing locale key ${key}`);
     const wire = {
         read: vi.fn(async () => ({ ok: true, value: { config: { enabled: true }, resolvedPath: 'C:/logs', packageNames: ['pkg'] } })),
         save: vi.fn(),
@@ -56,18 +59,20 @@ async function mountBundle(locale = 'ru', readState: ReadState = 'ready') {
         remote: { $mount: async () => () => {} },
         get: () => wire,
         locale: {
-            preference: locale,
-            register: (_namespace: string, value: typeof dictionaries) => {
-                dictionaries = value;
-                return () => {};
+            register: (namespace: string, language: string, value: Readonly<Record<string, string>>) => {
+                const id = `${namespace}:${language}`;
+                dictionaries.set(id, value);
+                return () => {
+                    dictionaries.delete(id);
+                };
             },
-            bind: () => (key: string) => required(dictionaries[locale]?.[key], `Missing locale key ${key}`)
+            bind: (namespace: string) => (key: string) => translator(namespace, activeLocale)(key)
         },
         effect: (callback: () => Disposer) => disposers.push(callback()),
         slots: {
             inject: (_name: string, callback: () => Disposer) => disposers.push(callback()),
-            register: (options: { id: string }, component: React.ComponentType) => {
-                registrations.set(options.id, component);
+            register: (options: { id: string; locale: string }, component: React.ComponentType<{ t: (key: string) => string }>) => {
+                registrations.set(options.id, { namespace: options.locale, component });
                 return () => {
                     registrations.delete(options.id);
                 };
@@ -92,6 +97,7 @@ async function mountBundle(locale = 'ru', readState: ReadState = 'ready') {
         document,
         navigator,
         HTMLElement,
+        Error,
         console,
         crypto: window.crypto,
         setTimeout,
@@ -108,10 +114,14 @@ async function mountBundle(locale = 'ru', readState: ReadState = 'ready') {
     document.body.append(host);
     const mountedRoot = createRoot(host);
     root = mountedRoot;
-    const component = required(registrations.get('dsh-logger'), 'Logger settings did not register');
-    await React.act(async () => mountedRoot.render(React.createElement(component)));
+    const { namespace, component } = required(registrations.get('dsh-logger'), 'Logger settings did not register');
+    const setLocale = async (language: string) => {
+        activeLocale = language;
+        await React.act(async () => mountedRoot.render(React.createElement(component, { t: translator(namespace, language) })));
+    };
+    await setLocale(locale);
     if (readState === 'ready') expect(document.body.textContent).toContain('pkg');
-    return { wire };
+    return { wire, setLocale };
 }
 
 it('matches literal Russian mockup labels and keeps global/plugin collections independent', async () => {
@@ -236,6 +246,41 @@ it('loads the English production settings renderer', async () => {
     for (const label of ['Global settings', 'Connected plugins', 'Keys', 'Paths', 'Save']) {
         expect(document.body.textContent).toContain(label);
     }
+});
+
+it('updates the mounted settings section without refetching or translating raw diagnostic text', async () => {
+    const { wire, setLocale } = await mountBundle('en');
+    const rawMessage = 'Save: Сохранить <raw diagnostic>';
+    wire.save.mockResolvedValue({ ok: false, error: new Error(rawMessage) });
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    const form = required(document.querySelector('form'));
+    const heading = required(form.querySelector('h2'));
+    const reload = required(form.querySelector('button[aria-label="Reload"]'));
+    const limit = required(form.querySelector<HTMLInputElement>('input[type="number"]'));
+    React.act(() => {
+        required(Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')?.set).call(limit, '23');
+        limit.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+    await React.act(async () => required(form.querySelector<HTMLButtonElement>('button[type="submit"]')).click());
+    const notice = required(document.querySelector('aside'));
+
+    expect(heading.textContent).toBe('Global settings');
+    expect(notice.textContent).toContain(rawMessage);
+    await setLocale('ru');
+    expect(heading.textContent).toBe('Общие настройки');
+    expect(reload.getAttribute('aria-label')).toBe('Перезагрузить');
+    expect(notice.textContent).toContain('Не удалось сохранить настройки логирования.');
+    expect(notice.textContent).toContain(rawMessage);
+    await setLocale('en');
+    expect(heading.textContent).toBe('Global settings');
+    expect(reload.getAttribute('aria-label')).toBe('Reload');
+    expect(notice.textContent).toContain('Could not save logger settings.');
+    expect(notice.textContent).toContain(rawMessage);
+    expect(document.querySelector('form')).toBe(form);
+    expect(limit.value).toBe('23');
+    expect(wire.read).toHaveBeenCalledOnce();
+    expect(wire.save).toHaveBeenCalledOnce();
+    expect(wire.previewPath).not.toHaveBeenCalled();
 });
 
 // Проверяет доставку CSS production bundle, не геометрию или скриншот браузера.

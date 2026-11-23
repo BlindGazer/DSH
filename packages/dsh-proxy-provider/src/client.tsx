@@ -4,6 +4,5 @@ export {
     ModelsFooterProxyEntry,
     name,
     ProviderCardProxyEntry,
-    ProxyLocaleSettings,
     ProxySettingsModal
 } from './client/app/index.tsx';

@@ -46,7 +46,7 @@ function setup() {
     two: { workspaceId: 'two', displayTitle: 'Two', path: '/two' },
   }
   const open = vi.fn()
-  dispose = installWorkspaceMenu(document, { label: () => '编辑', nativeRenameLabel: () => 'Rename', resolve: key => targets[key], open })
+  dispose = installWorkspaceMenu(document, { label: () => '编辑', nativeRenameLabel: () => 'Rename', subscribe: () => () => undefined, resolve: key => targets[key], open })
   return { targets, open, anchor, show }
 }
 

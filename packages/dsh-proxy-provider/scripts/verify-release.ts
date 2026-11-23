@@ -102,15 +102,63 @@ if (registration) {
     };
     const client = registration.factory(id => (id === 'react' ? react : id === 'react/jsx-runtime' ? jsxRuntime : {}));
     const registrations = [];
+    const effects: Array<() => void> = [];
+    const dictionaries = new Map<string, Map<string, Readonly<Record<string, string>>>>();
+    let active = 'en';
+    let revision = 0;
+    const translators = new Map<string, (key: string, params?: Readonly<Record<string, string | number>>) => string>();
+    const effect = (setup: () => (() => void) | undefined) => {
+        const cleanup = setup();
+        let disposed = false;
+        const dispose = () => {
+            if (disposed) return;
+            disposed = true;
+            cleanup?.();
+        };
+        effects.push(dispose);
+        return dispose;
+    };
     const slots = {
-        inject: (_slot, callback) => callback(),
+        inject: (_slot: string, callback: () => (() => void) | undefined) => effect(callback),
         register: (options, component) => {
-            registrations.push({ options, component });
-            return () => {};
+            const entry = { options, component };
+            return effect(() => {
+                registrations.push(entry);
+                return () => {
+                    const index = registrations.indexOf(entry);
+                    if (index >= 0) registrations.splice(index, 1);
+                };
+            });
         }
     };
-    const allowed = new Set(client.inject || []);
-    const rawContext = { slots, locale: { preference: 'en' } };
+    const locale = {
+        register(namespace: string, language: string, dictionary: Readonly<Record<string, string>>) {
+            const group = dictionaries.get(namespace) ?? new Map();
+            assert.ok(!group.has(language), `duplicate dictionary: ${namespace}/${language}`);
+            group.set(language, dictionary);
+            dictionaries.set(namespace, group);
+            revision++;
+            return () => {
+                group.delete(language);
+                if (group.size === 0) dictionaries.delete(namespace);
+                revision++;
+            };
+        },
+        bind(namespace: string) {
+            const existing = translators.get(namespace);
+            if (existing) return existing;
+            const translate = (key: string, params?: Readonly<Record<string, string | number>>) => {
+                const group = dictionaries.get(namespace);
+                const message = group?.get(active)?.[key] ?? group?.get('en')?.[key] ?? key;
+                return message.replace(/\{(\w+)\}/g, (match, name: string) => String(params?.[name] ?? match));
+            };
+            translators.set(namespace, translate);
+            return translate;
+        },
+        getSnapshot: () => ({ active, revision })
+    };
+    const allowed = new Set([...(client.inject || []), 'effect']);
+    const rawContext = { slots, locale, effect };
     const strictContext = new Proxy(rawContext, {
         get(target, key, receiver) {
             if (typeof key === 'string' && !allowed.has(key)) throw new Error(`undeclared ctx property: ${key}`);
@@ -126,7 +174,51 @@ if (registration) {
             ({ options }) => options.name === 'plugins.detail.actions' && options.id === 'dsh-proxy-provider-settings-action'
         )?.component;
         assert.equal(typeof action, 'function');
-        assert.equal(action({ subject: { kind: 'row', pkg: { name: '@other/plugin' } } }), undefined);
+        const element = action({ subject: { kind: 'row', pkg: { name: '@other/plugin' } } });
+        assert.equal(element?.type(element.props), undefined);
+    });
+    await check('localized slots use the registered dictionaries and active shell locale', () => {
+        const footer = registrations.find(({ options }) => options.name === 'settings.models.footer');
+        assert.ok(footer);
+        const namespace = footer.options.locale;
+        assert.equal(typeof namespace, 'string');
+        assert.deepEqual([...(dictionaries.get(namespace)?.keys() ?? [])].toSorted(), ['en', 'ru']);
+        assert.ok(registrations.every(({ options }) => options.locale === namespace));
+        assert.equal(typeof footer.options.label, 'function');
+        const bound = locale.bind(namespace);
+        const assertLocale = (language: string, label: string, summary: string) => {
+            active = language;
+            revision++;
+            const seatRevision = revision;
+            const injectedTranslate = (key: string, params?: Readonly<Record<string, string | number>>) => {
+                assert.equal(revision, seatRevision);
+                return bound(key, params);
+            };
+            const rendered = footer.component({ t: injectedTranslate });
+            assert.equal(rendered.props.t, injectedTranslate);
+            assert.equal(rendered.props.active, language);
+            assert.equal(footer.options.label(), label);
+            assert.equal(injectedTranslate('summary', { profiles: 2, providers: 1 }), summary);
+        };
+        assertLocale('en', 'Proxy settings', '2 profile(s); 1 proxied provider(s)');
+        assertLocale('ru', 'Настройки прокси', 'Профилей: 2; провайдеров через прокси: 1');
+        assertLocale('en', 'Proxy settings', '2 profile(s); 1 proxied provider(s)');
+    });
+    const disposeAll = () => {
+        while (effects.length) effects.pop()?.();
+    };
+    await check('unload removes registrations and dictionaries before reactivation', () => {
+        const count = registrations.length;
+        disposeAll();
+        assert.equal(registrations.length, 0);
+        assert.equal(dictionaries.size, 0);
+        try {
+            client.apply(strictContext);
+            assert.equal(registrations.length, count);
+            assert.equal(dictionaries.size, 1);
+        } finally {
+            disposeAll();
+        }
     });
 }
 

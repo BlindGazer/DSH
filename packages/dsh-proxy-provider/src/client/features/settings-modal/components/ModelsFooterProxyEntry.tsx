@@ -1,14 +1,16 @@
+import type { DshLocalizedSlotProps } from '@kalex/dsh-core';
 import { useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect } from 'react';
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { proxyStore, useProxyStore } from '../../../app/proxyStore.ts';
 import { ensureProxyStyles, proxyClasses } from '../../../app/proxyStyles.ts';
 import { ProxySettingsModal } from './ProxySettingsModal.tsx';
 
 /**
  * Нижняя информационная панель и кнопка открытия настроек прокси в разделе моделей DSH.
  */
-export function ModelsFooterProxyEntry() {
+export function ModelsFooterProxyEntry({ t, active }: DshLocalizedSlotProps & { readonly active: string }) {
     const effectiveTheme = useEffectiveTheme();
+    const format = new Intl.NumberFormat(active);
     const snap = useProxyStore();
 
     useEffect(() => {
@@ -31,17 +33,19 @@ export function ModelsFooterProxyEntry() {
                         flexWrap: 'wrap'
                     }}>
                     <button type="button" className={proxyClasses('button')} onClick={() => proxyStore.publish({ modalOpen: true })}>
-                        {tProxy('Proxy settings')}
+                        {t('Proxy settings')}
                     </button>
                     <span className={proxyClasses('hostSub')}>
-                        {tProxy(`${profilesCount} profile(s) • ${activeCount} proxied provider(s)`)}
+                        {t('summary', { profiles: format.format(profilesCount), providers: format.format(activeCount) })}
                     </span>
                     {conflictsCount > 0 ? (
-                        <span className={proxyClasses('badge', 'badgeWarn')}>{tProxy(`⚠ ${conflictsCount} host conflict(s)`)}</span>
+                        <span className={proxyClasses('badge', 'badgeWarn')}>
+                            {t('conflictCount', { count: format.format(conflictsCount) })}
+                        </span>
                     ) : undefined}
                 </div>
             </div>
-            <ProxySettingsModal open={snap.modalOpen} onClose={() => proxyStore.publish({ modalOpen: false })} />
+            <ProxySettingsModal active={active} t={t} open={snap.modalOpen} onClose={() => proxyStore.publish({ modalOpen: false })} />
         </div>
     );
 }

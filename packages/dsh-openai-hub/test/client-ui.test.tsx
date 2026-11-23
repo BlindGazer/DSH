@@ -54,7 +54,7 @@ function makeRemote(value: OpenAICodexSnapshot): OpenAICodexRemote {
         reportUiReady: vi.fn(async () => true as const)
     };
 }
-const text = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex('en', key);
+const text = translateOpenAICodex.bind(undefined, 'en');
 function settingsButton(container: HTMLElement): HTMLButtonElement {
     const button = [...container.querySelectorAll('button')].find(item => !item.hasAttribute('data-checked') && !item.textContent?.trim());
     if (!button) throw new Error('Account settings button missing');
@@ -76,9 +76,9 @@ describe('OpenAI Hub account settings', () => {
         ['ru', 'dark']
     ] as const)('shows localized authorization cards in %s with the %s theme', async (locale, theme) => {
         document.documentElement.setAttribute('data-theme', theme);
-        const t = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex(locale, key);
+        const t = translateOpenAICodex.bind(undefined, locale);
         const controller = new OpenAICodexController(makeRemote(snapshot));
-        render(<CodexSettingsPanel controller={controller} locale={locale} text={t} />);
+        render(<CodexSettingsPanel controller={controller} text={t} />);
         fireEvent.click(await screen.findByRole('button', { name: t('addAccount') }));
         const group = screen.getByRole('group', { name: t('authMethod') });
         const device = within(group).getByDisplayValue<HTMLInputElement>('device-code');
@@ -99,7 +99,7 @@ describe('OpenAI Hub account settings', () => {
         ['ru', 'dark']
     ] as const)('shows callback progress until completion in %s with the %s theme', async (locale, theme) => {
         document.documentElement.setAttribute('data-theme', theme);
-        const t = (key: Parameters<typeof translateOpenAICodex>[1]) => translateOpenAICodex(locale, key);
+        const t = translateOpenAICodex.bind(undefined, locale);
         const empty: OpenAICodexSnapshot = { ...snapshot, accounts: [], status: 'idle' };
         const waiting: OpenAICodexSnapshot = {
             ...empty,
@@ -117,7 +117,7 @@ describe('OpenAI Hub account settings', () => {
         });
         vi.mocked(api.submitCallbackUrl).mockReturnValueOnce(pending.promise);
         const controller = new OpenAICodexController(api);
-        render(<CodexSettingsPanel controller={controller} locale={locale} text={t} />);
+        render(<CodexSettingsPanel controller={controller} text={t} />);
         fireEvent.click(await screen.findByRole('button', { name: t('addFirstAccount') }));
         fireEvent.change(screen.getByLabelText(t('accountLabel')), { target: { value: 'work' } });
         fireEvent.click(screen.getByDisplayValue('browser-oauth'));
@@ -160,7 +160,7 @@ describe('OpenAI Hub account settings', () => {
             return current;
         });
         const controller = new OpenAICodexController(api);
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
         const dialog = screen.getByTestId('dsh-modal-card');
         expect(within(dialog).getByText('Connection timed out.')).toBeTruthy();
@@ -183,7 +183,7 @@ describe('OpenAI Hub account settings', () => {
         const api = makeRemote(waiting);
         vi.mocked(api.submitCallbackUrl).mockRejectedValueOnce(new Error('Synthetic rejection'));
         const controller = new OpenAICodexController(api);
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
         const callback = 'http://localhost:1455/auth/callback?code=test-code&state=test-state';
         fireEvent.change(await screen.findByLabelText(text('manualCallbackLabel')), { target: { value: callback } });
@@ -199,7 +199,7 @@ describe('OpenAI Hub account settings', () => {
         const pending = Promise.withResolvers<OpenAICodexSnapshot>();
         vi.mocked(api.startLogin).mockReturnValueOnce(pending.promise);
         const controller = new OpenAICodexController(api);
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: text('addFirstAccount') }));
         fireEvent.change(screen.getByRole('textbox', { name: text('accountLabel') }), { target: { value: 'work' } });
         fireEvent.click(screen.getByDisplayValue(authMethod));
@@ -237,7 +237,7 @@ describe('OpenAI Hub account settings', () => {
         const writeText = vi.fn(async (_value: string) => undefined);
         Object.defineProperty(navigator, 'clipboard', { configurable: true, value: { writeText } });
         const controller = new OpenAICodexController(makeRemote(waiting));
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
 
         const copyButton = await screen.findByTestId('dsh-icon-button');
         expect(copyButton.hasAttribute('title')).toBe(false);
@@ -279,13 +279,13 @@ describe('OpenAI Hub account settings', () => {
             ]
         };
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [localized] }));
-        render(<CodexModelsFooterEntry controller={controller} locale="ru" text={key => translateOpenAICodex('ru', key)} />);
+        render(<CodexModelsFooterEntry controller={controller} locale="ru" text={translateOpenAICodex.bind(undefined, 'ru')} />);
 
         const footer = await screen.findByTestId('openai-hub-models-footer-alpha');
         const charts = [...footer.querySelectorAll('.dsh-circular-progress')];
 
         expect(charts).toHaveLength(2);
-        for (const [index, label] of ['Лимит на 5 часов: 92%', 'Недельный лимит: 93%'].entries()) {
+        for (const [index, label] of ['Лимит на 5 часов: 92 %', 'Недельный лимит: 93 %'].entries()) {
             const chart = charts[index];
             if (!chart) throw new Error('Quota chart missing');
             expect(chart.matches('[title]')).toBe(false);
@@ -483,12 +483,12 @@ describe('OpenAI Hub account settings', () => {
             usageLimits: [{ name: 'Codex', usedPercent: 8, windowSeconds: 18_000, resetAt: 0 }]
         };
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [partial] }));
-        render(<CodexModelsFooterEntry controller={controller} locale={locale} text={key => translateOpenAICodex(locale, key)} />);
+        render(<CodexModelsFooterEntry controller={controller} locale={locale} text={translateOpenAICodex.bind(undefined, locale)} />);
         fireEvent.click(settingsButton(await screen.findByTestId('openai-hub-models-footer-partial')));
 
         const dialog = await screen.findByTestId('dsh-modal-card');
         expect(within(dialog).getByText(label)).toBeTruthy();
-        expect(within(dialog).getByText('92%')).toBeTruthy();
+        expect(within(dialog).getByText(new Intl.NumberFormat(locale, { style: 'percent' }).format(0.92).replace(/\s/g, ' '))).toBeTruthy();
         expect(within(dialog).queryByText('0%')).toBeNull();
         const tooltipTrigger = within(dialog).getByRole('button', { name: noData });
         expect(tooltipTrigger.hasAttribute('title')).toBe(false);
@@ -647,11 +647,11 @@ describe('OpenAI Hub account settings', () => {
         const chart = accountDialog.querySelector('.dsh-linear-progress');
         if (!chart) throw new Error('Quota chart missing');
         fireEvent.pointerEnter(chart);
-        expect(await screen.findByText('Codex: 99%')).toBeTruthy();
+        expect(await screen.findByText('5-hour limit: 99%')).toBeTruthy();
         fireEvent.pointerLeave(chart);
         const reset = within(accountDialog).getByRole('button', { name: /Resets in/ });
         fireEvent.pointerEnter(reset);
-        expect(await screen.findByText(new Date(alpha.usageLimits[0]?.resetAt ?? 0).toLocaleString())).toBeTruthy();
+        expect(await screen.findByText(new Date(alpha.usageLimits[0]?.resetAt ?? 0).toLocaleString('en'))).toBeTruthy();
         fireEvent.pointerLeave(reset);
         const footer = within(accountDialog).getByTestId('openai-hub-modal-footer');
         expect(within(footer).getAllByRole('button')).toEqual([
@@ -704,7 +704,7 @@ describe('OpenAI Hub account settings', () => {
         const api = makeRemote(waiting);
         const controller = new OpenAICodexController(api);
         const callbackUrl = 'http://localhost:1455/auth/callback?code=synthetic-code&state=synthetic-state';
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
         const dialog = await screen.findByTestId('dsh-modal-card');
         fireEvent.change(within(dialog).getByLabelText('Paste the full redirect URL'), { target: { value: callbackUrl } });
@@ -734,7 +734,7 @@ describe('OpenAI Hub account settings', () => {
                     : { ...empty, status: 'waiting', deviceCode: 'TEST-CODE', verificationUri: 'https://auth.openai.com/codex/device' }
                 : empty
         );
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
         fireEvent.change(screen.getByLabelText('Account label'), { target: { value: 'work' } });
         fireEvent.click(screen.getByRole('button', { name: 'Sign in with ChatGPT' }));
@@ -766,7 +766,7 @@ describe('OpenAI Hub account settings', () => {
         vi.mocked(api.snapshot).mockImplementation(async () =>
             submitted ? (finished ? authorized : { ...empty, status: 'waiting' }) : empty
         );
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
         fireEvent.change(screen.getByLabelText('Account label'), { target: { value: 'work' } });
         fireEvent.click(screen.getByRole('button', { name: 'Sign in with ChatGPT' }));
@@ -779,7 +779,7 @@ describe('OpenAI Hub account settings', () => {
     it('requires a lowercase account label before beginning OAuth', async () => {
         const api = makeRemote({ ...snapshot, accounts: [] }),
             controller = new OpenAICodexController(api);
-        render(<CodexSettingsPanel controller={controller} locale="en" text={text} />);
+        render(<CodexSettingsPanel controller={controller} text={text} />);
         fireEvent.click(await screen.findByRole('button', { name: 'Add an account to OpenAI Hub' }));
         fireEvent.change(screen.getByLabelText('Account label'), { target: { value: 'Bad Label' } });
         fireEvent.click(screen.getByRole('button', { name: 'Sign in with ChatGPT' }));

@@ -3,11 +3,13 @@ import { describe, expect, it } from 'vitest';
 import { ProxyPluginSettingsAction } from '../src/client/features/locale-settings/components/ProxyPluginSettingsAction.tsx';
 
 describe('Proxy Plugin Manager settings action', () => {
-    it('shows language and full settings controls only on the Proxy package detail', () => {
-        const markup = renderToString(<ProxyPluginSettingsAction subject={{ pkg: { name: '@kalex/dsh-proxy-provider' } }} />);
+    it('shows the full settings action only on the Proxy package detail', () => {
+        const markup = renderToString(
+            <ProxyPluginSettingsAction t={key => key} subject={{ pkg: { name: '@kalex/dsh-proxy-provider' } }} />
+        );
 
-        expect(markup).toContain('Interface language');
+        expect(markup).not.toContain('Interface language');
         expect(markup).toContain('Proxy settings');
-        expect(renderToString(<ProxyPluginSettingsAction subject={{ pkg: { name: '@other/plugin' } }} />)).toBe('');
+        expect(renderToString(<ProxyPluginSettingsAction t={key => key} subject={{ pkg: { name: '@other/plugin' } }} />)).toBe('');
     });
 });

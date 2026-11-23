@@ -15,13 +15,13 @@ export function useCodexSettingsPanel(
     const [addLoginOpen, setAddLoginOpen] = useState(false),
         [label, setLabel] = useState(''),
         [authMethod, setAuthMethod] = useState<AuthMethod>('device-code'),
-        [error, setError] = useState(''),
+        [error, setError] = useState<{ detail: string; key: OpenAICodexText }>(),
         [busy, setBusy] = useState(false),
         [callbackInFlight, setCallbackInFlight] = useState(false),
         [loginStarted, setLoginStarted] = useState(false),
         [loginPending, setLoginPending] = useState(false),
         [callbackUrl, setCallbackUrl] = useState(''),
-        [copyFeedback, setCopyFeedback] = useState('');
+        [copyFeedback, setCopyFeedback] = useState<OpenAICodexText>();
     const isReauthentication = Boolean(reauthenticateAccount);
     const loginOpen = addLoginOpen || isReauthentication;
     const activeLabel = reauthenticateAccount?.accountLabel ?? label;
@@ -32,9 +32,9 @@ export function useCodexSettingsPanel(
         if (!verificationUri) return;
         try {
             await navigator.clipboard.writeText(verificationUri);
-            setCopyFeedback(text('verificationLinkCopied'));
+            setCopyFeedback('verificationLinkCopied');
         } catch {
-            setCopyFeedback(text('verificationLinkCopyFailed'));
+            setCopyFeedback('verificationLinkCopyFailed');
         }
     };
     useEffect(() => {
@@ -56,7 +56,7 @@ export function useCodexSettingsPanel(
                 if (isReauthentication) onReauthenticationClose?.();
             } else if (current?.status === 'error') {
                 setLoginPending(false);
-                setError(current.error || text('loginFailed'));
+                setError({ detail: current.error, key: 'loginFailed' });
             }
         };
         const timer = window.setInterval(() => void poll(), 1000);
@@ -65,7 +65,7 @@ export function useCodexSettingsPanel(
             active = false;
             window.clearInterval(timer);
         };
-    }, [controller, isReauthentication, loginOpen, loginPending, onReauthenticationClose, text]);
+    }, [controller, isReauthentication, loginOpen, loginPending, onReauthenticationClose]);
     useEffect(() => {
         if (!loginOpen || !loginPending || (snapshot?.status !== 'done' && snapshot?.status !== 'error')) return;
         const timer = window.setTimeout(() => {
@@ -78,18 +78,18 @@ export function useCodexSettingsPanel(
                 if (isReauthentication) onReauthenticationClose?.();
             } else {
                 setLoginPending(false);
-                setError(snapshot.error || text('loginFailed'));
+                setError({ detail: snapshot.error, key: 'loginFailed' });
             }
         }, 0);
         return () => window.clearTimeout(timer);
-    }, [isReauthentication, loginOpen, loginPending, onReauthenticationClose, snapshot, text]);
+    }, [isReauthentication, loginOpen, loginPending, onReauthenticationClose, snapshot]);
     const openLogin = () => {
         const pending = snapshot?.status === 'starting' || snapshot?.status === 'waiting';
         setLoginPending(pending);
         setLoginStarted(pending);
         setCallbackUrl('');
-        setCopyFeedback('');
-        setError('');
+        setCopyFeedback(undefined);
+        setError(undefined);
         if (isReauthentication) onReauthenticationClose?.();
         setAddLoginOpen(true);
     };
@@ -106,12 +106,12 @@ export function useCodexSettingsPanel(
     const submitCallbackUrl = async () => {
         const url = callbackUrl.trim();
         if (!url) {
-            setError(text('callbackFailed'));
+            setError({ detail: '', key: 'callbackFailed' });
             return;
         }
         setBusy(true);
         setCallbackInFlight(true);
-        setError('');
+        setError(undefined);
         try {
             const result = await controller.submitCallbackUrl(url);
             setCallbackUrl('');
@@ -122,12 +122,12 @@ export function useCodexSettingsPanel(
                 closeLogin();
             } else if (result.status === 'error') {
                 setLoginPending(false);
-                setError(result.error || text('callbackFailed'));
+                setError({ detail: result.error, key: 'callbackFailed' });
             } else {
                 setLoginPending(true);
             }
         } catch {
-            setError(text('callbackFailed'));
+            setError({ detail: '', key: 'callbackFailed' });
         } finally {
             setCallbackInFlight(false);
             setBusy(false);
@@ -135,7 +135,7 @@ export function useCodexSettingsPanel(
     };
     const retryLogin = async () => {
         setBusy(true);
-        setError('');
+        setError(undefined);
         try {
             const result = await controller.retryLogin();
             if (result.status === 'starting') {
@@ -143,7 +143,7 @@ export function useCodexSettingsPanel(
                 setLoginPending(true);
             }
         } catch {
-            setError(text('loginFailed'));
+            setError({ detail: '', key: 'loginFailed' });
         } finally {
             setBusy(false);
         }
@@ -151,11 +151,11 @@ export function useCodexSettingsPanel(
     const startLogin = async () => {
         const parsed = AccountLabelSchema.safeParse(activeLabel);
         if (!parsed.success || (!isReauthentication && snapshot?.accounts.some(account => account.accountLabel === activeLabel))) {
-            setError(text('labelInvalid'));
+            setError({ detail: '', key: 'labelInvalid' });
             return;
         }
         setBusy(true);
-        setError('');
+        setError(undefined);
         setLoginStarted(true);
         try {
             const result = await controller.startLogin(parsed.data, activeAuthMethod, isReauthentication);
@@ -165,9 +165,9 @@ export function useCodexSettingsPanel(
                 setLoginPending(false);
                 closeLogin();
             } else if (result.status === 'waiting' || result.status === 'starting') setLoginPending(true);
-            if (result.status === 'error') setError(result.error || text('loginFailed'));
+            if (result.status === 'error') setError({ detail: result.error, key: 'loginFailed' });
         } catch {
-            setError(text('loginFailed'));
+            setError({ detail: '', key: 'loginFailed' });
         } finally {
             setBusy(false);
         }
@@ -178,7 +178,7 @@ export function useCodexSettingsPanel(
         loginOpen,
         label: activeLabel,
         authMethod: activeAuthMethod,
-        error,
+        error: error ? error.detail || text(error.key) : undefined,
         busy,
         signingIn: (callbackInFlight || snapshot?.status === 'starting') && snapshot?.status !== 'error' && snapshot?.status !== 'done',
         loginStarted,
@@ -186,7 +186,7 @@ export function useCodexSettingsPanel(
         labelId,
         callbackUrl,
         setCallbackUrl,
-        copyFeedback,
+        copyFeedback: copyFeedback ? text(copyFeedback) : undefined,
         copyVerificationLink,
         closeLogin,
         openLogin,

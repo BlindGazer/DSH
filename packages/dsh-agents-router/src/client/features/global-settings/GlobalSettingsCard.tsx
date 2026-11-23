@@ -1,22 +1,27 @@
-import { buildCoreThemeStyles, Spinner, SwitchControl, ThemedSelect, useDshThemeRevision } from '@kalex/dsh-core';
+import {
+    buildCoreThemeStyles,
+    type DshLocalizedSlotProps,
+    Spinner,
+    SwitchControl,
+    ThemedSelect,
+    useDshThemeRevision
+} from '@kalex/dsh-core';
 import type React from 'react';
 import { useRef } from 'react';
 import type { GlobalSettings } from '../../../shared/models/RouterModels.ts';
-import { locales, resolveLocale } from '../../locales/index.ts';
 import { useEffectiveTheme } from '../../theme/useEffectiveTheme.ts';
-import { getHostLocale } from '../../utils/locale-context.ts';
 import { useGlobalSettings } from './hooks/useGlobalSettings.ts';
 import styles from './settingsStyles.module.scss';
 import settingsStyleText from './settingsStyles.module.scss?inline';
 
-export interface GlobalSettingsCardProps {
+export interface GlobalSettingsCardProps extends DshLocalizedSlotProps {
     isModal?: boolean;
     onClose?: () => void;
 }
 
-export function GlobalSettingsCard({ isModal = false, onClose }: GlobalSettingsCardProps): React.JSX.Element {
+export function GlobalSettingsCard({ isModal = false, onClose, t }: GlobalSettingsCardProps): React.JSX.Element {
     const state = useGlobalSettings();
-    const content = <GlobalSettingsContent state={state} isModal={isModal} {...(onClose ? { onClose } : {})} />;
+    const content = <GlobalSettingsContent t={t} state={state} isModal={isModal} {...(onClose ? { onClose } : {})} />;
     return isModal ? content : <SettingsRoot preference={state.settings?.theme ?? 'auto'}>{content}</SettingsRoot>;
 }
 
@@ -32,10 +37,8 @@ export function SettingsRoot({ preference, children }: { preference: GlobalSetti
     );
 }
 
-function GlobalSettingsContent({ state, isModal, onClose }: GlobalSettingsCardProps & { state: ReturnType<typeof useGlobalSettings> }) {
+function GlobalSettingsContent({ state, isModal, onClose, t }: GlobalSettingsCardProps & { state: ReturnType<typeof useGlobalSettings> }) {
     const { settings, notice, error, busy, update, resetDefaults, save } = state;
-    const locale = resolveLocale(settings?.locale, getHostLocale());
-    const t = (key: string): string => (locales[locale] as Record<string, string>)[key] ?? key;
 
     if (!settings) {
         return (
@@ -73,22 +76,6 @@ function GlobalSettingsContent({ state, isModal, onClose }: GlobalSettingsCardPr
                     </div>
                 </div>
                 <form onSubmit={onSave}>
-                    <div className="ar-settings-row">
-                        <span className="ar-settings-copy">
-                            <strong>{t('locale')}</strong>
-                            <small>{t('localeHint')}</small>
-                        </span>
-                        <ThemedSelect
-                            value={settings.locale}
-                            disabled={busy}
-                            onChange={value => update('locale', value)}
-                            options={[
-                                { value: 'auto', label: t('autoDsh') },
-                                { value: 'ru', label: t('russian') },
-                                { value: 'en', label: t('english') }
-                            ]}
-                        />
-                    </div>
                     <div className="ar-settings-row">
                         <span className="ar-settings-copy">
                             <strong>{t('theme')}</strong>

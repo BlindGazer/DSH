@@ -11,11 +11,6 @@ export const API_BASE = '/api/dsh-proxy-provider';
 export const DEFAULT_TEST_URL = 'https://generativelanguage.googleapis.com';
 
 /**
- * Ключ хранения выбранного языка интерфейса плагина в localStorage.
- */
-export const PROXY_LOCALE_KEY = '@kalex/dsh-proxy-provider/interface-language';
-
-/**
  * Известные пространства имен настроек провайдеров в DSH.
  */
 export const KNOWN_SETTINGS_NS: readonly string[] = ['llm-pi-ai', 'llm-deepseek', 'llm-deepseek-account', 'llm-deepseek-api-key', ''];

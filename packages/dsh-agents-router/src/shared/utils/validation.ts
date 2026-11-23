@@ -11,15 +11,14 @@ type ValidationResult<T> =
 export function validateGlobalSettings(value: ConfigValue = {}): ValidationResult<GlobalSettings> {
     const errors: string[] = [];
     if (!isConfigRecord(value)) return { valid: false, settings: DEFAULT_GLOBAL_SETTINGS, errors: ['global settings must be an object'] };
-    const settings = { ...DEFAULT_GLOBAL_SETTINGS, ...value };
-    if (typeof settings.locale !== 'string' || !['auto', 'ru', 'en'].includes(settings.locale))
-        errors.push('locale must be auto, ru, or en');
+    const { locale: _legacyLocale, ...current } = value;
+    const settings = { ...DEFAULT_GLOBAL_SETTINGS, ...current };
     if (typeof settings.theme !== 'string' || !['auto', 'dark', 'light'].includes(settings.theme))
         errors.push('theme must be auto, dark, or light');
     if (typeof settings.pollingIntervalMs !== 'number' || ![2000, 3000, 5000, 10000].includes(settings.pollingIntervalMs))
         errors.push('pollingIntervalMs must be 2000, 3000, 5000, or 10000');
     if (typeof settings.globalLogging !== 'boolean') errors.push('globalLogging must be a boolean');
-    const unrecognized = Object.keys(value).filter(key => !Object.hasOwn(DEFAULT_GLOBAL_SETTINGS, key));
+    const unrecognized = Object.keys(current).filter(key => !Object.hasOwn(DEFAULT_GLOBAL_SETTINGS, key));
     if (unrecognized.length) errors.push(`unrecognized global setting(s): ${unrecognized.join(', ')}`);
     return errors.length ? { valid: false, settings: DEFAULT_GLOBAL_SETTINGS, errors } : { valid: true, settings, errors };
 }

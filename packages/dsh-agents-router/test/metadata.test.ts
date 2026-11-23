@@ -159,9 +159,10 @@ test('area config isolates invalid branches and rejects top-level unrecognized f
     assert.equal(parseAreasConfig('{').valid, false);
 });
 
-test('global settings validate locale, theme, polling, and logging values', () => {
+test('global settings validate theme, polling, and logging values and reject unknown keys', () => {
     assert.equal(validateGlobalSettings().settings.pollingIntervalMs, 3000);
-    assert.equal(validateGlobalSettings({ locale: 'ru', theme: 'light', pollingIntervalMs: 5000, globalLogging: true }).valid, true);
+    assert.equal(validateGlobalSettings({ theme: 'light', pollingIntervalMs: 5000, globalLogging: true }).valid, true);
+    assert.deepEqual(validateGlobalSettings({ locale: 'legacy', extra: true }).errors, ['unrecognized global setting(s): extra']);
     assert.equal(validateGlobalSettings({ pollingIntervalMs: 2500 }).valid, false);
     assert.equal(validateGlobalSettings({ globalLogging: 'yes' }).valid, false);
 });

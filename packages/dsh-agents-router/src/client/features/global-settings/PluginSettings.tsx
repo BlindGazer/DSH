@@ -1,22 +1,19 @@
+import type { DshLocalizedSlotProps } from '@kalex/dsh-core';
 import type React from 'react';
 import { useState } from 'react';
 import { PACKAGE_ID } from '../../../shared/constants/constants.ts';
-import { locales, resolveLocale } from '../../locales/index.ts';
-import { getHostLocale } from '../../utils/locale-context.ts';
 import { GlobalSettingsCard, SettingsRoot } from './GlobalSettingsCard.tsx';
 
-export interface PluginSettingsActionProps {
+export interface PluginSettingsActionProps extends DshLocalizedSlotProps {
     subject?: {
         kind?: string;
         pkg?: { name?: string };
     };
 }
 
-export function PluginSettingsAction({ subject }: PluginSettingsActionProps): React.JSX.Element | null {
+export function PluginSettingsAction({ subject, t }: PluginSettingsActionProps): React.JSX.Element | undefined {
     const [modalOpen, setModalOpen] = useState(false);
-    if (subject?.pkg?.name !== PACKAGE_ID) return null;
-    const locale = resolveLocale('auto', getHostLocale());
-    const t = (key: string): string => (locales[locale] as Record<string, string>)[key] ?? key;
+    if (subject?.pkg?.name !== PACKAGE_ID) return undefined;
 
     return (
         <SettingsRoot preference="auto">
@@ -33,7 +30,7 @@ export function PluginSettingsAction({ subject }: PluginSettingsActionProps): Re
             </button>
             {modalOpen ? (
                 <div className="ar-settings-modal-backdrop">
-                    <GlobalSettingsCard isModal onClose={() => setModalOpen(false)} />
+                    <GlobalSettingsCard t={t} isModal onClose={() => setModalOpen(false)} />
                 </div>
             ) : null}
         </SettingsRoot>

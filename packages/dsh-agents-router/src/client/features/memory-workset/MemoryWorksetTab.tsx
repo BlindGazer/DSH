@@ -1,3 +1,4 @@
+import type { DshActiveLocale } from '@kalex/dsh-core';
 import type React from 'react';
 import type { DiscoveredRuleWithState, RouterPostBody, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 import { RuleRow } from '../../components/common/RuleRow.tsx';
@@ -6,7 +7,8 @@ import { ContextBar, TokenChart } from './ContextCharts.tsx';
 export interface MemoryWorksetTabProps {
     data: RouterStateResponse;
     t: (key: string) => string;
-    points: Array<{ label: string; tokens: number }>;
+    points: Array<{ timestamp: number; tokens: number }>;
+    locale: DshActiveLocale;
     path: string;
     setPath: (value: string) => void;
     openFile: (filePath: string) => Promise<void>;
@@ -23,6 +25,7 @@ export function MemoryWorksetTab({
     data,
     t,
     points,
+    locale,
     path,
     setPath,
     openFile,
@@ -41,22 +44,22 @@ export function MemoryWorksetTab({
                     <div className="ar-card-heading">
                         <h2>{t('contextStructure')}</h2>
                         <span className="ar-muted">
-                            {t('currentSet')}: {(data.metrics.uniqueCurrentSetCharacters ?? 0).toLocaleString()} {t('chars')}
+                            {t('currentSet')}: {(data.metrics.uniqueCurrentSetCharacters ?? 0).toLocaleString(locale)} {t('chars')}
                         </span>
                     </div>
-                    <ContextBar data={data} t={t} />
+                    <ContextBar data={data} t={t} locale={locale} />
                     <div className="ar-footnote">
-                        {t('visibleHistory')}: {(data.metrics.visibleKnownPluginCharacters ?? 0).toLocaleString()} {t('chars')}
+                        {t('visibleHistory')}: {(data.metrics.visibleKnownPluginCharacters ?? 0).toLocaleString(locale)} {t('chars')}
                     </div>
                 </article>
                 <article className="ar-card">
                     <div className="ar-card-heading">
                         <h2>{t('tokenTrend')}</h2>
                         <span className="ar-pill">
-                            {t('budget')}: {data.metrics.tokenBudget.toLocaleString()}
+                            {t('budget')}: {data.metrics.tokenBudget.toLocaleString(locale)}
                         </span>
                     </div>
-                    <TokenChart points={points} budget={data.metrics.tokenBudget} />
+                    <TokenChart points={points} locale={locale} t={t} budget={data.metrics.tokenBudget} />
                 </article>
             </div>
             <div className="ar-grid ar-grid-workset">
@@ -93,7 +96,7 @@ export function MemoryWorksetTab({
                     </h2>
                     <div className="ar-list">
                         {matched.map(rule => (
-                            <RuleRow key={rule.source} rule={rule} sessionId={data.sessionId} openFile={openFile} t={t} />
+                            <RuleRow key={rule.source} rule={rule} sessionId={data.sessionId} openFile={openFile} t={t} locale={locale} />
                         ))}
                     </div>
                     <details className="ar-subcard">
@@ -102,7 +105,14 @@ export function MemoryWorksetTab({
                         </summary>
                         <div className="ar-list">
                             {always.map(rule => (
-                                <RuleRow key={rule.source} rule={rule} sessionId={data.sessionId} openFile={openFile} t={t} />
+                                <RuleRow
+                                    key={rule.source}
+                                    rule={rule}
+                                    sessionId={data.sessionId}
+                                    openFile={openFile}
+                                    t={t}
+                                    locale={locale}
+                                />
                             ))}
                         </div>
                     </details>

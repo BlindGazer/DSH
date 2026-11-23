@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { link, mkdir, realpath, rm } from 'node:fs/promises';
+import { link, mkdir, mkdtemp, readFile, realpath, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -9,13 +9,31 @@ import { RouterStore } from '../src/host/services/store.ts';
 const sessionId = 'session_test_123';
 const projectRoot = fileURLToPath(new URL('../examples/demo-project', import.meta.url));
 
+test('ignores legacy locale without resetting or persisting it in global settings', async () => {
+    const home = await mkdtemp(path.join(await realpath(tmpdir()), 'dsh-router-test-legacy-'));
+    try {
+        const store = new RouterStore(home);
+        const settings = { theme: 'dark', pollingIntervalMs: 5000, globalLogging: true };
+        const file = store.globalSettingsFile();
+        await mkdir(store.base);
+        await writeFile(file, JSON.stringify({ version: 1, settings: { ...settings, locale: 'invalid-legacy-value' } }));
+
+        const loaded = await store.loadGlobalSettings();
+        expect(loaded).toStrictEqual({ settings, warning: undefined });
+        expect(await store.saveGlobalSettings(loaded.settings)).toStrictEqual({ saved: true, settings, errors: [] });
+        expect(JSON.parse(await readFile(file, 'utf8'))).toStrictEqual({ version: 1, settings });
+        expect(await store.loadGlobalSettings()).toStrictEqual(loaded);
+    } finally {
+        await rm(home, { recursive: true });
+    }
+});
+
 test('stores global settings and isolates bounded audit logs under DSH home', async () => {
     const home = path.join(tmpdir(), `dsh-router-test-${randomUUID()}`);
     await mkdir(home);
     try {
         const store = new RouterStore(home);
         assert.deepEqual((await store.loadGlobalSettings()).settings, {
-            locale: 'auto',
             theme: 'auto',
             pollingIntervalMs: 3000,
             globalLogging: false
