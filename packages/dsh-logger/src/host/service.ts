@@ -83,7 +83,7 @@ export function isValidPackageName(value: string): boolean {
 
 export function resolveLoggerPath(config: LoggerConfig, profilePath?: string): string {
     const profile = profilePath ?? process.env.DSH_PROFILE_PATH ?? join(homedir(), '.dsh');
-    const path = config.path ?? join(profile, 'dsh-logs');
+    const path = config.path ?? join(profile, 'dsh-logger');
     if (!isAbsolute(path)) throw new Error('Logger path must be absolute');
     return resolve(path);
 }
