@@ -1,13 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { DEFAULT_GLOBAL_SETTINGS } from '../../../../shared/constants/constants.ts';
 import type { GlobalSettings } from '../../../../shared/models/RouterModels.ts';
 import { globalSettingsApi } from '../globalSettingsApi.ts';
-
-const DEFAULT_SETTINGS: GlobalSettings = {
-    locale: 'auto',
-    theme: 'auto',
-    pollingIntervalMs: 3000,
-    globalLogging: false
-};
 
 export function useGlobalSettings() {
     const [settings, setSettings] = useState<GlobalSettings>();
@@ -50,7 +44,7 @@ export function useGlobalSettings() {
     };
 
     const resetDefaults = (): void => {
-        setSettings(DEFAULT_SETTINGS);
+        setSettings(DEFAULT_GLOBAL_SETTINGS);
         setNotice('');
         setError('');
     };

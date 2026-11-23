@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { OpenAICodexRemote } from '../src/client/features/settings/openAICodexRuntime.ts';
-import { OpenAICodexController, selectLocale } from '../src/client/features/settings/openAICodexRuntime.ts';
+import { OpenAICodexController } from '../src/client/features/settings/openAICodexRuntime.ts';
 import type { OpenAICodexSnapshot } from '../src/shared/remote.ts';
 
 const snapshot: OpenAICodexSnapshot = { accounts: [], status: 'idle', deviceCode: '', verificationUri: '', error: '' };
@@ -45,9 +45,5 @@ describe('OpenAI Hub Client controller', () => {
         expect(api.updateAccount).toHaveBeenCalledWith({ accountLabel: 'work', newLabel: 'work', autoRefreshLimits: true });
         expect(api.refreshUsage).toHaveBeenCalledWith({ accountLabel: 'work' });
         expect(api.deleteAccount).toHaveBeenCalledWith({ accountLabel: 'work' });
-    });
-    it('uses English by default and honors Russian preference', () => {
-        expect(selectLocale(undefined)).toBe('en');
-        expect(selectLocale('ru')).toBe('ru');
     });
 });

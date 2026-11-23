@@ -1,13 +1,14 @@
-import { Tooltip } from '@kalex/dsh-core';
+import { type DshActiveLocale, Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
 import type { RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 
 export interface ContextBarProps {
     data: RouterStateResponse;
     t: (key: string) => string;
+    locale: DshActiveLocale;
 }
 
-export function ContextBar({ data, t }: ContextBarProps): React.JSX.Element {
+export function ContextBar({ data, t, locale }: ContextBarProps): React.JSX.Element {
     const rulesCount = data.metrics.rules?.characters ?? 0;
     const areasCount = data.metrics.areaCatalog?.characters ?? 0;
     const skillsCount = data.metrics.skillCatalog?.characters ?? 0;
@@ -25,18 +26,18 @@ export function ContextBar({ data, t }: ContextBarProps): React.JSX.Element {
         <>
             <div className="ar-stack" style={{ gridTemplateColumns: stackColumns }}>
                 {values.map(([name, count, color]) => (
-                    <Tooltip key={name} className={color} content={`${name}: ${count}`} triggerElement="span">
+                    <Tooltip key={color} className={color} content={`${name}: ${count.toLocaleString(locale)}`} triggerElement="span">
                         {null}
                     </Tooltip>
                 ))}
             </div>
             <div className="ar-grid ar-legend">
                 {values.map(([name, count, color]) => (
-                    <div className="ar-subcard" key={name}>
+                    <div className="ar-subcard" key={color}>
                         <span className={`ar-dot ${color}`} />
                         {name}
                         <strong>
-                            {count.toLocaleString()} {t('chars')}
+                            {count.toLocaleString(locale)} {t('chars')}
                         </strong>
                     </div>
                 ))}
@@ -46,17 +47,19 @@ export function ContextBar({ data, t }: ContextBarProps): React.JSX.Element {
 }
 
 export interface TokenPoint {
-    label: string;
+    timestamp: number;
     tokens: number;
 }
 
 export interface TokenChartProps {
     points: TokenPoint[];
     budget: number;
+    locale: DshActiveLocale;
+    t: (key: string) => string;
 }
 
-export function TokenChart({ points, budget }: TokenChartProps): React.JSX.Element {
-    if (!points.length) return <p className="ar-muted">Loading...</p>;
+export function TokenChart({ points, budget, locale, t }: TokenChartProps): React.JSX.Element {
+    if (!points.length) return <p className="ar-muted">{t('loading')}</p>;
 
     const width = 600;
     const height = 120;
@@ -70,7 +73,7 @@ export function TokenChart({ points, budget }: TokenChartProps): React.JSX.Eleme
     const firstPoint = coords[0];
     const area = lastPoint && firstPoint ? `${line} L${lastPoint.x},${height} L${firstPoint.x},${height} Z` : line;
     const budgetY = height - 10 - (budget / max) * (height - 24);
-    const lastLabel = points.at(-1)?.label ?? '';
+    const formatTime = (point?: TokenPoint): string => (point ? new Date(point.timestamp).toLocaleTimeString(locale) : '');
 
     return (
         <div className="ar-chart">
@@ -83,8 +86,8 @@ export function TokenChart({ points, budget }: TokenChartProps): React.JSX.Eleme
                 ))}
             </svg>
             <div className="ar-chart-labels">
-                <span>{points[0]?.label}</span>
-                <span>{lastLabel}</span>
+                <span>{formatTime(points[0])}</span>
+                <span>{formatTime(points.at(-1))}</span>
             </div>
         </div>
     );

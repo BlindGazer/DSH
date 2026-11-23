@@ -94,7 +94,8 @@ if (registration) {
     const client = registration.factory(id => (id === 'react' ? react : id === 'react/jsx-runtime' ? jsxRuntime : {}));
     const registrations = [];
     const rawContext = {
-        locale: { preference: 'auto' },
+        effect: setup => setup(),
+        locale: { register: () => () => {}, bind: () => key => key },
         slots: {
             inject: (_slot, callback) => callback(),
             register: (options, component) => {
@@ -106,7 +107,7 @@ if (registration) {
     const allowed = new Set(client.inject || []);
     const strictContext = new Proxy(rawContext, {
         get(target, key, receiver) {
-            if (typeof key === 'string' && !allowed.has(key)) throw new Error(`undeclared ctx property: ${key}`);
+            if (typeof key === 'string' && !allowed.has(key) && key !== 'effect') throw new Error(`undeclared ctx property: ${key}`);
             return Reflect.get(target, key, receiver);
         }
     });
@@ -121,7 +122,7 @@ if (registration) {
     await check('plugin detail action filters unrelated bundles', () => {
         const action = registrations.find(({ options }) => options.name === 'plugins.detail.actions')?.component;
         assert.equal(typeof action, 'function');
-        assert.equal(action({ subject: { kind: 'bundle', pkg: { name: '@unrelated/plugin' } } }), null);
+        assert.equal(action({ subject: { kind: 'bundle', pkg: { name: '@unrelated/plugin' } } }), undefined);
     });
 }
 

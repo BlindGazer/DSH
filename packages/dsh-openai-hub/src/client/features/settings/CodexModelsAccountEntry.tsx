@@ -1,4 +1,14 @@
-import { Button, CircularProgress, IconButton, Modal, SettingsIcon, SwitchControl, Tooltip } from '@kalex/dsh-core';
+import {
+    Button,
+    CircularProgress,
+    type DshActiveLocale,
+    type DshTranslate,
+    IconButton,
+    Modal,
+    SettingsIcon,
+    SwitchControl,
+    Tooltip
+} from '@kalex/dsh-core';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import { TestId } from '../../../shared/constants/testId.ts';
 import type { AccountSnapshot } from '../../../shared/remote.ts';
@@ -8,7 +18,8 @@ import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexModelsAccountEntryProps {
     readonly account: AccountSnapshot;
     readonly controller: OpenAICodexController;
-    readonly text: (key: OpenAICodexText) => string;
+    readonly locale: DshActiveLocale;
+    readonly text: DshTranslate<OpenAICodexText>;
     readonly open: boolean;
     readonly autoRefreshBusy: boolean;
     readonly autoRefreshError: boolean;
@@ -27,6 +38,7 @@ export interface CodexModelsAccountEntryProps {
 export function CodexModelsAccountEntry({
     account,
     controller,
+    locale,
     text,
     open,
     autoRefreshBusy,
@@ -44,12 +56,15 @@ export function CodexModelsAccountEntry({
     onClose
 }: CodexModelsAccountEntryProps) {
     const enabled = account.models.filter(model => model.enabled).length;
-    const summary = text('modelsEnabledSummary').replace('{enabled}', String(enabled)).replace('{total}', String(account.models.length));
+    const number = new Intl.NumberFormat(locale);
+    const percent = new Intl.NumberFormat(locale, { style: 'percent' });
+    const summary = text('modelsEnabledSummary', { enabled: number.format(enabled), total: number.format(account.models.length) });
     const needsAttention = !account.loggedIn;
     const chartLimits = [
         ...(account.usageStatus === 'error' || account.usageLimits.some(limit => limit.windowSeconds === 18_000)
             ? [
                   {
+                      id: 'five-hour',
                       name: text('fiveHourLimit'),
                       usedPercent:
                           account.usageStatus === 'error'
@@ -59,6 +74,7 @@ export function CodexModelsAccountEntry({
               ]
             : []),
         {
+            id: 'weekly',
             name: text('weeklyLimit'),
             usedPercent:
                 account.usageStatus === 'error'
@@ -86,13 +102,13 @@ export function CodexModelsAccountEntry({
                         <div className={styles.modelsUsageIndicators}>
                             {chartLimits.map(limit => {
                                 const remainingPercent = Math.max(0, Math.min(100, Math.round(100 - limit.usedPercent)));
-                                const label = `${limit.name}: ${remainingPercent}%`;
+                                const label = `${limit.name}: ${percent.format(remainingPercent / 100)}`;
                                 return (
-                                    <span key={limit.name} className={styles.quotaIndicator}>
+                                    <span key={limit.id} className={styles.quotaIndicator}>
                                         <Tooltip content={label} triggerElement="span">
                                             <CircularProgress value={remainingPercent} size="standard" />
                                         </Tooltip>
-                                        <span>{remainingPercent}%</span>
+                                        <span>{percent.format(remainingPercent / 100)}</span>
                                     </span>
                                 );
                             })}
@@ -168,7 +184,7 @@ export function CodexModelsAccountEntry({
                 title={`${text('title')}: ${account.accountLabel} (${text(account.authMethod === 'device-code' ? 'deviceCode' : 'browserOAuth')})`}
                 closeLabel={text('close')}
                 {...(styles.modalCard ? { cardClassName: styles.modalCard } : {})}>
-                <CodexAccountCard account={account} controller={controller} text={text} />
+                <CodexAccountCard account={account} controller={controller} locale={locale} text={text} />
             </Modal>
         </>
     );

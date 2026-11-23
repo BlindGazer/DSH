@@ -1,6 +1,4 @@
-import type { DshClientContext } from '@kalex/dsh-core';
-import type { ComponentType } from 'react';
-import type { CopyKey, Translate } from '../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import type { DshLocaleSnapshot, DshLocalizedClientContext } from '@kalex/dsh-core';
 
 export interface WorkspaceView {
     readonly workspaceId: string;
@@ -21,33 +19,7 @@ export interface WorkspaceSnapshot {
     readonly items: readonly WorkspaceView[];
 }
 
-export interface LocaleSnapshot {
-    readonly revision: number;
-}
-
-export interface WorkspaceManagerLocaleService {
-    register(namespace: string, dictionaries: Record<'en' | 'ru', Record<CopyKey, string>>): () => void;
-    bind(namespace: 'dsh-workspace-manager'): Translate;
-    bind(namespace: 'workspace'): (key: 'rename') => string;
-    getSnapshot(): LocaleSnapshot;
-    subscribe(listener: () => void): () => void;
-}
-
-export interface WorkspaceManagerSlotOptions {
-    readonly name: string;
-    readonly id: string;
-    readonly order?: number;
-    readonly label?: string | (() => string);
-}
-
-export interface WorkspaceManagerSlotsService {
-    inject(slotName: string, callback: () => () => void): () => void;
-    register<Props extends object>(options: WorkspaceManagerSlotOptions, component: ComponentType<Props>): () => void;
-}
-
-export interface WorkspaceManagerClientContext extends Omit<DshClientContext, 'slots' | 'locale'> {
-    readonly slots: WorkspaceManagerSlotsService;
-    readonly locale: WorkspaceManagerLocaleService;
+export interface WorkspaceManagerClientContext extends DshLocalizedClientContext {
     readonly workspaces: {
         create(input: { path: string }): Promise<WorkspaceView>;
         rename(workspaceId: string, title: string): Promise<WorkspaceView>;
@@ -67,7 +39,7 @@ export interface WorkspaceManagerClientContext extends Omit<DshClientContext, 's
             readonly order: number;
             observe(
                 target: MenuWorkspaceTarget
-            ): readonly { getSnapshot(): LocaleSnapshot | boolean; subscribe(listener: () => void): () => void }[];
+            ): readonly { getSnapshot(): DshLocaleSnapshot | boolean; subscribe(listener: () => void): () => void }[];
             resolve(target: MenuWorkspaceTarget): readonly { id: string; label: string; icon: { key: string }; run: () => void }[];
         }): () => void;
     };

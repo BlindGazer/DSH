@@ -90,19 +90,19 @@ export function useCodexAccountCard(
     const [editingLabel, setEditingLabel] = useState(false),
         [label, setLabel] = useState(account.accountLabel);
     const [draft, setDraft] = useState<ModelChoice[]>(account.models.map(model => ({ ...model })));
-    const [error, setError] = useState(''),
+    const [error, setError] = useState<OpenAICodexText>(),
         [busy, setBusy] = useState(false),
         [resetCard, setResetCard] = useState('');
     const [pendingReset, setPendingReset] = useState<ResetRequest | undefined>(() => readPendingReset(account.accountLabel));
     useCodexAccountPolling(account, controller);
     const run = async (action: () => Promise<OpenAICodexSnapshot>): Promise<boolean> => {
         setBusy(true);
-        setError('');
+        setError(undefined);
         try {
             await action();
             return true;
         } catch {
-            setError(text('actionFailed'));
+            setError('actionFailed');
             return false;
         } finally {
             setBusy(false);
@@ -111,7 +111,7 @@ export function useCodexAccountCard(
     const saveLabel = async () => {
         const checked = AccountLabelSchema.safeParse(label);
         if (!checked.success) {
-            setError(text('labelInvalid'));
+            setError('labelInvalid');
             return;
         }
         if (
@@ -137,7 +137,7 @@ export function useCodexAccountCard(
     const refreshCatalog = () => run(() => controller.refreshCatalog(account.accountLabel));
     const refreshUsage = () => run(() => controller.refreshUsage(account.accountLabel));
     const openModels = () => {
-        setError('');
+        setError(undefined);
         setDraft(account.models.map(model => ({ ...model })));
         setModelModalOpen(true);
     };
@@ -167,7 +167,7 @@ export function useCodexAccountCard(
         savePendingReset(request);
         setPendingReset(request);
         setBusy(true);
-        setError('');
+        setError(undefined);
         try {
             const resultSnapshot = await controller.consumeReset(request);
             const result = resultSnapshot.accounts.find(candidate => candidate.accountLabel === account.accountLabel)?.resetResult;
@@ -177,7 +177,7 @@ export function useCodexAccountCard(
             }
             setResetCard('');
         } catch {
-            setError(text('resetError'));
+            setError('resetError');
         } finally {
             setBusy(false);
         }
@@ -216,7 +216,7 @@ export function useCodexAccountCard(
         editingLabel,
         label,
         draft,
-        error,
+        error: error ? text(error) : '',
         busy,
         resetCard,
         pendingReset,

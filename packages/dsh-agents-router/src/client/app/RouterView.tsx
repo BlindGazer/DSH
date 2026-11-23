@@ -1,4 +1,4 @@
-import { buildCoreThemeStyles, Spinner, useDshThemeRevision } from '@kalex/dsh-core';
+import { buildCoreThemeStyles, type DshActiveLocale, type DshLocalizedSlotProps, Spinner, useDshThemeRevision } from '@kalex/dsh-core';
 import type React from 'react';
 import { useRef, useState } from 'react';
 import { AuditProjectTab } from '../features/audit-project/AuditProjectTab.tsx';
@@ -13,19 +13,18 @@ import { useRouterAuditLog } from '../features/router/hooks/useRouterAuditLog.ts
 import { useRouterData } from '../features/router/hooks/useRouterData.ts';
 import { useRouterPolling } from '../features/router/hooks/useRouterPolling.ts';
 import { useRouterVisibility } from '../features/router/hooks/useRouterVisibility.ts';
-import { locales, resolveLocale } from '../locales/index.ts';
 import { useEffectiveTheme } from '../theme/useEffectiveTheme.ts';
-import { getHostLocale } from '../utils/locale-context.ts';
 import styles from './routerStyles.module.scss';
 import routerStyleText from './routerStyles.module.scss?inline';
 
 const TAB_KEYS = ['memory', 'catalog', 'diagnostics', 'auditProject'] as const;
 
-export interface RouterViewProps {
+export interface RouterViewProps extends DshLocalizedSlotProps {
     sessionId: string;
+    locale: DshActiveLocale;
 }
 
-export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
+export function RouterView({ sessionId, t, locale }: RouterViewProps): React.JSX.Element {
     const rootRef = useRef<HTMLElement | null>(null);
     const [tab, setTab] = useState<'memory' | 'catalog' | 'diagnostics' | 'auditProject'>('memory');
     const [filter, setFilter] = useState<'all' | 'active' | 'skipped'>('all');
@@ -40,8 +39,6 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
     const effectiveTheme = useEffectiveTheme(data?.globalSettings?.theme ?? 'auto', rootRef);
     const themeRevision = useDshThemeRevision();
     useRouterPolling(pollActive, pollInterval, reload);
-    const locale = resolveLocale(data?.globalSettings.locale, getHostLocale());
-    const t = (key: string): string => (locales[locale] as Record<string, string>)[key] ?? key;
 
     if (!data || !settings) {
         const inactiveSession = error.includes('session is not active in this DSH process');
@@ -95,12 +92,16 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
             />
             {error ? <p className="ar-error">{error}</p> : null}
             {data.auditWarning ? <p className="ar-warning">{data.auditWarning}</p> : null}
-            <KpiStrip data={data} t={t} lastPoint={lastPoint} percent={percent} />
+            <KpiStrip data={data} t={t} lastPoint={lastPoint} percent={percent} locale={locale} />
             <div className="ar-tabs">
                 {TAB_KEYS.map((key, index) => (
                     <button key={key} type="button" className={`ar-tab-btn${tab === key ? ' selected' : ''}`} onClick={() => setTab(key)}>
                         {t(key)}
-                        {index === 1 ? ` (${data.rules.length})` : index === 2 ? ` (${data.diagnostics.length})` : ''}
+                        {index === 1
+                            ? ` (${data.rules.length.toLocaleString(locale)})`
+                            : index === 2
+                              ? ` (${data.diagnostics.length.toLocaleString(locale)})`
+                              : ''}
                     </button>
                 ))}
             </div>
@@ -110,6 +111,7 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
                     data={data}
                     t={t}
                     points={points}
+                    locale={locale}
                     path={actions.path}
                     setPath={actions.setPath}
                     openFile={actions.openFile}
@@ -123,7 +125,9 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
                 />
             ) : null}
 
-            {tab === 'catalog' ? <CatalogTab data={data} t={t} filter={filter} setFilter={setFilter} openFile={actions.openFile} /> : null}
+            {tab === 'catalog' ? (
+                <CatalogTab data={data} t={t} locale={locale} filter={filter} setFilter={setFilter} openFile={actions.openFile} />
+            ) : null}
 
             {tab === 'diagnostics' ? (
                 <DiagnosticsTab
@@ -155,7 +159,7 @@ export function RouterView({ sessionId }: RouterViewProps): React.JSX.Element {
 
             {showGlobalSettings ? (
                 <div className="ar-modal">
-                    <GlobalSettingsCard isModal onClose={() => setShowGlobalSettings(false)} />
+                    <GlobalSettingsCard t={t} isModal onClose={() => setShowGlobalSettings(false)} />
                 </div>
             ) : null}
         </main>

@@ -1,13 +1,14 @@
+import type { DshLocalizedSlotProps } from '@kalex/dsh-core';
 import { ThemedSelect } from '@kalex/dsh-core';
 
 import { DEFAULT_TEST_URL } from '../../../../shared/constants/endpoints.ts';
 import type { ProfileDraft, ProxyProtocol, TestConnectionResult } from '../../../../shared/models/ProxyModels.ts';
 import { sanitizeHostInput } from '../../../../shared/utils/hostUtils.ts';
-import { tProxy } from '../../../app/proxyStore.ts';
 import { proxyClasses } from '../../../app/proxyStyles.ts';
 import { ProfileCredentialsFields } from './ProfileCredentialsFields.tsx';
 
-export interface ProfileEditorProps {
+export interface ProfileEditorProps extends DshLocalizedSlotProps {
+    readonly active: string;
     readonly editingDraft: ProfileDraft;
     readonly isNewDraft: boolean;
     readonly formError: string | null;
@@ -28,6 +29,8 @@ export interface ProfileEditorProps {
  * Форма создания и редактирования профиля прокси-сервера с двухэтапной проверкой соединения.
  */
 export function ProfileEditor({
+    t,
+    active,
     editingDraft,
     isNewDraft,
     formError,
@@ -46,22 +49,22 @@ export function ProfileEditor({
     return (
         <div className={proxyClasses('form')}>
             <div style={{ fontWeight: 600, fontSize: '13px' }}>
-                {isNewDraft ? tProxy('Create Proxy Profile') : tProxy(`Edit Profile: ${editingDraft.name}`)}
+                {isNewDraft ? t('Create Proxy Profile') : t('editProfile', { name: editingDraft.name })}
             </div>
-            {formError ? <div className={proxyClasses('alert', 'alertError')}>{tProxy(formError)}</div> : undefined}
+            {formError ? <div className={proxyClasses('alert', 'alertError')}>{t(formError)}</div> : undefined}
             <div className={proxyClasses('grid')}>
                 <label className={proxyClasses('field')}>
-                    <span className={proxyClasses('label')}>{tProxy('Profile Name')}</span>
+                    <span className={proxyClasses('label')}>{t('Profile Name')}</span>
                     <input
                         type="text"
                         className={proxyClasses('input')}
-                        placeholder={tProxy('e.g. Corporate Proxy')}
+                        placeholder={t('e.g. Corporate Proxy')}
                         value={editingDraft.name}
                         onChange={e => setEditingDraft({ ...editingDraft, name: e.target.value })}
                     />
                 </label>
                 <div className={proxyClasses('field')}>
-                    <span className={proxyClasses('label')}>{tProxy('Protocol')}</span>
+                    <span className={proxyClasses('label')}>{t('Protocol')}</span>
                     <ThemedSelect<ProxyProtocol>
                         fullWidth={true}
                         value={editingDraft.protocol}
@@ -75,7 +78,7 @@ export function ProfileEditor({
                     />
                 </div>
                 <label className={proxyClasses('field')}>
-                    <span className={proxyClasses('label')}>{tProxy('Port (1–65535)')}</span>
+                    <span className={proxyClasses('label')}>{t('Port (1–65535)')}</span>
                     <input
                         type="number"
                         min={1}
@@ -88,11 +91,11 @@ export function ProfileEditor({
                 </label>
             </div>
             <label className={proxyClasses('field')}>
-                <span className={proxyClasses('label')}>{tProxy('Host (IP or domain, scheme stripped automatically)')}</span>
+                <span className={proxyClasses('label')}>{t('Host (IP or domain, scheme stripped automatically)')}</span>
                 <input
                     type="text"
                     className={proxyClasses('input')}
-                    placeholder={tProxy('proxy.corp.local or 127.0.0.1')}
+                    placeholder={t('proxy.corp.local or 127.0.0.1')}
                     value={editingDraft.host}
                     onChange={e =>
                         setEditingDraft({
@@ -113,10 +116,11 @@ export function ProfileEditor({
                         })
                     }
                 />
-                <span>{tProxy('Requires authentication (Basic / SOCKS5 Username & Password)')}</span>
+                <span>{t('Requires authentication (Basic / SOCKS5 Username & Password)')}</span>
             </label>
             {editingDraft.authEnabled ? (
                 <ProfileCredentialsFields
+                    t={t}
                     editingDraft={editingDraft}
                     setEditingDraft={setEditingDraft}
                     showPassword={showPassword}
@@ -134,7 +138,7 @@ export function ProfileEditor({
                         })
                     }
                 />
-                <span>{tProxy('Ignore SSL / TLS certificate errors (rejectUnauthorized: false)')}</span>
+                <span>{t('Ignore SSL / TLS certificate errors (rejectUnauthorized: false)')}</span>
             </label>
             <div
                 style={{
@@ -144,7 +148,7 @@ export function ProfileEditor({
                     flexDirection: 'column',
                     gap: '8px'
                 }}>
-                <span className={proxyClasses('label')}>{tProxy('Test Connection (5000ms TCP + HTTP check)')}</span>
+                <span className={proxyClasses('label')}>{t('Test Connection (5000ms TCP + HTTP check)')}</span>
                 <div style={{ display: 'flex', gap: '8px' }}>
                     <input
                         type="text"
@@ -160,20 +164,21 @@ export function ProfileEditor({
                         onClick={() => {
                             handleRunTest().catch(() => {});
                         }}>
-                        {tProxy(testing ? 'Testing...' : 'Test')}
+                        {t(testing ? 'Testing...' : 'Test')}
                     </button>
                 </div>
                 {testResult ? (
                     <div className={testResult.ok ? proxyClasses('alert', 'alertOk') : proxyClasses('alert', 'alertError')}>
-                        {tProxy(
-                            testResult.ok
-                                ? `✓ Proxy reachable! TCP OK (${testResult.tcpLatencyMs ?? 0}ms) • Target HTTP ${
-                                      testResult.status ?? 'OK'
-                                  } (${testResult.latencyMs ?? 0}ms)`
-                                : `✕ ${testResult.error || 'Connection test failed'}${
-                                      testResult.tcpOk ? ` (TCP connected in ${testResult.tcpLatencyMs ?? 0}ms, HTTP stage failed)` : ''
-                                  }`
-                        )}
+                        {testResult.ok
+                            ? t('testSuccess', {
+                                  tcp: new Intl.NumberFormat(active).format(testResult.tcpLatencyMs ?? 0),
+                                  status: testResult.status ?? 'OK',
+                                  http: new Intl.NumberFormat(active).format(testResult.latencyMs ?? 0)
+                              })
+                            : t(testResult.tcpOk ? 'testHttpFailure' : 'testFailure', {
+                                  error: t(testResult.error || 'Connection test failed'),
+                                  tcp: new Intl.NumberFormat(active).format(testResult.tcpLatencyMs ?? 0)
+                              })}
                     </div>
                 ) : undefined}
             </div>
@@ -185,7 +190,7 @@ export function ProfileEditor({
                     marginTop: '4px'
                 }}>
                 <button type="button" className={proxyClasses('button')} onClick={cancelEditProfile}>
-                    {tProxy('Cancel')}
+                    {t('Cancel')}
                 </button>
                 <button
                     type="button"
@@ -194,7 +199,7 @@ export function ProfileEditor({
                     onClick={() => {
                         handleSaveDraft().catch(() => {});
                     }}>
-                    {tProxy(saving ? 'Saving...' : 'Save Profile')}
+                    {t(saving ? 'Saving...' : 'Save Profile')}
                 </button>
             </div>
         </div>

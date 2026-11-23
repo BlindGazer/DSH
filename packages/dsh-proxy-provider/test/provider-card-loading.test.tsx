@@ -10,7 +10,7 @@ describe('provider card loading state', () => {
         proxyStore.publish({ loading: true });
 
         try {
-            const markup = renderToString(<ProviderCardProxyEntry providerId="openai" />);
+            const markup = renderToString(<ProviderCardProxyEntry t={key => key} providerId="openai" />);
             expect(markup).toContain(`data-testid="${TestId.Common.Loading}"`);
         } finally {
             proxyStore.publish({ loading: initialLoading });

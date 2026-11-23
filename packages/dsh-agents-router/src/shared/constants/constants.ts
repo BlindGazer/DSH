@@ -28,7 +28,6 @@ export const DEFAULT_PROJECT_SETTINGS: Readonly<ProjectSettings> = Object.freeze
 });
 
 export const DEFAULT_GLOBAL_SETTINGS: Readonly<GlobalSettings> = Object.freeze({
-    locale: 'auto',
     theme: 'auto',
     pollingIntervalMs: 3000,
     globalLogging: false

@@ -7,7 +7,7 @@ interface ResponseBody {
     text?: string;
     sessionId?: string;
     filePath?: string;
-    settings?: { locale?: string };
+    settings?: { theme?: string };
 }
 
 interface RequestOptions {
@@ -20,7 +20,7 @@ function makeHandler() {
     const calls: string[][] = [];
     const handler = createRouterHandler({
         state: async sessionId => ({ sessionId }),
-        globalSettings: async () => ({ settings: { locale: 'auto' } }),
+        globalSettings: async () => ({ settings: { theme: 'auto' } }),
         saveGlobalSettings: async settings => ({ ok: true, settings }),
         audit: async sessionId => ({ ok: true, text: `log:${sessionId}` }),
         deleteAudit: async sessionId => ({ ok: true, sessionId }),
@@ -62,10 +62,10 @@ test('serves state and validates mutating route bodies', async () => {
     const state = await request(handler, '/agents-router/state?sessionId=s-1');
     assert.equal(state.status, 200);
     assert.deepEqual(state.body, { sessionId: 's-1' });
-    assert.equal((await request(handler, '/agents-router/global-settings')).body.settings?.locale, 'auto');
+    assert.equal((await request(handler, '/agents-router/global-settings')).body.settings?.theme, 'auto');
     assert.equal((await request(handler, '/agents-router/audit?sessionId=s-1')).body.text, 'log:s-1');
-    const savedGlobal = await request(handler, '/agents-router/global-settings', { method: 'POST', body: { settings: { locale: 'ru' } } });
-    assert.equal(savedGlobal.body.settings?.locale, 'ru');
+    const savedGlobal = await request(handler, '/agents-router/global-settings', { method: 'POST', body: { settings: { theme: 'dark' } } });
+    assert.equal(savedGlobal.body.settings?.theme, 'dark');
     const deleted = await request(handler, '/agents-router/audit/delete', { method: 'POST', body: { sessionId: 's-1' } });
     assert.equal(deleted.status, 200);
     const reinitialized = await request(handler, '/agents-router/reinitialize', { method: 'POST', body: { sessionId: 's-1' } });

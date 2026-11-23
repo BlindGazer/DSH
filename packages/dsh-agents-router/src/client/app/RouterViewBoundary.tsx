@@ -1,12 +1,6 @@
 import { createClientLogger } from '@kalex/dsh-logger-core';
 import { Component, type ErrorInfo, type ReactNode } from 'react';
-import { locales, resolveLocale } from '../locales/index.ts';
-import { getHostLocale } from '../utils/locale-context.ts';
-import { RouterView } from './RouterView.tsx';
-
-interface RouterViewBoundaryProps {
-    readonly sessionId: string;
-}
+import { RouterView, type RouterViewProps } from './RouterView.tsx';
 
 interface RouterViewBoundaryState {
     readonly hasError: boolean;
@@ -15,7 +9,7 @@ interface RouterViewBoundaryState {
 const logger = createClientLogger();
 
 /** Keeps an unexpected render failure visible instead of leaving the conversation view blank. */
-export class RouterViewBoundary extends Component<RouterViewBoundaryProps, RouterViewBoundaryState> {
+export class RouterViewBoundary extends Component<RouterViewProps, RouterViewBoundaryState> {
     public override state: RouterViewBoundaryState = { hasError: false };
 
     public static getDerivedStateFromError(): RouterViewBoundaryState {
@@ -33,8 +27,7 @@ export class RouterViewBoundary extends Component<RouterViewBoundaryProps, Route
 
     public override render(): ReactNode {
         if (this.state.hasError) {
-            const locale = resolveLocale('auto', getHostLocale());
-            const t = (key: string): string => (locales[locale] as Record<string, string>)[key] ?? key;
+            const { t } = this.props;
             return (
                 <main style={{ padding: 20 }}>
                     <h2>{t('renderFailureTitle')}</h2>
@@ -42,6 +35,6 @@ export class RouterViewBoundary extends Component<RouterViewBoundaryProps, Route
                 </main>
             );
         }
-        return <RouterView sessionId={this.props.sessionId} />;
+        return <RouterView {...this.props} />;
     }
 }

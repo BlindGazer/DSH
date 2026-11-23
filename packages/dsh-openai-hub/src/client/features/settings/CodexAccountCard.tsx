@@ -1,4 +1,14 @@
-import { Button, Checkbox, IconButton, LinearProgress, Modal, RefreshIcon, TextField, Tooltip } from '@kalex/dsh-core';
+import {
+    Button,
+    Checkbox,
+    type DshActiveLocale,
+    IconButton,
+    LinearProgress,
+    Modal,
+    RefreshIcon,
+    TextField,
+    Tooltip
+} from '@kalex/dsh-core';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import { TestId } from '../../../shared/constants/testId.ts';
 import type { AccountSnapshot } from '../../../shared/remote.ts';
@@ -9,10 +19,13 @@ import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexAccountCardProps {
     readonly account: AccountSnapshot;
     readonly controller: OpenAICodexController;
+    readonly locale: DshActiveLocale;
     readonly text: (key: OpenAICodexText) => string;
 }
-export function CodexAccountCard({ account, controller, text }: CodexAccountCardProps) {
+export function CodexAccountCard({ account, controller, locale, text }: CodexAccountCardProps) {
     const panel = useCodexAccountCard(account, controller, text);
+    const number = new Intl.NumberFormat(locale);
+    const percent = new Intl.NumberFormat(locale, { style: 'percent' });
     const weeklyLimit = account.usageLimits.find(limit => limit.windowSeconds === 604_800);
     return (
         <section className={`${styles.panel} ${styles.modalLayout}`} data-testid={`${TestId.OpenAIHub.Account}-${account.accountLabel}`}>
@@ -28,23 +41,28 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                     <div className={styles.quotaList}>
                         {account.usageLimits.map(limit => {
                             const remainingPercent = Math.max(0, Math.min(100, Math.round(100 - limit.usedPercent)));
-                            const label = limit === weeklyLimit ? text('weeklyLimit') : limit.name;
+                            const label =
+                                limit === weeklyLimit
+                                    ? text('weeklyLimit')
+                                    : limit.windowSeconds === 18_000
+                                      ? text('fiveHourLimit')
+                                      : limit.name;
                             return (
                                 <div className={styles.quotaItem} key={`${limit.name}-${limit.windowSeconds}`}>
                                     <div className={styles.quotaLabel}>
                                         <span>{label}</span>
-                                        <span className={styles.linearUsageValue}>{remainingPercent}%</span>
+                                        <span className={styles.linearUsageValue}>{percent.format(remainingPercent / 100)}</span>
                                     </div>
                                     <Tooltip
                                         className={styles.quotaBar ?? ''}
-                                        content={`${label}: ${remainingPercent}%`}
+                                        content={`${label}: ${percent.format(remainingPercent / 100)}`}
                                         triggerElement="span">
                                         <LinearProgress value={remainingPercent} size="standard" color="accent" />
                                     </Tooltip>
                                     {limit.resetAt > 0 ? (
                                         <p className={styles.quotaReset}>
-                                            <Tooltip content={new Date(limit.resetAt).toLocaleString()}>
-                                                {formatQuotaReset(limit.resetAt, text)}
+                                            <Tooltip content={new Date(limit.resetAt).toLocaleString(locale)}>
+                                                {formatQuotaReset(limit.resetAt, text, locale)}
                                             </Tooltip>
                                         </p>
                                     ) : undefined}
@@ -66,7 +84,12 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                     {account.usageLimited ? <p>{text('usageLimited')}</p> : undefined}
                     {account.usageCredits ? (
                         <p>
-                            {text('credits')}: {account.usageCreditsUnlimited ? text('unlimited') : account.usageCredits}
+                            {text('credits')}:{' '}
+                            {account.usageCreditsUnlimited
+                                ? text('unlimited')
+                                : Number.isFinite(Number(account.usageCredits))
+                                  ? number.format(Number(account.usageCredits))
+                                  : account.usageCredits}
                         </p>
                     ) : undefined}
                     <div className={styles.usageActions}>
@@ -78,14 +101,15 @@ export function CodexAccountCard({ account, controller, text }: CodexAccountCard
                 <section className={styles.card}>
                     <h3 id={`${panel.labelId}-reset-cards`}>{text('resetCards')}</h3>
                     <p>
-                        {text('resetAvailable')}: {account.usageResetCredits ?? text('usageUnavailable')}
+                        {text('resetAvailable')}:{' '}
+                        {account.usageResetCredits === undefined ? text('usageUnavailable') : number.format(account.usageResetCredits)}
                     </p>
                     {account.resetCardsStatus === 'error' ? <p>{text('resetDetailsUnavailable')}</p> : undefined}
                     {account.resetCards.map(card => (
                         <div className={styles.usageRow} key={card.id}>
                             <span>
                                 {text('resetCardLabel')} ·{' '}
-                                {card.expiresAt ? new Date(card.expiresAt).toLocaleString() : text('expiresUnknown')}
+                                {card.expiresAt ? new Date(card.expiresAt).toLocaleString(locale) : text('expiresUnknown')}
                             </span>
                             <Button
                                 disabled={panel.busy || Boolean(panel.pendingReset && panel.pendingReset.creditId !== card.id)}

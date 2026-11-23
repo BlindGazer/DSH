@@ -1,3 +1,4 @@
+import type { DshLocalizedSlotProps } from '@kalex/dsh-core';
 import { ThemedSelect, Tooltip } from '@kalex/dsh-core';
 
 import type {
@@ -6,10 +7,11 @@ import type {
     HostConflictProviderEntry,
     SanitizedProxyProfile
 } from '../../../../shared/models/ProxyModels.ts';
-import { proxyStore, tProxy } from '../../../app/proxyStore.ts';
+import { proxyStore } from '../../../app/proxyStore.ts';
 import { proxyClasses } from '../../../app/proxyStyles.ts';
 
-export interface RoutingSectionProps {
+export interface RoutingSectionProps extends DshLocalizedSlotProps {
+    readonly active: string;
     readonly providers: readonly DiscoveredProvider[];
     readonly profiles: readonly SanitizedProxyProfile[];
     readonly bindings: Record<string, string | null>;
@@ -21,13 +23,22 @@ export interface RoutingSectionProps {
 /**
  * Секция назначения профилей прокси провайдерам с поиском и предупреждениями о конфликтах доменов.
  */
-export function RoutingSection({ providers, profiles, bindings, conflicts, providerSearch, setProviderSearch }: RoutingSectionProps) {
+export function RoutingSection({
+    providers,
+    profiles,
+    bindings,
+    conflicts,
+    providerSearch,
+    setProviderSearch,
+    t,
+    active
+}: RoutingSectionProps) {
     // При обновлении снимок API может быть неполным, поэтому рендерим только массивы.
     const providerList: readonly DiscoveredProvider[] = Array.isArray(providers) ? providers : [];
     const profileList: readonly SanitizedProxyProfile[] = Array.isArray(profiles) ? profiles : [];
     const conflictList: readonly HostConflict[] = Array.isArray(conflicts) ? conflicts : [];
     const routingOptions = [
-        { value: '', label: tProxy('Direct (No proxy)') },
+        { value: '', label: t('Direct (No proxy)') },
         ...profileList.map(profile => ({
             value: profile.id,
             label: `${profile.name} (${profile.protocol.toUpperCase()} ${profile.host}:${profile.port})`
@@ -48,7 +59,10 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
         <div className={proxyClasses('section')}>
             <div className={proxyClasses('sectionHead')}>
                 <h3 className={proxyClasses('sectionTitle')}>
-                    {tProxy(`2. Provider Routing (${filteredProviders.length}/${providerList.length})`)}
+                    {t('routingCount', {
+                        shown: new Intl.NumberFormat(active).format(filteredProviders.length),
+                        total: new Intl.NumberFormat(active).format(providerList.length)
+                    })}
                 </h3>
                 <div
                     style={{
@@ -61,12 +75,12 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                     <input
                         type="text"
                         className={proxyClasses('input')}
-                        placeholder={tProxy('Search provider by name or host...')}
+                        placeholder={t('Search provider by name or host...')}
                         value={providerSearch}
                         onChange={e => setProviderSearch(e.target.value)}
                     />
                     {providerSearch ? (
-                        <Tooltip content={tProxy('Clear search')} triggerElement="span">
+                        <Tooltip content={t('Clear search')} triggerElement="span">
                             <button type="button" className={proxyClasses('button', 'buttonSmall')} onClick={() => setProviderSearch('')}>
                                 ✕
                             </button>
@@ -77,21 +91,23 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
 
             {conflictList.length > 0 ? (
                 <div className={proxyClasses('alert', 'alertWarn')}>
-                    <div style={{ fontWeight: 600, marginBottom: '4px' }}>⚠ {tProxy('Domain / Host Routing Conflict Detected')}</div>
+                    <div style={{ fontWeight: 600, marginBottom: '4px' }}>⚠ {t('Domain / Host Routing Conflict Detected')}</div>
                     {conflictList.map(c => (
                         <div key={c.host}>
-                            {tProxy(
-                                `Host "${c.host}" is shared by [${c.providers
+                            {t('routingConflict', {
+                                host: c.host,
+                                providers: c.providers
                                     .map((p: HostConflictProviderEntry) => `${p.providerName}: ${p.profileName}`)
-                                    .join(', ')}]. Active proxy "${c.appliedProfileName}" is applied to all requests to ${c.host}.`
-                            )}
+                                    .join(', '),
+                                profile: c.appliedProfileName
+                            })}
                         </div>
                     ))}
                 </div>
             ) : undefined}
 
             {filteredProviders.length === 0 ? (
-                <div className={proxyClasses('hostSub')}>{tProxy(`No providers matching "${providerSearch.trim()}".`)}</div>
+                <div className={proxyClasses('hostSub')}>{t('noMatchingProviders', { query: providerSearch.trim() })}</div>
             ) : (
                 <div className={proxyClasses('list')}>
                     {filteredProviders.map(prov => {
@@ -107,13 +123,13 @@ export function RoutingSection({ providers, profiles, bindings, conflicts, provi
                                         }}>
                                         <span style={{ fontWeight: 600, fontSize: '13px' }}>{prov.name}</span>
                                         {prov.custom ? (
-                                            <span className={proxyClasses('badge', 'badgeDirect')}>{tProxy('Custom')}</span>
+                                            <span className={proxyClasses('badge', 'badgeDirect')}>{t('Custom')}</span>
                                         ) : undefined}
                                     </div>
                                     <div className={proxyClasses('hostSub')}>
                                         {prov.hosts && prov.hosts.length > 0
-                                            ? `Hosts: ${prov.hosts.join(', ')}`
-                                            : `Provider ID: ${prov.id}`}
+                                            ? t('hosts', { hosts: prov.hosts.join(', ') })
+                                            : t('providerId', { id: prov.id })}
                                     </div>
                                 </div>
                                 <ThemedSelect

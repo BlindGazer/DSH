@@ -132,7 +132,6 @@ export interface RouterPostBody {
  * Глобальные настройки плагина маршрутизации.
  */
 export interface GlobalSettings {
-    readonly locale: 'auto' | 'ru' | 'en';
     readonly theme: 'auto' | 'dark' | 'light';
     readonly pollingIntervalMs: 2000 | 3000 | 5000 | 10000;
     readonly globalLogging: boolean;

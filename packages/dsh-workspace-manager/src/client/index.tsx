@@ -1,4 +1,3 @@
-import type { DshClientContext } from '@kalex/dsh-core';
 import { en, ru } from '../shared/constants/localizations/WorkspaceManagerLocalization.ts';
 import { AddirSettingsSection } from './features/manage-workspaces/components/SettingsSection.tsx';
 import { WorkspaceEditOverlay } from './features/manage-workspaces/components/WorkspaceEditOverlay.tsx';
@@ -26,15 +25,19 @@ function resolveWorkspace(snapshot: WorkspaceSnapshot, workspaceId: string): Wor
 
 export const inject = ['slots', 'locale', 'workspaces', 'uiWorkspace', 'sessions', 'contextMenus', 'remoteAccess'];
 
-export function apply(context: DshClientContext & WorkspaceManagerClientContext): void {
+const namespace = 'dsh-workspace-manager';
+
+export function apply(context: WorkspaceManagerClientContext): void {
     const editRequest = createSnapshotStore<WorkspaceEditTarget | undefined>(undefined);
     const worktreeRequest = createSnapshotStore<WorktreeRequest | undefined>(undefined);
     const workspaceSnapshot = createSnapshotStore<WorkspaceSnapshot>({
         items: []
     });
-    const t = context.locale.bind('dsh-workspace-manager');
+    const translateLabel = context.locale.bind(namespace);
+    const translateNative = context.locale.bind('workspace');
 
-    context.effect(() => context.locale.register('dsh-workspace-manager', { en, ru }), 'workspace-manager: localized copy');
+    context.effect(() => context.locale.register(namespace, 'en', en), 'workspace-manager: localized copy (en)');
+    context.effect(() => context.locale.register(namespace, 'ru', ru), 'workspace-manager: localized copy (ru)');
     ensureWorkspaceManagerStyles();
 
     const canCreate = (workspaceId: string) => context.remoteAccess.source('workspace', workspaceId, 'session/create');
@@ -52,7 +55,7 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
                         ? [
                               {
                                   id: 'worktree',
-                                  label: t('worktreeTitle'),
+                                  label: translateLabel('worktreeTitle'),
                                   icon: { key: 'workspace.fork' },
                                   run: () => {
                                       if (worktreeRequest.getSnapshot() || !canCreate(target.workspaceId).getSnapshot()) return;
@@ -78,8 +81,9 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
     context.effect(
         () =>
             installWorkspaceMenu(document, {
-                label: () => t('edit'),
-                nativeRenameLabel: () => context.locale.bind('workspace')('rename'),
+                label: () => translateLabel('edit'),
+                nativeRenameLabel: () => translateNative('rename'),
+                subscribe: listener => context.locale.subscribe(listener),
                 resolve: workspaceId => resolveWorkspace(workspaceSnapshot.getSnapshot(), workspaceId),
                 open: target => editRequest.set(target)
             }),
@@ -90,9 +94,10 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
         context.slots.register<{ readonly useWorkspaces: UseWorkspaceSnapshot }>(
             {
                 name: 'shell.overlay',
-                id: '@kalex/dsh-workspace-manager.editor'
+                id: '@kalex/dsh-workspace-manager.editor',
+                locale: namespace
             },
-            ({ useWorkspaces }) => (
+            ({ useWorkspaces, t }) => (
                 <WorkspaceEditOverlay
                     editRequest={editRequest}
                     workspaceSnapshot={workspaceSnapshot}
@@ -109,8 +114,8 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
     );
 
     context.slots.inject('shell.overlay', () =>
-        context.slots.register({ name: 'shell.overlay', id: '@kalex/dsh-workspace-manager.worktree' }, () => (
-            <WorktreeOverlay request={worktreeRequest} locale={context.locale} t={t} pick={pick} />
+        context.slots.register({ name: 'shell.overlay', id: '@kalex/dsh-workspace-manager.worktree', locale: namespace }, ({ t }) => (
+            <WorktreeOverlay request={worktreeRequest} t={t} pick={pick} />
         ))
     );
 
@@ -120,9 +125,10 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
                 name: 'settings.section',
                 id: '@kalex/dsh-workspace-manager.directories',
                 order: 250,
-                label: () => t('globalTitle')
+                locale: namespace,
+                label: () => translateLabel('globalTitle')
             },
-            ({ useWorkspaces }) => (
+            ({ useWorkspaces, t }) => (
                 <AddirSettingsSection
                     t={t}
                     useWorkspaces={useWorkspaces}

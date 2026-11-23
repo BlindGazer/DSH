@@ -4,7 +4,6 @@ import { routerApi } from '../src/client/features/router/services/routerApi.ts';
 import type { GlobalSettings, RouterStateResponse } from '../src/shared/models/RouterModels.ts';
 
 const globalSettings: GlobalSettings = {
-    locale: 'ru',
     theme: 'dark',
     pollingIntervalMs: 3000,
     globalLogging: false

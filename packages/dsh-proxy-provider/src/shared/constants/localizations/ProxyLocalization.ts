@@ -1,8 +1,4 @@
-import type { DshLocaleCode, DshLocalePreference } from '@kalex/dsh-core';
-import { type KeyValueStorage, persistLocale, readSavedLocale, resolveDshLocale } from '@kalex/dsh-core/hooks/useLocalePreference.ts';
-import { PROXY_LOCALE_KEY } from '../endpoints.ts';
-
-export const ProxyRussianDictionary: Readonly<Record<string, string>> = {
+const ru: Readonly<Record<string, string>> = {
     Direct: 'Напрямую',
     'Direct (No proxy)': 'Напрямую (без прокси)',
     'Direct connection (bypasses proxy)': 'Прямое подключение без прокси',
@@ -52,9 +48,6 @@ export const ProxyRussianDictionary: Readonly<Record<string, string>> = {
     'Clear search': 'Очистить поиск',
     'Domain / Host Routing Conflict Detected': 'Обнаружен конфликт маршрутизации домена или узла',
     Custom: 'Пользовательский',
-    'Interface language': 'Язык интерфейса',
-    English: 'Английский',
-    Russian: 'Русский',
     Save: 'Сохранить',
     Reset: 'Сбросить',
     Error: 'Ошибка',
@@ -106,107 +99,57 @@ export const ProxyRussianDictionary: Readonly<Record<string, string>> = {
     'PASSWORD_REQUIRED: This export file contains encrypted credentials. Please enter the decryption password.':
         'Для этого файла экспорта требуется пароль расшифровки учетных данных.',
     'Forbidden: access restricted to DSH Web GUI': 'Доступ запрещен: доступ разрешен только из веб-интерфейса DSH',
-    'providerId is required': 'Требуется идентификатор провайдера'
+    'providerId is required': 'Требуется идентификатор провайдера',
+    summary: 'Профилей: {profiles}; провайдеров через прокси: {providers}',
+    conflictCount: 'Конфликтов узлов: {count}',
+    cardConflict: 'Конфликт узла ({host}, применяется прокси {profile})',
+    cardConflictDetails: 'Узел {host} используется несколькими провайдерами. Прокси "{profile}" применяется ко всему узлу.',
+    routingConflict: 'Узел "{host}" используется провайдерами: {providers}. Прокси "{profile}" применяется ко всему узлу.',
+    routingCount: '2. Маршрутизация провайдеров ({shown}/{total})',
+    noMatchingProviders: 'Нет провайдеров по запросу "{query}".',
+    hosts: 'Узлы: {hosts}',
+    providerId: 'Идентификатор провайдера: {id}',
+    deleteAssigned: 'Профиль "{profile}" назначен для: {providers}. После удаления провайдеры будут подключаться напрямую.',
+    profileAuth: 'Аутентификация ({username})',
+    Encrypted: 'зашифровано',
+    'Ignore SSL Errors': 'Игнорировать ошибки SSL',
+    savedUsername: 'Имя пользователя (сохранено: {username})',
+    Yes: 'Да',
+    editProfile: 'Изменить профиль: {name}',
+    testSuccess: 'Прокси доступен. TCP: {tcp} мс. HTTP-ответ: {status} ({http} мс).',
+    testHttpFailure: '{error} (TCP подключен за {tcp} мс, этап HTTP завершился ошибкой)',
+    testFailure: '{error}',
+    'Connection test failed': 'Не удалось проверить подключение',
+    importSuccess: 'Успешно импортировано профилей: {count}.',
+    importWithoutCredentials: 'Импортировано профилей без учетных данных: {count}.',
+    importWithCredentials: 'Импортировано профилей с расшифрованными учетными данными: {count}.',
+    'Settings and password-encrypted credentials exported to dsh-proxy-provider-settings.json':
+        'Настройки и зашифрованные учетные данные экспортированы в dsh-proxy-provider-settings.json',
+    'Proxy settings (without credentials) exported to dsh-proxy-provider-settings.json':
+        'Настройки без учетных данных экспортированы в dsh-proxy-provider-settings.json'
 };
 
-/**
- * Вычисляет активный язык интерфейса прокси ('en' или 'ru') с учетом выбора пользователя и языка DSH.
- */
-export function resolveProxyLocale(choice?: DshLocalePreference | string, hostLocale?: string): DshLocaleCode {
-    const normalizedChoice: DshLocalePreference | undefined = choice === 'ru' || choice === 'en' || choice === 'auto' ? choice : undefined;
-    return resolveDshLocale(normalizedChoice, hostLocale);
-}
+const en = {
+    ...Object.fromEntries(Object.keys(ru).map(key => [key, key])),
+    summary: '{profiles} profile(s); {providers} proxied provider(s)',
+    conflictCount: '{count} host conflict(s)',
+    cardConflict: 'Host conflict ({host}, active proxy: {profile})',
+    cardConflictDetails: 'Host {host} is shared by multiple providers. Active proxy "{profile}" applies to the entire host.',
+    routingConflict: 'Host "{host}" is shared by {providers}. Active proxy "{profile}" applies to the entire host.',
+    routingCount: '2. Provider Routing ({shown}/{total})',
+    noMatchingProviders: 'No providers matching "{query}".',
+    hosts: 'Hosts: {hosts}',
+    providerId: 'Provider ID: {id}',
+    deleteAssigned: 'Profile "{profile}" is assigned to: {providers}. Deleting it resets those providers to a direct connection.',
+    profileAuth: 'Auth ({username})',
+    savedUsername: 'Username (saved: {username})',
+    editProfile: 'Edit Profile: {name}',
+    testSuccess: 'Proxy reachable. TCP: {tcp} ms. HTTP response: {status} ({http} ms).',
+    testHttpFailure: '{error} (TCP connected in {tcp} ms, HTTP stage failed)',
+    testFailure: '{error}',
+    importSuccess: 'Successfully imported {count} profile(s).',
+    importWithoutCredentials: 'Imported {count} profile(s) without credentials.',
+    importWithCredentials: 'Imported {count} profile(s) with decrypted credentials.'
+};
 
-/**
- * Читает сохраненный выбор языка прокси из хранилища.
- */
-export function readSavedProxyLocale(storage?: KeyValueStorage): DshLocaleCode | undefined {
-    return readSavedLocale(PROXY_LOCALE_KEY, storage);
-}
-
-/**
- * Сохраняет выбранный пользователем язык прокси в хранилище.
- */
-export function persistProxyLocale(storage: KeyValueStorage | undefined, locale: string): void {
-    if (locale === 'ru' || locale === 'en') {
-        persistLocale(PROXY_LOCALE_KEY, locale, storage);
-    }
-}
-
-/**
- * Переводит статические и шаблонные строки интерфейса прокси на выбранный язык.
- */
-export function translateProxyText(value: string, locale: DshLocaleCode = 'en'): string {
-    if (locale !== 'ru' || typeof value !== 'string') return value;
-    const directMatch = ProxyRussianDictionary[value];
-    if (directMatch !== undefined) return directMatch;
-
-    const count = /^(\d+) profile\(s\) • (\d+) proxied provider\(s\)$/.exec(value);
-    if (count) return `Профилей: ${count[1]} • провайдеров через прокси: ${count[2]}`;
-    const conflicts = /^⚠ (\d+) host conflict\(s\)$/.exec(value);
-    if (conflicts) return `⚠ Конфликтов узлов: ${conflicts[1]}`;
-    const profile = /^Edit Profile: (.+)$/.exec(value);
-    if (profile) return `Изменить профиль: ${profile[1]}`;
-    const username = /^Username \(saved: (.+)\)$/.exec(value);
-    if (username) return `Имя пользователя (сохранено: ${username[1]})`;
-    const routing = /^2\. Provider Routing \((\d+)\/(\d+)\)$/.exec(value);
-    if (routing) return `2. Маршрутизация провайдеров (${routing[1]}/${routing[2]})`;
-    const profileProxy = /^Proxy: (.+) \((.+)\)$/.exec(value);
-    if (profileProxy) return `Прокси: ${profileProxy[1]} (${profileProxy[2]})`;
-    const provider = /^(Proxy profile for |Route for )(.+)$/.exec(value);
-    if (provider) return `${provider[1] === 'Route for ' ? 'Маршрут для ' : 'Профиль прокси для '}${provider[2]}`;
-    const hostConflict =
-        /^Host (.+) is shared by multiple providers with different proxy settings\. Active proxy "(.+)" is applied to the entire host\.$/.exec(
-            value
-        );
-    if (hostConflict)
-        return `Узел ${hostConflict[1]} используется несколькими провайдерами с разными настройками прокси. Прокси "${hostConflict[2]}" применяется ко всему узлу.`;
-    const noProviders = /^No providers matching "(.+)"\.$/.exec(value);
-    if (noProviders) return `Нет провайдеров по запросу "${noProviders[1]}".`;
-    const assigned =
-        /^Profile "(.+)" is currently assigned to: (.+)\. Deleting it will reset those providers to Direct \(No proxy\)\.$/.exec(value);
-    if (assigned)
-        return `Профиль "${assigned[1]}" назначен для: ${assigned[2]}. После удаления эти провайдеры будут переключены на прямое подключение.`;
-    const imported = /^Imported (\d+) profile\(s\) (.+)\.$/.exec(value);
-    if (imported) {
-        const detail =
-            imported[2] === 'successfully'
-                ? 'успешно'
-                : imported[2] === 'without credentials'
-                  ? 'без учетных данных'
-                  : 'с расшифрованными учетными данными';
-        return `Импортировано профилей: ${imported[1]}, ${detail}.`;
-    }
-    const exported = /^(.+) exported to dsh-proxy-provider-settings\.json$/.exec(value);
-    if (exported) {
-        const detail =
-            exported[1] === 'Settings and password-encrypted credentials'
-                ? 'настройки и зашифрованные учетные данные'
-                : 'настройки прокси без учетных данных';
-        return `Экспортированы ${detail} (dsh-proxy-provider-settings.json)`;
-    }
-    const conflictTitle = /^⚠ Host conflict \((.+) → (.+)\)$/.exec(value);
-    if (conflictTitle) return `⚠ Конфликт узла (${conflictTitle[1]}, применяется прокси ${conflictTitle[2]})`;
-    const conflictDetails = /^Host "(.+)" is shared by \[(.+)\]\. Active proxy "(.+)" is applied to all requests to (.+)\.$/.exec(value);
-    if (conflictDetails)
-        return `Узел "${conflictDetails[1]}" используется несколькими провайдерами: ${conflictDetails[2]}. Прокси "${conflictDetails[3]}" применяется ко всем запросам к ${conflictDetails[4]}.`;
-    const testSuccess = /^✓ Proxy reachable! TCP OK \((\d+)ms\) • Target HTTP (.+) \((\d+)ms\)$/.exec(value);
-    if (testSuccess) return `✓ Прокси доступен. TCP: ${testSuccess[1]} мс. HTTP-ответ: ${testSuccess[2]} (${testSuccess[3]} мс).`;
-    const testFailure = /^✕ (.+) \(TCP connected in (\d+)ms, HTTP stage failed\)$/.exec(value);
-    if (testFailure) return `✕ ${testFailure[1]} (TCP подключен за ${testFailure[2]} мс, этап HTTP завершился ошибкой)`;
-    const tcpFailure = /^TCP connection to proxy (.+):(\d+) failed \(timeout 5000ms or connection refused\)$/.exec(value);
-    if (tcpFailure) return `Не удалось подключиться к прокси ${tcpFailure[1]}:${tcpFailure[2]} (тайм-аут 5000 мс или соединение отклонено)`;
-    const sslFailure =
-        /^SSL\/TLS certificate error \((.+)\)\. Enable "Ignore SSL \/ TLS certificate errors" if your proxy uses a corporate root CA\.$/.exec(
-            value
-        );
-    if (sslFailure)
-        return `Ошибка сертификата SSL/TLS (${sslFailure[1]}). Если прокси использует корпоративный корневой сертификат, включите игнорирование ошибок сертификатов.`;
-    const httpFailure = /^HTTP request through proxy failed: (.+)$/.exec(value);
-    if (httpFailure) return `Ошибка HTTP-запроса через прокси: ${httpFailure[1]}`;
-    const unknownEndpoint = /^Unknown endpoint "(.+)"$/.exec(value);
-    if (unknownEndpoint) return `Неизвестный адрес запроса: "${unknownEndpoint[1]}"`;
-    const wrappedFailure = /^✕ (.+)$/.exec(value);
-    if (wrappedFailure?.[1]) return `✕ ${translateProxyText(wrappedFailure[1], 'ru')}`;
-    return value;
-}
+export const proxyDictionaries = { en, ru };

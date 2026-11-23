@@ -1,4 +1,4 @@
-import { Button, CollectionAddButton, IconButton, Modal, RadioCardGroup, TextField } from '@kalex/dsh-core';
+import { Button, CollectionAddButton, type DshTranslate, IconButton, Modal, RadioCardGroup, TextField } from '@kalex/dsh-core';
 import type { AuthMethod } from '../../../shared/accounts.ts';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import { TestId } from '../../../shared/constants/testId.ts';
@@ -9,8 +9,7 @@ import { useCodexSettingsPanel } from './hooks/useCodexSettingsPanel.ts';
 import type { OpenAICodexController } from './openAICodexRuntime.ts';
 export interface CodexSettingsPanelProps {
     readonly controller: OpenAICodexController;
-    readonly locale: 'en' | 'ru';
-    readonly text: (key: OpenAICodexText) => string;
+    readonly text: DshTranslate<OpenAICodexText>;
     readonly hideHeading?: boolean;
     readonly reauthenticateAccount?: Pick<AccountSnapshot, 'accountLabel' | 'authMethod'>;
     readonly onReauthenticationClose?: () => void;
@@ -112,7 +111,7 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                         <p>{text('connected')}</p>
                     ) : panel.isReauthentication ? (
                         <div className={styles.card}>
-                            <p>{text('reauthenticateHint').replace('{account}', panel.label)}</p>
+                            <p>{text('reauthenticateHint', { account: panel.label })}</p>
                             {panel.error ? <p>{panel.error}</p> : undefined}
                         </div>
                     ) : (

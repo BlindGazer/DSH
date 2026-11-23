@@ -4,6 +4,5 @@
 export const ProxyTestId = {
     providerCard: (providerId: string): string => `proxy-card-${providerId}`,
     FooterBar: 'proxy-footer-bar',
-    SettingsModal: 'proxy-settings-modal',
-    LocaleSettings: 'proxy-locale-settings'
+    SettingsModal: 'proxy-settings-modal'
 } as const;

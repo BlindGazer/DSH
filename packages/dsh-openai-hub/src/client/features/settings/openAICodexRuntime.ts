@@ -1,9 +1,8 @@
-import type { DshClientContext, DshLocaleCode, DshLocaleService, DshSlotRegistrationOptions } from '@kalex/dsh-core';
+import type { DshActiveLocale, DshLocalizedClientContext, DshSlotRegistrationOptions, DshTranslate } from '@kalex/dsh-core';
 import { createClientLogger } from '@kalex/dsh-logger-core';
 import type { ReactElement } from 'react';
 import { createElement, useSyncExternalStore } from 'react';
 import type { AuthMethod, ModelChoice } from '../../../shared/accounts.ts';
-import type { openAICodexLocaleDictionaries } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import type {
     AccountSnapshot,
     OpenAICodexSnapshot,
@@ -20,13 +19,8 @@ export type OpenAICodexRemote = OpenAIHubRemote;
 interface RemoteMountService {
     $mount(contribution: typeof TYPERT_REMOTE): Promise<() => Promise<void> | void>;
 }
-interface LocaleService extends DshLocaleService {
-    register(namespace: string, dictionaries: typeof openAICodexLocaleDictionaries): () => void;
-    bind(namespace: string): (key: string) => string;
-}
-export interface OpenAICodexClientContext extends DshClientContext {
+export interface OpenAICodexClientContext extends DshLocalizedClientContext {
     readonly remote: RemoteMountService;
-    readonly locale: LocaleService;
     readonly modelDirectories: ModelDirectories;
     get(name: string): OpenAIHubWireRemote | undefined;
     effect(callback: () => undefined | (() => void), label?: string): void;
@@ -199,26 +193,25 @@ export class OpenAICodexController {
 export function useCodexState(controller: OpenAICodexController): CodexClientState {
     return useSyncExternalStore(controller.subscribe, controller.getSnapshot, controller.getSnapshot);
 }
-export function selectLocale(preference?: string): DshLocaleCode {
-    return preference === 'ru' ? 'ru' : 'en';
-}
+
 export function registerCodexSlot<TProps extends object>(
     context: OpenAICodexClientContext,
-    options: DshSlotRegistrationOptions,
-    component: (props: TProps) => ReactElement | undefined,
+    options: DshSlotRegistrationOptions & { readonly locale: string },
+    component: (props: TProps & { locale: DshActiveLocale; text: DshTranslate }) => ReactElement | undefined,
     props: TProps,
-    fallbackText: string,
     onError: (error: UiRenderError) => Promise<true>,
     onReady: (componentId: UiComponentId) => Promise<true>
 ): void {
     const componentId = options.id ?? options.name;
-    const render = (slotProps: Record<string, string | undefined>) =>
-        createElement(
-            CodexRenderErrorBoundary,
-            { fallbackText, componentId, onError, onReady },
-            createElement<TProps>(component, { ...slotProps, ...props })
-        );
-    context.slots.inject(options.name, () => context.slots.register(options, render));
+    context.slots.inject(options.name, () =>
+        context.slots.register<{ sessionId?: string }>(options, ({ t, ...slotProps }) =>
+            createElement(
+                CodexRenderErrorBoundary,
+                { fallbackText: t('renderFailure'), componentId, onError, onReady },
+                createElement(component, { ...slotProps, ...props, locale: context.locale.getSnapshot().active, text: t })
+            )
+        )
+    );
 }
 export { RemoteNamespace, ServiceKey } from '../../../shared/constants/runtime.ts';
 export type { AccountSnapshot };
