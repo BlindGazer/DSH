@@ -1,11 +1,12 @@
+import type { DshLocalizedSlotProps } from '@kalex/dsh-core';
 import { SettingsIcon, Spinner, ThemedSelect, Tooltip, useEffectiveTheme } from '@kalex/dsh-core';
 import { useEffect } from 'react';
 
 import { ProxyTestId } from '../../../../shared/constants/testId.ts';
-import { proxyStore, tProxy, useProxyStore } from '../../../app/proxyStore.ts';
+import { proxyStore, useProxyStore } from '../../../app/proxyStore.ts';
 import { proxyClasses } from '../../../app/proxyStyles.ts';
 
-export interface ProviderCardProxyEntryProps {
+export interface ProviderCardProxyEntryProps extends DshLocalizedSlotProps {
     readonly provider?: string | { readonly provider?: string; readonly id?: string };
     readonly providerId?: string;
 }
@@ -14,6 +15,7 @@ export interface ProviderCardProxyEntryProps {
  * Компактная строка выбора профиля прокси и кнопки настроек внутри карточки провайдера DSH.
  */
 export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
+    const { t } = props;
     const effectiveTheme = useEffectiveTheme();
     const snap = useProxyStore();
     const providerEntry = props?.provider;
@@ -44,7 +46,7 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
     const conflict = (snap.conflicts || []).find(c => c.providers?.some(p => p.providerId === providerId));
 
     const dropdownOptions = [
-        { value: '', label: tProxy('Direct (No proxy)') },
+        { value: '', label: t('Direct (No proxy)') },
         ...profiles.map(p => ({
             value: p.id,
             label: `${p.name} (${p.protocol.toUpperCase()} ${p.host}:${p.port})`
@@ -58,7 +60,7 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
         } catch (err) {
             const errorObj = err as { message?: string };
             proxyStore.publish({
-                error: errorObj?.message || tProxy('Failed to update proxy binding')
+                error: errorObj?.message || 'Failed to update proxy binding'
             });
         }
     };
@@ -79,18 +81,16 @@ export function ProviderCardProxyEntry(props: ProviderCardProxyEntryProps) {
                 />
                 {conflict ? (
                     <Tooltip
-                        content={tProxy(
-                            `Host ${conflict.host} is shared by multiple providers with different proxy settings. Active proxy "${conflict.appliedProfileName}" is applied to the entire host.`
-                        )}
+                        content={t('cardConflictDetails', { host: conflict.host, profile: conflict.appliedProfileName })}
                         triggerElement="span">
                         <span className={proxyClasses('badge', 'badgeWarn')}>
-                            {tProxy(`⚠ Host conflict (${conflict.host} → ${conflict.appliedProfileName})`)}
+                            {t('cardConflict', { host: conflict.host, profile: conflict.appliedProfileName })}
                         </span>
                     </Tooltip>
                 ) : undefined}
             </div>
             <div className={proxyClasses('cardRight')}>
-                <Tooltip content={tProxy('Proxy settings')} triggerElement="span">
+                <Tooltip content={t('Proxy settings')} triggerElement="span">
                     <button
                         type="button"
                         className={proxyClasses('button', 'buttonIcon')}

@@ -6,6 +6,8 @@ vi.mock('@kalex/dsh-core', () => ({ ensureCoreStyles: vi.fn(), useEffectiveTheme
 
 import { apply, type LoggerClientContext } from '../src/client/index.tsx';
 
+const getSnapshot = () => ({ active: 'en', revision: 0 });
+
 describe('logger settings client', () => {
     const snapshot = { config: LoggerConfigSchema.parse({}), resolvedPath: 'logs', packageNames: [] };
     const wire: LoggerWireRemote = {
@@ -32,9 +34,17 @@ describe('logger settings client', () => {
         const dispose = vi.fn();
         const register = vi.fn(() => () => undefined);
         const mount = vi.fn(async () => dispose);
+        const unregister = vi.fn();
+        const registerDictionary = vi.fn(() => unregister);
         const context: LoggerClientContext = {
             remote: { $mount: mount },
-            locale: { register: () => () => undefined, bind: () => key => key },
+            locale: {
+                register: registerDictionary,
+                bind: () => key => key,
+                getLocale: getSnapshot,
+                getSnapshot,
+                subscribe: () => unregister
+            },
             slots: { inject: (_name, callback) => callback(), register },
             get: () => wire,
             effect: callback => {
@@ -44,9 +54,13 @@ describe('logger settings client', () => {
         const cleanup = await apply(context);
         expect(mount).toHaveBeenCalledWith(TYPERT_REMOTE);
         expect(register).toHaveBeenCalledWith(
-            expect.objectContaining({ name: 'settings.section', id: 'dsh-logger' }),
+            expect.objectContaining({ name: 'settings.section', id: 'dsh-logger', locale: 'settings.logger' }),
             expect.any(Function)
         );
+        expect(registerDictionary.mock.calls).toEqual([
+            ['settings.logger', 'en', expect.objectContaining({ save: 'Save' })],
+            ['settings.logger', 'ru', expect.objectContaining({ save: 'Сохранить' })]
+        ]);
         await cleanup();
         expect(dispose).toHaveBeenCalledOnce();
     });

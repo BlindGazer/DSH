@@ -1,7 +1,7 @@
 import type { JSX } from 'react/jsx-runtime';
 
 /**
- * Поддерживаемые коды языков интерфейса плагинов DSH.
+ * Языки локальных словарей Core, а не полный набор доступных локалей DSH.
  */
 export type DshLocaleCode = 'en' | 'ru';
 

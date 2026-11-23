@@ -1,4 +1,4 @@
-import { Tooltip } from '@kalex/dsh-core';
+import { type DshActiveLocale, Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
 import type { RouterStateResponse } from '../../../shared/models/RouterModels.ts';
 
@@ -7,9 +7,10 @@ export interface KpiStripProps {
     t: (key: string) => string;
     lastPoint: number;
     percent: number;
+    locale: DshActiveLocale;
 }
 
-export function KpiStrip({ data, t, lastPoint, percent }: KpiStripProps): React.JSX.Element {
+export function KpiStrip({ data, t, lastPoint, percent, locale }: KpiStripProps): React.JSX.Element {
     const rulesCount = data.metrics.rules?.count ?? 0;
     const skillsCount = data.metrics.skillCatalog?.count ?? 0;
     const loadedCount = data.metrics.loadedSkills?.count ?? 0;
@@ -18,16 +19,20 @@ export function KpiStrip({ data, t, lastPoint, percent }: KpiStripProps): React.
 
     return (
         <section className="ar-kpis">
-            <Kpi title={t('rules')} value={`${rulesCount}`} detail={`${rulesCharacters.toLocaleString()} ${t('chars')}`} />
+            <Kpi
+                title={t('rules')}
+                value={rulesCount.toLocaleString(locale)}
+                detail={`${rulesCharacters.toLocaleString(locale)} ${t('chars')}`}
+            />
             <Kpi
                 title={t('workset')}
-                value={`${data.settings?.rootInstructionFileNames?.length ?? 0} ${t('paths')}`}
+                value={`${(data.settings?.rootInstructionFileNames?.length ?? 0).toLocaleString(locale)} ${t('paths')}`}
                 detail={data.status === 'idle' ? t('idleState') : t('running')}
             />
             <Kpi
                 title={t('skills')}
-                value={`${skillsCount} / ${loadedCount}`}
-                detail={`${skillsCharacters.toLocaleString()} ${t('chars')}`}
+                value={`${skillsCount.toLocaleString(locale)} / ${loadedCount.toLocaleString(locale)}`}
+                detail={`${skillsCharacters.toLocaleString(locale)} ${t('chars')}`}
             />
             <Kpi
                 title={
@@ -38,8 +43,8 @@ export function KpiStrip({ data, t, lastPoint, percent }: KpiStripProps): React.
                         </Tooltip>
                     </span>
                 }
-                value={`${lastPoint.toLocaleString()} / ${data.metrics.tokenBudget.toLocaleString()}`}
-                detail={`${percent.toFixed(1)}%`}
+                value={`${lastPoint.toLocaleString(locale)} / ${data.metrics.tokenBudget.toLocaleString(locale)}`}
+                detail={`${(percent / 100).toLocaleString(locale, { style: 'percent', minimumFractionDigits: 1, maximumFractionDigits: 1 })}`}
                 tone={percent > 100 ? 'danger' : percent >= 70 ? 'warn' : 'success'}
             />
         </section>

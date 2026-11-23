@@ -1,13 +1,12 @@
-import { type DshLocaleCode, ensureCoreStyles } from '@kalex/dsh-core';
-import type { OpenAICodexText } from '../shared/constants/localizations/OpenAICodexLocalization.ts';
-import { openAICodexLocaleDictionaries, translateOpenAICodex } from '../shared/constants/localizations/OpenAICodexLocalization.ts';
+import { ensureCoreStyles } from '@kalex/dsh-core';
+import { openAICodexLocaleDictionaries } from '../shared/constants/localizations/OpenAICodexLocalization.ts';
 import { TYPERT_REMOTE } from '../shared/remote.ts';
 import { startAccountPolling } from './features/settings/accountPollingLifetime.ts';
 import { CodexModelsFooterEntry } from './features/settings/CodexModelsFooterEntry.tsx';
 import { CodexQuotaDock } from './features/settings/CodexQuotaDock.tsx';
 import { ensureCodexFooterStyles } from './features/settings/codexFooterStyles.ts';
 import type { OpenAICodexClientContext } from './features/settings/openAICodexRuntime.ts';
-import { OpenAICodexController, registerCodexSlot, selectLocale } from './features/settings/openAICodexRuntime.ts';
+import { OpenAICodexController, registerCodexSlot } from './features/settings/openAICodexRuntime.ts';
 import { createOpenAIHubRemote } from './features/settings/remoteBoundary.ts';
 
 export const name = '@kalex/dsh-openai-hub';
@@ -22,26 +21,26 @@ export async function apply(context: OpenAICodexClientContext): Promise<() => Pr
         throw new Error('OpenAI Hub Remote service did not mount');
     }
     const remote = createOpenAIHubRemote(wire);
-    context.effect(() => context.locale.register('settings.openai-hub', openAICodexLocaleDictionaries), 'openai-hub: locale dictionaries');
+    const namespace = 'settings.openai-hub';
+    for (const [language, dictionary] of Object.entries(openAICodexLocaleDictionaries)) {
+        context.effect(() => context.locale.register(namespace, language, dictionary), `openai-hub: locale ${language}`);
+    }
+    const label = context.locale.bind(namespace);
     const controller = new OpenAICodexController(remote);
     context.effect(() => startAccountPolling(controller), 'openai-hub: persistent account quota timers');
-    const locale: DshLocaleCode = selectLocale(context.locale.preference);
-    const text = (key: OpenAICodexText): string => translateOpenAICodex(locale, key);
     registerCodexSlot(
         context,
-        { name: 'settings.models.footer', id: 'openai-hub-models', order: 60, label: text('title') },
+        { name: 'settings.models.footer', id: 'openai-hub-models', order: 60, locale: namespace, label: () => label('title') },
         CodexModelsFooterEntry,
-        { controller, locale, text },
-        text('renderFailure'),
+        { controller },
         error => remote.reportUiError(error),
         componentId => remote.reportUiReady(componentId)
     );
     registerCodexSlot(
         context,
-        { name: 'conversation.composer.dock', id: 'openai-hub-quota', order: 2 },
+        { name: 'conversation.composer.dock', id: 'openai-hub-quota', order: 2, locale: namespace },
         CodexQuotaDock,
-        { controller, directories: context.modelDirectories, text },
-        text('renderFailure'),
+        { controller, directories: context.modelDirectories },
         error => remote.reportUiError(error),
         componentId => remote.reportUiReady(componentId)
     );

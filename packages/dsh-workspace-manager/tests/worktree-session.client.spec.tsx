@@ -26,21 +26,21 @@ it('opens the worktree action in the same menu group as native deletion', async 
     });
     type Menu = Parameters<WorkspaceManagerClientContext['contextMenus']['register']>[0];
     const menus: Menu[] = [];
-    let overlay: ComponentType | undefined;
+    let overlay: ComponentType<{ t: (key: keyof typeof en) => string }> | undefined;
     const context = {
         effect: (start: () => () => void) => { const release = start(); dispose.push(release); return release; },
         contextMenus: { register: (menu: Menu) => { menus.push(menu); return () => undefined; } },
         remoteAccess: { source: () => ({ getSnapshot: () => true, subscribe: () => () => undefined }) },
         slots: {
-            inject: (_: string, install: () => () => void) => install(),
-            register: ({ id }: { id: string }, component: ComponentType) => { if (id.endsWith('.delete-worktree')) overlay = component; return () => undefined; }
+            inject: (_: string, install: () => void) => install(),
+            register: ({ id }: { id: string }, component: ComponentType<{ t: (key: keyof typeof en) => string }>) => { if (id.endsWith('.delete-worktree')) overlay = component; return () => undefined; }
         },
         locale: {
-            revision: { revision: 0 },
             register: () => () => undefined,
-            bind: () => (key: keyof typeof en | 'rename') => (key === 'rename' ? 'Rename' : en[key]),
-            subscribe() { if (!this.revision) throw new Error('Unbound locale'); return () => undefined; },
-            getSnapshot() { return this.revision; }
+            bind: () => (key: string) => key === 'rename' ? 'Rename' : Object.entries(en).find(([name]) => name === key)?.[1] ?? key,
+            getLocale: () => ({ active: 'en' as const, revision: 0 }),
+            subscribe: () => () => undefined,
+            getSnapshot: () => ({ active: 'en' as const, revision: 0 })
         },
         workspaces: { create: vi.fn(), rename: vi.fn(), delete: vi.fn() },
         uiWorkspace: { openSession: vi.fn(), pickDirectory: vi.fn() },
@@ -58,7 +58,7 @@ it('opens the worktree action in the same menu group as native deletion', async 
     expect(action).not.toHaveProperty('afterContent');
     for (const release of unsubscribe) release();
     action?.run();
-    render(createElement(overlay));
+    render(createElement(overlay, { t: key => en[key] }));
     expect(screen.getByText(en.worktreeDeleteFolder)).toBeTruthy();
     fireEvent.click(screen.getByRole('checkbox', { name: en.worktreeDeleteBranch }));
     fireEvent.click(screen.getByRole('button', { name: en.worktreeDelete }));
@@ -74,7 +74,7 @@ afterEach(() => {
 it('opens an explicitly new session in the selected worktree via the native workspace menu', async () => {
     type Menu = Parameters<WorkspaceManagerClientContext['contextMenus']['register']>[0];
     let menu: Menu | undefined;
-    let overlay: ComponentType | undefined;
+    let overlay: ComponentType<{ t: (key: keyof typeof en) => string }> | undefined;
     const workspaceCreate = vi.fn(async () => ({ workspaceId: 'registered-worktree' }));
     const sessionCreate = vi.fn(async () => 'fresh-session');
     const openSession = vi.fn().mockImplementationOnce(() => { throw new Error('Navigation failed'); });
@@ -85,8 +85,10 @@ it('opens an explicitly new session in the selected worktree via the native work
         contextMenus: { register: (input: Menu) => { if (input.id.endsWith('.worktree')) menu = input; return () => undefined; } },
         remoteAccess: { source: () => allowed },
         slots: {
-            inject: (_: string, install: () => () => void) => install(),
-            register: ({ id }: { id: string }, component: ComponentType) => { if (id.endsWith('.worktree')) overlay = component; }
+            inject: (_: string, install: () => void) => install(),
+            register: ({ id }: { id: string }, component: ComponentType<{ t: (key: keyof typeof en) => string }>) => {
+                if (id.endsWith('.worktree')) overlay = component;
+            }
         },
         locale: { register: () => () => undefined, bind: () => (key: keyof typeof en) => en[key], subscribe: () => () => undefined, getSnapshot: () => 0 },
         workspaces: { create: workspaceCreate },
@@ -102,7 +104,7 @@ it('opens an explicitly new session in the selected worktree via the native work
     const [action] = menu.resolve(target);
     expect(action?.label).toBe(en.worktreeTitle);
     action?.run();
-    render(createElement(overlay));
+    render(createElement(overlay, { t: key => en[key] }));
     fireEvent.click(await screen.findByRole('radio', { name: /Open existing worktree/i }));
     fireEvent.click(screen.getByRole('button', { name: en.worktreeCheckout }));
     fireEvent.click(screen.getByRole('button', { name: 'work (/repo-worktrees/work)' }));

@@ -256,8 +256,12 @@ const ru: Record<keyof typeof en, string> = {
     accountsSummary: 'Аккаунтов: {count}',
     actionFailed: 'Не удалось выполнить действие.'
 };
-export function translateOpenAICodex(locale: DshLocaleCode, key: keyof typeof en): string {
-    return (locale === 'ru' ? ru : en)[key];
+export function translateOpenAICodex(
+    locale: DshLocaleCode,
+    key: keyof typeof en,
+    params?: Readonly<Record<string, string | number>>
+): string {
+    return (locale === 'ru' ? ru : en)[key].replace(/\{(\w+)\}/g, (match, name: string) => String(params?.[name] ?? match));
 }
 export const openAICodexLocaleDictionaries = { en, ru } as const;
 export type OpenAICodexText = keyof typeof en;

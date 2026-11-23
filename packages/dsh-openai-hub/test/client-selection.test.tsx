@@ -95,7 +95,7 @@ describe('selected OpenAI Hub account', () => {
     });
     it('follows the selected account, shows only its circular status, and hides for other or stale selections', async () => {
         const h = harness();
-        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
+        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" locale="en" text={text} />);
         const status = await screen.findByTestId('openai-hub-quota-dock');
         expect(within(status).getByRole('button', { name: '10%' })).toBeTruthy();
         expect(status.textContent).not.toContain('work');
@@ -109,7 +109,7 @@ describe('selected OpenAI Hub account', () => {
     });
     it('previews the primary quota on hover without a native title', async () => {
         const h = harness();
-        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
+        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" locale="en" text={text} />);
         const status = await screen.findByTestId('openai-hub-quota-dock');
         const trigger = within(status).getByRole('button', { name: '10%' });
 
@@ -131,7 +131,7 @@ describe('selected OpenAI Hub account', () => {
             ]
         };
         const h = harness([selected]);
-        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
+        render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" locale="en" text={text} />);
 
         const trigger = await screen.findByRole('button', { name: '72%' });
         fireEvent.pointerOver(trigger);
@@ -154,7 +154,9 @@ describe('selected OpenAI Hub account', () => {
         const h = harness([stale]);
         await h.controller.load();
         await act(async () => {
-            render(<CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" text={text} />);
+            render(
+                <CodexQuotaDock controller={h.controller} directories={h.directories} sessionId="session-test" locale="en" text={text} />
+            );
             await vi.advanceTimersByTimeAsync(0);
         });
         expect(Boolean(screen.queryByTestId('openai-hub-quota-dock'))).toBe(!autoRefreshLimits);

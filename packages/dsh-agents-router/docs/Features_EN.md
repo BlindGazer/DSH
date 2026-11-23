@@ -83,7 +83,8 @@ Managed in the plugin settings (Plugins page):
 
 ## Global settings
 
-- `locale` - locale (`auto`, `ru`, `en`).
+The interface language follows the DSH setting.
+
 - `theme` - theme (`auto`, `dark`, `light`).
 - `pollingIntervalMs` - polling interval (2000, 3000, 5000, 10000).
 - `globalLogging` - global logging.

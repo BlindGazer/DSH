@@ -267,7 +267,7 @@ function H(e) {
 	return e.length === 0 || e.length > 128 || X(e) ? !1 : /^[a-z0-9][a-z0-9._-]*$/u.test(e) || /^@[a-z0-9][a-z0-9._-]*\/[a-z0-9][a-z0-9._-]*$/u.test(e);
 }
 function U(e, t) {
-	let n = t ?? process.env.DSH_PROFILE_PATH ?? _(m(), ".dsh"), r = e.path ?? _(n, "dsh-logs");
+	let n = t ?? process.env.DSH_PROFILE_PATH ?? _(m(), ".dsh"), r = e.path ?? _(n, "dsh-logger");
 	if (!g(r)) throw Error("Logger path must be absolute");
 	return y(r);
 }

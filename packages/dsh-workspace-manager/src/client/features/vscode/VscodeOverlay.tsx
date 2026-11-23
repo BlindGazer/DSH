@@ -1,23 +1,17 @@
 import { Button, Modal, Notification, RadioCardGroup, Spinner, useEffectiveTheme } from '@kalex/dsh-core';
 import { useId, useSyncExternalStore } from 'react';
 import type { Translate } from '../../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
-import type { WorkspaceManagerClientContext } from '../../models/WorkspaceManagerClientContext.ts';
 import type { WorkspaceEditTarget } from '../manage-workspaces/models/WorkspaceEditTarget.ts';
 import type { SnapshotStore } from '../manage-workspaces/services/snapshotStore.ts';
 import { useVscodeWorkflow } from './hooks/useVscodeWorkflow.ts';
 
 interface VscodeOverlayProps {
     readonly request: SnapshotStore<WorkspaceEditTarget | undefined>;
-    readonly locale: WorkspaceManagerClientContext['locale'];
     readonly t: Translate;
 }
 
-export function VscodeOverlay({ request, locale, t }: VscodeOverlayProps) {
+export function VscodeOverlay({ request, t }: VscodeOverlayProps) {
     const target = useSyncExternalStore(request.subscribe, request.getSnapshot);
-    useSyncExternalStore(
-        listener => locale.subscribe(listener),
-        () => locale.getSnapshot()
-    );
     const theme = useEffectiveTheme();
     const groupId = useId();
     const { view, selection, setSelection, isLaunching, submit, close } = useVscodeWorkflow(request, target);

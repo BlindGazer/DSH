@@ -4,17 +4,9 @@ import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-libra
 import { StrictMode } from 'react';
 import { afterEach, expect, it, vi } from 'vitest';
 import { createSnapshotStore } from '../src/client/features/manage-workspaces/services/snapshotStore.ts';
-import type { WorkspaceManagerLocaleService } from '../src/client/models/WorkspaceManagerClientContext.ts';
 import { en } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.ts';
 
 const api = '../src/client/worktreeApi.ts';
-const noop = () => undefined;
-const locale: WorkspaceManagerLocaleService = {
-    register: () => noop,
-    bind: () => () => '',
-    getSnapshot: createSnapshotStore({ revision: 0 }).getSnapshot,
-    subscribe: () => noop
-};
 
 async function setup(files: string[]) {
     const discoverVscode = vi.fn(async () => files);
@@ -23,7 +15,7 @@ async function setup(files: string[]) {
     const { VscodeOverlay } = await import('../src/client/features/vscode/VscodeOverlay.tsx');
     const target = { workspaceId: 'repo', path: '/repo', displayTitle: 'Repo' };
     const request = createSnapshotStore<typeof target | undefined>(target);
-    const view = <VscodeOverlay request={request} locale={locale} t={key => en[key]} />;
+    const view = <VscodeOverlay request={request} t={key => en[key]} />;
     return { discoverVscode, launchVscode, request, view };
 }
 

@@ -1,4 +1,4 @@
-import { Tooltip } from '@kalex/dsh-core';
+import { type DshActiveLocale, type DshTranslate, Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
 import { useState } from 'react';
 import type { DiscoveredRuleWithState } from '../../../shared/models/RouterModels.ts';
@@ -7,10 +7,11 @@ export interface RuleRowProps {
     rule: DiscoveredRuleWithState;
     sessionId: string;
     openFile: (filePath: string) => Promise<void>;
-    t?: (key: string) => string;
+    t?: DshTranslate;
+    locale?: DshActiveLocale;
 }
 
-export function RuleRow({ rule, sessionId, openFile, t }: RuleRowProps): React.JSX.Element {
+export function RuleRow({ rule, sessionId, openFile, t, locale = 'en' }: RuleRowProps): React.JSX.Element {
     const [showAllConditions, setShowAllConditions] = useState(false);
     const sourceName = rule.sourcePath.split(/[\\/]/).at(-1) ?? rule.sourcePath;
     const sourceDirectory = rule.sourcePath.slice(0, -sourceName.length);
@@ -44,7 +45,7 @@ export function RuleRow({ rule, sessionId, openFile, t }: RuleRowProps): React.J
                     <span className="ar-rule-badges">
                         <span className="ar-rule-scope">{rule.area}</span>
                         <span className={`ar-pill ar-rule-characters ${rule.selected ? 'ar-good' : ''}`}>
-                            {(rule.characters ?? description.length).toLocaleString()} {t?.('chars') ?? 'chars'}
+                            {(rule.characters ?? description.length).toLocaleString(locale)} {t?.('chars') ?? 'chars'}
                         </span>
                     </span>
                 </summary>
@@ -83,7 +84,8 @@ export function RuleRow({ rule, sessionId, openFile, t }: RuleRowProps): React.J
                         <button className="ar-rule-more" type="button" onClick={() => setShowAllConditions(!showAllConditions)}>
                             {showAllConditions
                                 ? (t?.('less') ?? 'Less')
-                                : (t?.('morePaths')?.replace('{count}', String(conditions.length - 1)) ?? `+${conditions.length - 1} more`)}
+                                : (t?.('morePaths', { count: (conditions.length - 1).toLocaleString(locale) }) ??
+                                  `+${conditions.length - 1} more`)}
                         </button>
                     ) : null}
                 </div>

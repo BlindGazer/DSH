@@ -1,4 +1,4 @@
-import { Tooltip } from '@kalex/dsh-core';
+import { type DshActiveLocale, Tooltip } from '@kalex/dsh-core';
 import type React from 'react';
 import { useState } from 'react';
 import type { DiscoveredRuleWithState, RouterStateResponse } from '../../../shared/models/RouterModels.ts';
@@ -7,12 +7,13 @@ import { RuleRow } from '../../components/common/RuleRow.tsx';
 export interface CatalogTabProps {
     data: RouterStateResponse;
     t: (key: string) => string;
+    locale?: DshActiveLocale;
     filter: 'all' | 'active' | 'skipped';
     setFilter: (filter: 'all' | 'active' | 'skipped') => void;
     openFile: (filePath: string) => Promise<void>;
 }
 
-export function CatalogTab({ data, t, filter, setFilter, openFile }: CatalogTabProps): React.JSX.Element {
+export function CatalogTab({ data, t, locale = 'en', filter, setFilter, openFile }: CatalogTabProps): React.JSX.Element {
     const [search, setSearch] = useState('');
     const counts = {
         all: data.rules.length,
@@ -32,7 +33,7 @@ export function CatalogTab({ data, t, filter, setFilter, openFile }: CatalogTabP
             <article className="ar-card">
                 <div className="ar-card-heading ar-catalog-heading">
                     <h2>
-                        {t('allRules')} <span className="ar-rules-total">{data.rules.length}</span>
+                        {t('allRules')} <span className="ar-rules-total">{data.rules.length.toLocaleString(locale)}</span>
                     </h2>
                     <div className="ar-catalog-controls">
                         <div className="ar-rule-search">
@@ -78,7 +79,7 @@ export function CatalogTab({ data, t, filter, setFilter, openFile }: CatalogTabP
                 {filteredRules.length ? (
                     <div className="ar-list">
                         {filteredRules.map((rule: DiscoveredRuleWithState) => (
-                            <RuleRow key={rule.source} rule={rule} sessionId={data.sessionId} openFile={openFile} t={t} />
+                            <RuleRow key={rule.source} rule={rule} sessionId={data.sessionId} openFile={openFile} t={t} locale={locale} />
                         ))}
                     </div>
                 ) : (

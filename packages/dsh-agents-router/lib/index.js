@@ -70,7 +70,6 @@ var DEFAULT_PROJECT_SETTINGS = Object.freeze({
 	})
 });
 var DEFAULT_GLOBAL_SETTINGS = Object.freeze({
-	locale: "auto",
 	theme: "auto",
 	pollingIntervalMs: 3e3,
 	globalLogging: false
@@ -6018,15 +6017,11 @@ function validateGlobalSettings(value = {}) {
 		settings: DEFAULT_GLOBAL_SETTINGS,
 		errors: ["global settings must be an object"]
 	};
+	const { locale: _legacyLocale, ...current } = value;
 	const settings = {
 		...DEFAULT_GLOBAL_SETTINGS,
-		...value
+		...current
 	};
-	if (typeof settings.locale !== "string" || ![
-		"auto",
-		"ru",
-		"en"
-	].includes(settings.locale)) errors.push("locale must be auto, ru, or en");
 	if (typeof settings.theme !== "string" || ![
 		"auto",
 		"dark",
@@ -6039,7 +6034,7 @@ function validateGlobalSettings(value = {}) {
 		1e4
 	].includes(settings.pollingIntervalMs)) errors.push("pollingIntervalMs must be 2000, 3000, 5000, or 10000");
 	if (typeof settings.globalLogging !== "boolean") errors.push("globalLogging must be a boolean");
-	const unrecognized = Object.keys(value).filter((key) => !Object.hasOwn(DEFAULT_GLOBAL_SETTINGS, key));
+	const unrecognized = Object.keys(current).filter((key) => !Object.hasOwn(DEFAULT_GLOBAL_SETTINGS, key));
 	if (unrecognized.length) errors.push(`unrecognized global setting(s): ${unrecognized.join(", ")}`);
 	return errors.length ? {
 		valid: false,

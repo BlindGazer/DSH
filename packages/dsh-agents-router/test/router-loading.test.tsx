@@ -6,13 +6,13 @@ import { GlobalSettingsCard } from '../src/client/features/global-settings/Globa
 
 describe('router loading states', () => {
     it('shows the shared loading indicator while router data is pending', () => {
-        const markup = renderToString(<RouterView sessionId="loading-session" />);
+        const markup = renderToString(<RouterView t={key => key} locale="en" sessionId="loading-session" />);
 
         expect(markup).toContain(`data-testid="${TestId.Common.Loading}"`);
     });
 
     it('shows the shared loading indicator while global settings are pending', () => {
-        const markup = renderToString(<GlobalSettingsCard />);
+        const markup = renderToString(<GlobalSettingsCard t={key => key} />);
 
         expect(markup).toContain(`data-testid="${TestId.Common.Loading}"`);
     });

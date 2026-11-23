@@ -1,20 +1,13 @@
 import { Button, Notification, Spinner, useEffectiveTheme } from '@kalex/dsh-core';
-import { useSyncExternalStore } from 'react';
 import type { Translate } from '../../../shared/constants/localizations/WorkspaceManagerLocalization.ts';
-import type { WorkspaceManagerClientContext } from '../../models/WorkspaceManagerClientContext.ts';
 import { SettingRow } from '../manage-workspaces/components/SettingRow.tsx';
 import { useVscodeSettings } from './hooks/useVscodeSettings.ts';
 
 interface WorkspaceFeaturesSettingsProps {
-    readonly locale: WorkspaceManagerClientContext['locale'];
     readonly t: Translate;
 }
 
-export function WorkspaceFeaturesSettings({ locale, t }: WorkspaceFeaturesSettingsProps) {
-    useSyncExternalStore(
-        listener => locale.subscribe(listener),
-        () => locale.getSnapshot()
-    );
+export function WorkspaceFeaturesSettings({ t }: WorkspaceFeaturesSettingsProps) {
     const theme = useEffectiveTheme();
     const { enabled, ready, saving, error, update, dismissError, retry } = useVscodeSettings();
     return (

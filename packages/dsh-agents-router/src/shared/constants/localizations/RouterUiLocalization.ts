@@ -98,22 +98,17 @@ export const locales = Object.freeze({
         redirectInstructionDirectories: 'Redirect files from selected root directories',
         instructionDirectoryNames: 'Root directory names (one per line)',
         globalSettings: 'Global plugin settings',
-        locale: 'Interface language',
         theme: 'Theme',
         polling: 'Auto-refresh interval',
         globalLogging: 'Global logging (master switch)',
         auto: 'Auto',
-        russian: 'Russian',
-        english: 'English',
         dark: 'Dark',
         light: 'Light',
         globalScope: 'Global Scope',
         settingsStorage: 'Stored in ~/.dsh/agents-router/global-settings.json',
-        localeHint: 'Defaults to the DSH language (ru / en).',
         themeHint: 'Defaults to the DSH appearance.',
         pollingHint: 'Polling runs only while the Router tab is open and visible.',
         loggingHint: 'Off by default. Turning it off deletes logs for all projects.',
-        autoDsh: 'Auto (DSH language)',
         autoTheme: 'Auto (DSH theme)',
         resetDefaults: 'Reset to defaults',
         seconds: 'sec',
@@ -239,22 +234,17 @@ export const locales = Object.freeze({
         redirectInstructionDirectories: 'Перенаправлять файлы выбранных корневых каталогов',
         instructionDirectoryNames: 'Имена корневых каталогов, по одному в строке',
         globalSettings: 'Глобальные настройки плагина',
-        locale: 'Язык интерфейса',
         theme: 'Тема оформления',
         polling: 'Период автообновления',
         globalLogging: 'Глобальное логирование (master switch)',
         auto: 'Авто',
-        russian: 'Русский',
-        english: 'English',
         dark: 'Тёмная',
         light: 'Светлая',
         globalScope: 'Global Scope',
         settingsStorage: 'Хранятся в ~/.dsh/agents-router/global-settings.json',
-        localeHint: 'По умолчанию используется язык DSH (ru / en).',
         themeHint: 'По умолчанию наследуется оформление DSH.',
         pollingHint: 'Опрос выполняется, только когда вкладка маршрутизатора открыта и видима.',
         loggingHint: 'По умолчанию выключено. При отключении логи всех проектов удаляются.',
-        autoDsh: 'Авто (язык DSH)',
         autoTheme: 'Авто (как в DSH)',
         resetDefaults: 'Сбросить по умолчанию',
         seconds: 'сек',
@@ -290,12 +280,3 @@ export const locales = Object.freeze({
         renderFailureDetails: 'Подробности ошибки доступны в консоли браузера.'
     } satisfies RouterLocale
 });
-
-export function resolveLocale(explicit?: string, hostLocale?: string): DshLocaleCode {
-    if (explicit === 'ru' || explicit === 'en') return explicit;
-    if (explicit === 'auto' || explicit === undefined) {
-        if (hostLocale?.toLowerCase().startsWith('ru')) return 'ru';
-        return 'en';
-    }
-    return 'en';
-}

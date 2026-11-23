@@ -5,55 +5,16 @@ import net from 'node:net';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import test from 'node:test';
-import vm from 'node:vm';
 
 const {
     compileRoutingTable,
     createProviderProxyController,
     extractHost,
     normalizeProxyConfig,
-    persistProxyLocale,
-    readSavedProxyLocale,
     resolveProviderHosts,
-    resolveProxyLocale,
     sanitizeHostInput,
-    testProxyConnection,
-    translateProxyText
+    testProxyConnection
 } = await import(new URL('../lib/index.js', import.meta.url).href);
-
-test('0. Proxy locale follows manual choice and supported DSH languages', () => {
-    assert.equal(resolveProxyLocale('ru', 'en'), 'ru');
-    assert.equal(resolveProxyLocale('en', 'ru'), 'en');
-    assert.equal(resolveProxyLocale(undefined, 'ru-RU'), 'ru');
-    assert.equal(resolveProxyLocale(undefined, 'en-US'), 'en');
-    assert.equal(resolveProxyLocale(undefined, 'zh-CN'), 'en');
-});
-
-test('0. Manual proxy locale is persisted independently of the DSH language', () => {
-    const values = new Map();
-    const storage = {
-        getItem: key => values.get(key) ?? null,
-        setItem: (key, value) => values.set(key, value)
-    };
-    assert.equal(readSavedProxyLocale(storage), undefined);
-    persistProxyLocale(storage, 'ru');
-    assert.equal(readSavedProxyLocale(storage), 'ru');
-    assert.equal(resolveProxyLocale(readSavedProxyLocale(storage), 'en-US'), 'ru');
-    persistProxyLocale(storage, 'invalid');
-    assert.equal(readSavedProxyLocale(storage), 'ru');
-});
-
-test('0. Static and dynamic proxy interface messages are translated', () => {
-    assert.equal(translateProxyText('Proxy settings', 'ru'), 'Настройки прокси');
-    assert.equal(translateProxyText('2 profile(s) • 1 proxied provider(s)', 'ru'), 'Профилей: 2 • провайдеров через прокси: 1');
-    assert.equal(
-        translateProxyText(
-            'Profile "Local" is currently assigned to: Provider. Deleting it will reset those providers to Direct (No proxy).',
-            'ru'
-        ),
-        'Профиль "Local" назначен для: Provider. После удаления эти провайдеры будут переключены на прямое подключение.'
-    );
-});
 
 test('1. Host sanitization and provider domain resolution', () => {
     assert.equal(sanitizeHostInput('http://proxy.corp.local:8080/path'), 'proxy.corp.local');
@@ -465,87 +426,4 @@ test('4. End-to-end SOCKS5 Proxy (RFC 1928 + RFC 1929 Auth) and globalThis.fetch
         targetServer.close();
         rmSync(tmpDir, { recursive: true, force: true });
     }
-});
-
-test('5. Client bundle registers settings and locale controls for both DSH slots', () => {
-    const clientCode = readFileSync(new URL('../lib/client.js', import.meta.url), 'utf8');
-    let loadedModule = null;
-    const sandbox = {
-        window: {
-            __ModuleLoader__: {
-                load(def) {
-                    loadedModule = def;
-                }
-            }
-        },
-        fetch: async () => ({
-            ok: true,
-            json: async () => ({ ok: true, config: { profiles: [], providerBindings: {} }, providers: [], conflicts: [] })
-        }),
-        localStorage: (() => {
-            const values = new Map();
-            return { getItem: key => values.get(key) ?? null, setItem: (key, value) => values.set(key, value) };
-        })(),
-        console
-    };
-    vm.runInNewContext(clientCode, sandbox);
-    assert.ok(loadedModule);
-    assert.equal(loadedModule.id, '@kalex/dsh-proxy-provider');
-
-    const fakeReact = {
-        useState: v => [typeof v === 'function' ? v() : v, () => {}],
-        useEffect: () => {},
-        useCallback: fn => fn,
-        useRef: v => ({ current: v })
-    };
-    const fakeJsx = {
-        jsx: (type, props) => ({ type, props }),
-        jsxs: (type, props) => ({ type, props }),
-        Fragment: 'Fragment'
-    };
-    const exported = loadedModule.factory(id => {
-        if (id === 'react') return fakeReact;
-        if (id === 'react/jsx-runtime') return fakeJsx;
-        return {};
-    });
-
-    const registeredSlots = [];
-    const fakeCtx = {
-        locale: { preference: 'en' },
-        slots: {
-            inject(_slotName, fn) {
-                fn();
-            },
-            register(spec, component) {
-                registeredSlots.push({ spec, component });
-                return () => {};
-            }
-        }
-    };
-
-    exported.apply(fakeCtx);
-    assert.ok(registeredSlots.some(s => s.spec.name === 'settings.models.footer'));
-    assert.ok(registeredSlots.some(s => s.spec.name === 'plugins.bundle.config' && s.spec.key === '@kalex/dsh-proxy-provider'));
-    assert.ok(registeredSlots.some(s => s.spec.name === 'settings.models.provider-card' && s.spec.key === 'llm-pi-ai'));
-    assert.ok(registeredSlots.some(s => s.spec.name === 'settings.models.provider-card' && s.spec.key === 'llm-deepseek'));
-    assert.match(clientCode, /kpp-btn kpp-btn-icon/);
-    assert.match(clientCode, /Proxy settings/);
-    assert.match(clientCode, /kpp-card-left[\s\S]*?ThemedSelect/);
-    assert.match(clientCode, /viewBox:\s*['"]0 0 24 24['"]/);
-    assert.match(clientCode, /\.kpp-footer-row\s*\{[^}]*margin:\s*8px;[^}]*padding:\s*8px;/);
-    assert.match(clientCode, /\.kpp-dropdown-item:hover\s*\{[^}]*color:\s*var\(--dsh-ui-text\) !important;/);
-    assert.match(clientCode, /\.kpp-dropdown-item-active\s*\{[^}]*color:\s*var\(--dsh-ui-text\) !important;/);
-    assert.match(clientCode, /\.kpp-card-bar,\.kpp-footer-row[^{]*\{[^}]*background:transparent/);
-    assert.match(clientCode, /\.kpp-modal-backdrop \.kpp-modal\s*\{[^}]*background:var\(--dsw-alias-bg-layer-2\)/);
-
-    const localeSettings = registeredSlots.find(s => s.spec.name === 'plugins.bundle.config').component;
-    let panel = localeSettings().props.children.type();
-    assert.equal(panel.props.children[0].props.children, 'Interface language');
-    assert.equal(panel.props.children[1].props.options[0].label, 'English');
-    panel.props.children[1].props.onChange('ru');
-    panel = localeSettings().props.children.type();
-    assert.equal(panel.props.children[0].props.children, 'Язык интерфейса');
-    assert.equal(panel.props.children[1].props.options[1].label, 'Русский');
-    assert.equal(panel.props.children[1].props.value, 'ru');
-    assert.equal(sandbox.localStorage.getItem('@kalex/dsh-proxy-provider/interface-language'), 'ru');
 });

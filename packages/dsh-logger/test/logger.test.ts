@@ -169,7 +169,7 @@ describe('dsh logger contract', () => {
         const logs = join(profile, 'logs');
         const outside = mkdtempSync(join(tmpdir(), 'dsh-logger-out-'));
         try {
-            expect(resolveLoggerPath({ enabled: false }, profile)).toBe(join(profile, 'dsh-logs'));
+            expect(resolveLoggerPath({ enabled: false }, profile)).toBe(join(profile, 'dsh-logger'));
             expect(validateLoggerPath(logs, profile)).toBe(logs);
             expect(() => validateLoggerPath(join(profile, '..', 'escape'), profile)).toThrow();
             mkdirSync(logs, { recursive: true });

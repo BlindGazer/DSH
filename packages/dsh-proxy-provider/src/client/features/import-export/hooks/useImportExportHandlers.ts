@@ -5,6 +5,7 @@ import { proxyStore } from '../../../app/proxyStore.ts';
 export interface IoNotice {
     readonly ok: boolean;
     readonly text: string;
+    readonly params?: Readonly<Record<string, string | number>>;
 }
 
 export interface ImportedPayloadCandidate {
@@ -155,7 +156,8 @@ export function useImportExportHandlers(options: {
             options.setEditingDraft(null);
             setIoNotice({
                 ok: true,
-                text: `Imported ${candidateProfiles.length} profile(s) successfully.`
+                text: 'importSuccess',
+                params: { count: candidateProfiles.length }
             });
         } catch (err) {
             const errorObj = err as { message?: string };
@@ -187,9 +189,8 @@ export function useImportExportHandlers(options: {
             options.setEditingDraft(null);
             setIoNotice({
                 ok: true,
-                text: skipCredentials
-                    ? `Imported ${count} profile(s) without credentials.`
-                    : `Imported ${count} profile(s) with decrypted credentials.`
+                text: skipCredentials ? 'importWithoutCredentials' : 'importWithCredentials',
+                params: { count }
             });
         } catch (err) {
             const errorObj = err as { message?: string };
