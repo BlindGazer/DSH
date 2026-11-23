@@ -107,6 +107,12 @@ function runtime(config: AccountConfig, cache: UsageCache): AccountRuntime {
         }
     };
 }
+function profileDirectory(ctx: Context): string | undefined {
+    if (!('profileContext' in ctx)) return undefined;
+    const profile = ctx.profileContext;
+    return profile && typeof profile === 'object' && 'dir' in profile && typeof profile.dir === 'string' ? profile.dir : undefined;
+}
+
 export class AccountsRuntime {
     readonly credentials: AccountCredentials;
     accounts: AccountRuntime[];
@@ -121,7 +127,7 @@ export class AccountsRuntime {
         private readonly ctx: Context,
         config: z.infer<typeof Config>,
         private readonly logging: HubLogger,
-        private readonly usageCache = new UsageCache()
+        private readonly usageCache = new UsageCache(profileDirectory(ctx))
     ) {
         this.credentials = new AccountCredentials(ctx);
         this.login = loginStatuses.get(ctx) ?? {
@@ -767,7 +773,7 @@ export class AccountsRuntime {
                     if (usage.status !== 'fulfilled') throw new Error('Usage unavailable');
                     account.view.usageStatus = 'ready';
                     account.view.usageError = '';
-                    if (usage.value.limits.length || !account.view.usageLimits.length) {
+                    if (usage.value.limits.length > 0) {
                         Object.assign(account.view, {
                             usageLimited: usage.value.limited,
                             usageLimits: usage.value.limits,

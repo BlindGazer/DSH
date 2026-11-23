@@ -3,6 +3,20 @@
     width: min(600px, 100%);
 }
 
+.dialog.creationDialog {
+    width: min(780px, 100%);
+}
+
+.branchFields {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr));
+}
+
+.pathHint {
+    color: var(--dsh-ui-muted);
+}
+
 .footer {
     display: flex;
     flex-wrap: wrap;

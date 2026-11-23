@@ -31,6 +31,11 @@ function resolveWorkspace(snapshot: WorkspaceSnapshot, workspaceId: string): Wor
     };
 }
 
+function workspacePathKey(path: string): string {
+    if (/^(?:[A-Za-z]:[\\/]|\\\\)/.test(path)) return path.replaceAll('\\', '/').replace(/\/+$/, '');
+    return path.replace(/\/+$/, '');
+}
+
 const vscodeIconKey = '@kalex/dsh-workspace-manager.vscode';
 
 export const inject = ['slots', 'locale', 'workspaces', 'uiWorkspace', 'sessions', 'contextMenus', 'remoteAccess'];
@@ -128,7 +133,7 @@ export function apply(context: WorkspaceManagerClientContext): void {
 
     function deleteMenuActions(target: WorkspaceEditTarget) {
         const repository = worktreeSource(target).getRepository();
-        if (!repository?.isLinkedWorktree) return [];
+        if (!repository) return [];
         return [
             {
                 id: 'delete-worktree',
@@ -140,12 +145,16 @@ export function apply(context: WorkspaceManagerClientContext): void {
                     deleteRequest.set({
                         target,
                         repository,
-                        onDeleted: async gitWarnings => {
+                        onDeleted: async (gitWarnings, checkoutPath) => {
                             const warnings = gitWarnings.map<CopyKey>(code =>
                                 code === 'mergeCleanupFailed' ? 'worktreeMergeCleanupFailed' : 'worktreeBranchDeleteFailed'
                             );
                             try {
-                                await context.workspaces.delete(target.workspaceId);
+                                const path = workspacePathKey(checkoutPath);
+                                const selected = workspaceSnapshot.getSnapshot().items.find(item => workspacePathKey(item.path) === path);
+                                if (selected && selected.workspaceId !== target.workspaceId && path !== workspacePathKey(target.path)) {
+                                    await context.workspaces.delete(selected.workspaceId);
+                                }
                             } catch (error) {
                                 console.error('[workspace-manager] Workspace removal failed', error);
                                 warnings.push('worktreeWorkspaceDeleteFailed');

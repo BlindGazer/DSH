@@ -307,26 +307,40 @@ describe('OpenAI Hub account settings', () => {
         expect(footer.querySelectorAll('.dsh-circular-progress')).toHaveLength(1);
         expect(within(footer).getByText('93%')).toBeTruthy();
     });
-    it('keeps the latest quota data when automatic refresh is disabled', async () => {
+    it.each([true, false])('keeps the latest quota data when automatic refresh is toggled to %s', async enabled => {
         const current = {
             ...account('alpha'),
-            autoRefreshLimits: true,
+            autoRefreshLimits: !enabled,
             usageStatus: 'ready' as const,
             usageLimits: [{ name: 'Codex', usedPercent: 20, windowSeconds: 18000, resetAt: 1234 }],
+            usageResetCredits: 2,
             usageUpdatedAt: 1234
         };
-        const cleared = { ...account('alpha'), autoRefreshLimits: false };
+        const cleared = { ...account('alpha'), autoRefreshLimits: enabled };
         const api = makeRemote({ ...snapshot, accounts: [cleared] });
         vi.mocked(api.snapshot).mockResolvedValue({ ...snapshot, accounts: [current] });
         const controller = new OpenAICodexController(api);
         await controller.load();
 
-        const result = await controller.updateAccount('alpha', 'alpha', false);
+        const result = await controller.updateAccount('alpha', 'alpha', enabled);
         const updated = result.accounts.find(candidate => candidate.accountLabel === 'alpha');
 
-        expect(updated?.autoRefreshLimits).toBe(false);
+        expect(updated?.autoRefreshLimits).toBe(enabled);
         expect(updated?.usageLimits).toEqual(current.usageLimits);
         expect(updated?.usageUpdatedAt).toBe(1234);
+        expect(updated?.usageResetCredits).toBe(2);
+    });
+    it('does not overwrite a newer usage sample returned with the toggle response', async () => {
+        const previous = { ...account('alpha'), usageUpdatedAt: 100, usageResetCredits: 2 };
+        const current = { ...previous, autoRefreshLimits: true, usageUpdatedAt: 200, usageResetCredits: 1 };
+        const api = makeRemote({ ...snapshot, accounts: [current] });
+        vi.mocked(api.snapshot).mockResolvedValue({ ...snapshot, accounts: [previous] });
+        const controller = new OpenAICodexController(api);
+        await controller.load();
+
+        const updated = await controller.updateAccount('alpha', 'alpha', true);
+
+        expect(updated.accounts[0]).toStrictEqual(current);
     });
     it('migrates a pending reset under the confirmed new label before rendering its renamed card', async () => {
         const prefix = '@kalex/dsh-openai-hub.pending-reset';
@@ -522,13 +536,13 @@ describe('OpenAI Hub account settings', () => {
         expect(within(dialog).queryByText('No data')).toBeNull();
         expect(dialog.querySelectorAll('.dsh-linear-progress')).toHaveLength(1);
     });
-    it('shows zero footer charts without data or after a usage error and keeps cached modal charts', async () => {
+    it('distinguishes missing footer quota from cached quota after a usage error', async () => {
         const noData = { ...account('empty'), usageStatus: 'idle' as const };
         const emptyController = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [noData] }));
         render(<CodexModelsFooterEntry controller={emptyController} locale="en" text={text} />);
         const emptyFooter = await screen.findByTestId('openai-hub-models-footer-empty');
-        expect(emptyFooter.querySelectorAll('.dsh-circular-progress')).toHaveLength(1);
-        expect(within(emptyFooter).getByText('0%')).toBeTruthy();
+        expect(emptyFooter.querySelectorAll('.dsh-circular-progress')).toHaveLength(0);
+        expect(within(emptyFooter).getByText('No data')).toBeTruthy();
         expect(screen.queryByText('Loading usage...')).toBeNull();
         cleanup();
 
@@ -543,11 +557,9 @@ describe('OpenAI Hub account settings', () => {
         const controller = new OpenAICodexController(makeRemote({ ...snapshot, accounts: [previous] }));
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
         const cachedFooter = await screen.findByTestId('openai-hub-models-footer-cached');
-        const chartFills = cachedFooter.querySelectorAll('.dsh-circular-progress-fill');
-        expect([...chartFills].map(fill => fill.getAttribute('stroke-dasharray'))).toEqual([
-            expect.stringMatching(/^0 /),
-            expect.stringMatching(/^0 /)
-        ]);
+        expect(cachedFooter.querySelectorAll('.dsh-circular-progress')).toHaveLength(2);
+        expect(within(cachedFooter).getByText('100%')).toBeTruthy();
+        expect(within(cachedFooter).getByText('93%')).toBeTruthy();
         fireEvent.click(settingsButton(cachedFooter));
         const accountErrorDialog = await screen.findByTestId('dsh-modal-card');
         const charts = accountErrorDialog.querySelectorAll('.dsh-linear-progress');
@@ -624,9 +636,11 @@ describe('OpenAI Hub account settings', () => {
                 name: `Model ${index + 1}`,
                 enabled: index < 3
             })),
-            usageLimits: [{ name: 'Codex', usedPercent: 1, windowSeconds: 18000, resetAt: Date.now() + 5 * 60 * 60 * 1000 }]
+            usageLimits: [{ name: 'Codex', usedPercent: 1, windowSeconds: 18000, resetAt: Date.now() + 5 * 60 * 60 * 1000 }],
+            usageUpdatedAt: Date.now()
         };
         const api = makeRemote({ ...snapshot, accounts: [alpha] });
+        vi.mocked(api.updateAccount).mockResolvedValueOnce({ ...snapshot, accounts: [{ ...alpha, autoRefreshLimits: true }] });
         const controller = new OpenAICodexController(api);
         render(<CodexModelsFooterEntry controller={controller} locale="en" text={text} />);
         expect(await screen.findByText('Models: 3/7 enabled')).toBeTruthy();
@@ -639,9 +653,11 @@ describe('OpenAI Hub account settings', () => {
             'Turning this off stops automatic usage updates. When enabled, limits refresh every 5 minutes, or every minute when less than 25% remains.'
         );
         fireEvent.click(toggle);
-        await waitFor(() =>
-            expect(api.updateAccount).toHaveBeenCalledWith({ accountLabel: 'alpha', newLabel: 'alpha', autoRefreshLimits: true })
-        );
+        await waitFor(() => expect(toggle.getAttribute('data-checked')).toBe('true'));
+        expect(api.updateAccount).toHaveBeenCalledWith({ accountLabel: 'alpha', newLabel: 'alpha', autoRefreshLimits: true });
+        expect(api.snapshot).toHaveBeenCalledOnce();
+        expect(api.refreshUsage).not.toHaveBeenCalled();
+        expect(screen.getByText('99%')).toBeTruthy();
         fireEvent.click(settingsButton(screen.getAllByTestId(/^openai-hub-models-footer-/)[0] ?? document.body));
         const accountDialog = await screen.findByTestId('dsh-modal-card');
         const chart = accountDialog.querySelector('.dsh-linear-progress');

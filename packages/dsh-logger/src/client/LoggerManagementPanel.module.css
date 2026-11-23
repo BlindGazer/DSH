@@ -204,7 +204,7 @@
     gap: 14px;
     padding: 12px 0;
     border-top: 1px solid var(--dsh-ui-border);
-    background-color: var(--dsh-ui-bg-modal);
+    background-color: var(--dsw-alias-bg-layer-2);
 }
 .pathDialog {
     max-width: 35rem;

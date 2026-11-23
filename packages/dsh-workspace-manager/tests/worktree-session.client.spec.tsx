@@ -2,8 +2,9 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { type ComponentType, createElement } from 'react';
 import { afterEach, expect, it, vi } from 'vitest';
+import { createWorktreeMenuSource } from '../src/client/features/worktree/worktreeMenuSource.ts';
 import { apply } from '../src/client/index.tsx';
-import type { WorkspaceManagerClientContext } from '../src/client/models/WorkspaceManagerClientContext.ts';
+import type { UseWorkspaceSnapshot, WorkspaceManagerClientContext } from '../src/client/models/WorkspaceManagerClientContext.ts';
 import { en } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.ts';
 import { inspectWorktrees } from '../src/client/worktreeApi.ts';
 
@@ -18,11 +19,27 @@ vi.mock('../src/client/worktreeApi.ts', () => ({
 
 const dispose: Array<() => void> = [];
 
-it('opens the worktree action in the same menu group as native deletion', async () => {
-    const target = { workspaceId: 'work', path: '/repo-worktrees/work', displayTitle: 'Work' };
+it.each([true, false])('hides deletion without selectable checkouts (linked: %s)', async isLinkedWorktree => {
+    const inspected = Promise.resolve({ currentBranch: 'main', isLinkedWorktree, defaultBasePath: '/worktrees', branches: ['main'], occupiedBranches: ['main'], checkouts: [{ path: '/repo', branch: 'main' }], deletableCheckouts: [] });
+    vi.mocked(inspectWorktrees).mockReturnValueOnce(inspected);
+    const source = createWorktreeMenuSource('workspace');
+    const release = source.subscribe(() => undefined);
+    await inspected;
+    expect(source.getSnapshot()).toBe(false);
+    expect(source.getRepository()).toBeUndefined();
+    release();
+});
+
+it.each([true, false])('deletes only the selected linked checkout record (registered: %s)', async registered => {
+    const target = { workspaceId: 'root', path: 'D:\\repo', displayTitle: 'Repo' };
+    const checkout = { path: 'D:/repo-worktrees/work', branch: 'work' };
+    const other = { path: 'D:/repo-worktrees/other', branch: 'other' };
+    const items = [target, { workspaceId: 'other', path: other.path }, ...(registered ? [{ workspaceId: 'work', path: 'D:\\repo-worktrees\\work' }] : [])].map(item => ({ ...item, title: '', createdAt: '', updatedAt: '', sessionIds: [] }));
+    const useWorkspaces: UseWorkspaceSnapshot = select => select({ items });
+    let editor: ComponentType<{ t: (key: keyof typeof en) => string; useWorkspaces: UseWorkspaceSnapshot }> | undefined;
     vi.mocked(inspectWorktrees).mockResolvedValueOnce({
-        currentBranch: 'work', isLinkedWorktree: true, defaultBasePath: '/repo-worktrees',
-        branches: ['main', 'work'], occupiedBranches: ['main', 'work'], checkouts: []
+        currentBranch: 'main', isLinkedWorktree: false, defaultBasePath: 'D:/repo-worktrees',
+        branches: ['main', 'work'], occupiedBranches: ['main', 'work'], checkouts: [other, checkout], deletableCheckouts: [other, checkout]
     });
     type Menu = Parameters<WorkspaceManagerClientContext['contextMenus']['register']>[0];
     const menus: Menu[] = [];
@@ -33,7 +50,7 @@ it('opens the worktree action in the same menu group as native deletion', async 
         remoteAccess: { source: () => ({ getSnapshot: () => true, subscribe: () => () => undefined }) },
         slots: {
             inject: (_: string, install: () => void) => install(),
-            register: ({ id }: { id: string }, component: ComponentType<{ t: (key: keyof typeof en) => string }>) => { if (id.endsWith('.delete-worktree')) overlay = component; return () => undefined; }
+            register: ({ id }: { id: string }, component: ComponentType<{ t: (key: keyof typeof en) => string }>) => { if (id.endsWith('.delete-worktree')) overlay = component; if (id.endsWith('.editor')) editor = component as NonNullable<typeof editor>; return () => undefined; }
         },
         locale: {
             register: () => () => undefined,
@@ -48,7 +65,8 @@ it('opens the worktree action in the same menu group as native deletion', async 
     };
     apply(context as Parameters<typeof apply>[0]);
     const menu = menus.find(item => item.id.endsWith('.delete-worktree'));
-    if (!menu || !overlay) throw new Error('Expected a delete contribution and a shell overlay');
+    if (!menu || !overlay || !editor) throw new Error('Expected a delete contribution and shell overlays');
+    render(createElement(editor, { t: key => en[key], useWorkspaces }));
     expect(menu.order).toBeGreaterThan(300);
     const unsubscribe = menu.observe(target).map(source => source.subscribe(() => undefined));
     await waitFor(() => expect(menu.resolve(target)).toHaveLength(1));
@@ -60,10 +78,13 @@ it('opens the worktree action in the same menu group as native deletion', async 
     action?.run();
     render(createElement(overlay, { t: key => en[key] }));
     expect(screen.getByText(en.worktreeDeleteFolder)).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: en.worktreeCheckout }));
+    fireEvent.click(screen.getByRole('button', { name: `work (${checkout.path})` }));
     fireEvent.click(screen.getByRole('checkbox', { name: en.worktreeDeleteBranch }));
     fireEvent.click(screen.getByRole('button', { name: en.worktreeDelete }));
     expect(await screen.findByText(en.worktreeBranchDeleteFailed)).toBeTruthy();
-    expect(context.workspaces.delete).toHaveBeenCalledExactlyOnceWith(target.workspaceId);
+    if (registered) expect(context.workspaces.delete).toHaveBeenCalledExactlyOnceWith('work');
+    else expect(context.workspaces.delete).not.toHaveBeenCalled();
     expect(screen.queryByText(en.worktreeDeleteFolder)).toBeNull();
 });
 afterEach(() => {

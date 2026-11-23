@@ -14,6 +14,7 @@ import type {
 } from '../../shared/models/Worktree.ts';
 
 const BRANCH_PREFIX = 'refs/heads/';
+const REMOTE_PREFIX = 'refs/remotes/';
 const FILTER_ATTRIBUTES = ['clean', 'smudge', 'process', 'required'];
 const DEFAULT_WORKTREE_DIRECTORY = '.worktrees';
 let ignoreUpdates = Promise.resolve();
@@ -186,11 +187,16 @@ async function inspectRepository(workspacePath: string): Promise<RepositoryState
     const root = await canonicalDirectory(line(top.stdout));
     if (root === null) throw new WorktreeError('notRepository');
 
-    const [listed, local, head] = await Promise.all([
+    const [listed, local, remote, head] = await Promise.all([
         git(root, ['worktree', 'list', '--porcelain', '-z']),
         git(root, ['for-each-ref', '--format=%(refname)', BRANCH_PREFIX]),
+        git(root, ['for-each-ref', '--format=%(refname:strip=2)%00%(symref)', REMOTE_PREFIX]),
         git(root, ['symbolic-ref', '--quiet', 'HEAD'], [0, 1])
     ]);
+    const remoteBranches = remote.stdout.split(/\r?\n/).flatMap(record => {
+        const [name, target] = record.split('\0');
+        return name && target === '' ? [name] : [];
+    });
     const branches = local.stdout.split(/\r?\n/).flatMap(ref => {
         const branch = branchName(ref);
         return branch === null ? [] : [branch];
@@ -220,8 +226,12 @@ async function inspectRepository(workspacePath: string): Promise<RepositoryState
                 relative(workspace, root) === '' &&
                 checkouts.some(checkout => relative(checkout.path, root) === '') &&
                 relative(await gitDirectory(root, '--absolute-git-dir'), await gitDirectory(root, '--git-common-dir')) !== '',
+            ...(relative(workspace, root) === '' && registrations[0] && relative(registrations[0].path, root) === ''
+                ? { deletableCheckouts: checkouts.filter(checkout => relative(checkout.path, root) !== '') }
+                : {}),
             defaultBasePath: join(workspace, DEFAULT_WORKTREE_DIRECTORY),
             branches,
+            remoteBranches,
             // Даже stale-регистрация блокирует ветку в Git, пока пользователь не удалит ее.
             occupiedBranches: [...new Set(registrations.flatMap(({ branch }) => (branch === null ? [] : [branch])))],
             checkouts
@@ -277,6 +287,14 @@ async function resolveBranch(state: RepositoryState, selection: Exclude<Worktree
     ) {
         throw new WorktreeError('invalidBranch');
     }
+    if (selection.mode === 'existing' && selection.originBranch !== undefined) {
+        if (repository.branches.includes(branch)) throw new WorktreeError('branchExists');
+        if (repository.occupiedBranches.includes(branch)) throw new WorktreeError('branchOccupied');
+        if (selection.originBranch !== `origin/${branch}` || !repository.remoteBranches?.includes(selection.originBranch)) {
+            throw new WorktreeError('sourceMissing');
+        }
+        return `${REMOTE_PREFIX}${selection.originBranch}`;
+    }
     if (selection.mode === 'existing') {
         if (!repository.branches.includes(branch)) throw new WorktreeError('branchMissing');
         if (repository.occupiedBranches.includes(branch)) throw new WorktreeError('branchOccupied');
@@ -284,8 +302,10 @@ async function resolveBranch(state: RepositoryState, selection: Exclude<Worktree
         return branch;
     }
     if (repository.branches.includes(branch)) throw new WorktreeError('branchExists');
-    if (!repository.branches.includes(selection.sourceBranch)) throw new WorktreeError('sourceMissing');
-    const ref = `${BRANCH_PREFIX}${selection.sourceBranch}`;
+    const sources = selection.sourceRemote ? repository.remoteBranches : repository.branches;
+    if (!sources?.includes(selection.sourceBranch)) throw new WorktreeError('sourceMissing');
+    const prefix = selection.sourceRemote ? REMOTE_PREFIX : BRANCH_PREFIX;
+    const ref = `${prefix}${selection.sourceBranch}`;
     const commit = await git(root, ['show-ref', '--hash', '--verify', '--', ref], [0, 128]);
     if (commit.status !== 0) throw new WorktreeError('sourceMissing');
     return line(commit.stdout);
@@ -430,7 +450,12 @@ export async function prepareWorktree(
         const occupied = error instanceof Error && 'code' in error && error.code === 'EEXIST';
         throw new WorktreeError(occupied ? 'pathExists' : 'gitFailed', { cause: error });
     }
-    const branchArgs = selection.mode === 'new' ? ['--no-track', '-b', selection.branch] : [];
+    const branchArgs =
+        selection.mode === 'new'
+            ? ['--no-track', '-b', selection.branch]
+            : selection.originBranch !== undefined
+              ? ['--track', '-b', selection.branch]
+              : [];
     try {
         await git(root, [
             '--git-dir',

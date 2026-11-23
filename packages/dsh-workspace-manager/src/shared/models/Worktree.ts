@@ -8,8 +8,10 @@ export interface WorktreeRepository {
     readonly isLinkedWorktree: boolean;
     readonly defaultBasePath: string;
     readonly branches: readonly string[];
+    readonly remoteBranches?: readonly string[];
     readonly occupiedBranches: readonly string[];
     readonly checkouts: readonly WorktreeCheckout[];
+    readonly deletableCheckouts?: readonly WorktreeCheckout[];
 }
 
 interface WorktreeDestination {
@@ -18,8 +20,13 @@ interface WorktreeDestination {
 }
 
 export type WorktreeSelection =
-    | (WorktreeDestination & { readonly mode: 'new'; readonly branch: string; readonly sourceBranch: string })
-    | (WorktreeDestination & { readonly mode: 'existing'; readonly branch: string })
+    | (WorktreeDestination & {
+          readonly mode: 'new';
+          readonly branch: string;
+          readonly sourceBranch: string;
+          readonly sourceRemote?: boolean;
+      })
+    | (WorktreeDestination & { readonly mode: 'existing'; readonly branch: string; readonly originBranch?: string })
     | { readonly mode: 'open'; readonly path: string };
 
 export interface WorktreeDeletion {

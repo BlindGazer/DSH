@@ -1,6 +1,7 @@
 // @vitest-environment jsdom
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, expect, it, vi } from 'vitest';
+import { DeleteWorktreeModal } from '../src/client/features/worktree/DeleteWorktreeModal.tsx';
 import { WorktreeModal, type WorktreeModalProps } from '../src/client/features/worktree/WorktreeModal.tsx';
 import { ru } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.ts';
 import type { WorktreeRepository } from '../src/shared/models/Worktree.ts';
@@ -74,12 +75,14 @@ it('starts from the current branch and creates a session for the chosen destinat
     expect(screen.getByText('Project')).toBeTruthy();
     expect(screen.getByLabelText(ru.worktreeSourceBranch)).toHaveProperty('textContent', 'main');
     expect(screen.getByDisplayValue('/projects/repo-worktrees')).toBeTruthy();
+    expect(screen.getByText(ru.worktreeResultPathHint)).toBeTruthy();
     expect(button(ru.worktreeCreate)).toHaveProperty('disabled', true);
 
     fireEvent.click(button(ru.browse));
     await screen.findByDisplayValue('/selected');
     fillNewBranch();
     expect(screen.getByText('/selected/feature-new')).toBeTruthy();
+    expect(screen.queryByText(ru.worktreeResultPathHint)).toBeNull();
     fireEvent.click(button(ru.worktreeCreate));
 
     await waitFor(() => expect(props.onClose).toHaveBeenCalledOnce());
@@ -87,6 +90,23 @@ it('starts from the current branch and creates a session for the chosen destinat
         mode: 'new', branch: 'feature/new', sourceBranch: 'main', basePath: '/selected', folderName: 'feature-new'
     });
     expect(props.openSession).toHaveBeenCalledExactlyOnceWith('/prepared');
+});
+
+it('filters source branches and selects an origin branch with the keyboard', async () => {
+    vi.stubGlobal('fetch', vi.fn(async () => Response.json({ ok: true, repository: repository({ remoteBranches: ['origin/release'] }) })));
+    const { prepare } = renderDialog({ inspect: signal => inspectWorktrees('project', signal) });
+    fireEvent.click(await screen.findByRole('button', { name: ru.worktreeSourceBranch }));
+    const search = screen.getByPlaceholderText(ru.worktreeSearchBranch);
+    expect(document.activeElement).toBe(search);
+    fireEvent.change(search, { target: { value: 'missing' } });
+    expect(screen.getByText(ru.worktreeNoBranchMatches)).toBeTruthy();
+    fireEvent.change(search, { target: { value: ' RELEASE ' } });
+    expect(screen.queryByRole('button', { name: 'feature' })).toBeNull();
+    expect(button(`origin/release (${ru.worktreeRemoteBranch})`)).toBeTruthy();
+    fireEvent.keyDown(search, { key: 'Enter' });
+    fillNewBranch();
+    fireEvent.click(button(ru.worktreeCreate));
+    await waitFor(() => expect(prepare).toHaveBeenCalledWith(expect.objectContaining({ sourceBranch: 'origin/release', sourceRemote: true })));
 });
 
 it('starts with no source selected on a detached HEAD and lists all local branches', async () => {
@@ -133,12 +153,39 @@ it('only offers free local branches in existing branch mode', async () => {
     });
 });
 
-it('opens a detached worktree by its full path without destination fields', async () => {
-    const props = renderDialog();
+it('finds an origin branch without a local counterpart in existing branch mode', async () => {
+    const inspect = vi.fn<WorktreeModalProps['inspect']>().mockResolvedValue(repository({
+        remoteBranches: ['origin/busy', 'origin/feature', 'origin/topic/release', 'upstream/topic/release']
+    }));
+    const { prepare } = renderDialog({ inspect });
+    fireEvent.click(await screen.findByRole('radio', { name: new RegExp(`^${ru.worktreeExisting}`) }));
+    fireEvent.click(button(ru.worktreeFreeBranch));
+    const search = screen.getByPlaceholderText(ru.worktreeSearchBranch);
+    fireEvent.change(search, { target: { value: 'origin/' } });
+    expect(screen.queryByRole('button', { name: /origin\/(busy|feature)/ })).toBeNull();
+    fireEvent.click(button(`origin/topic/release (${ru.worktreeCreateLocalBranch})`));
+    type(ru.worktreeFolderName, 'release');
+    fireEvent.click(button(ru.worktreeCreate));
+    await waitFor(() => expect(prepare).toHaveBeenCalledExactlyOnceWith({
+        mode: 'existing', branch: 'topic/release', originBranch: 'origin/topic/release',
+        basePath: '/projects/repo-worktrees', folderName: 'release'
+    }));
+});
+
+it('opens a detached worktree found by path without destination fields', async () => {
+    const inspect = vi.fn<WorktreeModalProps['inspect']>().mockResolvedValue(repository({ remoteBranches: ['origin/not-a-worktree'] }));
+    const props = renderDialog({ inspect });
     fireEvent.click(await screen.findByRole('radio', { name: new RegExp(`^${ru.worktreeOpen}`) }));
     expect(screen.queryByRole('textbox', { name: ru.worktreeBasePath })).toBeNull();
     fireEvent.click(button(ru.worktreeCheckout));
-    fireEvent.click(button(`${ru.worktreeDetached} (/projects/repo-worktrees/detached)`));
+    const search = screen.getByPlaceholderText(ru.worktreeSearchCheckout);
+    fireEvent.change(search, { target: { value: 'origin/' } });
+    expect(screen.getByText(ru.worktreeNoCheckoutMatches)).toBeTruthy();
+    fireEvent.change(search, { target: { value: '/DETACHED' } });
+    const checkoutLabel = `${ru.worktreeDetached} (/projects/repo-worktrees/detached)`;
+    fireEvent.click(button(checkoutLabel));
+    expect(button(ru.worktreeCheckout).textContent).toContain(checkoutLabel);
+    expect(screen.queryByText('/projects/repo-worktrees/detached')).toBeNull();
     fireEvent.click(button(ru.worktreeOpenAction));
 
     await waitFor(() => expect(props.onClose).toHaveBeenCalledOnce());
@@ -214,4 +261,64 @@ it('cancels repository inspection when the modal unmounts', () => {
     unmount();
 
     expect(signal?.aborted).toBe(true);
+});
+
+function renderDeletion() {
+    const deletableCheckouts = [
+        { path: '/linked/feature', branch: 'feature' },
+        { path: '/linked/detached', branch: null }
+    ];
+    const onDeleted = vi.fn().mockResolvedValue(undefined);
+    const fetch = vi.fn<typeof globalThis.fetch>().mockResolvedValue(
+        Response.json({ ok: true, result: { worktreeRemoved: true, warnings: [] } })
+    );
+    vi.stubGlobal('fetch', fetch);
+    render(
+        <DeleteWorktreeModal
+            target={{ workspaceId: 'project', displayTitle: 'Project', path: '/projects/repo' }}
+            repository={repository({ checkouts: [{ path: '/projects/repo', branch: 'main' }, ...deletableCheckouts], deletableCheckouts })}
+            t={key => ru[key]}
+            onClose={vi.fn()}
+            onDeleted={onDeleted}
+        />
+    );
+    return { fetch, onDeleted };
+}
+
+it('requires an explicit linked checkout and submits its path and branch options under the root workspace ID', async () => {
+    const { fetch, onDeleted } = renderDeletion();
+    expect(button(ru.worktreeDelete)).toHaveProperty('disabled', true);
+    fireEvent.click(button(ru.worktreeCheckout));
+    expect(screen.queryByRole('button', { name: 'main (/projects/repo)' })).toBeNull();
+    fireEvent.click(button('feature (/linked/feature)'));
+    fireEvent.click(screen.getByLabelText(ru.worktreeDeleteBranch));
+    fireEvent.click(screen.getByLabelText(ru.worktreeMergeFirst));
+    fireEvent.click(button(ru.worktreeMergeInto));
+    expect(screen.queryByRole('button', { name: 'feature' })).toBeNull();
+    fireEvent.click(button('busy'));
+    fireEvent.click(button(ru.worktreeDelete));
+    await waitFor(() => expect(onDeleted).toHaveBeenCalledExactlyOnceWith([], '/linked/feature'));
+    expect(fetch.mock.calls[0]?.[1]?.body).toBe(JSON.stringify({
+        workspaceId: 'project', worktreePath: '/linked/feature', expectedBranch: 'feature', deleteBranch: true, mergeInto: 'busy'
+    }));
+});
+
+it('resets destructive options when the target changes and submits detached HEAD without branch operations', async () => {
+    const { fetch, onDeleted } = renderDeletion();
+    fireEvent.click(button(ru.worktreeCheckout));
+    fireEvent.click(button('feature (/linked/feature)'));
+    fireEvent.click(screen.getByLabelText(ru.worktreeDeleteBranch));
+    fireEvent.click(screen.getByLabelText(ru.worktreeMergeFirst));
+    fireEvent.click(button(ru.worktreeCheckout));
+    fireEvent.click(button(`${ru.worktreeDetached} (/linked/detached)`));
+    for (const label of [ru.worktreeDeleteBranch, ru.worktreeMergeFirst]) {
+        expect(screen.getByLabelText(label)).toHaveProperty('checked', false);
+        expect(screen.getByLabelText(label)).toHaveProperty('disabled', true);
+    }
+    expect(screen.queryByLabelText(ru.worktreeMergeInto)).toBeNull();
+    fireEvent.click(button(ru.worktreeDelete));
+    await waitFor(() => expect(onDeleted).toHaveBeenCalledExactlyOnceWith([], '/linked/detached'));
+    expect(fetch.mock.calls[0]?.[1]?.body).toBe(JSON.stringify({
+        workspaceId: 'project', worktreePath: '/linked/detached', expectedBranch: null, deleteBranch: false
+    }));
 });

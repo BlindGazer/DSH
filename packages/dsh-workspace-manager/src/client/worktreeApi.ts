@@ -17,6 +17,11 @@ function isBranch(value: Json | undefined): value is string | null {
     return value === null || isText(value);
 }
 
+function parseCheckout(checkout: Json) {
+    if (!isRecord(checkout) || !isText(checkout.path) || !isBranch(checkout.branch)) throw new Error('Invalid worktree checkout');
+    return { path: checkout.path, branch: checkout.branch };
+}
+
 function parseRepository(value: Json | undefined): WorktreeRepository {
     if (isRecord(value)) {
         const { currentBranch, defaultBasePath, branches, occupiedBranches, checkouts, isLinkedWorktree } = value;
@@ -34,12 +39,12 @@ function parseRepository(value: Json | undefined): WorktreeRepository {
                 isLinkedWorktree: isLinkedWorktree === true,
                 defaultBasePath,
                 branches,
+                ...(Array.isArray(value.remoteBranches) && value.remoteBranches.every(isText)
+                    ? { remoteBranches: value.remoteBranches }
+                    : {}),
                 occupiedBranches,
-                checkouts: checkouts.map(checkout => {
-                    if (!isRecord(checkout) || !isText(checkout.path) || !isBranch(checkout.branch))
-                        throw new Error('Invalid worktree checkout');
-                    return { path: checkout.path, branch: checkout.branch };
-                })
+                checkouts: checkouts.map(parseCheckout),
+                ...(Array.isArray(value.deletableCheckouts) ? { deletableCheckouts: value.deletableCheckouts.map(parseCheckout) } : {})
             };
         }
     }

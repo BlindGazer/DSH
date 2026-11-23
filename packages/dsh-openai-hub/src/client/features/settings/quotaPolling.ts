@@ -48,9 +48,12 @@ export function retainQuotaPolling(controller: OpenAICodexController, accountLab
         accounts.set(accountLabel, entry);
         document.addEventListener('visibilitychange', entry.visibility);
     }
+    const firstOwner = entry.owners.size === 0;
     const owner = Symbol();
     entry.owners.set(owner, delay);
     if (entry.timer === undefined || entry.delay !== Math.min(...entry.owners.values())) schedule(entry);
+    const account = controller.getSnapshot().snapshot?.accounts.find(candidate => candidate.accountLabel === accountLabel);
+    if (firstOwner && account && account.usageUpdatedAt <= 0) entry.refresh();
     const retained = entry;
     return () => {
         retained.owners.delete(owner);

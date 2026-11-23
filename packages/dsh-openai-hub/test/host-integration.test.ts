@@ -137,7 +137,7 @@ interface TestHost {
     readonly remountAfterConfigEdit: (handler: EditRemount) => void;
     readonly rejectNextConfigEdit: () => void;
 }
-function harness(seed: Record<string, string> = {}): TestHost {
+function harness(seed: Record<string, string> = {}, profileDir?: string): TestHost {
     const values = new Map(Object.entries(seed));
     const calls = { resolved: [] as string[], set: [] as string[], unset: [] as string[] };
     const profileEntry = { options: { name: PackageId }, config: {} as { accounts: AccountConfig[] } };
@@ -160,6 +160,7 @@ function harness(seed: Record<string, string> = {}): TestHost {
     const cleanups: Array<() => void> = [];
     const ctx = new Context();
     Object.defineProperties(ctx, {
+        profileContext: { value: profileDir ? { dir: profileDir } : undefined },
         credentials: {
             value: {
                 async resolve(ref: CredentialRef) {
@@ -957,13 +958,12 @@ describe('OpenAI Hub host integration', () => {
 
     it('restores only the last successful quota after a Host restart and rename', async () => {
         const profile = mkdtempSync(join(tmpdir(), 'dsh-quota-'));
-        vi.stubEnv('DSH_PROFILE_DIR', profile);
         try {
             const work = config('work', 'quota-work');
             const neighbor = config('neighbor', 'quota-neighbor');
             const seed = { [work.credentialKey]: oauth('quota-work'), [neighbor.credentialKey]: oauth('quota-neighbor') };
             const { OpenAICodexAuthService } = await import('../src/host/index.ts');
-            const first = harness(seed);
+            const first = harness(seed, profile);
             void new OpenAICodexAuthService(first.ctx, { accounts: [work, neighbor] });
             const limits = [{ name: 'Codex', usedPercent: 42, windowSeconds: 18000, resetAt: Date.now() + 1000 }];
             mocks.usage.mockResolvedValueOnce({ limited: false, limits, credits: { hasCredits: true, unlimited: false, balance: '7' } });
@@ -974,9 +974,17 @@ describe('OpenAI Hub host integration', () => {
             expect(failure.accounts[0]).toMatchObject({ usageStatus: 'error', usageLimits: limits });
             const empty = await remote().refreshUsage({ accountLabel: 'work' });
             expect(empty.accounts[0]).toMatchObject({ usageStatus: 'ready', usageLimits: limits });
+            first.remountAfterConfigEdit(nextConfig => {
+                first.dispose();
+                void new OpenAICodexAuthService(first.ctx, nextConfig);
+            });
+            for (const autoRefreshLimits of [true, false]) {
+                const toggled = await remote().updateAccount({ accountLabel: 'work', newLabel: 'work', autoRefreshLimits });
+                expect(toggled.accounts[0]).toMatchObject({ autoRefreshLimits, usageLimits: limits });
+            }
             first.dispose();
 
-            const second = harness(seed);
+            const second = harness(seed, profile);
             void new OpenAICodexAuthService(second.ctx, { accounts: [{ ...work, accountLabel: 'renamed' }, neighbor] });
             const restored = await remote().snapshot();
             expect(restored.accounts).toMatchObject([

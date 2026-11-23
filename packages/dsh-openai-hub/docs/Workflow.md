@@ -38,7 +38,9 @@ The API catalog is authoritative. If a refresh fails after a successful fetch, t
 
 Settings -> Models displays one information block and a dedicated model modal for each account. Each account has its own persisted automatic quota-refresh switch, off by default. Enabling it polls that account every five minutes. For the account/model selected in chat, use one-minute polling when its nearest applicable remaining quota is below 25%. When choosing the applicable window, prioritize hourly, then five-hour, then daily limits. Hidden pages issue no polling requests; returning to a visible page triggers one refresh for the relevant account. Manual refresh and opening an account's model modal concern that account only.
 
-The chat status bar reads the SDK's per-session `modelDirectories.directoryFor(sessionId).store` selection, not timeline history or guessed slot fields. It shows quota only for the currently selected OpenAI Hub model and its account; it is hidden for other providers, stale selections, or quota older than ten minutes. A plugin-lifetime subscription retains one polling timer per enabled account even with settings and composer unmounted. Settings and dock share that scheduler, preventing duplicate quota requests.
+The chat status bar reads the SDK's per-session `modelDirectories.directoryFor(sessionId).store` selection, not timeline history or guessed slot fields. It shows the last known quota for the selected OpenAI Hub model and account. A plugin-lifetime subscription retains one polling timer per enabled account even with settings and composer unmounted. Settings and dock share that scheduler, preventing duplicate quota requests.
+
+Toggling automatic refresh leaves the last known quota intact. Enabling it requests quota immediately only when no quota has been obtained yet. The host saves the last successful quota per account in the DSH profile and restores it on startup, even when automatic refresh is off. Failed or empty refreshes do not replace saved limits.
 
 ## Reinstall and acceptance
 

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Провайдер OpenAI Codex",
+    "description": "Подключает модели OpenAI Codex через один или несколько аккаунтов ChatGPT."
+  }
+}

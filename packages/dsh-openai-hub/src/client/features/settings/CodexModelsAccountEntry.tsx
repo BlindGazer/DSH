@@ -60,27 +60,11 @@ export function CodexModelsAccountEntry({
     const percent = new Intl.NumberFormat(locale, { style: 'percent' });
     const summary = text('modelsEnabledSummary', { enabled: number.format(enabled), total: number.format(account.models.length) });
     const needsAttention = !account.loggedIn;
+    const fiveHour = account.usageLimits.find(limit => limit.windowSeconds === 18_000);
+    const weekly = account.usageLimits.find(limit => limit.windowSeconds === 604_800);
     const chartLimits = [
-        ...(account.usageStatus === 'error' || account.usageLimits.some(limit => limit.windowSeconds === 18_000)
-            ? [
-                  {
-                      id: 'five-hour',
-                      name: text('fiveHourLimit'),
-                      usedPercent:
-                          account.usageStatus === 'error'
-                              ? 100
-                              : (account.usageLimits.find(limit => limit.windowSeconds === 18_000)?.usedPercent ?? 100)
-                  }
-              ]
-            : []),
-        {
-            id: 'weekly',
-            name: text('weeklyLimit'),
-            usedPercent:
-                account.usageStatus === 'error'
-                    ? 100
-                    : (account.usageLimits.find(limit => limit.windowSeconds === 604_800)?.usedPercent ?? 100)
-        }
+        ...(fiveHour ? [{ id: 'five-hour', name: text('fiveHourLimit'), usedPercent: fiveHour.usedPercent }] : []),
+        { id: 'weekly', name: text('weeklyLimit'), usedPercent: weekly?.usedPercent }
     ];
     return (
         <>
@@ -101,14 +85,20 @@ export function CodexModelsAccountEntry({
                         </div>
                         <div className={styles.modelsUsageIndicators}>
                             {chartLimits.map(limit => {
-                                const remainingPercent = Math.max(0, Math.min(100, Math.round(100 - limit.usedPercent)));
-                                const label = `${limit.name}: ${percent.format(remainingPercent / 100)}`;
+                                const remainingPercent =
+                                    limit.usedPercent === undefined
+                                        ? undefined
+                                        : Math.max(0, Math.min(100, Math.round(100 - limit.usedPercent)));
+                                const value = remainingPercent === undefined ? text('quotaNoData') : percent.format(remainingPercent / 100);
+                                const label = `${limit.name}: ${value}`;
                                 return (
                                     <span key={limit.id} className={styles.quotaIndicator}>
-                                        <Tooltip content={label} triggerElement="span">
-                                            <CircularProgress value={remainingPercent} size="standard" />
-                                        </Tooltip>
-                                        <span>{percent.format(remainingPercent / 100)}</span>
+                                        {remainingPercent !== undefined && (
+                                            <Tooltip content={label} triggerElement="span">
+                                                <CircularProgress value={remainingPercent} size="standard" />
+                                            </Tooltip>
+                                        )}
+                                        <span>{value}</span>
                                     </span>
                                 );
                             })}

@@ -27,8 +27,16 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
     const folderNameId = `${id}-folder`;
     const locked = dialog.action !== undefined || dialog.loading;
     const prepared = dialog.preparedPath !== undefined;
-    const available = dialog.mode === 'new' ? dialog.branches : dialog.freeBranches;
-    const branchOptions = available.map(branch => ({ value: branch, label: branch }));
+    const branchOptions =
+        dialog.mode === 'new'
+            ? dialog.sourceOptions.map(({ value, name, remote }) => ({
+                  value,
+                  label: remote ? `${name} (${t('worktreeRemoteBranch')})` : name
+              }))
+            : dialog.existingOptions.map(option => ({
+                  value: option.value,
+                  label: option.originBranch !== undefined ? `${option.originBranch} (${t('worktreeCreateLocalBranch')})` : option.branch
+              }));
     const checkoutOptions = dialog.checkouts.map(item => ({
         value: item.path,
         label: `${item.branch ?? t('worktreeDetached')} (${item.path})`
@@ -41,7 +49,7 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
                 title={t('worktreeTitle')}
                 closeLabel={t('close')}
                 onClose={dialog.close}
-                cardClassName={styles.dialog ?? ''}
+                cardClassName={`${styles.dialog} ${styles.creationDialog}`}
                 footer={
                     <div className={styles.footer}>
                         <Button disabled={dialog.action !== undefined} onClick={dialog.close}>
@@ -102,6 +110,10 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
                                                 id={selectId}
                                                 optionClassName={styles.option ?? ''}
                                                 value={dialog.checkout}
+                                                search={{
+                                                    placeholder: t('worktreeSearchCheckout'),
+                                                    emptyText: t('worktreeNoCheckoutMatches')
+                                                }}
                                                 options={[
                                                     { value: '', label: t('worktreeSelectCheckout'), disabled: true },
                                                     ...checkoutOptions
@@ -109,7 +121,6 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
                                                 onChange={dialog.setCheckout}
                                                 disabled={locked}
                                             />
-                                            {dialog.checkout ? <p>{dialog.checkout}</p> : null}
                                         </>
                                     ) : (
                                         <p>{t('worktreeNoCheckouts')}</p>
@@ -117,42 +128,48 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
                                 </div>
                             ) : (
                                 <>
-                                    <div className={styles.field}>
-                                        {branchOptions.length ? (
-                                            <>
-                                                <label htmlFor={selectId}>
-                                                    {t(dialog.mode === 'new' ? 'worktreeSourceBranch' : 'worktreeFreeBranch')}
-                                                </label>
-                                                <ThemedSelect
-                                                    key={dialog.mode}
-                                                    fullWidth
-                                                    id={selectId}
-                                                    optionClassName={styles.option ?? ''}
-                                                    value={dialog.mode === 'new' ? dialog.sourceBranch : dialog.branch}
-                                                    options={[
-                                                        { value: '', label: t('worktreeSelectBranch'), disabled: true },
-                                                        ...branchOptions
-                                                    ]}
-                                                    onChange={dialog.mode === 'new' ? dialog.setSourceBranch : dialog.setBranch}
+                                    <div className={styles.branchFields}>
+                                        <div className={styles.field}>
+                                            {branchOptions.length ? (
+                                                <>
+                                                    <label htmlFor={selectId}>
+                                                        {t(dialog.mode === 'new' ? 'worktreeSourceBranch' : 'worktreeFreeBranch')}
+                                                    </label>
+                                                    <ThemedSelect
+                                                        key={dialog.mode}
+                                                        fullWidth
+                                                        id={selectId}
+                                                        optionClassName={styles.option ?? ''}
+                                                        value={dialog.mode === 'new' ? dialog.sourceBranch : dialog.branch}
+                                                        search={{
+                                                            placeholder: t('worktreeSearchBranch'),
+                                                            emptyText: t('worktreeNoBranchMatches')
+                                                        }}
+                                                        options={[
+                                                            { value: '', label: t('worktreeSelectBranch'), disabled: true },
+                                                            ...branchOptions
+                                                        ]}
+                                                        onChange={dialog.mode === 'new' ? dialog.setSourceBranch : dialog.setBranch}
+                                                        disabled={locked}
+                                                    />
+                                                </>
+                                            ) : (
+                                                <p>{t(dialog.mode === 'new' ? 'worktreeNoBranches' : 'worktreeNoFreeBranches')}</p>
+                                            )}
+                                        </div>
+                                        {dialog.mode === 'new' ? (
+                                            <div className={styles.field}>
+                                                <label htmlFor={branchNameId}>{t('worktreeBranchName')}</label>
+                                                <TextField
+                                                    id={branchNameId}
+                                                    className={styles.input ?? ''}
+                                                    value={dialog.branchName}
+                                                    onChange={dialog.setBranchName}
                                                     disabled={locked}
                                                 />
-                                            </>
-                                        ) : (
-                                            <p>{t(dialog.mode === 'new' ? 'worktreeNoBranches' : 'worktreeNoFreeBranches')}</p>
-                                        )}
+                                            </div>
+                                        ) : null}
                                     </div>
-                                    {dialog.mode === 'new' ? (
-                                        <div className={styles.field}>
-                                            <label htmlFor={branchNameId}>{t('worktreeBranchName')}</label>
-                                            <TextField
-                                                id={branchNameId}
-                                                className={styles.input ?? ''}
-                                                value={dialog.branchName}
-                                                onChange={dialog.setBranchName}
-                                                disabled={locked}
-                                            />
-                                        </div>
-                                    ) : null}
                                     <div className={styles.field}>
                                         <label htmlFor={basePathId}>{t('worktreeBasePath')}</label>
                                         <div className={styles.picker}>
@@ -183,7 +200,9 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
                                     <dl>
                                         <div>
                                             <dt>{t('worktreeResultPath')}</dt>
-                                            <dd>{dialog.resultPath}</dd>
+                                            <dd className={dialog.resultPath ? undefined : styles.pathHint}>
+                                                {dialog.resultPath ?? (dialog.invalidFolder ? '-' : t('worktreeResultPathHint'))}
+                                            </dd>
                                         </div>
                                     </dl>
                                 </>

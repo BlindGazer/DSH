@@ -1190,6 +1190,7 @@ function registerVscodeRoutes(ctx, enabled, logger = NOOP_LOGGER) {
 }
 // src/host/services/WorktreeService.ts
 var BRANCH_PREFIX = "refs/heads/";
+var REMOTE_PREFIX = "refs/remotes/";
 var FILTER_ATTRIBUTES = [
 	"clean",
 	"smudge",
@@ -1313,7 +1314,7 @@ async function inspectRepository(workspacePath) {
 	if (top.status !== 0) throw new WorktreeError("notRepository");
 	const root = await canonicalDirectory(line(top.stdout));
 	if (root === null) throw new WorktreeError("notRepository");
-	const [listed, local, head] = await Promise.all([
+	const [listed, local, remote, head] = await Promise.all([
 		git(root, [
 			"worktree",
 			"list",
@@ -1326,11 +1327,20 @@ async function inspectRepository(workspacePath) {
 			BRANCH_PREFIX
 		]),
 		git(root, [
+			"for-each-ref",
+			"--format=%(refname:strip=2)%00%(symref)",
+			REMOTE_PREFIX
+		]),
+		git(root, [
 			"symbolic-ref",
 			"--quiet",
 			"HEAD"
 		], [0, 1])
 	]);
+	const remoteBranches = remote.stdout.split(/\r?\n/).flatMap((record) => {
+		const [name, target] = record.split("\0");
+		return name && target === "" ? [name] : [];
+	});
 	const branches = local.stdout.split(/\r?\n/).flatMap((ref) => {
 		const branch = branchName(ref);
 		return branch === null ? [] : [branch];
@@ -1357,8 +1367,10 @@ async function inspectRepository(workspacePath) {
 		repository: {
 			currentBranch: currentBranch !== null && branches.includes(currentBranch) ? currentBranch : null,
 			isLinkedWorktree: relative(workspace, root) === "" && checkouts.some((checkout) => relative(checkout.path, root) === "") && relative(await gitDirectory(root, "--absolute-git-dir"), await gitDirectory(root, "--git-common-dir")) !== "",
+			...relative(workspace, root) === "" && registrations[0] && relative(registrations[0].path, root) === "" ? { deletableCheckouts: checkouts.filter((checkout) => relative(checkout.path, root) !== "") } : {},
 			defaultBasePath: join(workspace, DEFAULT_WORKTREE_DIRECTORY),
 			branches,
+			remoteBranches,
 			occupiedBranches: [...new Set(registrations.flatMap(({ branch }) => branch === null ? [] : [branch]))],
 			checkouts
 		}
@@ -1393,19 +1405,25 @@ async function resolveBranch(state, selection) {
 	const { branch } = selection;
 	const { root, repository } = state;
 	if (!branch || branch === "HEAD" || branch.startsWith("-") || branch.includes("\0") || (await git(root, ["check-ref-format", `${BRANCH_PREFIX}${branch}`], [0, 1])).status !== 0) throw new WorktreeError("invalidBranch");
+	if (selection.mode === "existing" && selection.originBranch !== void 0) {
+		if (repository.branches.includes(branch)) throw new WorktreeError("branchExists");
+		if (repository.occupiedBranches.includes(branch)) throw new WorktreeError("branchOccupied");
+		if (selection.originBranch !== `origin/${branch}` || !repository.remoteBranches?.includes(selection.originBranch)) throw new WorktreeError("sourceMissing");
+		return `${REMOTE_PREFIX}${selection.originBranch}`;
+	}
 	if (selection.mode === "existing") {
 		if (!repository.branches.includes(branch)) throw new WorktreeError("branchMissing");
 		if (repository.occupiedBranches.includes(branch)) throw new WorktreeError("branchOccupied");
 		return branch;
 	}
 	if (repository.branches.includes(branch)) throw new WorktreeError("branchExists");
-	if (!repository.branches.includes(selection.sourceBranch)) throw new WorktreeError("sourceMissing");
+	if (!(selection.sourceRemote ? repository.remoteBranches : repository.branches)?.includes(selection.sourceBranch)) throw new WorktreeError("sourceMissing");
 	const commit = await git(root, [
 		"show-ref",
 		"--hash",
 		"--verify",
 		"--",
-		`${BRANCH_PREFIX}${selection.sourceBranch}`
+		`${selection.sourceRemote ? REMOTE_PREFIX : BRANCH_PREFIX}${selection.sourceBranch}`
 	], [0, 128]);
 	if (commit.status !== 0) throw new WorktreeError("sourceMissing");
 	return line(commit.stdout);
@@ -1524,6 +1542,10 @@ async function prepareWorktree(workspacePath, selection, checkWritable) {
 	}
 	const branchArgs = selection.mode === "new" ? [
 		"--no-track",
+		"-b",
+		selection.branch
+	] : selection.originBranch !== void 0 ? [
+		"--track",
 		"-b",
 		selection.branch
 	] : [];
@@ -1813,19 +1835,29 @@ function parseSelection(value) {
 		path
 	};
 	if (!text(basePath) || !text(folderName) || !text(branch)) return void 0;
-	if (mode === "new" && text(sourceBranch)) return {
-		mode,
-		basePath,
-		folderName,
-		branch,
-		sourceBranch
-	};
-	if (mode === "existing") return {
-		mode,
-		basePath,
-		folderName,
-		branch
-	};
+	if (mode === "new" && text(sourceBranch)) {
+		const { sourceRemote } = value;
+		if (sourceRemote !== void 0 && typeof sourceRemote !== "boolean") return void 0;
+		return {
+			mode,
+			basePath,
+			folderName,
+			branch,
+			sourceBranch,
+			...sourceRemote ? { sourceRemote } : {}
+		};
+	}
+	if (mode === "existing") {
+		const { originBranch } = value;
+		if (originBranch !== void 0 && !text(originBranch)) return void 0;
+		return {
+			mode,
+			basePath,
+			folderName,
+			branch,
+			...originBranch === void 0 ? {} : { originBranch }
+		};
+	}
 }
 function parseDeletion(body) {
 	const { worktreePath, expectedBranch, deleteBranch, mergeInto } = body;
@@ -1870,6 +1902,7 @@ function registerWorktreeRoutes(ctx, service, logger = NOOP_LOGGER) {
 					if (action === "delete") {
 						const deletion = parseDeletion(body);
 						if (deletion === void 0) return response({ ok: false }, 400);
+						protectedDirs.push(...service.getDirectoriesForWorkspace(deletion.worktreePath).filter((dir) => dir.readOnly));
 						return response({
 							ok: true,
 							result: await deleteWorktree(workspace.path, deletion, checkWritable, (code, error) => {

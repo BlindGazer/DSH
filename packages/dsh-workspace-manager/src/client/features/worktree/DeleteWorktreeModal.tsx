@@ -12,11 +12,11 @@ export interface DeleteWorktreeModalProps {
     readonly repository: WorktreeRepository;
     readonly t: Translate;
     readonly onClose: () => void;
-    readonly onDeleted: (warnings: readonly string[]) => Promise<void>;
+    readonly onDeleted: (warnings: readonly string[], checkoutPath: string) => Promise<void>;
 }
 
 export function DeleteWorktreeModal({ target, repository, t, onClose, onDeleted }: DeleteWorktreeModalProps) {
-    const dialog = useDeleteWorktree(target, repository, onDeleted);
+    const dialog = useDeleteWorktree(target.workspaceId, repository, onDeleted);
     const theme = useEffectiveTheme();
     const id = useId();
     const close = () => {
@@ -43,12 +43,30 @@ export function DeleteWorktreeModal({ target, repository, t, onClose, onDeleted 
                     </div>
                 }>
                 <div className={styles.form}>
-                    <WorktreeSummary title={target.displayTitle} path={target.path} branch={repository?.currentBranch} t={t} />
+                    <WorktreeSummary title={target.displayTitle} path={target.path} branch={repository.currentBranch} t={t} />
+                    <div className={styles.field}>
+                        <label htmlFor={`${id}-checkout`}>{t('worktreeCheckout')}</label>
+                        <ThemedSelect
+                            fullWidth
+                            id={`${id}-checkout`}
+                            optionClassName={styles.option ?? ''}
+                            value={dialog.checkout?.path ?? ''}
+                            options={[
+                                { value: '', label: t('worktreeSelectCheckout'), disabled: true },
+                                ...dialog.checkouts.map(({ path, branch }) => ({
+                                    value: path,
+                                    label: `${branch ?? t('worktreeDetached')} (${path})`
+                                }))
+                            ]}
+                            disabled={dialog.busy || !dialog.checkouts.length}
+                            onChange={dialog.selectCheckout}
+                        />
+                    </div>
                     <label htmlFor={`${id}-folder`}>
                         <Checkbox
                             id={`${id}-folder`}
                             checked={dialog.folder}
-                            disabled={dialog.busy}
+                            disabled={dialog.busy || !dialog.checkout}
                             onChange={checked => {
                                 dialog.setFolder(checked);
                                 if (!checked) {
@@ -60,19 +78,14 @@ export function DeleteWorktreeModal({ target, repository, t, onClose, onDeleted 
                         {t('worktreeDeleteFolder')}
                     </label>
                     <label htmlFor={`${id}-branch`}>
-                        <Checkbox
-                            id={`${id}-branch`}
-                            checked={dialog.branch}
-                            disabled={!dialog.folder || dialog.busy || repository.currentBranch === null}
-                            onChange={dialog.setBranch}
-                        />{' '}
+                        <Checkbox id={`${id}-branch`} checked={dialog.branch} disabled={!dialog.canUseBranch} onChange={dialog.setBranch} />{' '}
                         {t('worktreeDeleteBranch')}
                     </label>
                     <label htmlFor={`${id}-merge`}>
                         <Checkbox
                             id={`${id}-merge`}
                             checked={dialog.merge}
-                            disabled={!dialog.folder || dialog.busy || repository.currentBranch === null || !dialog.branches.length}
+                            disabled={!dialog.canUseBranch || !dialog.branches.length}
                             onChange={dialog.setMerge}
                         />{' '}
                         {t('worktreeMergeFirst')}

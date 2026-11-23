@@ -1,7 +1,8 @@
 {
   "name": "@kalex/dsh-logger",
   "version": "2.0.0",
-  "description": "Logger manager for integrated plugins",
+  "description": "Centralizes logging and log settings for integrated DSH plugins.",
+  "icon": "assets/icon.svg",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/BlindGazer/DSH.git",
@@ -27,7 +28,9 @@
     "./typert": {
       "default": "./lib/remote.js"
     },
-    "./cordis.patch.yml": "./cordis.patch.yml"
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
+    "./package.json": "./package.json"
   },
   "dsh": {
     "bundle": {
@@ -45,7 +48,9 @@
   "files": [
     "lib",
     "cordis.patch.yml",
-    "README.md"
+    "README.md",
+    "locale",
+    "assets"
   ],
   "dependencies": {
     "react-compiler-runtime": "^1.0.0",

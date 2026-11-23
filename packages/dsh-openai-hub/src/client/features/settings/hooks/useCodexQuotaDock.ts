@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useEffect, useSyncExternalStore } from 'react';
 import { ProviderRoute } from '../../../../shared/constants/runtime.ts';
 import type { ModelDirectories, ModelSelectionSource, ModelSelectionState } from '../modelSelectionSource.ts';
 import { selectedModels } from '../modelSelectionSource.ts';
@@ -20,7 +20,6 @@ export function useCodexQuotaDock(controller: OpenAICodexController, directories
     const store = source?.store ?? noSelection;
     const selection = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getSnapshot);
     const state = useCodexState(controller);
-    const [now, setNow] = useState(Date.now);
     const selected = selection.routable === true && selection.current?.provider === ProviderRoute ? selection.current : undefined;
     const account = state.snapshot?.accounts.find(
         item =>
@@ -39,16 +38,6 @@ export function useCodexQuotaDock(controller: OpenAICodexController, directories
         if (!provider || !model || !accountLabel) return undefined;
         return selectedModels.retain({ provider, model });
     }, [accountLabel, model, provider]);
-    const updatedAt = account?.usageUpdatedAt ?? 0;
-    const autoRefresh = account?.autoRefreshLimits;
-    useEffect(() => {
-        if (!autoRefresh || !updatedAt) return undefined;
-        const timer = setTimeout(() => setNow(Date.now()), Math.max(0, updatedAt + 600000 - Date.now()));
-        return () => clearTimeout(timer);
-    }, [autoRefresh, updatedAt]);
     useCodexAccountPolling(account, controller);
-    return {
-        account,
-        visible: updatedAt > 0 && (!autoRefresh || now - updatedAt < 600000)
-    };
+    return { account, visible: (account?.usageUpdatedAt ?? 0) > 0 };
 }

@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "OpenAI Codex provider",
+    "description": "Connects OpenAI Codex models through one or more ChatGPT accounts."
+  }
+}

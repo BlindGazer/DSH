@@ -8948,6 +8948,11 @@ function runtime(config, cache) {
 		}
 	};
 }
+function profileDirectory(ctx) {
+	if (!("profileContext" in ctx)) return void 0;
+	const profile = ctx.profileContext;
+	return profile && typeof profile === "object" && "dir" in profile && typeof profile.dir === "string" ? profile.dir : void 0;
+}
 var AccountsRuntime = class {
 	ctx;
 	logging;
@@ -8961,7 +8966,7 @@ var AccountsRuntime = class {
 	login;
 	submitManualCode;
 	retryOAuthTokenExchange;
-	constructor(ctx, config, logging, usageCache = new UsageCache()) {
+	constructor(ctx, config, logging, usageCache = new UsageCache(profileDirectory(ctx))) {
 		this.ctx = ctx;
 		this.logging = logging;
 		this.usageCache = usageCache;
@@ -9599,7 +9604,7 @@ var AccountsRuntime = class {
 					if (usage.status !== "fulfilled") throw new Error("Usage unavailable");
 					account.view.usageStatus = "ready";
 					account.view.usageError = "";
-					if (usage.value.limits.length || !account.view.usageLimits.length) {
+					if (usage.value.limits.length > 0) {
 						Object.assign(account.view, {
 							usageLimited: usage.value.limited,
 							usageLimits: usage.value.limits,

@@ -17,14 +17,15 @@ export function useCodexModelsFooterEntry(controller: OpenAICodexController) {
         state.snapshot?.status === 'starting' ||
         state.snapshot?.accounts.some(account => account.catalogStatus === 'fallback') === true;
     const accounts: readonly AccountSnapshot[] = state.snapshot?.accounts ?? [];
-    const shouldPoll = initializing || accounts.some(account => account.autoRefreshLimits);
     useEffect(() => {
+        if (document.visibilityState === 'visible') void controller.load(true);
+    }, [controller]);
+    useEffect(() => {
+        if (!initializing) return undefined;
         const refresh = () => {
             if (document.visibilityState === 'visible') void controller.load(true);
         };
-        refresh();
-        if (!shouldPoll) return undefined;
-        const timer = window.setInterval(refresh, initializing ? 2500 : 300000);
+        const timer = window.setInterval(refresh, 2500);
         const visibility = () => {
             if (document.visibilityState === 'visible') refresh();
         };
@@ -33,7 +34,7 @@ export function useCodexModelsFooterEntry(controller: OpenAICodexController) {
             if (timer !== undefined) window.clearInterval(timer);
             document.removeEventListener('visibilitychange', visibility);
         };
-    }, [controller, initializing, shouldPoll]);
+    }, [controller, initializing]);
     const reauthenticate = (account: AccountSnapshot) =>
         setReauthenticateAccount({ accountLabel: account.accountLabel, authMethod: account.authMethod });
     const requestDeleteAccount = (accountLabel: string) => {

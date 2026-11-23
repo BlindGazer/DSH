@@ -1,7 +1,8 @@
 {
   "name": "@kalex/dsh-openai-hub",
   "version": "2.0.0",
-  "description": "OpenAI Hub: multiple ChatGPT accounts under one DSH model provider",
+  "description": "Use OpenAI Codex models in DSH through one or more ChatGPT accounts.",
+  "icon": "assets/icon.svg",
   "type": "module",
   "main": "./lib/index.js",
   "exports": {
@@ -10,6 +11,7 @@
     "./remote": "./lib/remote.js",
     "./typert": "./lib/remote.js",
     "./cordis.patch.yml": "./cordis.patch.yml",
+    "./locale/*.json": "./locale/*.json",
     "./package.json": "./package.json"
   },
   "files": [
@@ -17,6 +19,8 @@
     "cordis.patch.yml",
     "README.md",
     "docs",
+    "locale",
+    "assets",
     "LICENSE",
     "package.json"
   ],
@@ -24,8 +28,8 @@
     "plugin": {
       "schemaVersion": 1,
       "displayName": {
-        "en": "OpenAI Hub",
-        "ru": "OpenAI Hub"
+        "en": "OpenAI Codex provider",
+        "ru": "Провайдер OpenAI Codex"
       },
       "summary": {
         "en": "Use multiple ChatGPT accounts, current models and account limits in DSH.",

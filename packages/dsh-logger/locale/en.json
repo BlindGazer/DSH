@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Plugin logs",
+    "description": "Controls logging and log levels for plugins integrated with the DSH logger."
+  }
+}

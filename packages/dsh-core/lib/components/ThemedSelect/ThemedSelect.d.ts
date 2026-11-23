@@ -16,9 +16,13 @@ export interface ThemedSelectProps<TValue extends string = string> {
     readonly optionClassName?: string;
     readonly id?: string;
     readonly error?: string | undefined;
+    readonly search?: {
+        readonly placeholder: string;
+        readonly emptyText: string;
+    };
 }
 /**
  * Стандартизированный выпадающий список дизайн-системы @kalex/dsh-core.
  * Рендерит меню в DOM (избегая белого нативного попапа Chromium в темной теме) и поддерживает клавиатуру.
  */
-export declare function ThemedSelect<TValue extends string = string>({ value, size, options, onChange, disabled, fullWidth, showCheckmark, className, triggerClassName, menuClassName, optionClassName, id, error }: ThemedSelectProps<TValue>): import("react").JSX.Element;
+export declare function ThemedSelect<TValue extends string = string>({ value, size, options, onChange, disabled, fullWidth, showCheckmark, className, triggerClassName, menuClassName, optionClassName, id, error, search }: ThemedSelectProps<TValue>): import("react").JSX.Element;

@@ -57,7 +57,7 @@ export function useWorktreeDialog({ inspect, prepare, openSession, pick, onClose
             try {
                 const repository = await inspectRef.current(controller.signal);
                 if (controller.signal.aborted) return;
-                setSourceBranch(current => current ?? repository.currentBranch ?? '');
+                setSourceBranch(current => current ?? (repository.currentBranch === null ? '' : `local:${repository.currentBranch}`));
                 setSnapshot({ generation, repository });
             } catch (error) {
                 if (!controller.signal.aborted) {
@@ -77,11 +77,23 @@ export function useWorktreeDialog({ inspect, prepare, openSession, pick, onClose
     const loadError = loading ? undefined : snapshot?.error;
     const branches = repository?.branches ?? [];
     const occupied = new Set(repository?.occupiedBranches);
-    const freeBranches = branches.filter(branch => !occupied.has(branch));
+    const local = new Set(branches);
+    const existingOptions = [
+        ...branches.filter(branch => !occupied.has(branch)).map(branch => ({ value: branch, branch, originBranch: undefined })),
+        ...(repository?.remoteBranches ?? []).flatMap(originBranch => {
+            if (!originBranch.startsWith('origin/')) return [];
+            const branch = originBranch.slice('origin/'.length);
+            return local.has(branch) || occupied.has(branch) ? [] : [{ value: `remote:${originBranch}`, branch, originBranch }];
+        })
+    ];
     const checkouts = repository?.checkouts ?? [];
     const source = draftSource ?? '';
-    const sourceBranch = branches.includes(source) ? source : '';
-    const branch = freeBranches.includes(draftBranch) ? draftBranch : '';
+    const sourceOptions = [
+        ...branches.map(name => ({ value: `local:${name}`, name, remote: false })),
+        ...(repository?.remoteBranches ?? []).map(name => ({ value: `remote:${name}`, name, remote: true }))
+    ];
+    const selectedSource = sourceOptions.find(option => option.value === source);
+    const selectedBranch = existingOptions.find(option => option.value === draftBranch);
     const checkout = checkouts.some(item => item.path === draftCheckout) ? draftCheckout : '';
     const basePath = draftBase ?? repository?.defaultBasePath ?? '';
     const destination = { basePath: basePath.trim(), folderName: folderName.trim() };
@@ -92,9 +104,18 @@ export function useWorktreeDialog({ inspect, prepare, openSession, pick, onClose
     const resultPath = hasDestination ? previewDestination(destination.basePath, destination.folderName) : undefined;
     let selection: WorktreeSelection | undefined;
     if (mode === 'open' && checkout) selection = { mode, path: checkout };
-    if (mode === 'existing' && branch && hasDestination) selection = { mode, branch, ...destination };
-    if (mode === 'new' && sourceBranch && branchName.trim() && hasDestination) {
-        selection = { mode, sourceBranch, branch: branchName.trim(), ...destination };
+    if (mode === 'existing' && selectedBranch && hasDestination) {
+        const { originBranch } = selectedBranch;
+        selection = { mode, branch: selectedBranch.branch, ...(originBranch === undefined ? {} : { originBranch }), ...destination };
+    }
+    if (mode === 'new' && selectedSource && branchName.trim() && hasDestination) {
+        selection = {
+            mode,
+            sourceBranch: selectedSource.name,
+            ...(selectedSource.remote ? { sourceRemote: true } : {}),
+            branch: branchName.trim(),
+            ...destination
+        };
     }
     const canSubmit = action === undefined && !loading && !loadError && (selection !== undefined || preparedPath !== undefined);
 
@@ -149,7 +170,9 @@ export function useWorktreeDialog({ inspect, prepare, openSession, pick, onClose
             }
             const key = getWorktreeErrorKey(error instanceof Error ? error : undefined, 'worktreeGitFailed');
             setActionError(key);
-            if (shouldRefreshWorktree(key)) setGeneration(current => current + 1);
+            if (shouldRefreshWorktree(key) || (key === 'worktreeBranchExists' && selection?.mode === 'existing')) {
+                setGeneration(current => current + 1);
+            }
         } finally {
             if (!opened) {
                 locked.current = false;
@@ -163,13 +186,13 @@ export function useWorktreeDialog({ inspect, prepare, openSession, pick, onClose
         mode,
         setMode,
         repository,
-        branches,
-        sourceBranch,
+        sourceOptions,
+        sourceBranch: selectedSource?.value ?? '',
         setSourceBranch,
         branchName,
         setBranchName,
-        freeBranches,
-        branch,
+        existingOptions,
+        branch: selectedBranch?.value ?? '',
         setBranch,
         checkouts,
         checkout,

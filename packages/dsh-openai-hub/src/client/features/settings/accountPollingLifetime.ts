@@ -24,8 +24,8 @@ export function startAccountPolling(controller: OpenAICodexController): () => vo
             const delay = usageRefreshInterval(account, selection?.model.slice(prefix.length));
             const previous = retained.get(account.accountLabel);
             if (previous?.delay === delay) continue;
-            previous?.release();
             retained.set(account.accountLabel, { delay, release: retainQuotaPolling(controller, account.accountLabel, delay) });
+            previous?.release();
         }
     };
     const stopState = controller.subscribe(sync);

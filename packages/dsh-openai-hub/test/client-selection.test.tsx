@@ -41,7 +41,7 @@ function harness(accounts = [account('work'), account('personal', 10)]) {
         cancelLogin: reply,
         retryLogin: reply,
         submitCallbackUrl: reply,
-        updateAccount: reply,
+        updateAccount: vi.fn(reply),
         deleteAccount: reply,
         refreshCatalog: reply,
         refreshUsage: vi.fn(reply),
@@ -87,11 +87,38 @@ describe('selected OpenAI Hub account', () => {
         const h = harness([{ ...account('work'), autoRefreshLimits: true }]);
         const stop = startAccountPolling(h.controller);
         await h.controller.load();
+        expect(h.remote.refreshUsage).not.toHaveBeenCalled();
         await vi.advanceTimersByTimeAsync(300000);
         expect(h.remote.refreshUsage).toHaveBeenCalledOnce();
         stop();
         await vi.advanceTimersByTimeAsync(300000);
         expect(h.remote.refreshUsage).toHaveBeenCalledOnce();
+    });
+    it('fetches missing quota immediately when automatic refresh is enabled and stops the timer when disabled', async () => {
+        vi.useFakeTimers();
+        Object.defineProperty(document, 'visibilityState', { value: 'visible', configurable: true });
+        const empty = { ...account('work'), usageStatus: 'idle' as const, usageLimits: [], usageUpdatedAt: 0 };
+        const h = harness([empty]);
+        const stop = startAccountPolling(h.controller);
+        try {
+            await h.controller.load();
+            expect(h.remote.refreshUsage).not.toHaveBeenCalled();
+
+            const snapshot = await h.remote.snapshot();
+            const enabled = { ...empty, autoRefreshLimits: true };
+            h.remote.updateAccount.mockResolvedValueOnce({ ...snapshot, accounts: [enabled] });
+            h.remote.refreshUsage.mockResolvedValueOnce({ ...snapshot, accounts: [{ ...account('work'), autoRefreshLimits: true }] });
+
+            await h.controller.updateAccount('work', 'work', true);
+            expect(h.remote.refreshUsage).toHaveBeenCalledExactlyOnceWith({ accountLabel: 'work' });
+            expect(h.controller.getSnapshot().snapshot?.accounts[0]?.autoRefreshLimits).toBe(true);
+
+            await h.controller.updateAccount('work', 'work', false);
+            await vi.advanceTimersByTimeAsync(300000);
+            expect(h.remote.refreshUsage).toHaveBeenCalledOnce();
+        } finally {
+            stop();
+        }
     });
     it('follows the selected account, shows only its circular status, and hides for other or stale selections', async () => {
         const h = harness();
@@ -148,7 +175,7 @@ describe('selected OpenAI Hub account', () => {
         ]);
         expect(within(popover).getAllByText(/Resets in/)).toHaveLength(2);
     });
-    it.each([true, false])('expires old quota only when automatic refresh is enabled (%s)', async autoRefreshLimits => {
+    it.each([true, false])('keeps quota visible after ten minutes with automatic refresh set to %s', async autoRefreshLimits => {
         vi.useFakeTimers();
         const stale = { ...account('work'), autoRefreshLimits, usageUpdatedAt: Date.now() - 600001 };
         const h = harness([stale]);
@@ -159,8 +186,8 @@ describe('selected OpenAI Hub account', () => {
             );
             await vi.advanceTimersByTimeAsync(0);
         });
-        expect(Boolean(screen.queryByTestId('openai-hub-quota-dock'))).toBe(!autoRefreshLimits);
-        if (!autoRefreshLimits) expect(h.remote.refreshUsage).not.toHaveBeenCalled();
+        expect(screen.getByRole('button', { name: '10%' })).toBeTruthy();
+        expect(h.remote.refreshUsage).not.toHaveBeenCalled();
     });
     it('accelerates only a selected model and honors hourly before five-hour and daily windows', () => {
         const value = account('work');

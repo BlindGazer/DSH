@@ -140,11 +140,11 @@ export class OpenAICodexController {
             { event: 'account_update', operation: 'updateAccount', accountLabel },
             async () => {
                 const snapshot = await this.remote.updateAccount({ accountLabel, newLabel, autoRefreshLimits });
-                if (!previous?.autoRefreshLimits || autoRefreshLimits) return snapshot;
+                if (!previous || previous.autoRefreshLimits === autoRefreshLimits) return snapshot;
                 return {
                     ...snapshot,
                     accounts: snapshot.accounts.map(account =>
-                        account.accountLabel === newLabel
+                        account.accountLabel === newLabel && account.usageUpdatedAt <= previous.usageUpdatedAt
                             ? {
                                   ...account,
                                   usageStatus: previous.usageStatus,
@@ -152,6 +152,7 @@ export class OpenAICodexController {
                                   usageLimits: previous.usageLimits,
                                   usageCredits: previous.usageCredits,
                                   usageCreditsUnlimited: previous.usageCreditsUnlimited,
+                                  usageResetCredits: previous.usageResetCredits,
                                   resetCards: previous.resetCards,
                                   resetCardsStatus: previous.resetCardsStatus,
                                   usageUpdatedAt: previous.usageUpdatedAt,

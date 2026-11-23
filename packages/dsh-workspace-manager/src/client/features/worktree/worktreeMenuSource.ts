@@ -18,8 +18,8 @@ export function createWorktreeMenuSource(workspaceId: string) {
                 void inspectWorktrees(workspaceId, current.signal)
                     .then(result => {
                         if (current.signal.aborted) return;
-                        repository = result;
-                        visible.set(result.isLinkedWorktree);
+                        repository = !result.isLinkedWorktree && result.deletableCheckouts?.length ? result : undefined;
+                        visible.set(repository !== undefined);
                     })
                     .catch(() => undefined);
             }

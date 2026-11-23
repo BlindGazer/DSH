@@ -313,7 +313,7 @@ it('injects feature CSS matching the compiled panel classes through the DSH load
     expect(css).toContain('margin-inline-end:');
     expect(footer.querySelector('button:last-child[type="submit"]')).not.toBeNull();
     expect(declarations(panel)).toContain('grid-template-rows:minmax(0,1fr)auto');
-    expect(declarations(footer)).toContain('background-color:var(--dsh-ui-bg-modal)');
+    expect(declarations(footer)).toContain('background-color:var(--dsw-alias-bg-layer-2)');
     expect(declarations(panel, ' h3')).toContain('font-size:15px');
     expect(declarations(required(document.querySelector('fieldset')))).toContain('border:0');
     const sections = [...body.querySelectorAll(':scope > section')];

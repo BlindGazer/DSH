@@ -39,6 +39,38 @@ function commit(repo: string, content: string): string {
 
 const writable = () => {};
 
+test('creates a worktree from a remote-tracking ref instead of a same-named local branch', async () => {
+    const { repo, basePath } = fixture();
+    const remoteTip = commit(repo, 'remote');
+    commit(repo, 'local');
+    git(repo, 'branch', 'origin/main');
+    git(repo, 'update-ref', 'refs/remotes/origin/main', remoteTip);
+    git(repo, 'symbolic-ref', 'refs/remotes/origin/HEAD', 'refs/remotes/origin/main');
+    git(repo, 'update-ref', 'refs/remotes/upstream/main', remoteTip);
+
+    expect((await inspectWorktreeRepository(repo)).remoteBranches).toStrictEqual(['origin/main', 'upstream/main']);
+    const target = await prepareWorktree(repo, {
+        mode: 'new', sourceBranch: 'origin/main', sourceRemote: true, branch: 'feature', basePath, folderName: 'feature'
+    }, writable);
+    expect(git(target, 'rev-parse', 'HEAD')).toBe(remoteTip);
+});
+
+test('creates a local tracking branch for an origin selection in existing mode', async () => {
+    const { repo, basePath } = fixture();
+    const tip = commit(repo, 'origin');
+    git(repo, 'remote', 'add', 'origin', '.');
+    git(repo, 'update-ref', 'refs/remotes/origin/topic/release', tip);
+    commit(repo, 'main');
+    const selection = { mode: 'existing', branch: 'topic/release', originBranch: 'origin/topic/release', basePath, folderName: 'release' } as const;
+
+    const target = await prepareWorktree(repo, selection, writable);
+
+    expect(git(target, 'symbolic-ref', '--short', 'HEAD')).toBe('topic/release');
+    expect(git(target, 'rev-parse', 'HEAD')).toBe(tip);
+    expect(git(target, 'rev-parse', '--symbolic-full-name', '@{upstream}')).toBe('refs/remotes/origin/topic/release');
+    await expect(prepareWorktree(repo, { ...selection, folderName: 'duplicate' }, writable)).rejects.toMatchObject({ code: 'branchExists' });
+});
+
 test('merges the source into main before deleting the linked worktree and branch', async () => {
     const { repo, basePath } = fixture();
     commit(repo, 'base');
@@ -47,7 +79,10 @@ test('merges the source into main before deleting the linked worktree and branch
     git(repo, 'branch', 'stale');
     git(repo, 'branch', '--set-upstream-to=stale', 'feature');
 
-    const result = await deleteWorktree(path, { worktreePath: path, expectedBranch: 'feature', mergeInto: 'main', deleteBranch: true }, writable);
+    const sibling = join(basePath, 'sibling');
+    git(repo, 'worktree', 'add', '--detach', sibling, 'main');
+    const result = await deleteWorktree(repo, { worktreePath: path, expectedBranch: 'feature', mergeInto: 'main', deleteBranch: true }, writable);
+    expect((await inspectWorktreeRepository(repo)).deletableCheckouts).toStrictEqual([{ path: sibling, branch: null }]);
 
     expect(result).toStrictEqual({ worktreeRemoved: true, branchDeleted: true, warnings: [] });
     expect(existsSync(path)).toBe(false);
@@ -142,9 +177,13 @@ test('checks out a local branch with a literal refs/heads prefix and opens it wi
     const target = await prepareWorktree(repo, { mode: 'existing', branch: 'refs/heads/ordinary', basePath, folderName: 'linked' }, writable);
 
     expect(git(target, 'symbolic-ref', 'HEAD')).toBe('refs/heads/refs/heads/ordinary');
+    expect((await inspectWorktreeRepository(repo)).deletableCheckouts).toStrictEqual([{ path: target, branch: 'refs/heads/ordinary' }]);
+    mkdirSync(join(repo, 'subdir'));
+    expect((await inspectWorktreeRepository(join(repo, 'subdir'))).deletableCheckouts).toBeUndefined();
     expect(await inspectWorktreeRepository(target)).toStrictEqual({
         currentBranch: 'refs/heads/ordinary',
         isLinkedWorktree: true,
+        remoteBranches: [],
         defaultBasePath: join(target, '.worktrees'),
         branches: ['main', 'ordinary', 'refs/heads/ordinary'],
         occupiedBranches: ['main', 'refs/heads/ordinary'],

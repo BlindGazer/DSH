@@ -23,6 +23,7 @@ export interface ThemedSelectProps<TValue extends string = string> {
     readonly optionClassName?: string;
     readonly id?: string;
     readonly error?: string | undefined;
+    readonly search?: { readonly placeholder: string; readonly emptyText: string };
 }
 
 /**
@@ -42,13 +43,19 @@ export function ThemedSelect<TValue extends string = string>({
     menuClassName,
     optionClassName,
     id,
-    error
+    error,
+    search
 }: ThemedSelectProps<TValue>) {
     const rootRef = useRef<HTMLDivElement | undefined>(undefined);
     const triggerRef = useRef<HTMLButtonElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
     const keyboardMove = useRef(false);
+    const searchRef = useRef<HTMLInputElement>(null);
     const [open, setOpen] = useState(false);
+    const [query, setQuery] = useState('');
+    const filter = query.trim().toLowerCase();
+    const visibleOptions =
+        search && filter ? options.filter(option => !option.disabled && option.label.toLowerCase().includes(filter)) : options;
     const foundIndex = options.findIndex(option => option.value === value);
     const selectedIndex = Math.max(foundIndex, 0);
     const [activeIndex, setActiveIndex] = useState(selectedIndex);
@@ -68,17 +75,29 @@ export function ThemedSelect<TValue extends string = string>({
         };
     }, [open]);
 
+    const searchable = search !== undefined;
+    useEffect(() => {
+        if (!open || !searchable) return;
+        searchRef.current?.focus();
+        const closeOnFocusOutside = (event: FocusEvent): void => {
+            if (event.target instanceof Node && !rootRef.current?.contains(event.target)) setOpen(false);
+        };
+        document.addEventListener('focusin', closeOnFocusOutside);
+        return () => document.removeEventListener('focusin', closeOnFocusOutside);
+    }, [open, searchable]);
+
     useEffect(() => {
         if (!keyboardMove.current || !open) return;
         keyboardMove.current = false;
         const menu = menuRef.current;
-        const option = menu?.children.item(activeIndex);
+        const option = menu?.children.item(activeIndex + (searchable ? 1 : 0));
         if (!(option instanceof HTMLElement) || menu === null) return;
         const item = option.getBoundingClientRect();
         const viewport = menu.getBoundingClientRect();
-        if (item.top < viewport.top) menu.scrollTop += item.top - viewport.top;
+        const top = searchRef.current?.getBoundingClientRect().bottom ?? viewport.top;
+        if (item.top < top) menu.scrollTop += item.top - top;
         if (item.bottom > viewport.bottom) menu.scrollTop += item.bottom - viewport.bottom;
-    }, [activeIndex, open]);
+    }, [activeIndex, open, searchable]);
 
     const dismissOnEscape = (event: KeyboardEvent): void => {
         if (!open || event.key !== 'Escape') return;
@@ -89,11 +108,18 @@ export function ThemedSelect<TValue extends string = string>({
     };
 
     const moveActive = (delta: number): void => {
-        if (options.length === 0) return;
-        setActiveIndex(prev => (prev + delta + options.length) % options.length);
+        const count = visibleOptions.length;
+        if (count === 0) return;
+        setActiveIndex(prev => {
+            for (let step = 1; step <= count; step++) {
+                const index = (prev + delta * step + count) % count;
+                if (!visibleOptions[index]?.disabled) return index;
+            }
+            return prev;
+        });
     };
 
-    const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>): void => {
+    const handleKeyDown = (event: KeyboardEvent): void => {
         if (disabled || options.length === 0) return;
         if (event.key === 'Escape') {
             dismissOnEscape(event);
@@ -103,6 +129,7 @@ export function ThemedSelect<TValue extends string = string>({
             event.preventDefault();
             keyboardMove.current = true;
             if (!open) {
+                setQuery('');
                 setActiveIndex(selectedIndex);
                 setOpen(true);
             } else {
@@ -112,13 +139,15 @@ export function ThemedSelect<TValue extends string = string>({
             event.preventDefault();
             if (!open) {
                 keyboardMove.current = true;
+                setQuery('');
                 setActiveIndex(selectedIndex);
                 setOpen(true);
             } else {
-                const chosen = options[activeIndex];
+                const chosen = visibleOptions[activeIndex];
                 if (chosen && !chosen.disabled) {
                     onChange(chosen.value);
                     setOpen(false);
+                    triggerRef.current?.focus();
                 }
             }
         }
@@ -149,6 +178,7 @@ export function ThemedSelect<TValue extends string = string>({
                 onKeyDown={handleKeyDown}
                 onClick={() => {
                     if (!disabled) {
+                        setQuery('');
                         setActiveIndex(selectedIndex);
                         setOpen(prev => !prev);
                     }
@@ -171,8 +201,24 @@ export function ThemedSelect<TValue extends string = string>({
                     ref={menuRef}
                     data-testid={TestId.Common.SelectMenu}
                     className={cx('dsh-select-menu', 'ar-themed-select-menu', menuClassName)}>
-                    {options.map((option, index) => {
-                        const isSelected = index === selectedIndex;
+                    {search ? (
+                        <input
+                            ref={searchRef}
+                            className="dsh-input dsh-select-search"
+                            placeholder={search.placeholder}
+                            value={query}
+                            disabled={disabled}
+                            onKeyDown={handleKeyDown}
+                            onChange={event => {
+                                setQuery(event.currentTarget.value);
+                                setActiveIndex(0);
+                                if (menuRef.current) menuRef.current.scrollTop = 0;
+                            }}
+                        />
+                    ) : null}
+                    {visibleOptions.length === 0 && search ? <div>{search.emptyText}</div> : null}
+                    {visibleOptions.map((option, index) => {
+                        const isSelected = option.value === selectedOption?.value;
                         const isActive = index === activeIndex;
                         return (
                             <button

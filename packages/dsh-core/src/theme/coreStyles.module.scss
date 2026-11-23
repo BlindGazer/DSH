@@ -127,6 +127,13 @@
         background: var(--dsh-ui-surface);
         box-shadow: var(--dsh-ui-shadow-elevated);
     }
+    .dsh-select-search {
+        position: sticky;
+        top: 0;
+        box-sizing: border-box;
+        width: 100%;
+        min-width: 0;
+    }
     .dsh-select-option,
     .ar-themed-select-menu button {
         display: flex;

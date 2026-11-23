@@ -38,8 +38,16 @@ function parseSelection(value: unknown): WorktreeSelection | undefined {
     const { mode, path, basePath, folderName, branch, sourceBranch } = value;
     if (mode === 'open' && text(path)) return { mode, path };
     if (!text(basePath) || !text(folderName) || !text(branch)) return undefined;
-    if (mode === 'new' && text(sourceBranch)) return { mode, basePath, folderName, branch, sourceBranch };
-    if (mode === 'existing') return { mode, basePath, folderName, branch };
+    if (mode === 'new' && text(sourceBranch)) {
+        const { sourceRemote } = value;
+        if (sourceRemote !== undefined && typeof sourceRemote !== 'boolean') return undefined;
+        return { mode, basePath, folderName, branch, sourceBranch, ...(sourceRemote ? { sourceRemote } : {}) };
+    }
+    if (mode === 'existing') {
+        const { originBranch } = value;
+        if (originBranch !== undefined && !text(originBranch)) return undefined;
+        return { mode, basePath, folderName, branch, ...(originBranch === undefined ? {} : { originBranch }) };
+    }
     return undefined;
 }
 
@@ -89,6 +97,7 @@ export function registerWorktreeRoutes(ctx: Context, service: WorkspaceDirectori
                     if (action === 'delete') {
                         const deletion = parseDeletion(body);
                         if (deletion === undefined) return response({ ok: false }, 400);
+                        protectedDirs.push(...service.getDirectoriesForWorkspace(deletion.worktreePath).filter(dir => dir.readOnly));
                         const result = await deleteWorktree(workspace.path, deletion, checkWritable, (code, error) => {
                             logger.record({
                                 event: 'workspace-worktree-failed',
