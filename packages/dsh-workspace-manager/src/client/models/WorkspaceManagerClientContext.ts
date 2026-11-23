@@ -36,6 +36,7 @@ export interface WorkspaceManagerLocaleService {
 export interface WorkspaceManagerSlotOptions {
     readonly name: string;
     readonly id: string;
+    readonly key?: string;
     readonly order?: number;
     readonly label?: string | (() => string);
 }

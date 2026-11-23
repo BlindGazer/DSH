@@ -60,7 +60,11 @@ describe("Addir REST API", () => {
     );
     let registeredRoute: RegisteredRoute | undefined;
     const disposed = vi.fn();
-    const registration = registerAddirRoutes(ctx, service);
+    const entry = { options: { name: './lib/index.js', id: 'dsh-workspace-manager' } } as ConfigEntry;
+    Object.defineProperty(ctx.fiber, 'entry', { value: entry });
+    const onVscodeChanged = vi.fn();
+    const record = vi.fn();
+    const registration = registerAddirRoutes(ctx, service, resolveConfig(), onVscodeChanged, { record });
     expect(registeredRoute).toBeUndefined();
     ctx.provide("webServer", {
       register: (route: RegisteredRoute) => {
@@ -192,17 +196,33 @@ describe("Addir REST API", () => {
       enableTools: true,
     };
     let updated: object | undefined;
-    const configEditor = {
-      entries: () => [{ options: { name: "dsh-workspace-manager" } }],
-      edit: async (_entry: ConfigEntry, change: ConfigChange) => {
-        updated = change(current, {});
-      },
-    } as ConfigEditor;
+    const edit = vi.fn(async (target: ConfigEntry, change: ConfigChange) => {
+      expect(target).toBe(entry);
+      updated = change(current, {});
+    });
+    const configEditor: Pick<ConfigEditor, "edit"> = { edit };
     ctx.provide("configEditor", configEditor);
     expect(
       (await simulateRequest("/api/dsh-workspace-manager/config", "POST", switches)).status,
     ).toBe(200);
     expect(updated).toEqual({ ...current, ...switches });
+
+    edit.mockRejectedValueOnce(new Error('configuration rejected'));
+    const configUrl = '/api/dsh-workspace-manager/config';
+    expect((await simulateRequest(configUrl, 'POST', { vscodeEnabled: false })).status).toBe(500);
+    expect(onVscodeChanged).not.toHaveBeenCalled();
+    expect(readBody(await simulateRequest(configUrl, 'GET')).config?.vscodeEnabled).toBe(true);
+    expect(record).toHaveBeenLastCalledWith({
+      event: 'workspace-config-save-failed',
+      level: 'error',
+      operation: 'config',
+      data: { code: 'editRejected' },
+    });
+
+    expect((await simulateRequest(configUrl, 'POST', { vscodeEnabled: false })).status).toBe(200);
+    expect(updated).toEqual({ ...current, vscodeEnabled: false });
+    expect(onVscodeChanged).toHaveBeenCalledExactlyOnceWith(false);
+    expect(readBody(await simulateRequest(configUrl, 'GET')).config?.vscodeEnabled).toBe(false);
     await registration.dispose();
     expect(disposed).toHaveBeenCalledOnce();
   });

@@ -319,6 +319,9 @@ importers:
 
   packages/dsh-workspace-manager:
     dependencies:
+      ignore:
+        specifier: ^7.0.16
+        version: 7.0.16
       react:
         specifier: ^18.0.0 || ^19.0.0
         version: 19.3.1
@@ -1935,6 +1938,10 @@ packages:
   https-proxy-agent@9.1.0:
     resolution: {integrity: sha512-ag87y7cJJ9/3+GxFr8Oy4O5faDsGRGnBGsJj/YjOSsSx/5eadKLYTMPlzuR6obgoCDDm0abAAZitXXQkMOPSpA==}
     engines: {node: '>= 20'}
+
+  ignore@7.0.16:
+    resolution: {integrity: sha512-52N+Y4HRMOJmbLmr+DqO4iSRyyB7N52gm7PWCT6h0p978+oKbqHCB7gIJIwZvBUsjlSdWbrBFqUSmIFNZMpn0A==}
+    engines: {node: '>= 4'}
 
   immutable@5.2.1:
     resolution: {integrity: sha512-CgXNM1BhKqpMjFHTyqQSk09OWqzHNJ/U4BdeBgXoBdR2DdgBdOSv131cO1/YMgzopqnka3B/i949UaMLEKUxOA==}
@@ -3872,6 +3879,8 @@ snapshots:
     transitivePeerDependencies:
       - kerberos
       - supports-color
+
+  ignore@7.0.16: {}
 
   immutable@5.2.1: {}
 

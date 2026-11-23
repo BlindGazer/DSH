@@ -10,6 +10,7 @@ import type { IncomingMessage, ServerResponse } from 'node:http';
 import type { Context } from '@deepseek-ai/cordis';
 import type { ConfigEditor } from '@deepseek-ai/dsh-config-editor';
 import type { WebRoute } from '@deepseek-ai/dsh-host-webserver';
+import { type DshLogger, NOOP_LOGGER } from '@kalex/dsh-logger-core';
 import type { AddDirectoryOptions, WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.ts';
 import { type ResolvedConfig, resolveConfig } from '../config.ts';
 import { canonicalizePath } from '../services/pathUtils.ts';
@@ -46,7 +47,15 @@ function readJsonBody<T extends object>(req: IncomingMessage): Promise<T> {
     });
 }
 
-export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesService, config: ResolvedConfig = resolveConfig()) {
+export function registerAddirRoutes(
+    ctx: Context,
+    service: WorkspaceDirectoriesService,
+    config: ResolvedConfig = resolveConfig(),
+    onVscodeChanged?: (enabled: boolean) => void,
+    logger: DshLogger = NOOP_LOGGER
+) {
+    const configEntry = ctx.fiber.entry;
+    let vscodeEnabled = config.vscodeEnabled;
     return ctx.inject(['webServer'], webCtx => {
         webCtx.effect(() =>
             webCtx.webServer.register({
@@ -69,7 +78,7 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                     try {
                         if (action === 'config') {
                             if (req.method === 'GET') {
-                                writeJson(res, 200, { ok: true, config });
+                                writeJson(res, 200, { ok: true, config: { ...config, vscodeEnabled } });
                                 return;
                             }
                             if (req.method !== 'POST') {
@@ -80,9 +89,11 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                                 enableTools?: boolean;
                                 enableContextInjection?: boolean;
                                 enforceReadOnly?: boolean;
+                                vscodeEnabled?: boolean;
                             }>(req);
-                            const keys = ['enableTools', 'enableContextInjection', 'enforceReadOnly'] as const;
-                            if (!body || keys.some(key => typeof body[key] !== 'boolean')) {
+                            const keys = ['enableTools', 'enableContextInjection', 'enforceReadOnly', 'vscodeEnabled'] as const;
+                            const updates = body && keys.filter(key => Object.hasOwn(body, key));
+                            if (!updates || updates.length === 0 || updates.some(key => typeof body[key] !== 'boolean')) {
                                 writeJson(res, 400, {
                                     ok: false,
                                     error: 'Configuration switches must be booleans'
@@ -90,18 +101,38 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                                 return;
                             }
                             const editor: ConfigEditor | undefined = ctx.get('configEditor');
-                            const entry = editor?.entries().find(row => row.options.name === 'dsh-workspace-manager');
-                            if (!editor || !entry) {
+                            if (!editor || !configEntry) {
+                                logger.record({
+                                    event: 'workspace-config-save-failed',
+                                    level: 'error',
+                                    operation: 'config',
+                                    data: { code: 'editorUnavailable' }
+                                });
                                 writeJson(res, 409, {
                                     ok: false,
                                     error: 'Profile configuration editor is unavailable'
                                 });
                                 return;
                             }
-                            await editor.edit(entry, current => ({
-                                ...current,
-                                ...Object.fromEntries(keys.map(key => [key, body[key]]))
-                            }));
+                            try {
+                                await editor.edit(configEntry, current => ({
+                                    ...current,
+                                    ...Object.fromEntries(updates.map(key => [key, body[key]]))
+                                }));
+                            } catch {
+                                logger.record({
+                                    event: 'workspace-config-save-failed',
+                                    level: 'error',
+                                    operation: 'config',
+                                    data: { code: 'editRejected' }
+                                });
+                                writeJson(res, 500, { ok: false, error: 'Profile configuration could not be saved' });
+                                return;
+                            }
+                            if (body.vscodeEnabled !== undefined) {
+                                vscodeEnabled = body.vscodeEnabled;
+                                onVscodeChanged?.(vscodeEnabled);
+                            }
                             writeJson(res, 200, { ok: true });
                             return;
                         }
@@ -275,6 +306,7 @@ export function registerAddirRoutes(ctx: Context, service: WorkspaceDirectoriesS
                             error: `Unknown endpoint "${action}"`
                         });
                     } catch (err) {
+                        logger.record({ event: 'workspace-api-failed', level: 'error' });
                         const message = err instanceof Error ? err.message : String(err);
                         writeJson(res, 500, { ok: false, error: message });
                     }

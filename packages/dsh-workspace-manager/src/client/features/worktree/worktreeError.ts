@@ -17,7 +17,19 @@ const errorKeys = {
     ignoreFailed: 'worktreeIgnoreFailed',
     readOnly: 'worktreeReadOnly',
     worktreeMissing: 'worktreeMissing',
-    gitFailed: 'worktreeGitFailed'
+    gitFailed: 'worktreeGitFailed',
+    primaryWorktree: 'worktreeDeleteFailed',
+    worktreeChanged: 'worktreeChanged',
+    worktreeDirty: 'worktreeDirty',
+    worktreeLocked: 'worktreeLocked',
+    mergeTargetInvalid: 'worktreeMergeTargetInvalid',
+    mergeTargetDirty: 'worktreeMergeTargetDirty',
+    mergeConflict: 'worktreeMergeConflict',
+    mergeFailed: 'worktreeMergeFailed',
+    branchNotMerged: 'worktreeBranchNotMerged',
+    worktreeRemoveFailed: 'worktreeRemoveFailed',
+    branchDeleteFailed: 'worktreeBranchDeleteFailed',
+    mergeCleanupFailed: 'worktreeMergeCleanupFailed'
 } as const satisfies Record<WorktreeErrorCode, CopyKey>;
 
 function isWorktreeErrorCode(code: string): code is WorktreeErrorCode {

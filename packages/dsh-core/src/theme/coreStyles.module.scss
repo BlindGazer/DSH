@@ -27,6 +27,7 @@
         box-shadow: var(--dsh-ui-shadow-elevated);
         overflow-wrap: anywhere;
         user-select: text;
+
         &[data-severity="error"] {
             color: var(--dsh-ui-danger);
             border-color: var(--dsh-ui-danger);

@@ -15,6 +15,7 @@ afterEach(() => {
 function repository(overrides: Partial<WorktreeRepository> = {}): WorktreeRepository {
     return {
         currentBranch: 'main',
+        isLinkedWorktree: false,
         defaultBasePath: '/projects/repo-worktrees',
         branches: ['main', 'feature', 'busy'],
         occupiedBranches: ['main', 'busy'],

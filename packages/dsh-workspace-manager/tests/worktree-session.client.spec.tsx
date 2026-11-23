@@ -5,16 +5,67 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { apply } from '../src/client/index.tsx';
 import type { WorkspaceManagerClientContext } from '../src/client/models/WorkspaceManagerClientContext.ts';
 import { en } from '../src/shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import { inspectWorktrees } from '../src/client/worktreeApi.ts';
 
 vi.mock('../src/client/worktreeApi.ts', () => ({
     inspectWorktrees: vi.fn(async () => ({
-        currentBranch: 'main', defaultBasePath: '/repo-worktrees', branches: ['main'], occupiedBranches: ['main'],
+        currentBranch: 'main', isLinkedWorktree: false, defaultBasePath: '/repo-worktrees', branches: ['main'], occupiedBranches: ['main'],
         checkouts: [{ path: '/repo-worktrees/work', branch: 'work' }]
     })),
-    prepareWorktree: vi.fn(async () => '/repo-worktrees/work')
+    prepareWorktree: vi.fn(async () => '/repo-worktrees/work'),
+    deleteWorktree: vi.fn(async () => ['branchDeleteFailed'])
 }));
 
 const dispose: Array<() => void> = [];
+
+it('opens the worktree action in the same menu group as native deletion', async () => {
+    const target = { workspaceId: 'work', path: '/repo-worktrees/work', displayTitle: 'Work' };
+    vi.mocked(inspectWorktrees).mockResolvedValueOnce({
+        currentBranch: 'work', isLinkedWorktree: true, defaultBasePath: '/repo-worktrees',
+        branches: ['main', 'work'], occupiedBranches: ['main', 'work'], checkouts: []
+    });
+    type Menu = Parameters<WorkspaceManagerClientContext['contextMenus']['register']>[0];
+    const menus: Menu[] = [];
+    let overlay: ComponentType | undefined;
+    const context = {
+        effect: (start: () => () => void) => { const release = start(); dispose.push(release); return release; },
+        contextMenus: { register: (menu: Menu) => { menus.push(menu); return () => undefined; } },
+        remoteAccess: { source: () => ({ getSnapshot: () => true, subscribe: () => () => undefined }) },
+        slots: {
+            inject: (_: string, install: () => () => void) => install(),
+            register: ({ id }: { id: string }, component: ComponentType) => { if (id.endsWith('.delete-worktree')) overlay = component; return () => undefined; }
+        },
+        locale: {
+            revision: { revision: 0 },
+            register: () => () => undefined,
+            bind: () => (key: keyof typeof en | 'rename') => (key === 'rename' ? 'Rename' : en[key]),
+            subscribe() { if (!this.revision) throw new Error('Unbound locale'); return () => undefined; },
+            getSnapshot() { return this.revision; }
+        },
+        workspaces: { create: vi.fn(), rename: vi.fn(), delete: vi.fn() },
+        uiWorkspace: { openSession: vi.fn(), pickDirectory: vi.fn() },
+        sessions: { create: vi.fn() }
+    };
+    apply(context as Parameters<typeof apply>[0]);
+    const menu = menus.find(item => item.id.endsWith('.delete-worktree'));
+    if (!menu || !overlay) throw new Error('Expected a delete contribution and a shell overlay');
+    expect(menu.order).toBeGreaterThan(300);
+    const unsubscribe = menu.observe(target).map(source => source.subscribe(() => undefined));
+    await waitFor(() => expect(menu.resolve(target)).toHaveLength(1));
+    const [action] = menu.resolve(target);
+    expect(action).toBeDefined();
+    expect(action).not.toHaveProperty('separatorBefore');
+    expect(action).not.toHaveProperty('afterContent');
+    for (const release of unsubscribe) release();
+    action?.run();
+    render(createElement(overlay));
+    expect(screen.getByText(en.worktreeDeleteFolder)).toBeTruthy();
+    fireEvent.click(screen.getByRole('checkbox', { name: en.worktreeDeleteBranch }));
+    fireEvent.click(screen.getByRole('button', { name: en.worktreeDelete }));
+    expect(await screen.findByText(en.worktreeBranchDeleteFailed)).toBeTruthy();
+    expect(context.workspaces.delete).toHaveBeenCalledExactlyOnceWith(target.workspaceId);
+    expect(screen.queryByText(en.worktreeDeleteFolder)).toBeNull();
+});
 afterEach(() => {
     cleanup();
     for (const effect of dispose.splice(0)) effect();
@@ -31,10 +82,10 @@ it('opens an explicitly new session in the selected worktree via the native work
     const allowed = { getSnapshot: vi.fn(() => false), subscribe: () => () => undefined };
     const context = {
         effect: (start: () => () => void) => { dispose.push(start()); },
-        contextMenus: { register: (input: Menu) => { menu = input; return () => undefined; } },
+        contextMenus: { register: (input: Menu) => { if (input.id.endsWith('.worktree')) menu = input; return () => undefined; } },
         remoteAccess: { source: () => allowed },
         slots: {
-            inject: (_: string, install: () => void) => install(),
+            inject: (_: string, install: () => () => void) => install(),
             register: ({ id }: { id: string }, component: ComponentType) => { if (id.endsWith('.worktree')) overlay = component; }
         },
         locale: { register: () => () => undefined, bind: () => (key: keyof typeof en) => en[key], subscribe: () => () => undefined, getSnapshot: () => 0 },

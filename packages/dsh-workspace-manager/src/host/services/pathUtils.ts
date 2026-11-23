@@ -25,8 +25,11 @@ export function canonicalizePath(rawPath: string): string {
 export function isSubPath(target: string, root: string): boolean {
     const canonicalTarget = canonicalizePath(target);
     const canonicalRoot = canonicalizePath(root);
-    if (canonicalTarget === canonicalRoot) return true;
-    const relativePath = relative(canonicalRoot, canonicalTarget);
+    return isWithinCanonicalPath(canonicalTarget, canonicalRoot);
+}
+
+export function isWithinCanonicalPath(target: string, root: string): boolean {
+    const relativePath = relative(root, target);
     return relativePath !== '..' && !relativePath.startsWith(`..${sep}`) && !isAbsolute(relativePath);
 }
 
@@ -36,8 +39,12 @@ function expandHome(value: string): string {
     return value;
 }
 
-export function isHarnessProfilePath(target: string): boolean {
+export function getHarnessProfilesPath(): string {
     const configuredHome = process.env.DSH_HOME?.trim();
     const homePath = configuredHome === undefined || configuredHome === '' ? join(homedir(), '.dsh') : expandHome(configuredHome);
-    return isSubPath(target, join(homePath, 'profiles'));
+    return join(homePath, 'profiles');
+}
+
+export function isHarnessProfilePath(target: string): boolean {
+    return isSubPath(target, getHarnessProfilesPath());
 }

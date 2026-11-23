@@ -7,9 +7,10 @@
 
 import { type Context, Service } from '@deepseek-ai/cordis';
 import type { PreStepDecision } from '@deepseek-ai/dsh-agent';
-import type { DshLogger } from '@kalex/dsh-logger-core';
+import { createOptionalLogger } from '@kalex/dsh-logger-core';
 import type { AddDirectoryOptions, AddirService } from '../shared/models/WorkspaceDirectories.ts';
 import { registerAddirRoutes } from './api/httpRoutes.ts';
+import { registerVscodeRoutes } from './api/vscodeRoutes.ts';
 import { registerWorktreeRoutes } from './api/worktreeRoutes.ts';
 import { Config, type ConfigSchema, resolveConfig } from './config.ts';
 import {
@@ -28,10 +29,6 @@ export * from './services/WorkspaceDirectoriesService.ts';
 export * from './tools/workspaceDirectoryTools.ts';
 
 export const name = 'dsh-workspace-manager';
-
-export function createWorkspaceLogger(logger: DshLogger | undefined): DshLogger {
-    return logger ?? { record: () => undefined };
-}
 
 /**
  * Service Provider wrapping WorkspaceDirectoriesServiceImpl for Cordis.
@@ -115,8 +112,19 @@ export class AddirProvider extends Service implements AddirService {
         }
 
         // Register Web API routes
-        registerAddirRoutes(ctx, this.impl, resolved);
-        registerWorktreeRoutes(ctx, this.impl);
+        let vscodeEnabled = resolved.vscodeEnabled;
+        const logger = createOptionalLogger(ctx, '@kalex/dsh-workspace-manager');
+        registerAddirRoutes(
+            ctx,
+            this.impl,
+            resolved,
+            enabled => {
+                vscodeEnabled = enabled;
+            },
+            logger
+        );
+        registerWorktreeRoutes(ctx, this.impl, logger);
+        registerVscodeRoutes(ctx, () => vscodeEnabled, logger);
     }
 
     list(sessionId?: string) {

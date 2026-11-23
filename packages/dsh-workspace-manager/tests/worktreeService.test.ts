@@ -3,7 +3,7 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync,
 import { tmpdir } from 'node:os';
 import { join, posix } from 'node:path';
 import { expect, onTestFinished, test, vi } from 'vitest';
-import { inspectWorktreeRepository, prepareWorktree } from '../src/host/services/WorktreeService.ts';
+import { deleteWorktree, inspectWorktreeRepository, prepareWorktree, worktreeFailureDetails } from '../src/host/services/WorktreeService.ts';
 
 function git(path: string, ...args: string[]): string {
     return execFileSync('git', ['-C', path, '-c', 'core.hooksPath=/dev/null', '-c', 'core.autocrlf=false', ...args], {
@@ -39,6 +39,80 @@ function commit(repo: string, content: string): string {
 
 const writable = () => {};
 
+test('merges the source into main before deleting the linked worktree and branch', async () => {
+    const { repo, basePath } = fixture();
+    commit(repo, 'base');
+    const path = await prepareWorktree(repo, { mode: 'new', sourceBranch: 'main', branch: 'feature', basePath, folderName: 'feature' }, writable);
+    const tip = commit(path, 'feature');
+    git(repo, 'branch', 'stale');
+    git(repo, 'branch', '--set-upstream-to=stale', 'feature');
+
+    const result = await deleteWorktree(path, { worktreePath: path, expectedBranch: 'feature', mergeInto: 'main', deleteBranch: true }, writable);
+
+    expect(result).toStrictEqual({ worktreeRemoved: true, branchDeleted: true, warnings: [] });
+    expect(existsSync(path)).toBe(false);
+    expect(git(repo, 'branch', '--list', 'feature')).toBe('');
+    expect(git(repo, 'rev-parse', 'HEAD')).toBe(tip);
+});
+
+test('reports branch deletion failure after removing the folder without forcing branch deletion', async () => {
+    const { repo, basePath } = fixture();
+    commit(repo, 'base');
+    const path = await prepareWorktree(repo, { mode: 'new', sourceBranch: 'main', branch: 'feature', basePath, folderName: 'feature' }, writable);
+    const tip = commit(path, 'feature');
+
+    const diagnostics: Record<string, string | number>[] = [];
+    const result = await deleteWorktree(path, { worktreePath: path, expectedBranch: 'feature', deleteBranch: true }, writable,
+        (code, error) => diagnostics.push({ code, ...worktreeFailureDetails(error) }));
+    expect(diagnostics).toStrictEqual([{ code: 'branchDeleteFailed', errorType: 'gitFailed', command: 'branch -d', status: 1, reason: 'branch-not-fully-merged' }]);
+
+    expect(result).toStrictEqual({ worktreeRemoved: true, branchDeleted: false, warnings: ['branchDeleteFailed'] });
+    expect(existsSync(path)).toBe(false);
+    expect(git(repo, 'rev-parse', 'feature')).toBe(tip);
+});
+
+test('aborts conflicting merges and keeps the source folder and branch', async () => {
+    const { repo, basePath } = fixture();
+    commit(repo, 'base');
+    const path = await prepareWorktree(repo, { mode: 'new', sourceBranch: 'main', branch: 'feature', basePath, folderName: 'feature' }, writable);
+    const tip = commit(path, 'feature');
+    const main = commit(repo, 'main');
+
+    await expect(deleteWorktree(path, { worktreePath: path, expectedBranch: 'feature', mergeInto: 'main', deleteBranch: true }, writable)).rejects.toMatchObject({ code: 'mergeConflict' });
+
+    expect(existsSync(path)).toBe(true);
+    expect(git(repo, 'rev-parse', 'feature')).toBe(tip);
+    expect(git(repo, 'rev-parse', 'HEAD')).toBe(main);
+    expect(git(repo, 'status', '--porcelain')).toBe('');
+});
+
+test('does not remove the primary, a changed attachment, or a dirty linked worktree', async () => {
+    const { repo, basePath } = fixture();
+    commit(repo, 'base');
+    const path = await prepareWorktree(repo, { mode: 'new', sourceBranch: 'main', branch: 'feature', basePath, folderName: 'feature' }, writable);
+    writeFileSync(join(path, 'untracked'), 'keep');
+
+    await expect(deleteWorktree(repo, { worktreePath: repo, expectedBranch: 'main' }, writable)).rejects.toMatchObject({ code: 'primaryWorktree' });
+    await expect(deleteWorktree(path, { worktreePath: path, expectedBranch: null }, writable)).rejects.toMatchObject({ code: 'worktreeChanged' });
+    await expect(deleteWorktree(path, { worktreePath: path, expectedBranch: 'feature' }, writable)).rejects.toMatchObject({ code: 'worktreeDirty' });
+    expect(readFileSync(join(path, 'untracked'), 'utf8')).toBe('keep');
+});
+
+test('merges into an unoccupied local branch without switching the primary checkout', async () => {
+    const { repo, basePath } = fixture();
+    const main = commit(repo, 'base');
+    git(repo, 'branch', 'destination');
+    const path = await prepareWorktree(repo, { mode: 'new', sourceBranch: 'main', branch: 'feature', basePath, folderName: 'feature' }, writable);
+    const tip = commit(path, 'feature');
+
+    await deleteWorktree(path, { worktreePath: path, expectedBranch: 'feature', mergeInto: 'destination', deleteBranch: true }, writable);
+
+    expect(existsSync(path)).toBe(false);
+    expect(git(repo, 'rev-parse', 'HEAD')).toBe(main);
+    expect(git(repo, 'rev-parse', 'destination')).toBe(tip);
+    expect((await inspectWorktreeRepository(repo)).checkouts).toStrictEqual([{ path: repo, branch: 'main' }]);
+});
+
 test('creates from an exact local branch even if its name collides with a tag', async () => {
     const { repo, basePath } = fixture();
     const main = commit(repo, 'main');
@@ -70,6 +144,7 @@ test('checks out a local branch with a literal refs/heads prefix and opens it wi
     expect(git(target, 'symbolic-ref', 'HEAD')).toBe('refs/heads/refs/heads/ordinary');
     expect(await inspectWorktreeRepository(target)).toStrictEqual({
         currentBranch: 'refs/heads/ordinary',
+        isLinkedWorktree: true,
         defaultBasePath: join(target, '.worktrees'),
         branches: ['main', 'ordinary', 'refs/heads/ordinary'],
         occupiedBranches: ['main', 'refs/heads/ordinary'],

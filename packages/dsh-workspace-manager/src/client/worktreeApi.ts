@@ -1,4 +1,4 @@
-import type { WorktreeRepository, WorktreeSelection } from '../shared/models/Worktree.ts';
+import type { WorktreeDeletionWarning, WorktreeRepository, WorktreeSelection } from '../shared/models/Worktree.ts';
 
 type Json = null | boolean | number | string | Json[] | JsonRecord;
 interface JsonRecord {
@@ -19,7 +19,7 @@ function isBranch(value: Json | undefined): value is string | null {
 
 function parseRepository(value: Json | undefined): WorktreeRepository {
     if (isRecord(value)) {
-        const { currentBranch, defaultBasePath, branches, occupiedBranches, checkouts } = value;
+        const { currentBranch, defaultBasePath, branches, occupiedBranches, checkouts, isLinkedWorktree } = value;
         if (
             isBranch(currentBranch) &&
             isText(defaultBasePath) &&
@@ -31,6 +31,7 @@ function parseRepository(value: Json | undefined): WorktreeRepository {
         ) {
             return {
                 currentBranch,
+                isLinkedWorktree: isLinkedWorktree === true,
                 defaultBasePath,
                 branches,
                 occupiedBranches,
@@ -45,8 +46,8 @@ function parseRepository(value: Json | undefined): WorktreeRepository {
     throw new Error('Invalid worktree repository');
 }
 
-async function request(action: 'inspect' | 'prepare', body: object, signal?: AbortSignal): Promise<JsonRecord> {
-    const response = await fetch(new URL(`api/dsh-workspace-worktree/${action}`, document.baseURI), {
+async function request(route: string, body: object, signal?: AbortSignal): Promise<JsonRecord> {
+    const response = await fetch(new URL(`api/dsh-workspace-${route}`, document.baseURI), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
@@ -61,12 +62,46 @@ async function request(action: 'inspect' | 'prepare', body: object, signal?: Abo
     return result;
 }
 
-export async function inspectWorktrees(workspaceId: string, signal: AbortSignal): Promise<WorktreeRepository> {
-    return parseRepository((await request('inspect', { workspaceId }, signal)).repository);
+export async function inspectWorktrees(workspaceId: string, signal?: AbortSignal): Promise<WorktreeRepository> {
+    return parseRepository((await request('worktree/inspect', { workspaceId }, signal)).repository);
 }
 
 export async function prepareWorktree(workspaceId: string, selection: WorktreeSelection): Promise<string> {
-    const { path } = await request('prepare', { workspaceId, selection });
+    const { path } = await request('worktree/prepare', { workspaceId, selection });
     if (!isText(path)) throw new Error('Invalid worktree path');
     return path;
+}
+
+interface DeleteWorktreeRequest {
+    readonly worktreePath: string;
+    readonly expectedBranch: string | null;
+    readonly deleteBranch: boolean;
+    readonly mergeInto?: string;
+}
+
+function isDeletionWarning(value: Json): value is WorktreeDeletionWarning {
+    return value === 'branchDeleteFailed' || value === 'mergeCleanupFailed';
+}
+
+export async function deleteWorktree(workspaceId: string, input: DeleteWorktreeRequest): Promise<readonly WorktreeDeletionWarning[]> {
+    const { result } = await request('worktree/delete', { workspaceId, ...input });
+    if (
+        !isRecord(result) ||
+        result.worktreeRemoved !== true ||
+        !Array.isArray(result.warnings) ||
+        !result.warnings.every(isDeletionWarning)
+    ) {
+        throw new Error('Invalid worktree removal result');
+    }
+    return result.warnings;
+}
+
+export async function discoverVscode(workspaceId: string, signal?: AbortSignal): Promise<string[]> {
+    const { workspaceFiles } = await request('vscode/discover', { workspaceId }, signal);
+    if (!Array.isArray(workspaceFiles) || !workspaceFiles.every(isText)) throw new Error('Invalid workspace files');
+    return workspaceFiles;
+}
+
+export async function launchVscode(workspaceId: string, workspaceFile?: string): Promise<void> {
+    await request('vscode/launch', { workspaceId, workspaceFile });
 }

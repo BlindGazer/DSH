@@ -1,13 +1,20 @@
-import type { DshClientContext } from '@kalex/dsh-core';
-import { en, ru } from '../shared/constants/localizations/WorkspaceManagerLocalization.ts';
+import { Notification, useEffectiveTheme } from '@kalex/dsh-core';
+import { useSyncExternalStore } from 'react';
+import { type CopyKey, en, ru } from '../shared/constants/localizations/WorkspaceManagerLocalization.ts';
 import { AddirSettingsSection } from './features/manage-workspaces/components/SettingsSection.tsx';
 import { WorkspaceEditOverlay } from './features/manage-workspaces/components/WorkspaceEditOverlay.tsx';
 import type { WorkspaceEditTarget } from './features/manage-workspaces/models/WorkspaceEditTarget.ts';
+import { fetchGlobalConfig, vscodeEnabled } from './features/manage-workspaces/services/addirApi.ts';
 import { createSnapshotStore } from './features/manage-workspaces/services/snapshotStore.ts';
 import { getWorkspaceDisplayTitle } from './features/manage-workspaces/services/workspaceLabels.ts';
 import { installWorkspaceMenu } from './features/manage-workspaces/services/workspaceMenuAdapter.ts';
 import { ensureWorkspaceManagerStyles } from './features/manage-workspaces/workspaceManagerStyles.ts';
+import { VscodeMenuIcon } from './features/vscode/VscodeMenuIcon.tsx';
+import { VscodeOverlay } from './features/vscode/VscodeOverlay.tsx';
+import { WorkspaceFeaturesSettings } from './features/vscode/WorkspaceFeaturesSettings.tsx';
+import { DeleteWorktreeModal, type DeleteWorktreeModalProps } from './features/worktree/DeleteWorktreeModal.tsx';
 import { WorktreeOverlay, type WorktreeRequest } from './features/worktree/WorktreeOverlay.tsx';
+import { createWorktreeMenuSource } from './features/worktree/worktreeMenuSource.ts';
 import type { UseWorkspaceSnapshot, WorkspaceManagerClientContext, WorkspaceSnapshot } from './models/WorkspaceManagerClientContext.ts';
 
 export * from './features/manage-workspaces/components/SettingsSection.tsx';
@@ -24,11 +31,22 @@ function resolveWorkspace(snapshot: WorkspaceSnapshot, workspaceId: string): Wor
     };
 }
 
+const vscodeIconKey = '@kalex/dsh-workspace-manager.vscode';
+
 export const inject = ['slots', 'locale', 'workspaces', 'uiWorkspace', 'sessions', 'contextMenus', 'remoteAccess'];
 
-export function apply(context: DshClientContext & WorkspaceManagerClientContext): void {
+export function apply(context: WorkspaceManagerClientContext): void {
     const editRequest = createSnapshotStore<WorkspaceEditTarget | undefined>(undefined);
     const worktreeRequest = createSnapshotStore<WorktreeRequest | undefined>(undefined);
+    const deleteRequest = createSnapshotStore<Omit<DeleteWorktreeModalProps, 't' | 'onClose'> | undefined>(undefined);
+    const deleteWarnings = createSnapshotStore<readonly CopyKey[]>([]);
+    const vscodeRequest = createSnapshotStore<WorkspaceEditTarget | undefined>(undefined);
+    const worktreeSources = new WeakMap<WorkspaceEditTarget, ReturnType<typeof createWorktreeMenuSource>>();
+    const worktreeSource = (target: WorkspaceEditTarget) => {
+        const source = worktreeSources.get(target) ?? createWorktreeMenuSource(target.workspaceId);
+        worktreeSources.set(target, source);
+        return source;
+    };
     const workspaceSnapshot = createSnapshotStore<WorkspaceSnapshot>({
         items: []
     });
@@ -36,6 +54,7 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
 
     context.effect(() => context.locale.register('dsh-workspace-manager', { en, ru }), 'workspace-manager: localized copy');
     ensureWorkspaceManagerStyles();
+    void fetchGlobalConfig().catch(() => undefined);
 
     const canCreate = (workspaceId: string) => context.remoteAccess.source('workspace', workspaceId, 'session/create');
     const pick = async () => (await context.uiWorkspace.pickDirectory()) ?? undefined;
@@ -46,7 +65,7 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
                 id: '@kalex/dsh-workspace-manager.worktree',
                 target: 'workspace',
                 order: 150,
-                observe: ({ workspaceId }) => [context.locale, canCreate(workspaceId)],
+                observe: target => [context.locale, canCreate(target.workspaceId), vscodeEnabled],
                 resolve: target =>
                     canCreate(target.workspaceId).getSnapshot()
                         ? [
@@ -68,12 +87,73 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
                                           }
                                       });
                                   }
-                              }
+                              },
+                              ...(vscodeEnabled.getSnapshot()
+                                  ? [
+                                        {
+                                            id: 'vscode',
+                                            label: t('vscodeTitle'),
+                                            icon: { key: vscodeIconKey },
+                                            run: () => {
+                                                if (vscodeEnabled.getSnapshot() && !vscodeRequest.getSnapshot()) vscodeRequest.set(target);
+                                            }
+                                        }
+                                    ]
+                                  : [])
                           ]
                         : []
             }),
         'workspace-manager: worktree menu action'
     );
+
+    context.effect(
+        () =>
+            context.contextMenus.register({
+                id: '@kalex/dsh-workspace-manager.delete-worktree',
+                target: 'workspace',
+                order: 1000,
+                observe: target => [context.locale, canCreate(target.workspaceId), worktreeSource(target)],
+                resolve: target => (canCreate(target.workspaceId).getSnapshot() ? deleteMenuActions(target) : [])
+            }),
+        'workspace-manager: delete worktree menu action'
+    );
+
+    context.slots.inject('contextMenu.icon', () =>
+        context.slots.register({ name: 'contextMenu.icon', key: vscodeIconKey, id: vscodeIconKey }, VscodeMenuIcon)
+    );
+
+    function deleteMenuActions(target: WorkspaceEditTarget) {
+        const repository = worktreeSource(target).getRepository();
+        if (!repository?.isLinkedWorktree) return [];
+        return [
+            {
+                id: 'delete-worktree',
+                label: t('worktreeDelete'),
+                icon: { key: 'workspace.delete' },
+                danger: true,
+                run: () => {
+                    if (deleteRequest.getSnapshot()) return;
+                    deleteRequest.set({
+                        target,
+                        repository,
+                        onDeleted: async gitWarnings => {
+                            const warnings = gitWarnings.map<CopyKey>(code =>
+                                code === 'mergeCleanupFailed' ? 'worktreeMergeCleanupFailed' : 'worktreeBranchDeleteFailed'
+                            );
+                            try {
+                                await context.workspaces.delete(target.workspaceId);
+                            } catch (error) {
+                                console.error('[workspace-manager] Workspace removal failed', error);
+                                warnings.push('worktreeWorkspaceDeleteFailed');
+                            }
+                            deleteWarnings.set(warnings);
+                            deleteRequest.set(undefined);
+                        }
+                    });
+                }
+            }
+        ];
+    }
 
     context.effect(
         () =>
@@ -112,6 +192,48 @@ export function apply(context: DshClientContext & WorkspaceManagerClientContext)
         context.slots.register({ name: 'shell.overlay', id: '@kalex/dsh-workspace-manager.worktree' }, () => (
             <WorktreeOverlay request={worktreeRequest} locale={context.locale} t={t} pick={pick} />
         ))
+    );
+
+    context.slots.inject('shell.overlay', () =>
+        context.slots.register({ name: 'shell.overlay', id: '@kalex/dsh-workspace-manager.delete-worktree' }, () => {
+            const current = useSyncExternalStore(deleteRequest.subscribe, deleteRequest.getSnapshot);
+            useSyncExternalStore(
+                listener => context.locale.subscribe(listener),
+                () => context.locale.getSnapshot()
+            );
+            const warnings = useSyncExternalStore(deleteWarnings.subscribe, deleteWarnings.getSnapshot);
+            const theme = useEffectiveTheme();
+            return (
+                <>
+                    {current ? <DeleteWorktreeModal {...current} t={t} onClose={() => deleteRequest.set(undefined)} /> : null}
+                    {warnings.length > 0 ? (
+                        <div className="dsh-core-root" data-theme={theme}>
+                            <Notification
+                                severity="warning"
+                                title={t('worktreeFolderRemoved')}
+                                message={warnings.map(t).join('\n')}
+                                copyLabel={t('vscodeCopy')}
+                                closeLabel={t('close')}
+                                onClose={() => deleteWarnings.set([])}
+                            />
+                        </div>
+                    ) : null}
+                </>
+            );
+        })
+    );
+
+    context.slots.inject('shell.overlay', () =>
+        context.slots.register({ name: 'shell.overlay', id: '@kalex/dsh-workspace-manager.vscode' }, () => (
+            <VscodeOverlay request={vscodeRequest} locale={context.locale} t={t} />
+        ))
+    );
+
+    context.slots.inject('plugins.bundle.config', () =>
+        context.slots.register(
+            { name: 'plugins.bundle.config', key: '@kalex/dsh-workspace-manager', id: 'workspace-manager-features', order: 30 },
+            () => <WorkspaceFeaturesSettings locale={context.locale} t={t} />
+        )
     );
 
     context.slots.inject('settings.section', () =>

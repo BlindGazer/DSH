@@ -36,6 +36,7 @@ export interface Config {
      * Default: true.
      */
     enforceReadOnly?: boolean;
+    vscodeEnabled?: boolean;
 }
 
 export interface ResolvedConfig {
@@ -43,6 +44,7 @@ export interface ResolvedConfig {
     readonly enableTools: boolean;
     readonly enableContextInjection: boolean;
     readonly enforceReadOnly: boolean;
+    readonly vscodeEnabled: boolean;
 }
 
 /**
@@ -63,7 +65,8 @@ export const Config: ConfigSchema = z.object({
     defaultDirectories: z.array(StaticDirectoryConfigSchema).default([]).description('Static directories to link on startup'),
     enableTools: z.boolean().default(true).description('Enable agent tools (list, add, remove directories)'),
     enableContextInjection: z.boolean().default(true).description('Enable prompt context injection of active workspace directories'),
-    enforceReadOnly: z.boolean().default(true).description('Enforce write protections for read-only directories')
+    enforceReadOnly: z.boolean().default(true).description('Enforce write protections for read-only directories'),
+    vscodeEnabled: z.boolean().default(true).description('Enable opening workspaces in VS Code')
 });
 
 export function resolveConfig(config: Config = {}): ResolvedConfig {
@@ -71,6 +74,7 @@ export function resolveConfig(config: Config = {}): ResolvedConfig {
         defaultDirectories: config.defaultDirectories ?? [],
         enableTools: config.enableTools ?? true,
         enableContextInjection: config.enableContextInjection ?? true,
-        enforceReadOnly: config.enforceReadOnly ?? true
+        enforceReadOnly: config.enforceReadOnly ?? true,
+        vscodeEnabled: config.vscodeEnabled ?? true
     };
 }

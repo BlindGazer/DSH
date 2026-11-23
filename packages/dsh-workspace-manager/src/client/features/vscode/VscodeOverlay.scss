@@ -1,0 +1,18 @@
+// Загрузчик DSH получает CSS через существующую инъекцию стилей плагина.
+.dsh-core-root .workspace-manager-vscode-files {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.dsh-core-root .workspace-manager-vscode-pending-card {
+    width: fit-content;
+    max-width: 100%;
+}
+
+.dsh-core-root .workspace-manager-vscode-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    overflow-wrap: anywhere;
+}

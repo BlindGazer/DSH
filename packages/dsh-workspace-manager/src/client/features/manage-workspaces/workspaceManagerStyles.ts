@@ -1,5 +1,7 @@
 import { buildCoreThemeStyles, subscribeDshThemeChanges } from '@kalex/dsh-core';
 
+import vscodeCss from '../vscode/VscodeOverlay.scss?inline';
+import featuresCss from '../vscode/WorkspaceFeaturesSettings.scss?inline';
 import worktreeCss from '../worktree/WorktreeModal.module.scss?inline';
 
 export const styles = `
@@ -82,7 +84,7 @@ let themeChangesSubscribed = false;
 export function ensureWorkspaceManagerStyles(): void {
     if (typeof document === 'undefined' || !document.head) return;
     const existing = document.querySelector<HTMLStyleElement>(`style[data-plugin-css="${WORKSPACE_MANAGER_STYLE_ID}"]`);
-    const styleText = `${buildCoreThemeStyles()}\n${styles}\n${worktreeCss}`;
+    const styleText = `${buildCoreThemeStyles()}\n${styles}\n${worktreeCss}\n${vscodeCss}\n${featuresCss}`;
     if (existing) {
         existing.textContent = styleText;
     } else {

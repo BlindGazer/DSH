@@ -1,8 +1,15 @@
 import type { Context } from '@deepseek-ai/cordis';
+import { type DshLogger, NOOP_LOGGER } from '@kalex/dsh-logger-core';
 import type { WorkspaceDirectoriesService } from '../../shared/models/WorkspaceDirectories.ts';
-import type { WorktreeSelection } from '../../shared/models/Worktree.ts';
+import type { WorktreeDeletion, WorktreeSelection } from '../../shared/models/Worktree.ts';
 import { isHarnessProfilePath, isSubPath } from '../services/pathUtils.ts';
-import { inspectWorktreeRepository, prepareWorktree, WorktreeError } from '../services/WorktreeService.ts';
+import {
+    deleteWorktree,
+    inspectWorktreeRepository,
+    prepareWorktree,
+    WorktreeError,
+    worktreeFailureDetails
+} from '../services/WorktreeService.ts';
 
 const prefix = '/api/dsh-workspace-worktree';
 
@@ -36,14 +43,27 @@ function parseSelection(value: unknown): WorktreeSelection | undefined {
     return undefined;
 }
 
+function parseDeletion(body: Record<string, unknown>): WorktreeDeletion | undefined {
+    const { worktreePath, expectedBranch, deleteBranch, mergeInto } = body;
+    if (!text(worktreePath) || (expectedBranch !== null && !text(expectedBranch))) return undefined;
+    if (deleteBranch !== undefined && typeof deleteBranch !== 'boolean') return undefined;
+    if (mergeInto !== undefined && !text(mergeInto)) return undefined;
+    return {
+        worktreePath,
+        expectedBranch,
+        ...(deleteBranch !== undefined && { deleteBranch }),
+        ...(mergeInto !== undefined && { mergeInto })
+    };
+}
+
 function response(value: object, status = 200): Response {
     return Response.json(value, { status, headers: { 'Cache-Control': 'no-store' } });
 }
 
-export function registerWorktreeRoutes(ctx: Context, service: WorkspaceDirectoriesService) {
+export function registerWorktreeRoutes(ctx: Context, service: WorkspaceDirectoriesService, logger: DshLogger = NOOP_LOGGER) {
     return ctx.inject(['connection', 'workspaceRegistry'], scope => {
         const { connection, workspaceRegistry } = scope as Context & WorktreeHostContext;
-        const route = (action: 'inspect' | 'prepare'): WorktreeFetchRoute => ({
+        const route = (action: 'inspect' | 'prepare' | 'delete'): WorktreeFetchRoute => ({
             path: `${prefix}/${action}`,
             methods: ['POST'],
             requestBody: 'buffered',
@@ -58,8 +78,6 @@ export function registerWorktreeRoutes(ctx: Context, service: WorkspaceDirectori
                     const workspace = workspaceRegistry.list().find(item => item.id === body.workspaceId);
                     if (workspace === undefined || isHarnessProfilePath(workspace.path)) return response({ ok: false }, 404);
                     if (action === 'inspect') return response({ ok: true, repository: await inspectWorktreeRepository(workspace.path) });
-                    const selection = parseSelection(body.selection);
-                    if (selection === undefined) return response({ ok: false }, 400);
                     const protectedDirs = [...service.list(), ...service.getDirectoriesForWorkspace(workspace.path)].filter(
                         dir => dir.readOnly
                     );
@@ -68,25 +86,44 @@ export function registerWorktreeRoutes(ctx: Context, service: WorkspaceDirectori
                             throw new WorktreeError('readOnly');
                         }
                     };
+                    if (action === 'delete') {
+                        const deletion = parseDeletion(body);
+                        if (deletion === undefined) return response({ ok: false }, 400);
+                        const result = await deleteWorktree(workspace.path, deletion, checkWritable, (code, error) => {
+                            logger.record({
+                                event: 'workspace-worktree-failed',
+                                level: 'error',
+                                operation: action,
+                                data: {
+                                    code,
+                                    ...worktreeFailureDetails(error),
+                                    deleteBranch: deletion.deleteBranch === true,
+                                    mergeRequested: deletion.mergeInto !== undefined
+                                }
+                            });
+                        });
+                        return response({ ok: true, result });
+                    }
+                    const selection = parseSelection(body.selection);
+                    if (selection === undefined) return response({ ok: false }, 400);
                     const path = await prepareWorktree(workspace.path, selection, checkWritable);
                     checkWritable(path);
                     return response({ ok: true, path });
                 } catch (error) {
                     const code = error instanceof WorktreeError ? error.code : 'gitFailed';
-                    if (code === 'gitFailed') {
-                        const name = error instanceof Error ? error.name : 'unknown';
-                        console.error('[dsh-workspace-manager] worktree operation failed', action, name);
-                        scope.get('dshLoggerService')?.getLogger({ packageName: '@kalex/dsh-workspace-manager' }, 'host').record({
+                    const failed = code === 'gitFailed' || code === 'worktreeRemoveFailed' || code === 'mergeFailed';
+                    if (failed || action === 'delete') {
+                        logger.record({
                             event: 'workspace-worktree-failed',
                             level: 'error',
                             operation: action,
-                            data: { code, name }
+                            data: { code, ...(error instanceof Error ? worktreeFailureDetails(error) : {}) }
                         });
                     }
-                    return response({ ok: false, code }, code === 'gitFailed' ? 500 : 409);
+                    return response({ ok: false, code }, failed ? 500 : 409);
                 }
             }
         });
-        for (const action of ['inspect', 'prepare'] as const) scope.effect(() => connection.fetch.register(route(action)));
+        for (const action of ['inspect', 'prepare', 'delete'] as const) scope.effect(() => connection.fetch.register(route(action)));
     });
 }

@@ -5,6 +5,7 @@ export interface WorktreeCheckout {
 
 export interface WorktreeRepository {
     readonly currentBranch: string | null;
+    readonly isLinkedWorktree: boolean;
     readonly defaultBasePath: string;
     readonly branches: readonly string[];
     readonly occupiedBranches: readonly string[];
@@ -20,6 +21,21 @@ export type WorktreeSelection =
     | (WorktreeDestination & { readonly mode: 'new'; readonly branch: string; readonly sourceBranch: string })
     | (WorktreeDestination & { readonly mode: 'existing'; readonly branch: string })
     | { readonly mode: 'open'; readonly path: string };
+
+export interface WorktreeDeletion {
+    readonly worktreePath: string;
+    readonly expectedBranch: string | null;
+    readonly deleteBranch?: boolean;
+    readonly mergeInto?: string;
+}
+
+export type WorktreeDeletionWarning = 'branchDeleteFailed' | 'mergeCleanupFailed';
+
+export interface WorktreeDeletionResult {
+    readonly worktreeRemoved: true;
+    readonly branchDeleted: boolean;
+    readonly warnings: readonly WorktreeDeletionWarning[];
+}
 
 export type WorktreeErrorCode =
     | 'accessDenied'
@@ -37,4 +53,15 @@ export type WorktreeErrorCode =
     | 'ignoreFailed'
     | 'readOnly'
     | 'worktreeMissing'
-    | 'gitFailed';
+    | 'primaryWorktree'
+    | 'worktreeChanged'
+    | 'worktreeDirty'
+    | 'worktreeLocked'
+    | 'mergeTargetInvalid'
+    | 'mergeTargetDirty'
+    | 'mergeConflict'
+    | 'mergeFailed'
+    | 'branchNotMerged'
+    | 'worktreeRemoveFailed'
+    | 'gitFailed'
+    | WorktreeDeletionWarning;

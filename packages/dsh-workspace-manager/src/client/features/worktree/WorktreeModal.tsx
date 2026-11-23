@@ -5,6 +5,7 @@ import type { WorktreeRepository, WorktreeSelection } from '../../../shared/mode
 import type { WorkspaceEditTarget } from '../manage-workspaces/models/WorkspaceEditTarget.ts';
 import { useWorktreeDialog } from './hooks/useWorktreeDialog.ts';
 import styles from './WorktreeModal.module.scss';
+import { WorktreeSummary } from './WorktreeSummary.tsx';
 
 export interface WorktreeModalProps {
     readonly target: WorkspaceEditTarget;
@@ -59,42 +60,12 @@ export function WorktreeModal({ target, t, ...actions }: WorktreeModalProps) {
                     </div>
                 }>
                 <div className={styles.form}>
-                    <div className={styles.summary}>
-                        <div className={styles.location}>
-                            <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 16 16"
-                                fill="none"
-                                stroke="currentColor"
-                                strokeWidth="1.2"
-                                strokeLinejoin="round"
-                                aria-hidden="true">
-                                <path d="M1.75 12.5v-9h4.5l1.5 1.75h6.5v7.25z" />
-                            </svg>
-                            <strong>{target.displayTitle}</strong>
-                            <p>{target.path}</p>
-                        </div>
-                        {!dialog.loading && dialog.repository ? (
-                            <span className={styles.branch} title={t('worktreeCurrentBranch')}>
-                                <svg
-                                    width="13"
-                                    height="13"
-                                    viewBox="0 0 16 16"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="1.3"
-                                    strokeLinecap="round"
-                                    aria-hidden="true">
-                                    <circle cx="4.5" cy="3" r="1.65" />
-                                    <circle cx="4.5" cy="13" r="1.65" />
-                                    <circle cx="11.5" cy="3" r="1.65" />
-                                    <path d="M4.5 4.7v6.6m7-6.6c0 4.2-7 1.7-7 6.6" />
-                                </svg>
-                                <span>{dialog.repository.currentBranch ?? t('worktreeDetached')}</span>
-                            </span>
-                        ) : null}
-                    </div>
+                    <WorktreeSummary
+                        title={target.displayTitle}
+                        path={target.path}
+                        branch={dialog.loading ? undefined : dialog.repository?.currentBranch}
+                        t={t}
+                    />
                     {dialog.loading ? (
                         <p>
                             <Spinner /> {t('loading')}
