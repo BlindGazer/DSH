@@ -43,7 +43,12 @@ const en = {
     callbackFailed: 'The redirect URL could not be accepted. Check that it is the full localhost callback URL.',
     copy: 'Copy code',
     copied: 'Copied',
-    loginFailed: 'Could not start sign-in.',
+    loginFailed: 'Could not complete sign-in.',
+    accountAlreadyConnected:
+        'This ChatGPT account is already connected using this sign-in method. Use the existing entry instead of adding a new one.',
+    duplicateAccountHint:
+        'If this ChatGPT account is already connected using the selected method, sign in from its existing entry instead.',
+    copyLoginError: 'Copy error',
     usage: 'Usage',
     usageLoading: 'Loading usage...',
     usageUnavailable: 'Usage details are unavailable.',
@@ -171,7 +176,11 @@ const ru: Record<keyof typeof en, string> = {
     callbackFailed: 'Не удалось принять URL. Проверьте, что вставлен полный callback URL localhost.',
     copy: 'Скопировать код',
     copied: 'Скопировано',
-    loginFailed: 'Не удалось начать вход.',
+    loginFailed: 'Не удалось завершить вход.',
+    accountAlreadyConnected: 'Этот аккаунт ChatGPT уже подключён этим способом. Используйте существующую запись вместо добавления новой.',
+    duplicateAccountHint:
+        'Если аккаунт ChatGPT уже подключён выбранным способом, войдите через существующую запись вместо добавления новой.',
+    copyLoginError: 'Скопировать ошибку',
     usage: 'Использование',
     usageLoading: 'Загрузка данных...',
     usageUnavailable: 'Данные об использовании недоступны.',

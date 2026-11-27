@@ -8,7 +8,7 @@ This document describes the multi-account OpenAI Hub runtime and its operational
 - Remote service key: `openai-hub`; Remote namespace: `openaiHub`.
 - The plugin registers one static LLM provider route: `openai-hub`. Account login, removal, and label changes do not create or replace routes.
 - Provider group: `OpenAI Hub`.
-- Each account has a user-selected lowercase ASCII label (letters, digits, and hyphens; no spaces), entered before OAuth and editable from its account card. Labels must be unique.
+- Each account has a unique label of 1 to 32 characters. Start with a lowercase ASCII letter, then use lowercase ASCII letters, digits, or hyphens. Enter the label before OAuth; it can be edited on the account card.
 - Public model ID and model name: `<accountLabel>/<upstreamModelId>`, e.g. `workaccount/gpt-6.2-sol`. An external DSH subagent presentation may prepend `openai-hub/`; this is not part of the plugin model name.
 - Credential Store references use the SDK-compatible internal form `openai_hub_device_code_<8-hex-hash>` or `openai_hub_browser_oauth_<8-hex-hash>`. The OpenSpec logical reference is `openai-hub-<authMethod>-<8-hex-hash(accountId)>`; the underscore spelling is an internal adapter key required by the SDK validator. Neither form contains tokens. Full account IDs and secrets stay in the protected Credential Store record and are not exposed in configuration, model IDs, snapshots, logs, errors, or UI.
 
@@ -44,14 +44,14 @@ Toggling automatic refresh leaves the last known quota intact. Enabling it reque
 
 ## Reinstall and acceptance
 
-The package rename and account/configuration contract are not an in-place migration guarantee. Back up any needed profile settings, uninstall the legacy OpenAI Codex plugin, install `@kalex/dsh-openai-hub`, restart DSH if required, and sign in again. Use the uninstall/install commands and acceptance checklist in [Setup](Setup.md) or [Setup_EN](Setup_EN.md). Do not assume legacy credentials or configuration are migrated.
+The package rename and account/configuration contract are not an in-place migration guarantee. Back up any needed profile settings, uninstall the legacy OpenAI Codex plugin, install `@kalex/dsh-openai-hub`, restart DSH if required, and sign in again. See the installation steps and manual checks in [Setup](Setup.md) or [Setup_EN](Setup_EN.md). Do not assume legacy credentials or configuration are migrated.
 
 ## Known limitations
 
 - The plugin has one static route and does not provide proxy-mode selection or a plugin-owned proxy transport. Network routing is supplied by DSH.
 - Catalog availability depends on the authenticated API; fallback is the bundled local catalog until the first successful API response.
 - Unknown API models use the bundled Codex protocol metadata template; API context/output token limits override that template when supplied. Their persisted ID/context/output metadata survives Loader configuration remounts. Review upstream capability changes when upgrading pi-ai.
-- Browser OAuth requires the SDK's callback server on the same machine as the browser (port 1455); remote/headless deployments should use device-code sign-in. Manual callback-code entry is not exposed.
+- Browser OAuth uses a local callback on port 1455. If the sign-in dialog asks for the callback URL, paste the full redirected URL only into that dialog. Device-code sign-in is an alternative for a remote or headless Host.
 - Saving account settings uses the normal DSH Loader configuration lifecycle; an incomplete initial catalog resumes in the new Host instance after a remount.
 - Real-account acceptance and visual checks in the running DSH page must be performed by the user when no connected inspection/browser client is available; automated checks use synthetic accounts and credentials.
 - Old conversation model IDs are not rewritten on label change or account removal.

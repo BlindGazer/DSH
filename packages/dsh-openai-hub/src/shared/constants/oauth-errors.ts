@@ -1,3 +1,5 @@
+export const DuplicateAccountLoginError = 'account_already_connected';
+
 export const OAuthFailureMessages = {
     oauth_connect_timeout: 'Establishing a connection for the OAuth request timed out; that connection returned no HTTP response.',
     oauth_dns_failed: 'DNS resolution failed for the OAuth connection to auth.openai.com.',

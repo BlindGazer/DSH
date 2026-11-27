@@ -28,6 +28,13 @@
         overflow-wrap: anywhere;
         user-select: text;
 
+        &[data-inline] {
+            position: static;
+            width: auto;
+            max-height: none;
+            box-shadow: none;
+        }
+
         &[data-severity="error"] {
             color: var(--dsh-ui-danger);
             border-color: var(--dsh-ui-danger);

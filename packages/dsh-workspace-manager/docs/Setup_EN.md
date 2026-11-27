@@ -1,54 +1,27 @@
-# Installation and Commands
+# Installation and commands
 
-## Requirements
+Requires DSH `>=0.2.2-rc.5`. Building from source requires Node.js and pnpm. Worktree operations require Git on the DSH Host and a repository with at least one commit.
 
-- Node.js and pnpm (to build from source).
-- Installed DSH Desktop (profile `desktop`), version >= 0.2.2-rc.5.
+## From GitHub
 
-## Install from GitHub using the DSH CLI
-
-```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-```
-
-## Install using pnpm
-
-Run from the DSH Desktop profile directory:
+In DSH Desktop, open the plugin manager and add `github:BlindGazer/DSH#path:packages/dsh-workspace-manager`. For a separate CLI profile (for example, `web`):
 
 ```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
-## Install from a local folder (recommended for development)
+## From a local checkout
+
+Install dependencies and build the package from the repository root:
 
 ```powershell
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
+pnpm install
+pnpm --filter @kalex/dsh-workspace-manager build
+dsh plugin --profile web add C:/git/DSH/packages/dsh-workspace-manager
 ```
 
-## Available Commands
+For Desktop, select the built local package in the plugin manager instead of running the last command.
 
-Run commands from the `packages/dsh-workspace-manager` directory:
+## Package commands
 
-```bash
-# Build the plugin (Host + Client)
-pnpm run build
-
-# Build only the client part
-pnpm run build:client
-
-# Build only the host part
-pnpm run build:host
-
-# Run unit tests
-pnpm run test
-
-# Type check
-pnpm run typecheck
-
-# Verify the client bundle
-pnpm run verify
-
-# Full check: build + tests + verify
-pnpm run check
-```
+From the package directory, `pnpm run build` builds Host and Client; `pnpm run build:host` and `pnpm run build:client` build them separately. `pnpm run test` runs tests, `pnpm run typecheck` checks types, and `pnpm run verify` checks the client bundle. `pnpm run check` builds, tests, and verifies the bundle.

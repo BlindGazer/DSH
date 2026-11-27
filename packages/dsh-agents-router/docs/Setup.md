@@ -1,56 +1,29 @@
 # Установка и команды
 
-## Установка из GitHub через DSH CLI
+Требуется DSH `0.2.2-rc.5` или новее.
+
+В DSH Desktop откройте **Плагины**, нажмите **Добавить плагин** и вставьте:
+
+```text
+github:BlindGazer/DSH#path:packages/dsh-agents-router
+```
+
+Для профиля CLI, например `web`, выполните:
 
 ```powershell
-$desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd"
-& $desktopDsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-agents-router
 ```
 
-## Установка через pnpm
+Для установки из локальной копии выполните `pnpm install` и `pnpm build` из корня репозитория. Вместо строки `github:...` укажите абсолютный путь к каталогу `packages/dsh-agents-router`.
 
-Выполните из каталога профиля DSH Desktop:
+## Разработка
 
-```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm add github:BlindGazer/DSH#path:packages/dsh-agents-router
-```
+Запускайте команды из каталога пакета:
 
-## Установка из локальной папки
-
-```powershell
-$desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd"
-& $desktopDsh plugin --profile desktop add C:\git\DSH\packages\dsh-agents-router
-```
-
-## Доступные команды
-
-Выполняйте команды из каталога `packages/dsh-agents-router`:
-
-```bash
-# Сборка плагина (Host + Client)
-pnpm run build
-
-# Сборка только клиентской части (Vite)
-pnpm run build:client
-
-# Сборка только серверной части (Vite)
-pnpm run build:host
-
-# Запуск модульных тестов (Vitest)
-pnpm run test
-
-# Запуск тестов в режиме отслеживания изменений
-pnpm run test:watch
-
-# Полная проверка: сборка + тесты + верификация артефактов
-pnpm run check
-
-# Проверка готовности артефактов к релизу в DSH
-pnpm run verify
-```
-
-## Требования
-
-- Node.js и pnpm.
-- Версия DSH не ниже `0.2.2-rc.5` (см. `engines.dsh` в `package.json`).
+| Команда | Назначение |
+| --- | --- |
+| `pnpm build` | Собрать серверную и клиентскую части. |
+| `pnpm build:host` / `pnpm build:client` | Собрать только серверную / клиентскую часть. |
+| `pnpm test` / `pnpm test:watch` | Запустить тесты один раз / при изменениях. |
+| `pnpm verify` | Проверить файлы для выпуска. |
+| `pnpm check` | Собрать пакет, запустить тесты и проверить файлы для выпуска. |

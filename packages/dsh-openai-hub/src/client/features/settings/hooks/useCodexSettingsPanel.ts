@@ -2,6 +2,7 @@ import { useEffect, useId, useState, useSyncExternalStore } from 'react';
 import type { AuthMethod } from '../../../../shared/accounts.ts';
 import { AccountLabelSchema } from '../../../../shared/accounts.ts';
 import type { OpenAICodexText } from '../../../../shared/constants/localizations/OpenAICodexLocalization.ts';
+import { DuplicateAccountLoginError } from '../../../../shared/constants/oauth-errors.ts';
 import type { AccountSnapshot } from '../../../../shared/remote.ts';
 import type { OpenAICodexController } from '../openAICodexRuntime.ts';
 export function useCodexSettingsPanel(
@@ -15,7 +16,7 @@ export function useCodexSettingsPanel(
     const [addLoginOpen, setAddLoginOpen] = useState(false),
         [label, setLabel] = useState(''),
         [authMethod, setAuthMethod] = useState<AuthMethod>('device-code'),
-        [error, setError] = useState<{ detail: string; key: OpenAICodexText }>(),
+        [error, setError] = useState<{ detail: string; key: OpenAICodexText } | null>(),
         [busy, setBusy] = useState(false),
         [callbackInFlight, setCallbackInFlight] = useState(false),
         [loginStarted, setLoginStarted] = useState(false),
@@ -122,7 +123,7 @@ export function useCodexSettingsPanel(
                 closeLogin();
             } else if (result.status === 'error') {
                 setLoginPending(false);
-                setError({ detail: result.error, key: 'callbackFailed' });
+                setError({ detail: result.error, key: 'loginFailed' });
             } else {
                 setLoginPending(true);
             }
@@ -172,13 +173,23 @@ export function useCodexSettingsPanel(
             setBusy(false);
         }
     };
+    const loginErrorDetail = error?.key === 'loginFailed' ? error.detail : snapshot?.error;
+    const localizedLoginError =
+        loginErrorDetail === DuplicateAccountLoginError ? text('accountAlreadyConnected') : loginErrorDetail || text('loginFailed');
     return {
         state,
+        snapshotLoginError: localizedLoginError,
         snapshot,
         loginOpen,
         label: activeLabel,
         authMethod: activeAuthMethod,
-        error: error ? error.detail || text(error.key) : undefined,
+        labelError: error?.key === 'labelInvalid' ? text(error.key) : undefined,
+        callbackError: error?.key === 'callbackFailed' ? text(error.key) : undefined,
+        loginError:
+            error?.key === 'loginFailed' || (error === undefined && snapshot?.status === 'error' && snapshot.retryAvailable)
+                ? localizedLoginError
+                : undefined,
+        dismissError: () => setError(null),
         busy,
         signingIn: (callbackInFlight || snapshot?.status === 'starting') && snapshot?.status !== 'error' && snapshot?.status !== 'done',
         loginStarted,

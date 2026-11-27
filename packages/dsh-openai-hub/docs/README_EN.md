@@ -1,38 +1,21 @@
-# [@kalex/dsh-openai-hub](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-hub)
+# [@kalex/dsh-openai-hub](..)
 
-[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH)
-[![Node](https://img.shields.io/badge/Node-%3E%3D22.19.0-339933)](https://nodejs.org/)
-[![License](https://img.shields.io/badge/license-MIT-green)](../LICENSE)
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![Node.js >=22.19.0](https://img.shields.io/badge/Node.js-%3E%3D22.19.0-147D73)](https://nodejs.org/) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![license MIT](https://img.shields.io/badge/license-MIT-568814)](../LICENSE)
 
-A DeepSeek Harness plugin for signing into ChatGPT and using available OpenAI Codex models without an OpenAI Platform API key. Based on [gooosie/dsh-openai-codex-auth](https://github.com/gooosie/dsh-openai-codex-auth).
+> [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
 
-No public `.d.ts` files are generated: this package is installed as a DSH plugin, not used as a library.
+A DeepSeek Harness (DSH) plugin for signing into ChatGPT accounts and using their available OpenAI Codex models without an OpenAI Platform API key. Models from all accounts appear in the `OpenAI Hub` group; settings and quotas are separate for each account. Based on [gooosie/dsh-openai-codex-auth](https://github.com/gooosie/dsh-openai-codex-auth).
 
-## Features
+## Installation
 
-- Multiple accounts behind one static DSH route, `openai-hub`, in the `OpenAI Hub` provider group.
-- Combined model catalog with public IDs `<accountLabel>/<upstreamModelId>`.
-- Per-account model settings and quota preferences.
-- OAuth secrets and full account identifiers remain in DSH Credential Store; configuration contains non-secret settings only.
+**DSH Desktop:** open **Plugins**, select **Add plugin**, and paste: `github:BlindGazer/DSH#path:packages/dsh-openai-hub`.
 
-Choose a unique lowercase ASCII label (letters, digits, hyphens) before signing in. The catalog loads from the authenticated API after login and on refresh. If a request fails, the last successful catalog remains available; before the first success, the local `pi-ai` catalog is used with a refresh error indication. Automatic quota refresh is off by default. See [Workflow](Workflow.md) for cadence and priority details.
+**Terminal:** replace `web` with your CLI profile name. The Desktop app manages the `desktop` profile.
 
-## Install
-
-```sh
+```powershell
 dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-openai-hub
 ```
 
-Moving from the legacy package requires manual removal and installation; migration of credentials and settings is not guaranteed. See [installation and acceptance](Setup_EN.md) for instructions and a manual checklist.
+Stack: TypeScript, React, Cordis, pi-ai, Vite, and Vitest.
 
-## Security
-
-Tokens and full account IDs are not sent to the client and must not appear in configuration, logs, errors, or public model IDs. See [Security](Security_EN.md).
-
-## Documentation
-
-- [Features](Features_EN.md)
-- [Examples](Examples_EN.md)
-- [Workflow and architecture](Workflow.md)
-- [Installation and acceptance](Setup_EN.md) | [Установка и приемка](Setup.md)
-- [Русский README](../README.md)
+[Examples in DSH](Examples_EN.md) | [Features](Features_EN.md) | [Installation and verification](Setup_EN.md) | [Security](Security_EN.md) | [Русский](../README.md)

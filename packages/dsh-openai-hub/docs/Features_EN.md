@@ -2,11 +2,11 @@
 
 ## Accounts and sign-in
 
-Add an account in Settings -> Models. Enter its unique lowercase ASCII label before starting OAuth, then complete the supported ChatGPT sign-in flow. The label can be changed in that account's information block.
+Add an account in Settings -> Models. Before starting OAuth, enter a unique label of 1 to 32 characters. Start with a lowercase ASCII letter and use only lowercase ASCII letters, digits, or hyphens for the remaining characters. The label can be changed on the account card. Browser OAuth and device-code sign-in are available. If the browser sign-in dialog asks for a callback URL, paste the full redirected URL into that dialog only.
 
 ## Combined model catalog
 
-OpenAI Hub registers a single static provider route, `openai-hub`, grouped as `OpenAI Hub`. After login and on manual refresh, the plugin loads the authenticated API catalog and combines models from all configured accounts. Model IDs/names use `<accountLabel>/<upstreamModelId>`. Requests resolve the account credential and send the original upstream model ID. If catalog loading fails, the last successful catalog is retained; until the first success the bundled local `pi-ai` catalog is used and the refresh error is shown.
+OpenAI Hub registers a single static provider route, `openai-hub`, grouped as `OpenAI Hub`. After login and on manual refresh, the plugin loads the authenticated API catalog and combines models from all configured accounts. Model IDs/names use `<accountLabel>/<upstreamModelId>`. A request uses the matching account's credentials and sends the original model ID to the API. If catalog loading fails, the last successful catalog is retained; until the first success the bundled local `pi-ai` catalog is used and the refresh error is shown.
 
 Each account has its own information block and model modal. Renaming a label rebuilds that account's public model IDs; old history references are stale and history is not rewritten.
 
@@ -18,6 +18,12 @@ Quota is shown for the selected OpenAI Hub model/account only, and hidden for an
 
 Removing an account clears its own Credential Store record, configuration, and models without rewriting conversation history. Removing the last account returns to the initial add-account state.
 
-## Network and limitations
+## Network and structure
 
-Networking uses DSH's configured route. The plugin has no proxy-mode selector or plugin-owned proxy mechanism. Automated verification uses synthetic OAuth/network data; complete real-account acceptance manually using [Setup](Setup_EN.md).
+The plugin uses DSH's network route and does not configure a proxy itself.
+
+- `src/shared/`: TypeScript account models, Host communication schemas, and localization.
+- `src/host/`: Cordis plugin, OAuth, model catalog, quotas, and pi-ai adapter.
+- `src/client/`: React settings and quota indicator. Vite builds the package and Vitest runs the tests.
+
+See the [workflow](Workflow.md) and [manual checks](Setup_EN.md).

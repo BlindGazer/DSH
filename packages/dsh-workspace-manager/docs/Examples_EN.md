@@ -14,4 +14,6 @@ In the editor you configure linked directories: path, alias, description, and re
 
 ![Workspace source folders editor](../assets/workspace-source-folders-editor.png)
 
-_Linked workspace directories editor._
+## Session on a separate branch
+
+In the repository workspace menu, choose **New worktree session**. For a separate task, create a new branch from the local branch you want to start from and open a session in the new worktree. Uncommitted changes stay in the source checkout. When finished, use **Delete worktree** in the main workspace menu to remove the worktree.

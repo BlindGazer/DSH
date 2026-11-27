@@ -1,151 +1,60 @@
-# DeepSeek Harness (DSH) Monorepo: Плагины и Общая Библиотека
+# Плагины и библиотеки для DeepSeek Harness
 
-[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH) [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/) [![Vite](https://img.shields.io/badge/Vite-8-4B32C3)](https://vite.dev/) [![License](https://img.shields.io/badge/license-ISC-green)](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/package.json)
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](https://github.com/BlindGazer/DSH/blob/main/LICENSE.md)
 
-> [English](https://github.com/BlindGazer/DSH/blob/main/docs/README_EN.md)
+[English](https://github.com/BlindGazer/DSH/blob/main/docs/README_EN.md)
 
-Набор плагинов для **DeepSeek Harness (DSH)** на основе автономных пакетов с единой архитектурой, строгой системой типов и общим UI-фреймворком.
+В репозитории пять плагинов для DeepSeek Harness (DSH) и две библиотеки. Для установки плагинов требуется DSH `0.2.2-rc.5` или новее.
+
+## Пакеты
+
+| Пакет                                                                                                                | Что делает                                                                                                                                      |
+| -------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| [@kalex/dsh-agents-router](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/README.md)         | Подключает правила и навыки проекта по настройкам маршрутизации, путям файлов и ключевым словам.                                                |
+| [@kalex/dsh-proxy-provider](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-proxy-provider/README.md)       | Настраивает HTTP-, HTTPS- или SOCKS5-прокси отдельно для каждого провайдера моделей и проверяет соединение.                                     |
+| [@kalex/dsh-workspace-manager](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-workspace-manager/README.md) | Подключает дополнительные каталоги к рабочей области, в том числе в режиме только для чтения. Создаёт, открывает и удаляет рабочие деревья Git. |
+| [@kalex/dsh-openai-hub](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-openai-hub/README.md)               | Подключает аккаунты ChatGPT для доступа к моделям Codex, настраивает список моделей и показывает лимиты аккаунтов.                              |
+| [@kalex/dsh-logger](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-logger/README.md)                       | Настраивает и собирает логи плагинов, подключённых через `dsh-logger-core`.                                                                     |
+| [@kalex/dsh-core](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-core/README.md)                           | Библиотека компонентов React, тем и средств локализации.                                                                                        |
+| [@kalex/dsh-logger-core](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-logger-core/README.md)             | Библиотека типов и адаптеров для логирования.                                                                                                   |
 
 ## Установка
-Из интерфейса DSH (`Плагины` -> `Добавить плагин` -> вставить строку)
-<img width="1486" height="970" alt="image" src="https://github.com/user-attachments/assets/fe3f5650-f18e-43dc-a613-dc05d3b38c5a" />
 
-```powershell
-github:BlindGazer/DSH#path:packages/dsh-proxy-provider
+В DSH Desktop откройте **Плагины**, нажмите **Добавить плагин** и вставьте одну из строк:
+
+![Добавление плагина в DSH Desktop](https://github.com/user-attachments/assets/fe3f5650-f18e-43dc-a613-dc05d3b38c5a)
+
+```text
 github:BlindGazer/DSH#path:packages/dsh-agents-router
+github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 github:BlindGazer/DSH#path:packages/dsh-openai-hub
 github:BlindGazer/DSH#path:packages/dsh-logger
 ```
 
-Из терминала добавьте перед именем пакета `dsh plugin --profile desktop add`
-```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-```
-
----
-
-## 📦 Проекты в монорепозитории
-
-| Пакет                                                                        | Описание и решаемые задачи                                                                                                                                                                                                                                                                                                                   | Ссылка                                                                                                |
-| ---------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| **[@kalex/dsh-core](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-core/README.md)**                                   | **Core библиотека, компонентов и дизайн-системы.** Решает проблему дублирования кода между плагинами, предоставляет адаптивные UI-компоненты, палитры тем DSH, контракты локализации, и другой общий код.                    | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-core/README.md)                  |
-| **[@kalex/dsh-proxy-provider](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-proxy-provider/README.md)**               | **Менеджер прокси серверов для LLM провайдеров. ** Решает проблему сетевых ограничений, позволяет настраивать индивидуальные HTTP/HTTPS/SOCKS5 прокси для каждого провайдера, шифровать учетные данные (AES-256-GCM) и проверка соединения.      | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/README.md)        |
-| **[@kalex/dsh-agents-router](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/README.md)**                 | **Маршрутизатор правила и скилов агента** Решает проблему раздувания контекста (context window bloat) и перегрузки LLM лишними инструкциями. Динамически подгружает в контекст только те правила, которые соответствуют текущему рабочему набору файлов сессии (на основе правил маршрутизации, которые указаны в настройках). | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/README.md)         |
-| **[@kalex/dsh-workspace-manager](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-workspace-manager/README.md)**         | **Управление рабочей средой (Workspace)** Позволяет подключать несколько каталогов из разных расположений, позволяет задавать псевдонимы и описания, а также ограничивать доступ режимом только для чтения.  Также позволяет управлять worktree (создавать, мержить и удалять).                                                                                                                                   | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/README.md)     |
-| **[@kalex/dsh-openai-hub](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-openai-hub/README.md)** | **Мульти аккаунты OpenAI Codex ** Позволяет подключать множество аккаунтов по подписке, управлять отображением моделей, и просматривать лимиты всех подключенных аккаунтов.                                                                        | [Подробнее](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-openai-hub/README.md) |
-| **@kalex/dsh-logger** | Плагин централизованого управления логированием всех плагинов, подключенных через контракт `@kalex/dsh-logger-core` | [Подробнее](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-logger/README.md) |
-| **@kalex/dsh-logger-core** | Единный контракт логирования плагинов DSH. | [Подробнее](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-logger-core/README.md) |
-
----
-
-## 📚 Документация
-
-Правила оформления документации в проекте [docs/DOCUMENTATION_SPEC.md](https://github.com/BlindGazer/DSH/blob/main/docs/DOCUMENTATION_SPEC.md).
-
-Каждый пакет содержит:
-
-- `README.md` - краткое описание пакета. У плагинов оно отображается в настройках DSH.
-- `docs/` - установка, команды, возможности и примеры на русском и английском. Раздел безопасности есть там, где он нужен.
-
-Внутри монорепозитория пакеты используют TypeScript-исходники. Только `dsh-core` и `dsh-logger-core` включают публичные декларации `.d.ts` в свои архивы: они предназначены для импорта во внешних проектах. Остальные пять пакетов устанавливаются как плагины DSH и не выпускают декларации.
-
----
-
-## 🛠 Технологический стек
-
-- **TypeScript >= 7.0.2** со строгой типизацией
-- **React 18 и 19** со включенным **React Compiler** (`@vitejs/plugin-react`).
-- **Vite 8** на базе современного **Oxc** (`minify: 'oxc'`).
-- **Vitest 5** для быстрого запуска юнит тестов с нативной поддержкой ESM и TypeScript.
-- **Biome 2** и **Oxlint 1** для молниеносного линтинга и авто-форматирования кода.
-
----
-
-## ⚡ Доступные команды
-
-Все команды выполняются из корня репозитория через `pnpm`:
-
-```bash
-# Установка зависимостей монорепозитория
-pnpm install
-
-# Сборка всех пакетов через Vite 8
-pnpm run build
-
-# Запуск тестов во всех пакетах через Vitest
-pnpm run test
-
-# Запуск тестов в режиме отслеживания изменений
-pnpm run test:watch
-
-# Проверка типов TypeScript во всех проектах
-pnpm run typecheck
-
-# Проверка типов, кодировки и правил линтера
-pnpm run check
-
-# Автоматическое форматирование и исправление кода (Biome, Oxlint, UTF-8 LF)
-pnpm run fix
-
-# Проверка готовности артефактов к релизу в DSH (Cordis patch, манифесты, сборки)
-pnpm run verify
-```
-
----
-
-## 🚀 Установка плагинов в DSH Desktop Profile
-
-Команды ниже учитывают, что у вас `dsh` настроен в глобальной области видимости, или можете всегда указывать его полный путь
+Для профиля, которым управляет CLI, используйте `dsh plugin`. В примере `web` - имя профиля:
 
 ```powershell
-$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
-команды `pnpm` должны выполняться из следующего каталога
+Профиль `desktop` управляется приложением: не передавайте его в `dsh plugin`. Чтобы установить плагин из локальной копии репозитория, сначала выполните `pnpm install` и `pnpm build` из корня. Затем укажите абсолютный путь к каталогу пакета вместо строки `github:...`, например `C:\git\DSH\packages\dsh-proxy-provider`.
 
-```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-```
+## Разработка
 
----
+Запускайте команды из корня репозитория:
 
-Для установки плагинов в профиль **DSH Desktop** используйте CLI `dsh` или `pnpm`.
+| Команда           | Назначение                                                  |
+| ----------------- | ----------------------------------------------------------- |
+| `pnpm install`    | Установить зависимости.                                     |
+| `pnpm build`      | Собрать пакеты.                                             |
+| `pnpm test`       | Запустить тесты.                                            |
+| `pnpm test:watch` | Перезапускать тесты при изменениях.                         |
+| `pnpm typecheck`  | Проверить типы.                                             |
+| `pnpm check`      | Проверить типы, кодировку и правила линтера.                |
+| `pnpm fix`        | Отформатировать код и применить автоматические исправления. |
+| `pnpm verify`     | Проверить состав и структуру файлов для выпуска.            |
 
-### Вариант 1: Установка из GitHub через DSH CLI
+Внутри репозитория пакеты используют TypeScript-исходники. Только библиотеки `dsh-core` и `dsh-logger-core` публикуют декларации `.d.ts` для внешних проектов. Плагины устанавливаются в DSH, а не импортируются как библиотеки.
 
-```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-hub
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-logger
-```
-
-### Вариант 2: Установка из GitHub через pnpm
-
-```powershell
-pnpm add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-pnpm add github:BlindGazer/DSH#path:packages/dsh-agents-router
-pnpm add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-pnpm add github:BlindGazer/DSH#path:packages/dsh-openai-hub
-```
-
-### Вариант 3: Установка из локальной папки репозитория (рекомендуется для разработки)
-
-Откройте **PowerShell** и выполните:
-
-```powershell
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-agents-router
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
-```
-
-## 🏛 Архитектурные принципы
-
-Плагины разделяют код на общие, серверные и клиентские модули:
-
-1. `src/shared/`: Не зависящие от среды модели, константы, валидаторы и локализация.
-2. `src/host/`: Серверная/Node.js логика (API, файловые сервисы, шифрование, диспетчеризация). Не импортирует клиентские модули или React.
-3. `src/client/`: Клиентский интерфейс React с разделением на фичи (`app/`, `features/`, `utils/`, `theme/`).
-   тест
+README каждого пакета ведёт к инструкциям и примерам на русском и английском. См. [правила оформления документации](https://github.com/BlindGazer/DSH/blob/main/docs/DOCUMENTATION_SPEC.md).

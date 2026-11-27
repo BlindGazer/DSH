@@ -1,4 +1,13 @@
-import { Button, CollectionAddButton, type DshTranslate, IconButton, Modal, RadioCardGroup, TextField } from '@kalex/dsh-core';
+import {
+    Button,
+    CollectionAddButton,
+    type DshTranslate,
+    IconButton,
+    Modal,
+    Notification,
+    RadioCardGroup,
+    TextField
+} from '@kalex/dsh-core';
 import type { AuthMethod } from '../../../shared/accounts.ts';
 import type { OpenAICodexText } from '../../../shared/constants/localizations/OpenAICodexLocalization.ts';
 import { TestId } from '../../../shared/constants/testId.ts';
@@ -51,7 +60,7 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
             ) : undefined}
             {panel.snapshot?.status === 'error' && !panel.loginOpen ? (
                 <div className={styles.card}>
-                    <p>{panel.snapshot.error || text('loginFailed')}</p>
+                    <p>{panel.snapshotLoginError}</p>
                 </div>
             ) : undefined}
             <CollectionAddButton onClick={panel.openLogin}>
@@ -98,26 +107,29 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                         spellCheck={false}
                                         placeholder={text('callbackPlaceholder')}
                                         onChange={panel.setCallbackUrl}
+                                        error={panel.callbackError}
                                     />
-                                    {panel.error ? <p>{panel.error}</p> : undefined}
                                 </div>
                             ) : undefined}
                         </>
-                    ) : panel.snapshot?.status === 'error' && panel.snapshot.retryAvailable ? (
-                        <div className={styles.card}>
-                            <p>{panel.snapshot.error || text('loginFailed')}</p>
-                        </div>
-                    ) : panel.loginStarted && panel.snapshot?.status === 'done' && !panel.busy ? (
+                    ) : panel.snapshot?.status === 'error' && panel.snapshot.retryAvailable ? null : panel.loginStarted &&
+                      panel.snapshot?.status === 'done' &&
+                      !panel.busy ? (
                         <p>{text('connected')}</p>
                     ) : panel.isReauthentication ? (
                         <div className={styles.card}>
                             <p>{text('reauthenticateHint', { account: panel.label })}</p>
-                            {panel.error ? <p>{panel.error}</p> : undefined}
                         </div>
                     ) : (
                         <>
                             <label htmlFor={panel.labelId}>{text('accountLabel')}</label>
-                            <TextField id={panel.labelId} value={panel.label} maxLength={32} onChange={panel.setLabel} />
+                            <TextField
+                                id={panel.labelId}
+                                value={panel.label}
+                                maxLength={32}
+                                onChange={panel.setLabel}
+                                error={panel.labelError}
+                            />
                             <RadioCardGroup<AuthMethod>
                                 name={`${panel.labelId}-auth-method`}
                                 label={text('authMethod')}
@@ -129,11 +141,22 @@ export function CodexSettingsPanel({ controller, text, reauthenticateAccount, on
                                 ]}
                                 onChange={panel.setAuthMethod}
                             />
-                            {panel.error || (panel.loginStarted && panel.snapshot?.status === 'error' ? panel.snapshot.error : '') ? (
-                                <p>{panel.error || panel.snapshot?.error || text('loginFailed')}</p>
+                            {panel.snapshot?.accounts.some(account => account.authMethod === panel.authMethod) ? (
+                                <p>{text('duplicateAccountHint')}</p>
                             ) : undefined}
                         </>
                     )}
+                    {panel.loginError ? (
+                        <Notification
+                            inline
+                            severity="error"
+                            title={text('loginFailed')}
+                            message={panel.loginError}
+                            copyLabel={text('copyLoginError')}
+                            closeLabel={text('close')}
+                            onClose={panel.dismissError}
+                        />
+                    ) : undefined}
                 </div>
                 <div className={styles.modalFooter}>
                     <div className={styles.actionsRight}>

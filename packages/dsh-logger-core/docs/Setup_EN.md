@@ -11,6 +11,6 @@ pnpm --filter @kalex/dsh-logger-core test
 pnpm check
 ```
 
-To test a local build in an external project, run `pnpm pack` from the library directory and install the archive with `pnpm add`. The library has no plugin entry point and is not installed through the DSH CLI.
+After building, run `pnpm pack` from the library directory. Install the archive in the consuming project with `pnpm add <path-to-archive>`. The library has no plugin entry point and is not installed through the DSH CLI.
 
 [API example](Examples_EN.md) | [Russian](Setup.md)

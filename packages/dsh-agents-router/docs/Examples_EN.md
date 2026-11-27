@@ -2,46 +2,22 @@
 
 ## Plugin settings
 
-The plugin description and its settings open on the "Plugins" page in DeepSeek Harness.
+On the **Plugins** page, select **Agent Instructions Router**. The settings are below the description.
 
 ![Plugin settings](../assets/examples/plugin-settings.png)
 
-_Plugin settings on the "Plugins" page (the block below the description)._
+## Active rules in a session
 
-## Router panel in a session
+Open **Router** and select **Active Rules** to see the instructions for the current workset.
 
-In a session window, the plugin shows which rules and skills are loaded into the context, plus the token budget.
+![Active rules in a session](../assets/examples/router_tab_rules.png)
 
-![Router panel in a session](../assets/examples/router_tab_rules.png)
+## Project instructions
 
-_Router panel in a session window: loaded rules and skills, token budget._
+Open the [demo project](../examples/demo-project/README.md) as a DSH working directory. Add files from different areas to the workset to see how the active rules change.
 
-## Project catalog
+## Token estimates
 
-The plugin brings project instructions into a single `agents/` structure with responsibility areas:
+The **Memory and Workset** tab shows the estimated instruction token count and indicates when it exceeds the budget.
 
-```text
-agents/
-├─ rules/      global rules
-├─ skills/     global skills
-├─ agents.md   main rules file
-├─ front/
-│  ├─ rules/   front-end rules
-│  └─ skills/  front-end skills
-├─ back/
-│  ├─ rules/   back-end rules
-│  └─ skills/  back-end skills
-└─ openspec/
-   ├─ rules/   OpenSpec rules
-   └─ skills/  OpenSpec skills
-```
-
-_Single project instruction structure with responsibility areas._
-
-## Memory and metrics
-
-The "Memory" tab shows context metrics: how many tokens rules and skills take, the budget, and charts.
-
-![Memory and metrics](../assets/examples/router_tab_memory.png)
-
-_Context metrics in the "Memory" tab._
+![Token estimates and budget](../assets/examples/router_tab_memory.png)

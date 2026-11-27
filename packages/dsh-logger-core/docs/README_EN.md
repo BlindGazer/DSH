@@ -1,11 +1,13 @@
-# [@kalex/dsh-logger-core](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-logger-core)
+# [@kalex/dsh-logger-core](../README.md)
 
-> [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
+[![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](../../../LICENSE.md)
 
-Logging contracts and adapters for DSH plugins and external projects. This is a library, not an installable DSH plugin. It registers no service and provides no DSH interface.
+> [GitHub BlindGazer/DSH](../../../README.md)
 
-To use the library, build it and install its archive as described in Setup.
+Logging types and functions for DeepSeek Harness (DSH) plugins and external projects. A plugin can send records to `@kalex/dsh-logger` when its service is available and run without it otherwise.
 
-Stack: TypeScript, Vite, and Vitest. The build generates JavaScript and `.d.ts` files so external TypeScript projects can use the public API without the monorepo sources.
+This library is not installed as a DSH plugin. For an external project, build the archive containing JavaScript and TypeScript declarations and install it as described below.
 
-[Setup](Setup_EN.md) | [Features](Features_EN.md) | [API example](Examples_EN.md) | [Russian](../README.md)
+Stack: TypeScript, Vite, and Vitest.
+
+[Setup](Setup_EN.md) | [API](Features_EN.md) | [Examples](Examples_EN.md) | [Русский](../README.md)

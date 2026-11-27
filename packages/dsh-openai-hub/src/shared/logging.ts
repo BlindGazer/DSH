@@ -162,7 +162,17 @@ const OpenAIHubLogFieldsSchema = z
         connectionPort: z.number().int().min(1).max(65535).optional(),
         diagnosticVersion: z.union([z.literal(2), z.literal(3)]).optional(),
         loginStage: z
-            .enum(['callback_validation', 'token_exchange', 'token_response', 'account_claim', 'http_request', 'network_connect'])
+            .enum([
+                'callback_validation',
+                'token_exchange',
+                'token_response',
+                'account_claim',
+                'http_request',
+                'network_connect',
+                'account_conflict',
+                'credential_store',
+                'account_config'
+            ])
             .optional(),
         networkError: OpenAIHubNetworkErrorSchema.optional(),
         oauthServerError: OpenAIHubOAuthServerErrorSchema.optional(),

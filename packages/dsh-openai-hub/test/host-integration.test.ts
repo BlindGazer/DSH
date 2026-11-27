@@ -1,4 +1,4 @@
-import { mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { Context } from '@deepseek-ai/cordis';
@@ -16,6 +16,12 @@ import type { AccountConfig } from '../src/shared/accounts.ts';
 import { credentialRefForAccount, PackageId, ProviderRoute, ServiceKey } from '../src/shared/constants/runtime.ts';
 import type { OpenAIHubLogEvent } from '../src/shared/logging.ts';
 import type { OpenAIHubRemote } from '../src/shared/remote.ts';
+
+const { homedir } = vi.hoisted(() => ({ homedir: vi.fn<() => string>() }));
+vi.mock(import('node:os'), async importOriginal => {
+    const os = await importOriginal();
+    return { ...os, homedir: () => homedir() || os.homedir() };
+});
 
 const mocks = vi.hoisted(() => ({
     oauthLogin: vi.fn(),
@@ -432,6 +438,30 @@ describe('OpenAI Hub host integration', () => {
         expect(result.accounts[0]).toMatchObject({ accountLabel: 'new-account', loggedIn: true });
         expect(result.accounts.map(account => account.accountLabel)).toEqual(['new-account']);
     });
+
+    it.each(['browser-oauth', 'device-code'] as const)(
+        'rejects reconnecting the same ChatGPT account via %s before writing',
+        async authMethod => {
+            const account = config('work', 'same-account', authMethod);
+            const host = harness({ [account.credentialKey]: oauth('same-account') });
+            const { OpenAICodexAuthService } = await import('../src/host/index.ts');
+            void new OpenAICodexAuthService(host.ctx, { accounts: [account] });
+            mocks.oauthLogin.mockResolvedValueOnce({
+                type: 'oauth',
+                access: 'synthetic-access',
+                refresh: 'synthetic-refresh',
+                expires: Date.now() + 3_600_000,
+                accountId: 'same-account'
+            });
+
+            const result = await remote().startLogin({ accountLabel: 'other', authMethod });
+
+            expect(result).toMatchObject({ status: 'error', error: 'account_already_connected', retryAvailable: false });
+            expect(result.accounts.map(entry => entry.accountLabel)).toEqual(['work']);
+            expect(host.calls.set).toHaveLength(0);
+            expect(host.updates).toHaveLength(0);
+        }
+    );
 
     it('reauthenticates an existing account without resetting its settings', async () => {
         const savedChoices = [choice('gpt-alpha', 'Preferred model', false), choice('retired-model', 'Retired'), choice('gpt-beta')];
@@ -957,8 +987,12 @@ describe('OpenAI Hub host integration', () => {
     });
 
     it('restores only the last successful quota after a Host restart and rename', async () => {
-        const profile = mkdtempSync(join(tmpdir(), 'dsh-quota-'));
+        const home = mkdtempSync(join(tmpdir(), 'dsh-quota-'));
+        const profile = join(home, 'profile');
+        const cache = join(home, 'dsh', 'openai-hub');
+        homedir.mockReturnValue(home);
         try {
+            mkdirSync(profile);
             const work = config('work', 'quota-work');
             const neighbor = config('neighbor', 'quota-neighbor');
             const seed = { [work.credentialKey]: oauth('quota-work'), [neighbor.credentialKey]: oauth('quota-neighbor') };
@@ -1001,14 +1035,16 @@ describe('OpenAI Hub host integration', () => {
                 { accountLabel: 'neighbor', usageStatus: 'idle', usageLimits: [], usageUpdatedAt: 0 }
             ]);
             expect(mocks.usage).toHaveBeenCalledTimes(3);
-            const contents = readdirSync(profile).map(file => readFileSync(join(profile, file), 'utf8'));
+            expect(readdirSync(profile)).toStrictEqual([]);
+            const contents = readdirSync(cache).map(file => readFileSync(join(cache, file), 'utf8'));
             expect(contents).toHaveLength(1);
             expect(contents.join()).not.toMatch(/quota-work|action-card-id|credentialKey/);
             await remote().deleteAccount({ accountLabel: 'renamed' });
-            expect(readdirSync(profile)).toStrictEqual([]);
+            expect(readdirSync(cache)).toStrictEqual([]);
             second.dispose();
         } finally {
-            rmSync(profile, { recursive: true, force: true });
+            homedir.mockReset();
+            rmSync(home, { recursive: true, force: true });
         }
     });
 

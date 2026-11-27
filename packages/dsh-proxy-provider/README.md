@@ -1,45 +1,21 @@
 # [@kalex/dsh-proxy-provider](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider)
 
-[![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
-[![undici](https://img.shields.io/badge/undici-8.13.1-3B7FE4)](https://undici.nodejs.org/)
-[![License](https://img.shields.io/badge/license-ISC-green)](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-proxy-provider/package.json)
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![undici 8.13.1](https://img.shields.io/badge/undici-8.13.1-B93868)](https://undici.nodejs.org/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](https://github.com/BlindGazer/DSH/blob/main/LICENSE.md)
 
 > [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
 
-Плагин **DeepSeek Harness (DSH)**, который управляет сетевыми запросами (проксирует) выбранных провайдеров моделей через заданные прокси.
+Плагин DeepSeek Harness (DSH) для подключения провайдеров моделей через прокси. В настройках моделей можно создать профили HTTP, HTTPS или SOCKS5, проверить соединение и назначить профиль провайдеру. Маршрут определяется адресом назначения, а не провайдером. Разные порты одного хоста могут иметь разные маршруты.
 
-Публичные декларации `.d.ts` не генерируются: пакет устанавливается как плагин DSH, а не используется как библиотека.
+## Установка
 
-## 🎯 Назначение
+**DSH Desktop:** откройте **Плагины**, нажмите **Добавить плагин** и вставьте: `github:BlindGazer/DSH#path:packages/dsh-proxy-provider`.
 
-Позволяет настраивать выборочную маршрутизацию запросов провайдеров через HTTP, HTTPS и SOCKS5 прокси, сохраняя прямое подключение для остальных запросов. Также позволяет выбирать разные прокси-серверы для разных провайдеров моделей.
-
-Язык интерфейса следует языку DSH. Старый выбор языка плагина игнорируется; профили и маршруты не меняются.
-
-## 🚀 Установка из GitHub
+**Терминал:** вместо `web` укажите имя своего профиля CLI. Профилем `desktop` управляет приложение.
 
 ```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
-## 🛠 Технологический стек
+Стек: TypeScript, React, Cordis, undici, Vite и Vitest.
 
-| Технология | Версия / особенности        |
-| ---------- | --------------------------- |
-| TypeScript | >= 7.0.2, строгая типизация |
-| React      | 19                          |
-| undici     | 8.13.1, сетевые запросы     |
-| Vite (Oxc) | 8                       |
-| Vitest     | 5                       |
-
-## 🔐 Безопасность
-
-Учетные данные прокси (логин и пароль) шифруются алгоритмом AES-256-GCM с локальным мастер-ключом. Подробнее в [Security](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Security.md).
-
-## 📸 Примеры в DSH
-
-Как плагин выглядит и работает внутри DSH, смотрите в [Examples](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Examples.md).
-
-- [Команды и установка](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Setup.md) | [Commands and installation](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Setup_EN.md)
-- [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/README_EN.md)
+[Примеры в DSH](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Examples.md) | [Возможности](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Features.md) | [Установка и команды](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Setup.md) | [Безопасность](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/Security.md) | [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-proxy-provider/docs/README_EN.md)

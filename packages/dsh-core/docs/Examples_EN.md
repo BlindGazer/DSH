@@ -1,6 +1,6 @@
 # Component examples
 
-The library does not add a DSH screen. To preview its components locally, run `pnpm install` and `pnpm demo-core` from the monorepo root. Open the URL printed by Vite.
+The library does not add a DSH screen. To preview its components locally, run `pnpm install` and `pnpm demo-core` from the monorepo root. Open the URL printed by Vite. The first launch requires GitHub access if the stylesheet cache is empty.
 
 ```tsx
 import { Button } from '@kalex/dsh-core';

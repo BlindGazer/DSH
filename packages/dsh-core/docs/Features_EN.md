@@ -1,50 +1,26 @@
-# Features
-
-## What it provides
-
-A shared design system, UI components, themes, hooks, and utilities for DSH plugins so plugins do not duplicate common logic and look consistent.
+# Components and themes
 
 ## Components
 
-- `Button`, `IconButton` - buttons and icon buttons.
-- `ThemedSelect` - themed dropdown select.
-- `SwitchControl` - switch control.
-- `Tabs` - tabs.
-- `Modal` - modal window.
-- `Skeleton`, `Spinner`, `ProgressBar`, `ChildrenLazy` - loading states.
+- Buttons: `Button`, `IconButton`, `CollectionAddButton`.
+- Inputs and controls: `TextField`, `ThemedSelect`, `Checkbox`, `SwitchControl`, `RadioCardGroup`.
+- Tabs and overlays: `Tabs`, `Modal`, `Popover`, `Tooltip`, `Notification`.
+- Loading and progress: `Skeleton`, `Spinner`, `ProgressBar`, `ChildrenLazy`, `CircularProgress`, `LinearProgress`.
+- Expandable code block: `CodeDisclosure`.
+
+`Notification` stays open until dismissed. You can select the text or use the copy button; if copying through the Clipboard API fails, the component selects the text for manual copying. Keep secrets out of the title and message.
 
 ## Themes
 
-Unified CSS variables `--dsh-ui-*` for surfaces, text, borders, elevations, and semantic states (`info`, `success`, `warning`, `danger`). Support for light, dark, and custom themes. The `buildCoreThemeStyles` function generates theme styles.
+The `--dsh-ui-*` CSS variables define colors, borders, shadows, and status colors (`info`, `success`, `warning`, `danger`) for light, dark, and custom themes. To use the shared styles, load the theme CSS (`ensureCoreStyles` or `buildCoreThemeStyles`) and set `data-theme` from `useEffectiveTheme()` on a root element such as `.dsh-core-root`.
 
-## Hooks
+## Hooks and utilities
 
-- `useDebouncedValue` - debounced value.
-- `useLocalePreference` - locale preference.
-- `useEffectiveTheme` - effective (current) theme.
-- `useDshThemeRevision` - DSH theme revision.
+- `useDebouncedValue` updates a value after changes have stopped for a given interval.
+- `useLocalePreference`, `useEffectiveTheme`, and `useDshThemeRevision` provide the locale preference, current theme, and theme revision.
+- `classNames` combines CSS class names; `formatMessage` replaces positional placeholders such as `{0}` and `{1}`.
+- `sanitizeHostInput` normalizes a host address entered by the user. `extractHost` extracts the host and any non-default port from a URL or returns `null` on failure.
 
-## Utilities
+The package groups components, themes, hooks, utilities, types, and constants; it has no Host service or plugin entry point. Components use React and TypeScript with Sass styles. Vite builds the library, and Vitest runs the tests.
 
-- `classNames` - class merging.
-- `formatMessage` - localization string formatting with `{0}`, `{1}` substitution.
-- `hostSanitizer` - sanitizing host-provided data.
-
-## Models and constants
-
-- `SelectOption`, `ThemePalette`, `DshContext` - shared types.
-- `Delay` - standard animation and debounce timings.
-- `CoreLocalization` localization with `ru` and `en` support.
-
-## Tech Stack
-
-| Technology | Version / features     |
-| ---------- | ---------------------- |
-| TypeScript | >= 7.0.2, strict typing |
-| React      | 19                     |
-| Vite (Oxc) | 8                  |
-| Vitest     | 5                  |
-
-## Architecture
-
-The package does not depend on specific plugins: components, hooks, themes, utilities, and models are isolated and reused by any DSH plugin.
+[Examples](Examples_EN.md) | [Русский](Features.md)

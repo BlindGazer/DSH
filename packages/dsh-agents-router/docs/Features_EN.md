@@ -2,12 +2,7 @@
 
 ## What the plugin does
 
-`@kalex/dsh-agents-router` is a DeepSeek Harness plugin that manages loading project instructions into the agent context. Instead of loading all project rules at once, it selects only those relevant to the current task.
-
-The plugin solves two problems:
-
-1. **Context window bloat**: an agent working on back-end code should not read front-end rules, and vice versa.
-2. **Forgetfulness**: an agent working with OpenSpec files should automatically get the rules for them.
+The DeepSeek Harness plugin loads project instructions according to configured rules. For example, you can assign React rules to `src/front/` and OpenSpec rules to `openspec/`.
 
 ## How it works
 
@@ -50,7 +45,7 @@ Rules and skills of an area activate when the agent works with files under the g
 
 ## Soft token budget
 
-The plugin estimates the instruction volume in tokens and enforces a soft budget (`tokenBudget`, default 16000). Metrics are shown in the router panel and in the "Memory" tab.
+The plugin estimates instruction size and reports when it exceeds `tokenBudget` (32,000 tokens by default). This budget does not limit which instructions are loaded.
 
 ## Instruction isolation
 
@@ -91,13 +86,7 @@ The interface language follows the DSH setting.
 
 ## Tech stack
 
-- **TypeScript >= 7.0.2** with strict typing (no `any`, `unknown`, or `null`).
-- **React 19.3** + **React Compiler** (Vite 8 + Oxc).
-- **Vite 8** (`minify: 'oxc'`).
-- **Vitest 5** for tests.
-- **Biome** and **Oxlint** for linting and formatting.
-- **Cordis** (`@deepseek-ai/cordis`) - the DSH plugin environment.
-- **YAML** - parses frontmatter and area configuration.
+The host runs in Cordis. The interface uses React, builds use Vite, and tests use Vitest. The `yaml` library reads rule metadata.
 
 ## Architecture
 
@@ -107,4 +96,4 @@ Three-layer modular architecture:
 - `src/host/` - server logic: rule discovery, selection, isolation, `/agents-router` API.
 - `src/client/` - React UI: settings, router panel, diagnostics, catalog, memory.
 
-Dependencies flow only `shared -> host/client`. `host` never imports `client` or React.
+Both `host` and `client` use modules from `shared`. The host does not import client code or React.

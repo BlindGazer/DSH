@@ -2,7 +2,7 @@
 
 ## Commands
 
-Run all commands from the `packages/dsh-core` directory:
+Run `pnpm install` from the monorepo root first. Run the remaining commands from `packages/dsh-core`:
 
 ```bash
 # Build the library and generate type declarations

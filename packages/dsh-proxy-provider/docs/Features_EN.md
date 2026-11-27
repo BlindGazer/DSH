@@ -1,61 +1,19 @@
 # Features
 
-## What the plugin does
+## Routing
 
-Routes network requests of selected DSH model providers through configured proxy servers. Other providers work directly.
+In DSH settings, select a proxy profile for a detected model provider or leave it on a direct connection. The plugin maps the provider's hostnames to the selected profile and routes requests to them through an undici dispatcher. Requests to hosts without a proxy assignment go directly.
 
-## Why it is needed
+The plugin looks for a host-and-port route first, then a hostname route. If providers use the same destination address with different settings, the plugin reports a conflict and uses the first assigned profile. That route also applies to a provider set to connect directly to the same address.
 
-Helps work around network restrictions and API blocks for individual providers (OpenAI, Anthropic, DeepSeek, OpenRouter, and others). Lets you use different proxies for different providers.
+## Profiles and connection tests
 
-## How it works
+A profile has a name, protocol (HTTP, HTTPS, or SOCKS5), host, port, and optional username and password. Leave `ignoreSslErrors` off unless needed; see [Security](Security_EN.md). A connection test sends a request to a test URL through the selected profile and reports the latency.
 
-1. Discovers DSH model providers and their hosts.
-2. Compiles a routing table: maps provider hosts to proxy profiles.
-3. Replaces the undici dispatcher for proxied hosts; other requests go direct.
-4. Detects domain conflicts between providers.
+Credentials are omitted from exports by default. To transfer them, select the option to include credentials and set an encryption password. When importing that file, enter the password or skip credentials.
 
-## Supported protocols
+## Stack and structure
 
-- HTTP
-- HTTPS
-- SOCKS5
-
-## Proxy profiles
-
-A profile describes a proxy server: `id`, name, protocol, host, port, authentication (username and password), and the `ignoreSslErrors` flag.
-
-## Provider bindings
-
-For each provider you can select a proxy profile or direct connection.
-
-## Credential encryption
-
-Username and password are encrypted with AES-256-GCM using a local master key (see [Security](Security_EN.md)).
-
-## Connection test
-
-Lets you check proxy availability and measure latency against a test URL.
-
-## Import and export profiles
-
-Profiles can be imported and exported; passwords are encrypted.
-
-## Tech Stack
-
-| Technology | Version / features     |
-| ---------- | ---------------------- |
-| TypeScript | >= 7.0.2, strict typing |
-| React      | 19                     |
-| undici     | 8.13.1, networking     |
-| Vite (Oxc) | 8                  |
-| Vitest     | 5                  |
-| Cordis     | DSH plugin environment |
-
-## Architecture
-
-Three-layer modular:
-
-1. `src/shared/` - models, constants, validators, localization (no Node.js or React).
-2. `src/host/` - routing, encryption, dispatcher, storage, and connection-test services.
-3. `src/client/` - profiles and provider-binding UI.
+- `src/shared/`: TypeScript models, constants, helpers, and localization. The interface follows the DSH language.
+- `src/host/`: Cordis plugin, undici routing, storage, and connection tests.
+- `src/client/`: React UI for profiles and bindings. Vite builds the package and Vitest runs the tests.

@@ -1,56 +1,29 @@
-# Installation and Commands
+# Installation and commands
 
-## Install from GitHub using the DSH CLI
+Requires DSH `0.2.2-rc.5` or later.
+
+In DSH Desktop, open **Plugins**, select **Add plugin**, and paste:
+
+```text
+github:BlindGazer/DSH#path:packages/dsh-agents-router
+```
+
+For a CLI-managed profile such as `web`, run:
 
 ```powershell
-$desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd"
-& $desktopDsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-agents-router
 ```
 
-## Install using pnpm
+To install from a local checkout, run `pnpm install` and `pnpm build` at the repository root. Use the absolute path to `packages/dsh-agents-router` instead of the `github:...` reference.
 
-Run from the DSH Desktop profile directory:
+## Development
 
-```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm add github:BlindGazer/DSH#path:packages/dsh-agents-router
-```
+Run these commands from the package directory:
 
-## Install from a local folder
-
-```powershell
-$desktopDsh = "$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd"
-& $desktopDsh plugin --profile desktop add C:\git\DSH\packages\dsh-agents-router
-```
-
-## Available Commands
-
-Run commands from the `packages/dsh-agents-router` directory:
-
-```bash
-# Build the plugin (Host + Client)
-pnpm run build
-
-# Build only the client part (Vite)
-pnpm run build:client
-
-# Build only the host part (Vite)
-pnpm run build:host
-
-# Run unit tests (Vitest)
-pnpm run test
-
-# Run tests in watch mode
-pnpm run test:watch
-
-# Full check: build + tests + artifact verification
-pnpm run check
-
-# Verify release readiness of artifacts for DSH
-pnpm run verify
-```
-
-## Requirements
-
-- Node.js and pnpm.
-- DSH version `0.2.2-rc.5` or newer (see `engines.dsh` in `package.json`).
+| Command | Purpose |
+| --- | --- |
+| `pnpm build` | Build the host and client. |
+| `pnpm build:host` / `pnpm build:client` | Build only the host or client. |
+| `pnpm test` / `pnpm test:watch` | Run tests once or on file changes. |
+| `pnpm verify` | Check release artifacts. |
+| `pnpm check` | Build the package, run tests, and check release artifacts. |

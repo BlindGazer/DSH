@@ -8,7 +8,7 @@ export const API_BASE = '/api/dsh-proxy-provider';
 /**
  * Адрес по умолчанию для проверки работоспособности прокси-соединения.
  */
-export const DEFAULT_TEST_URL = 'https://generativelanguage.googleapis.com';
+export const DEFAULT_TEST_URL = 'https://platform.openai.com';
 
 /**
  * Известные пространства имен настроек провайдеров в DSH.

@@ -1,35 +1,20 @@
 # [@kalex/dsh-agents-router](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router)
 
-[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH) [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/) [![Vite](https://img.shields.io/badge/Vite-8-4B32C3)](https://vite.dev/) [![License](https://img.shields.io/badge/license-ISC-green)](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/package.json)
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](https://github.com/BlindGazer/DSH/blob/main/LICENSE.md)
 
-> [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
+Плагин DeepSeek Harness, который подключает правила и навыки проекта по настройкам маршрутизации. Например, правила для React можно активировать при работе с файлами из `src/front/`.
 
-Плагин **DeepSeek Harness (DSH)**, который подбирает и подгружает в контекст агента только те правила, навыки и инструкции проекта, которые относятся к текущей задаче.
+## Установка
 
-Публичные декларации `.d.ts` не генерируются: пакет устанавливается как плагин DSH, а не используется как библиотека.
+**DSH Desktop:** откройте **Плагины**, нажмите **Добавить плагин** и вставьте: `github:BlindGazer/DSH#path:packages/dsh-agents-router`.
 
-## 🎯 Назначение
-
-Устраняет перегрузку контекста: вместо всех правил проекта агент получает только релевантные для активных файлов и рабочего набора сессии. Поддерживает зоны ответственности (front, back, openspec), мягкий бюджет токенов и изоляцию инструкций.
-
-## 🚀 Установка из GitHub
+**Терминал:** вместо `web` укажите имя своего профиля CLI. Профилем `desktop` управляет приложение.
 
 ```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-agents-router
 ```
 
-## 🛠 Технологический стек
-
-| Технология             | Версия / особенности        |
-| ---------------------- | --------------------------- |
-| TypeScript             | >= 7.0.2, строгая типизация |
-| React + React Compiler | 19.3                        |
-| Vite (Oxc)             | 8                       |
-| Vitest                 | 5                       |
-
-## 📸 Примеры в DSH
-
-Как плагин выглядит и работает внутри DSH, смотрите в [Examples](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/Examples.md).
-
-- [Команды и установка](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/Setup.md) | [Commands and installation](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/Setup_EN.md)
-- [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-agents-router/docs/README_EN.md)
+- [Установка и команды](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/docs/Setup.md)
+- [Настройки и маршрутизация](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/docs/Features.md)
+- [Примеры в DSH](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/docs/Examples.md)
+- [English](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/docs/README_EN.md)

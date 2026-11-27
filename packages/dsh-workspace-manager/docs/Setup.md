@@ -1,54 +1,27 @@
 # Установка и команды
 
-## Требования
+Требуется DSH `>=0.2.2-rc.5`. Для сборки из исходников нужны Node.js и pnpm. Для операций с worktree на машине DSH Host нужен Git и репозиторий с хотя бы одним коммитом.
 
-- Node.js и pnpm (для сборки из исходников).
-- Установленный DSH Desktop (профиль `desktop`), версия >= 0.2.2-rc.5.
+## Из GitHub
 
-## Установка из GitHub через DSH CLI
-
-```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-```
-
-## Установка через pnpm
-
-Выполните из каталога профиля DSH Desktop:
+В DSH Desktop откройте менеджер плагинов и добавьте источник `github:BlindGazer/DSH#path:packages/dsh-workspace-manager`. Для отдельного CLI-профиля (например, `web`):
 
 ```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
-## Установка из локальной папки (рекомендуется для разработки)
+## Из локальной копии
+
+Из корня репозитория установите зависимости и соберите пакет:
 
 ```powershell
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
+pnpm install
+pnpm --filter @kalex/dsh-workspace-manager build
+dsh plugin --profile web add C:/git/DSH/packages/dsh-workspace-manager
 ```
 
-## Доступные команды
+Для Desktop выберите собранный локальный пакет в менеджере плагинов вместо последней команды.
 
-Выполняйте команды из каталога `packages/dsh-workspace-manager`:
+## Команды пакета
 
-```bash
-# Сборка плагина (Host + Client)
-pnpm run build
-
-# Сборка только клиентской части
-pnpm run build:client
-
-# Сборка только серверной части
-pnpm run build:host
-
-# Запуск модульных тестов
-pnpm run test
-
-# Проверка типов
-pnpm run typecheck
-
-# Проверка клиентского бандла
-pnpm run verify
-
-# Полная проверка: сборка + тесты + verify
-pnpm run check
-```
+Из каталога пакета: `pnpm run build` собирает Host и Client, `pnpm run build:host` и `pnpm run build:client` собирают их по отдельности. `pnpm run test` запускает тесты, `pnpm run typecheck` проверяет типы, `pnpm run verify` проверяет клиентский бандл. `pnpm run check` выполняет сборку, тесты и проверку бандла.

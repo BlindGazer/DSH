@@ -1,12 +1,14 @@
 # API example
 
 ```ts
-import { createHostLogger, NOOP_LOGGER } from '@kalex/dsh-logger-core';
+import { createClientLogger } from '@kalex/dsh-logger-core';
 
-const logger = createHostLogger(NOOP_LOGGER);
+const logger = createClientLogger({
+    sink: (level, message, context) => console.log(level, message, context),
+});
 logger.info('operation-completed', { operation: 'refresh' });
 ```
 
-This example discards the record. In a Host plugin, replace `NOOP_LOGGER` with the result of `createOptionalLogger(context, packageName)` and pass the exact npm package name. The library does not add a DSH interface.
+This example prints the event to the console and writes nothing to disk. To forward records from a Host plugin to DSH logger, use `createHostLogger(createOptionalLogger(context, packageName))` and pass the exact npm package name.
 
 [Russian](Examples.md)

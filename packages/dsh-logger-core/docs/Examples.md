@@ -1,12 +1,14 @@
 # Пример API
 
 ```ts
-import { createHostLogger, NOOP_LOGGER } from '@kalex/dsh-logger-core';
+import { createClientLogger } from '@kalex/dsh-logger-core';
 
-const logger = createHostLogger(NOOP_LOGGER);
+const logger = createClientLogger({
+    sink: (level, message, context) => console.log(level, message, context),
+});
 logger.info('operation-completed', { operation: 'refresh' });
 ```
 
-В примере запись отбрасывается. В Host-плагине вместо `NOOP_LOGGER` можно передать результат `createOptionalLogger(context, packageName)`, указав точное имя npm-пакета. Библиотека не добавляет интерфейс DSH.
+Пример выводит событие в консоль и ничего не пишет на диск. Чтобы передавать записи из Host-плагина в DSH logger, используйте `createHostLogger(createOptionalLogger(context, packageName))` и передайте точное имя npm-пакета.
 
 [English](Examples_EN.md)

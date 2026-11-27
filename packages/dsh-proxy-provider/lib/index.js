@@ -50,7 +50,7 @@ var API_BASE = "/api/dsh-proxy-provider";
 /**
 * Адрес по умолчанию для проверки работоспособности прокси-соединения.
 */
-var DEFAULT_TEST_URL = "https://generativelanguage.googleapis.com";
+var DEFAULT_TEST_URL = "https://platform.openai.com";
 /**
 * Известные пространства имен настроек провайдеров в DSH.
 */
@@ -685,7 +685,7 @@ function serializeConfigForDisk(config, masterKey) {
 			};
 		}),
 		providerBindings: config.providerBindings || {},
-		defaultTestUrl: config.defaultTestUrl || "https://generativelanguage.googleapis.com"
+		defaultTestUrl: config.defaultTestUrl || "https://platform.openai.com"
 	};
 }
 /**
@@ -710,7 +710,7 @@ function sanitizeConfigForClient(config) {
 			};
 		}),
 		providerBindings: { ...config.providerBindings },
-		defaultTestUrl: config.defaultTestUrl || "https://generativelanguage.googleapis.com"
+		defaultTestUrl: config.defaultTestUrl || "https://platform.openai.com"
 	};
 }
 /**

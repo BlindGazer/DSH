@@ -4,6 +4,7 @@ import type { ConfigEditor } from '@deepseek-ai/dsh-config-editor';
 import type { ProviderAuthInteraction } from '@earendil-works/pi-ai';
 import type { z } from 'zod';
 import { type AccountConfig, type AuthMethod, Config, reconcileModels } from '../shared/accounts.ts';
+import { DuplicateAccountLoginError } from '../shared/constants/oauth-errors.ts';
 import { credentialRefForAccount, PackageId } from '../shared/constants/runtime.ts';
 import type { OpenAIHubLogEvent } from '../shared/logging.ts';
 import type {
@@ -280,6 +281,7 @@ export class AccountsRuntime {
         if (!oauth) throw new Error('OpenAI Hub OAuth unavailable');
         const loginAttemptId = randomUUID();
         let observedFailure: OpenAIHubLogEvent | undefined;
+        let accountStage: OpenAIHubLogEvent['loginStage'];
         const report = (event: OpenAIHubLogEvent) => {
             if (event.phase === 'failed') observedFailure = event;
             else if (event.phase === 'started' && event.loginStage === 'token_exchange') observedFailure = undefined;
@@ -369,7 +371,6 @@ export class AccountsRuntime {
                 await this.serialized(async () => {
                     if (!current()) return;
                     const previousConfig = existingAccount?.config;
-                    const previousCredential = previousConfig ? await this.credentials.read(previousConfig) : undefined;
                     const config: AccountConfig = existingAccount
                         ? { ...existingAccount.config, credentialKey: credentialRefForAccount(request.authMethod, credential.accountId) }
                         : {
@@ -381,8 +382,31 @@ export class AccountsRuntime {
                               catalogLoaded: false,
                               catalogMetadata: []
                           };
-                    if (this.accounts.some(account => account !== existingAccount && account.config.credentialKey === config.credentialKey))
-                        throw new Error('OpenAI Hub credential belongs to another account');
+                    if (
+                        this.accounts.some(account => account !== existingAccount && account.config.credentialKey === config.credentialKey)
+                    ) {
+                        Object.assign(this.login, {
+                            status: 'error',
+                            deviceCode: '',
+                            verificationUri: '',
+                            callbackUrlRequested: false,
+                            retryAvailable: false,
+                            error: DuplicateAccountLoginError
+                        });
+                        await this.logging({
+                            event: 'login',
+                            phase: 'failed',
+                            state: 'error',
+                            loginStage: 'account_conflict',
+                            errorCode: 'validation_failed',
+                            loginAttemptId,
+                            accountLabel: request.accountLabel,
+                            authMethod: request.authMethod
+                        });
+                        return;
+                    }
+                    accountStage = 'credential_store';
+                    const previousCredential = previousConfig ? await this.credentials.read(previousConfig) : undefined;
                     const previousTargetCredential =
                         config.credentialKey === previousConfig?.credentialKey ? previousCredential : await this.credentials.read(config);
                     await this.credentials.store(
@@ -393,6 +417,7 @@ export class AccountsRuntime {
                     );
                     const previousAccounts = this.accounts.map(account => account.config);
                     attempt.committing = true;
+                    accountStage = 'account_config';
                     try {
                         await this.persist(
                             this.accounts
@@ -511,6 +536,7 @@ export class AccountsRuntime {
                     });
                     await this.logging({
                         ...failure,
+                        ...(accountStage && failure.errorCode === 'oauth_internal_failed' ? { loginStage: accountStage } : {}),
                         event: 'login',
                         phase: 'failed',
                         state: 'error',

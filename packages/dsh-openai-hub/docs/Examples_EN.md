@@ -2,12 +2,12 @@
 
 ## Two-account model list
 
-Suppose two accounts are labeled `work` and `personal`. Their models appear under the single provider group `OpenAI Hub`, for example `work/gpt-6.2-sol` and `personal/gpt-6-astra`. Each account has a separate information block and model settings modal. A request for `work/gpt-6.2-sol` resolves the `work` credential and sends `gpt-6.2-sol` to the upstream API.
+Suppose two accounts are labeled `work` and `personal`. Their models appear under the single provider group `OpenAI Hub`, for example `work/gpt-6.2-sol` and `personal/gpt-6-astra`. Each account has a separate information block and model settings modal. For a request to `work/gpt-6.2-sol`, the plugin uses the `work` account's credentials and sends `gpt-6.2-sol` to the API.
 
 ## Add an account
 
 1. Open Settings -> Models and choose Add account.
-2. Enter a unique lowercase ASCII label before OAuth.
+2. Enter a unique [account label](Features_EN.md), such as `work`, before OAuth.
 3. Complete the displayed ChatGPT authorization flow.
 4. Review the account's models and refresh the catalog if needed.
 

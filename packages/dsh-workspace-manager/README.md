@@ -1,44 +1,21 @@
 # [@kalex/dsh-workspace-manager](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager)
 
-[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH)
-[![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/)
-[![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/)
-[![License](https://img.shields.io/badge/license-isc-green)](https://github.com/BlindGazer/DSH/blob/main/LICENSE.md)
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](https://github.com/BlindGazer/DSH/blob/main/LICENSE.md)
 
 > [GitHub BlindGazer/DSH](https://github.com/BlindGazer/DSH)
 
-Плагин **DeepSeek Harness (DSH)** для подключения нескольких каталогов к рабочему пространству. Форк [keatsyh/dsh-plugin-addir](https://github.com/keatsyh/dsh-plugin-addir).
+Плагин DeepSeek Harness (DSH) для работы с несколькими каталогами и Git worktree. Подключенным каталогам можно задать псевдонимы, описания и режим только для чтения. Из меню рабочего пространства можно создать сессию в отдельном worktree, не переключая ветку в основном каталоге. Основан на [keatsyh/dsh-plugin-addir](https://github.com/keatsyh/dsh-plugin-addir).
 
-Публичные декларации `.d.ts` не генерируются: пакет устанавливается как плагин DSH, а не используется как библиотека.
+## Установка
 
-## 🎯 Назначение
+**DSH Desktop:** откройте **Плагины**, нажмите **Добавить плагин** и вставьте: `github:BlindGazer/DSH#path:packages/dsh-workspace-manager`.
 
-Позволяет подключать каталоги из разных расположений, задавать им псевдонимы и описания, а также ограничивать доступ режимом только для чтения.
-
-В меню `...` рабочей области выберите **Новая сессия worktree**. Можно создать worktree с новой веткой от любой локальной ветки, открыть свободную локальную ветку в новом worktree или запустить сессию в существующем worktree этого репозитория. По умолчанию новые каталоги создаются в `.worktrees` внутри выбранного рабочего каталога. При создании плагин добавляет `/.worktrees/` в `.gitignore` этого каталога, если Git ещё не игнорирует `.worktrees`. Базовый путь можно изменить.
-
-Пункт **Удалить worktree** появляется в меню основной рабочей области репозитория, когда у него есть дополнительные worktree. Выберите нужный worktree по ветке и пути. При необходимости включите слияние и удаление ветки; сама основная рабочая область не удаляется.
-
-На стороне DSH Host нужен Git и репозиторий с первым коммитом. Незакоммиченные изменения не переносятся. Каждая операция открывает новую сессию в выбранной папке. Архивация сессии не удаляет worktree.
-
-## 🚀 Установка из GitHub
+**Терминал:** вместо `web` укажите имя своего профиля CLI. Профилем `desktop` управляет приложение.
 
 ```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
 ```
 
-## 🛠 Технологический стек
+Стек: TypeScript, React, Cordis, Git, Vite и Vitest.
 
-| Технология | Версия / особенности        |
-| ---------- | --------------------------- |
-| TypeScript | >= 7.0.2, строгая типизация |
-| React      | 19                          |
-| Vite (Oxc) | 8                       |
-| Vitest     | 5                       |
-
-## 📸 Примеры в DSH
-
-Как плагин выглядит и работает внутри DSH, смотрите в [Examples](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Examples.md).
-
-- [Команды и установка](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Setup.md) | [Commands and installation](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Setup_EN.md)
-- [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/README_EN.md)
+[Примеры в DSH](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Examples.md) | [Возможности](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Features.md) | [Установка и команды](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Setup.md) | [English](https://github.com/BlindGazer/DSH/tree/main/packages/dsh-workspace-manager/docs/Readme_EN.md)

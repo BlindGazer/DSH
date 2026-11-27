@@ -1,138 +1,60 @@
-# DeepSeek Harness (DSH) Monorepo: Plugins and Shared Core Library
+# Plugins and libraries for DeepSeek Harness
 
-[![DSH](https://img.shields.io/badge/DSH-%3E%3D0.2.2-4B32C3)](https://github.com/BlindGazer/DSH) [![TypeScript](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React](https://img.shields.io/badge/React-19-61DAFB)](https://react.dev/) [![Vite](https://img.shields.io/badge/Vite-8-4B32C3)](https://vite.dev/) [![License](https://img.shields.io/badge/license-ISC-green)](https://github.com/BlindGazer/DSH/blob/main/packages/dsh-agents-router/package.json)
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![Vite 8](https://img.shields.io/badge/Vite-8-D97706)](https://vite.dev/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](../LICENSE.md)
 
-> [Russian](../README.md)
+[Русский](../README.md)
 
-A collection of plugins for **DeepSeek Harness (DSH)**, built as independent packages with a unified architecture, strict typing, and a shared UI framework.
+This repository contains five plugins and two libraries for DeepSeek Harness (DSH). The plugins require DSH `0.2.2-rc.5` or later.
+
+## Packages
+
+| Package | What it does |
+| --- | --- |
+| [@kalex/dsh-agents-router](../packages/dsh-agents-router/docs/README_EN.md) | Loads project rules and skills based on routing settings, file paths, and keywords. |
+| [@kalex/dsh-proxy-provider](../packages/dsh-proxy-provider/docs/README_EN.md) | Configures an HTTP, HTTPS, or SOCKS5 proxy per model provider and tests the connection. |
+| [@kalex/dsh-workspace-manager](../packages/dsh-workspace-manager/docs/Readme_EN.md) | Links additional directories to a workspace, with optional read-only access. Creates, opens, and removes Git worktrees. |
+| [@kalex/dsh-openai-hub](../packages/dsh-openai-hub/docs/README_EN.md) | Connects ChatGPT accounts to use Codex models, controls which models are listed, and shows account limits. |
+| [@kalex/dsh-logger](../packages/dsh-logger/docs/README_EN.md) | Configures and collects logs from plugins that use `dsh-logger-core`. |
+| [@kalex/dsh-core](../packages/dsh-core/docs/README_EN.md) | Library of React components, themes, and localization utilities. |
+| [@kalex/dsh-logger-core](../packages/dsh-logger-core/docs/README_EN.md) | Logging types and adapters. |
 
 ## Installation
 
-```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-openai-hub
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-logger
+In DSH Desktop, open **Plugins**, select **Add plugin**, and paste one of these package references:
+
+![Adding a plugin in DSH Desktop](https://github.com/user-attachments/assets/fe3f5650-f18e-43dc-a613-dc05d3b38c5a)
+
+```text
+github:BlindGazer/DSH#path:packages/dsh-agents-router
+github:BlindGazer/DSH#path:packages/dsh-proxy-provider
+github:BlindGazer/DSH#path:packages/dsh-workspace-manager
+github:BlindGazer/DSH#path:packages/dsh-openai-hub
+github:BlindGazer/DSH#path:packages/dsh-logger
 ```
 
----
-
-## Packages in the Monorepo
-
-| Package                                                                       | Description and Purpose                                                                                                                                                                                                                                                                                         | Link                                                                                                        |
-| ----------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- |
-| **[@kalex/dsh-core](../packages/dsh-core)**                                   | **Shared design system and utilities library.** Prevents duplicated code across plugins and provides responsive UI components (ThemedSelect, SwitchControl, Modal, Tabs, Button, Loader), DSH themes (dark, light, and custom), host sanitization, message formatting, and locale persistence.                  | [Details](../packages/dsh-core/docs/README_EN.md)                       |
-| **[@kalex/dsh-proxy-provider](../packages/dsh-proxy-provider)**               | **Selective proxy routing for LLM providers.** Helps work around network restrictions and API blocks for providers such as OpenAI, Anthropic, DeepSeek, OpenRouter, and others. Configure individual HTTP/HTTPS/SOCKS5 proxies per provider, encrypt credentials with AES-256-GCM, and test connection latency. | [Details](../packages/dsh-proxy-provider/docs/README_EN.md)        |
-| **[@kalex/dsh-agents-router](../packages/dsh-agents-router)**                 | **Intelligent router for agent rules and skills.** Reduces context window bloat and prevents LLMs from receiving irrelevant instructions. Dynamically loads only rules that match the session's active working set, provides a soft token budget, and isolates instructions.                                    | [Details](../packages/dsh-agents-router/docs/README_EN.md)         |
-| **[@kalex/dsh-workspace-manager](../packages/dsh-workspace-manager)**         | **Workspace directory manager.** Links multiple folders from different locations, supports aliases and descriptions, and can restrict access to read-only.                                                                                                                                                      | [Details](../packages/dsh-workspace-manager/docs/README_EN.md)     |
-| **[@kalex/dsh-openai-hub](../packages/dsh-openai-hub)** | **OpenAI Hub: multiple ChatGPT accounts.** One model route, authenticated catalog with local fallback, isolated account settings and selected-model limits. Tokens stay in DSH Credential Store.                                                                   | [Details](../packages/dsh-openai-hub/docs/README_EN.md) |
-| **@kalex/dsh-logger** | Centralized logging and settings for participating plugins. | [Details](../packages/dsh-logger/docs/README_EN.md) |
-| **@kalex/dsh-logger-core** | Dependency-free logging contracts and adapters. | [Details](../packages/dsh-logger-core/docs/README_EN.md) |
-
----
-
-## Documentation and package types
-
-See the [documentation standard](DOCUMENTATION_SPEC.md). Each package has a short Russian README and detailed Russian and English documentation. DSH shows the short README for installable plugins.
-
-Inside the monorepo, packages consume TypeScript source. Only `dsh-core` and `dsh-logger-core` ship public `.d.ts` files because external projects can import these libraries. The other five packages are installed as DSH plugins and do not generate declarations.
-
-## Tech Stack
-
-- **TypeScript >= 7.0.2** with strict typing
-- **React 18 and 19**, including **React Compiler** (`@vitejs/plugin-react`).
-- **Vite 8** with modern **Oxc** (`minify: 'oxc'`).
-- **Vitest 5** for unit tests with native ESM and TypeScript support.
-- **Biome 2** and **Oxlint 1** for fast code linting and formatting.
-
----
-
-## Available Commands
-
-Run all commands from the repository root using `pnpm`:
-
-```bash
-# Install monorepo dependencies
-pnpm install
-
-# Build all packages with Vite 8
-pnpm run build
-
-# Run tests in all packages with Vitest
-pnpm run test
-
-# Run tests in watch mode
-pnpm run test:watch
-
-# Check TypeScript types across all projects
-pnpm run typecheck
-
-# Check types, file encoding, and lint rules
-pnpm run check
-
-# Automatically format and fix code (Biome, Oxlint, UTF-8 LF)
-pnpm run fix
-
-# Verify release readiness of artifacts for DSH (Cordis patch, manifests, and builds)
-pnpm run verify
-```
-
----
-
-## Installing Plugins in DSH Desktop Profile
-
-The commands below assume that `dsh` is available globally, or you can always specify its full path:
+For a CLI-managed profile, use `dsh plugin`. In this example, `web` is the profile name:
 
 ```powershell
-$env:LOCALAPPDATA\Programs\DeepSeek Harness\resources\runtime\cli\bin\dsh.cmd
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
-Run `pnpm` commands from the following directory:
+The Desktop app manages the `desktop` profile; do not pass it to `dsh plugin`. To install from a local checkout, first run `pnpm install` and `pnpm build` from the repository root. Then use the absolute path to the package directory instead of the `github:...` reference, for example `C:\git\DSH\packages\dsh-proxy-provider`.
 
-```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-```
+## Development
 
----
+Run these commands from the repository root:
 
-Use the `dsh` CLI or `pnpm` to install plugins into the **DSH Desktop** profile.
+| Command | Purpose |
+| --- | --- |
+| `pnpm install` | Install dependencies. |
+| `pnpm build` | Build the packages. |
+| `pnpm test` | Run tests. |
+| `pnpm test:watch` | Rerun tests when files change. |
+| `pnpm typecheck` | Check types. |
+| `pnpm check` | Check types, file encoding, and lint rules. |
+| `pnpm fix` | Format code and apply automatic fixes. |
+| `pnpm verify` | Check the contents and layout of release artifacts. |
 
-### Option 1: Install from GitHub using the DSH CLI
+Packages use TypeScript source within the repository. Only the libraries `dsh-core` and `dsh-logger-core` publish `.d.ts` declarations for external projects. Install the other packages as DSH plugins rather than importing them as libraries.
 
-```powershell
-# Install the dsh-proxy-provider plugin from GitHub
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-
-# Install the dsh-agents-router plugin from GitHub
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-agents-router
-
-# Install the dsh-workspace-manager plugin from GitHub
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-```
-
-### Option 2: Install from GitHub using pnpm
-
-```powershell
-pnpm add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-pnpm add github:BlindGazer/DSH#path:packages/dsh-agents-router
-pnpm add github:BlindGazer/DSH#path:packages/dsh-workspace-manager
-```
-
-### Option 3: Install from a local repository folder (recommended for development)
-
-Open **PowerShell** and run:
-
-```powershell
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-agents-router
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-workspace-manager
-```
-
-## Architecture Principles
-
-Plugins separate shared, host, and client modules:
-
-1. `src/shared/`: Environment-independent models, constants, validators, and localization.
-2. `src/host/`: Server-side and Node.js logic (APIs, file services, encryption, and dispatch). It does not import client modules or React.
-3. `src/client/`: React client UI organized into features (`app/`, `features/`, `utils/`, `theme/`).
+Each package README links to instructions and examples in Russian and English. See the [documentation standard](DOCUMENTATION_SPEC.md).

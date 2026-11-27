@@ -2,8 +2,9 @@ import { createHash, randomBytes, randomUUID } from "node:crypto";
 import { openaiCodexProvider } from "@earendil-works/pi-ai/providers/openai-codex";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { channel } from "node:diagnostics_channel";
-import { lstatSync, readFileSync, realpathSync, renameSync, rmSync, writeFileSync } from "node:fs";
-import { join } from "node:path";
+import { lstatSync, mkdirSync, readFileSync, realpathSync, renameSync, rmSync, writeFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { dirname, join } from "node:path";
 import { createRequire } from "node:module";
 import "node:buffer";
 import { builtinModels } from "@earendil-works/pi-ai/providers/all";
@@ -12,7 +13,6 @@ import { googleGenerativeAIApi } from "@earendil-works/pi-ai/api/google-generati
 import { openAICompletionsApi } from "@earendil-works/pi-ai/api/openai-completions.lazy";
 import { openAIResponsesApi } from "@earendil-works/pi-ai/api/openai-responses.lazy";
 import { isContextOverflow } from "@earendil-works/pi-ai/utils/overflow";
-import "node:os";
 import "node:fs/promises";
 // ../dsh-logger-core/src/types.ts
 var NOOP_LOGGER = Object.freeze({ record: () => void 0 });
@@ -5437,6 +5437,23 @@ function credentialRefForAccount(authMethod, accountId) {
 	return `${CredentialRefPrefix}_${authMethod.replace("-", "_")}_${hex}`;
 }
 var ResetStorageKey = "@kalex/dsh-openai-hub.pending-reset";
+// src/shared/constants/oauth-errors.ts
+var DuplicateAccountLoginError = "account_already_connected";
+var OAuthFailureMessages = {
+	oauth_connect_timeout: "Establishing a connection for the OAuth request timed out; that connection returned no HTTP response.",
+	oauth_dns_failed: "DNS resolution failed for the OAuth connection to auth.openai.com.",
+	oauth_connection_refused: "The OAuth connection was refused.",
+	oauth_connection_reset: "The OAuth connection was reset.",
+	oauth_tls_failed: "TLS certificate verification failed for the OAuth connection.",
+	oauth_headers_timeout: "The OAuth connection did not return HTTP response headers in time.",
+	oauth_body_timeout: "Reading the OAuth response body timed out.",
+	oauth_network_failed: "The OAuth request to auth.openai.com failed; inspect the recorded exception types and codes.",
+	oauth_http_failed: "The OAuth endpoint returned an unsuccessful HTTP status.",
+	oauth_response_invalid: "The OAuth endpoint returned an invalid token response.",
+	oauth_claim_invalid: "The OAuth token contains no valid ChatGPT account claim.",
+	oauth_callback_invalid: "The callback does not match the current OAuth sign-in attempt.",
+	oauth_internal_failed: "OAuth sign-in failed outside the observed token exchange; no network cause was established."
+};
 // src/shared/remote.ts
 var UiComponentIdSchema = string().min(1).max(200);
 var UiRenderErrorSchema = object({
@@ -5598,22 +5615,6 @@ var TYPERT = Object.freeze({
 		objects: Object.freeze([])
 	})
 });
-// src/shared/constants/oauth-errors.ts
-var OAuthFailureMessages = {
-	oauth_connect_timeout: "Establishing a connection for the OAuth request timed out; that connection returned no HTTP response.",
-	oauth_dns_failed: "DNS resolution failed for the OAuth connection to auth.openai.com.",
-	oauth_connection_refused: "The OAuth connection was refused.",
-	oauth_connection_reset: "The OAuth connection was reset.",
-	oauth_tls_failed: "TLS certificate verification failed for the OAuth connection.",
-	oauth_headers_timeout: "The OAuth connection did not return HTTP response headers in time.",
-	oauth_body_timeout: "Reading the OAuth response body timed out.",
-	oauth_network_failed: "The OAuth request to auth.openai.com failed; inspect the recorded exception types and codes.",
-	oauth_http_failed: "The OAuth endpoint returned an unsuccessful HTTP status.",
-	oauth_response_invalid: "The OAuth endpoint returned an invalid token response.",
-	oauth_claim_invalid: "The OAuth token contains no valid ChatGPT account claim.",
-	oauth_callback_invalid: "The callback does not match the current OAuth sign-in attempt.",
-	oauth_internal_failed: "OAuth sign-in failed outside the observed token exchange; no network cause was established."
-};
 // src/shared/logging.ts
 var OAuthFailureCodeSchema = _enum([
 	"oauth_connect_timeout",
@@ -5814,7 +5815,10 @@ object({
 		"token_response",
 		"account_claim",
 		"http_request",
-		"network_connect"
+		"network_connect",
+		"account_conflict",
+		"credential_store",
+		"account_config"
 	]).optional(),
 	networkError: OpenAIHubNetworkErrorSchema.optional(),
 	oauthServerError: OpenAIHubOAuthServerErrorSchema.optional(),
@@ -8864,8 +8868,8 @@ var UsageCache = class {
 	}
 	path(key) {
 		if (!this.profilePath) return void 0;
-		const digest = createHash("sha256").update(key).digest("hex");
-		return join(realpathSync(this.profilePath), `dsh-openai-hub-quota-${digest}.json`);
+		const digest = createHash("sha256").update(JSON.stringify([realpathSync(this.profilePath), key])).digest("hex");
+		return join(homedir(), "dsh", "openai-hub", `dsh-openai-hub-quota-${digest}.json`);
 	}
 	read(key) {
 		try {
@@ -8885,6 +8889,10 @@ var UsageCache = class {
 		const payload = record.parse({
 			version: 1,
 			summary: view
+		});
+		mkdirSync(dirname(path), {
+			recursive: true,
+			mode: 448
 		});
 		const temp = `${path}.${randomUUID()}.tmp`;
 		try {
@@ -9119,6 +9127,7 @@ var AccountsRuntime = class {
 		if (!oauth) throw new Error("OpenAI Hub OAuth unavailable");
 		const loginAttemptId = randomUUID();
 		let observedFailure;
+		let accountStage;
 		const report = (event) => {
 			if (event.phase === "failed") observedFailure = event;
 			else if (event.phase === "started" && event.loginStage === "token_exchange") observedFailure = void 0;
@@ -9219,7 +9228,6 @@ var AccountsRuntime = class {
 				await this.serialized(async () => {
 					if (!current()) return;
 					const previousConfig = existingAccount?.config;
-					const previousCredential = previousConfig ? await this.credentials.read(previousConfig) : void 0;
 					const config = existingAccount ? {
 						...existingAccount.config,
 						credentialKey: credentialRefForAccount(request.authMethod, credential.accountId)
@@ -9232,11 +9240,34 @@ var AccountsRuntime = class {
 						catalogLoaded: false,
 						catalogMetadata: []
 					};
-					if (this.accounts.some((account) => account !== existingAccount && account.config.credentialKey === config.credentialKey)) throw new Error("OpenAI Hub credential belongs to another account");
+					if (this.accounts.some((account) => account !== existingAccount && account.config.credentialKey === config.credentialKey)) {
+						Object.assign(this.login, {
+							status: "error",
+							deviceCode: "",
+							verificationUri: "",
+							callbackUrlRequested: false,
+							retryAvailable: false,
+							error: DuplicateAccountLoginError
+						});
+						await this.logging({
+							event: "login",
+							phase: "failed",
+							state: "error",
+							loginStage: "account_conflict",
+							errorCode: "validation_failed",
+							loginAttemptId,
+							accountLabel: request.accountLabel,
+							authMethod: request.authMethod
+						});
+						return;
+					}
+					accountStage = "credential_store";
+					const previousCredential = previousConfig ? await this.credentials.read(previousConfig) : void 0;
 					const previousTargetCredential = config.credentialKey === previousConfig?.credentialKey ? previousCredential : await this.credentials.read(config);
 					await this.credentials.store(config, credential, current, Boolean(existingAccount && previousConfig?.credentialKey === config.credentialKey));
 					const previousAccounts = this.accounts.map((account) => account.config);
 					attempt.committing = true;
+					accountStage = "account_config";
 					try {
 						await this.persist(this.accounts.map((account) => account === existingAccount ? config : account.config).concat(existingAccount ? [] : [config]));
 					} catch {
@@ -9341,6 +9372,7 @@ var AccountsRuntime = class {
 					});
 					await this.logging({
 						...failure,
+						...accountStage && failure.errorCode === "oauth_internal_failed" ? { loginStage: accountStage } : {},
 						event: "login",
 						phase: "failed",
 						state: "error",

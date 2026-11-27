@@ -1,10 +1,8 @@
 # Router demo project
 
-This folder is a small, non-generated fixture for trying the project router. Open this directory as the DSH project root; the instructions live in `agents/` and only serve as input to the plugin. The plugin does not write or create files here.
+[![DSH >=0.2.2-rc.5](https://img.shields.io/badge/DSH-%3E%3D0.2.2--rc.5-4B32C3)](https://github.com/deepseek-ai/deepseek-harness) [![TypeScript 7](https://img.shields.io/badge/TypeScript-7-3178C6)](https://www.typescriptlang.org/) [![React 18 / 19](https://img.shields.io/badge/React-18_%2F_19-61DAFB)](https://react.dev/) [![license ISC](https://img.shields.io/badge/license-ISC-568814)](../../../../LICENSE.md)
 
-## Test
-
-Test section added.
+To try the router, open this directory as a DSH project. The example instructions are in `agents/`.
 
 ## Example paths and expected routing
 

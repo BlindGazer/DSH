@@ -1,54 +1,27 @@
-# Installation and Commands
+# Installation and commands
 
-## Requirements
+Requires DSH `>=0.2.2-rc.5`. Building from source requires Node.js and pnpm.
 
-- Node.js and pnpm (to build from source).
-- Installed DSH Desktop (profile `desktop`).
+## From GitHub
 
-## Install from GitHub using the DSH CLI
-
-```powershell
-dsh plugin --profile desktop add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
-```
-
-## Install using pnpm
-
-Run from the DSH Desktop profile directory:
+In DSH Desktop, open the plugin manager and add `github:BlindGazer/DSH#path:packages/dsh-proxy-provider`. For a separate CLI profile (for example, `web`):
 
 ```powershell
-Set-Location "$env:USERPROFILE/.dsh/profiles/desktop"
-pnpm add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
+dsh plugin --profile web add github:BlindGazer/DSH#path:packages/dsh-proxy-provider
 ```
 
-## Install from a local folder (recommended for development)
+## From a local checkout
+
+Install dependencies and build the package from the repository root:
 
 ```powershell
-dsh plugin --profile desktop add C:\git\DSH\packages\dsh-proxy-provider
+pnpm install
+pnpm --filter @kalex/dsh-proxy-provider build
+dsh plugin --profile web add C:/git/DSH/packages/dsh-proxy-provider
 ```
 
-## Available Commands
+For Desktop, select the built local package in the plugin manager instead of running the last command.
 
-Run commands from the `packages/dsh-proxy-provider` directory:
+## Package commands
 
-```bash
-# Build the plugin (Host + Client)
-pnpm run build
-
-# Build only the client part
-pnpm run build:client
-
-# Build only the host part
-pnpm run build:host
-
-# Run unit tests
-pnpm run test
-
-# Run tests in watch mode
-pnpm run test:watch
-
-# Verify plugin artifacts
-pnpm run verify
-
-# Full check: build + tests + verify
-pnpm run check
-```
+From the package directory, `pnpm run build` builds Host and Client; `pnpm run build:host` and `pnpm run build:client` build them separately. `pnpm run test` runs tests, `pnpm run test:watch` watches for changes, and `pnpm run verify` checks artifacts. `pnpm run check` builds, tests, and verifies artifacts.
